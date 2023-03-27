@@ -1,0 +1,1389 @@
+{
+  "AutomaticReconnect": true,
+  "SerialPortName": "COM11",
+  "StartupDelayMs": 0,
+  "IsConnecting": false,
+  "IsEnabled": false,
+  "LogIncomingData": true,
+  "IsConnected": false,
+  "BaudRate": 115200,
+  "UpdateMessages": [
+    {
+      "Message": {
+        "Interpreter": 1,
+        "Expression": "// special: 0 = silent; 1 = clip(*); 3 = hex; 4 = ASCII; 5 = LUT\r\nreturn String.fromCharCode(0x5F, 0x3F & $prop('Settings.info'));"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 0
+    },
+    {
+      "Message": {
+        "Interpreter": 1,
+        "Expression": "// servo count\r\nreturn String.fromCharCode(0x5E, $prop('Settings.ns'));"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 0
+    },
+    {
+      "Message": {
+        "Interpreter": 1,
+        "Expression": "// pwmparms.js update per-channel parameters\r\n  var ns = $prop('Settings.ns');          // servo count\r\n  /* other (unused here) settings:\r\n     $prop('Settings.accel_gain')\r\n     $prop('Settings.decel_gain')\r\n     $prop('Settings.force_gain')\r\n     $prop('Settings.heave_gain')\r\n     $prop('Settings.info')\r\n     $prop('Settings.nf')\r\n     $prop('Settings.smooth')\r\n     $prop('Settings.yaw_gain')\r\n   */\r\n  var tn = [0];\r\n  var tm = [0];\r\n  var to = [0];\r\n  //return ns;\r\n\r\n  if (null == root['tn']) {\r\n    for (i = 1; i <= ns; i++) {\r\n       tn[i-1] = $prop('Settings.p'+i+'min');\r\n       tm[i-1] = $prop('Settings.p'+i+'max');\r\n       to[i-1] = $prop('Settings.p'+i+'off');\r\n    }\r\n    // first message initialized Arduino offsets\r\n    root['tn'] = tn;\r\n    root['tm'] = tm;\r\n    root['to'] = to;\r\n    root['temp'] = 0;\r\n  }\r\n\r\n  var wisiwyg = $prop('Settings.wysiwyg');\r\n  var ts = $prop('Settings.test_servos');\r\n  var t1 = $prop('Settings.test_one') && 0 < ts;\r\n  var pg = $prop('Settings.page');\r\n  var s = $prop('Settings.servo');\r\n  var str = '';           // watch this space\r\n  var os = '';            // offset string\r\n\r\n  var temp; // used by undo()\r\n  var tp;\r\n  var ss;\r\n\r\n  function undo() { // undo changes\r\n    var d = 0;  // calculate tension to apply, based on test being done\r\n\r\n    if (tp == 4) {        // Arduino is not yet aware of max tension limits\r\n      tm[ss - 1] = temp;\r\n      d = $prop('Settings.p'+ss+'max') + $prop('Settings.p'+ss+'off') - $prop('Settings.p'+ss+'min');\r\n    }\r\n    else if (tp == 2) {\r\n      to[ss - 1] = temp;\r\n      // restore Arduino offset\r\n      str += String.fromCharCode(0x40 + ss - 1 | (0x40 & temp) >>1, 0x3F & temp);\r\n      d = $prop('Settings.p'+ss+'off') - $prop('Settings.p'+ss+'min');\r\n    }\r\n    else {  // restore min table\r\n      tn[ss - 1] = temp;\r\n      if (3 != pg)\r\n        os += String.fromCharCode(0x5E,ns)+String.fromCharCode.apply(null,tn);\r\n    }\r\n    // include data so that Arduino will set servo position with restored offset\r\n    str += String.fromCharCode(0x40 + ns + ss - 1 | (0x40 & d) >>1, 0x3F & d);\r\n    root['temp'] = 0;\r\n  };\r\n  //undo();\r\n\r\n  if (2 > pg || ! (wisiwyg || t1)) { // nothing new to change\r\n    if (0 < root['temp']) { // temporary test to undo?\r\n      temp = root['temp'];\r\n      tp = 7 & (temp>>7);\r\n      ss = temp & 0x7F;\r\n      temp = temp >> 10;\r\n      pg = 2; // force min table update\r\n      undo();\r\n      return os+str;\r\n    }\r\n    else return;\r\n  }\r\n  //return os.length\r\n\r\n  tn = root['tn'];\r\n  tm = root['tm'];\r\n  to = root['to'];\r\n  var change = false;     // Only one page at a time\r\n  var i;\r\n\r\nif (root['temp']) {\r\n    temp = root['temp'];\r\n    tp = 7 & (temp>>7);\r\n    ss = 0x7F & temp ;\r\n    prev = temp >> 10;\r\n    if (t1 && 1 == ts && s == ss && pg == tp) {\r\n      if ((pg == 2 && prev == $prop('Settings.p'+ss+'off'))\r\n       || (pg == 3 && prev == $prop('Settings.p'+ss+'min'))\r\n       || (pg == 4 && prev == $prop('Settings.p'+ss+'max')))\r\n        return;  // no change in temporary test_one parm\r\n    // otherwise, fall thru and replace that parm value\r\n    }\r\n    else undo();  // restore that parm value; another parm will be changed.\r\n  }\r\n\r\n  var prev;               // store previous value, potentially for root['temp']\r\n  for (i = 1; i <= ns; i++) {\r\n    var d = 0;  // calculate tension to apply, based on test being done; d = 0 for min (page 3)\r\n\r\n    if (4 == pg) {                // max\r\n      d = $prop('Settings.p'+i+'max') + $prop('Settings.p'+i+'off') - $prop('Settings.p'+i+'min');\r\n      if (tm[i-1] != $prop('Settings.p'+i+'max')) {\r\n        if(0 == root['temp'])\r\n          prev = tm[i-1];\r\n        change = true;\r\n        tm[i-1] = $prop('Settings.p'+i+'max');\r\n      }\r\n    }\r\n    else if (2 == pg) {   // offset\r\n      d = $prop('Settings.p'+i+'off') - $prop('Settings.p'+i+'min');\r\n      if (to[i-1] != $prop('Settings.p'+i+'off')) {\r\n        if(0 == root['temp'])\r\n          prev = to[i-1];\r\n        change = true;\r\n        var o = to[i-1] = $prop('Settings.p'+i+'off');\r\n        os += String.fromCharCode((0x40 + i - 1) | (0x40 & o)>>1, 0x3F & o);\r\n      }\r\n    }\r\n    else if (3 == pg) {   //min\r\n      if (tn[i-1] != $prop('Settings.p'+i+'min')) {\r\n        if(0 == root['temp'])\r\n          prev = tn[i-1];\r\n        change = true;\r\n        tn[i-1] = $prop('Settings.p'+i+'min');\r\n      }\r\n    }\r\n    t = String.fromCharCode(0x40 + ns + i - 1 | (0x40 & d) >>1, 0x3F & d);\r\n\r\n    if (wisiwyg || (t1 && i == s))\r\n      str += t;\r\n  }\r\n\r\n  //return str.length;\r\n  //return [pg,s,root['to'][0],$prop('Settings.p'+1+'off')].toString()+'\\n'\r\n  //return tn.toString()\r\n  //change = true;\r\n  if (change) {\r\n    if (3 == pg)  // change to min table?  update min table, then tension\r\n      str = String.fromCharCode(0x5E,ns)+String.fromCharCode.apply(null,tn) + str;\r\n\r\n    if (wisiwyg) {      // no change left unsaved!!\r\n      if (3 == pg)\r\n        root['tn'] = tn;\r\n      else if (4 == pg)\r\n        root['tm'] = tm;\r\n      else if (2 == pg)\r\n        root['to'] = to;\r\n      root['temp'] = 0;\r\n    }\r\n    else { // assumption: SimHub is fast enough that no more than 1 change at a time\r\n      i = s - 1;\r\n      if (2 == ts) {      // save a single parm;\r\n        if (3 == pg)\r\n          root['tn'][i] = tn[i];\r\n        else if (4 == pg)\r\n          root['tm'][i] = tm[i];\r\n        else root['to'][i] = to[i];\r\n        root['temp'] = 0;\r\n      }\r\n      else root['temp'] = (prev << 10) | (pg << 7) | s;\r\n    }\r\n    return str;\r\n  }"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 60
+    },
+    {
+      "Message": {
+        "Interpreter": 1,
+        "Expression": "// Calculate servo tensions from G-forces\r\nvar ns = $prop('Settings.ns');       // servo count\r\nvar tm = [0];\r\n// Set up data and reset IIR filters\r\nif (null == root['ft']) {\r\n  var ft = [0];\r\n  for (i = 1; i <= ns; i++) {\r\n     tm[i-1] = $prop('Settings.p'+i+'max');\r\n     ft[i-1] = 0;\r\n  }\r\n  // first message initializes Arduino offsets\r\n  root['ft'] = ft;  // IIR\r\n  root[\"tm\"] = tm;\r\n}\r\ntm = root[\"tm\"];\r\n\r\nvar e = 3;  // epsilon approximation to reduce imperceptible changes\r\nvar gain = $prop('Settings.force_gain') * 0.02;\r\n\r\n// G-forces from SimHub properties ---------------\r\n// longitudinal acceleration (positive is back)\r\nvar surge = $prop('AccelerationSurge') * gain;\r\nif (surge < 0)\r\n  surge *= $prop('Settings.accel_gain');\r\nelse\r\n  surge *= $prop('Settings.decel_gain');\r\n\r\n// lateral acceleration (positive is right) (feels like yaw)\r\nvar sway  = $prop('AccelerationSway') * gain;\r\nsway  *= $prop('Settings.yaw_gain');\r\n\r\n// vertical acceleration (positive is up)\r\nvar heave = $prop('AccelerationHeave') * gain;\r\nheave *= $prop('Settings.heave_gain');\r\n\r\n// neutral position test\r\nif ($prop('Settings.test_servos') === 2) {\r\n  surge = sway = heave = 0;\r\n}\r\n\r\n//return surge + ' ' + sway + ' ' + heave;\r\n\r\n// Combine forces\r\n//\r\n// convert speed and yaw changes to left and right tension values\r\nvar leftSurgeSway = Math.sqrt(surge*surge + sway*sway);\r\nvar rightSurgeSway = surge + surge - leftSurgeSway;\r\n//return leftSurgeSway + ' ' + rightSurgeSway;\r\n\r\nvar monoSurgeSway = surge * 0.8 + Math.abs(sway) * 0.2;\r\nvar monoSwayHeave = heave * 0.8 + Math.abs(sway) * 0.2;\r\nvar frontHeave = heave * 0.8 + Math.max(surge * 0.2, 0);\r\nvar rearHeave = heave * 0.8 + Math.max(-surge * 0.2, 0);\r\n\r\n// Assign forces to servos\r\n//\r\n// use offset to set center point of forces\r\n//\r\nvar ts = [Math.max(leftSurgeSway, 0)];                  // left shoulder belt\r\nts[1] = Math.max(rightSurgeSway, 0);                    // right shoulder belt\r\nts[2] = Math.max(rightSurgeSway + 20, 0);               // left head\r\nts[3] = Math.max(leftSurgeSway + 20, 0);                // right head\r\nts[4] = Math.max(surge + 40, 0);                        // upper back\r\nts[5] = Math.max(monoSurgeSway + 5, 0);                 // mono shoulder belt\r\n/*\r\nts[5] = Math.max(surge + 10, 0);                        // lower back\r\nts[6] = Math.max(rightSurgeSway + 10, 0);               // left side back\r\nts[7] = Math.max(leftSurgeSway + 10, 0);                // right side back\r\nts[8] = Math.max(sway + 10, 0);                         // left thigh\r\nts[7] = Math.max(-sway + 10, 0);                        // right thigh\r\nts[8] = Math.max(monoSwayHeave + 10, 0);                // left lap belt\r\nts[9] = Math.max(monoSwayHeave + 10, 0);                // right lap belt\r\nts[12] = Math.max(frontHeave + 10, 0);                  // front seat\r\nts[13] = Math.max(rearHeave + 10, 0);                   // rear seat\r\n//*/\r\n\r\nvar tc = 1 - ($prop('Settings.smooth') * 0.2);\r\nvar str = '';\r\nvar tt = 99;    // no such servo\r\nif ($prop('Settings.page') > 1 && 0 < $prop('Settings.test_servos'))\r\n  tt = $prop('Settings.servo') - 1;\r\nfor (var i = 0; i < ns; i++) {\r\n  // Low-pass IIR filter\r\n  var ft = root['ft'][i];\r\n  ft += (ts[i] - ft) * tc;   // filtered tension\r\n  if (ft > tm[i]) ft = tm[i];  // limit tension\r\n\r\n  // skip change if it is smaller than e or servo is being tested\r\n  if (Math.abs(ft - root['ft'][i]) > e && i != tt) {\r\n    str += String.fromCharCode(0x40 | (ns + i) | ((0x40 & ft)>>1));  // set tension\r\n    str += String.fromCharCode(0x3F & ft);                           // 6 lsb\r\n  }\r\n  root['ft'][i] = ft;\r\n}\r\nif (0 < str.length) {\r\n  //return str.length;    // 2 * ns\r\n  return str;\r\n}\r\n//return tt"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 0
+    }
+  ],
+  "OnConnectMessage": {
+    "Interpreter": 1,
+    "Expression": "var reset = String.fromCharCode(0x7F);\t// reset Arduino, initialize offsets\r\nvar ns = $prop('Settings.ns');  // number of supported servos\r\nfor (var i = 1; i <= ns; i++) {\r\n    var offset = $prop('Settings.p'+i+'min');\r\n    reset += String.fromCharCode((0x40 + i) | ((0x40 & offset)>>1));\t\t// set offsets\r\n    reset += String.fromCharCode(0x3F & offset);\t\t\t\t\t\t// 6 lsb\r\n}\r\nreturn reset;"
+  },
+  "OnDisconnectMessage": {
+    "Interpreter": 1,
+    "Expression": ""
+  },
+  "DtrEnable": true,
+  "RtsEnable": false,
+  "EditorExpanded": true,
+  "Name": "Custom Serial device",
+  "Description": "blekenbleu b2char_211006",
+  "LastErrorDate": "0001-01-01T00:00:00",
+  "LastErrorMessage": null,
+  "IsFreezed": false,
+  "SettingsBuilder": {
+    "Settings": [
+      {
+        "Maximum": 5,
+        "Minimum": 1,
+        "PropertyName": "page",
+        "CurrentValue": 1,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Page: 1=General; 2=Neutral; 3=Min; 4=Max; 5=Range",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Settings": [],
+        "Name": null,
+        "TypeName": "GroupEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": false,
+        "Label": "General",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==1"
+        }
+      },
+      {
+        "Maximum": 20,
+        "Minimum": 0,
+        "PropertyName": "gain_force",
+        "CurrentValue": 10,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": false,
+        "Label": "Global gain",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==1"
+        }
+      },
+      {
+        "Maximum": 100,
+        "Minimum": 0,
+        "PropertyName": "gain_accel",
+        "CurrentValue": 30,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": false,
+        "Label": "Acceleration gain",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==1"
+        }
+      },
+      {
+        "Maximum": 100,
+        "Minimum": 0,
+        "PropertyName": "gain_decel",
+        "CurrentValue": 40,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": false,
+        "Label": "Deceleration gain",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==1"
+        }
+      },
+      {
+        "Maximum": 100,
+        "Minimum": 0,
+        "PropertyName": "gain_sway",
+        "CurrentValue": 40,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": false,
+        "Label": "Yaw (sway) gain",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==1"
+        }
+      },
+      {
+        "Maximum": 100,
+        "Minimum": 0,
+        "PropertyName": "gain_heave",
+        "CurrentValue": 20,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": false,
+        "Label": "Heave gain",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==1"
+        }
+      },
+      {
+        "Maximum": 4,
+        "Minimum": 0,
+        "PropertyName": "smooth",
+        "CurrentValue": 2,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": false,
+        "Label": "Smoothing (20% per step)",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==1"
+        }
+      },
+      {
+        "Maximum": 15,
+        "Minimum": 2,
+        "PropertyName": "ns",
+        "CurrentValue": 8,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": false,
+        "Label": "Active PWM",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==1"
+        }
+      },
+      {
+        "Maximum": 0,
+        "Minimum": 0,
+        "PropertyName": "nf",
+        "CurrentValue": 0,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": false,
+        "Label": "Active Fans (TODO); 15 >= Fans + Servos",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==0"
+        }
+      },
+      {
+        "Maximum": 4,
+        "Minimum": 0,
+        "PropertyName": "info",
+        "CurrentValue": 4,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": false,
+        "Label": "Info: 0=silent; 1=clipping; 2=tension; 3=hex; 4=ASCII",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==1"
+        }
+      },
+      {
+        "PropertyName": "wysiwyg",
+        "CurrentValue": true,
+        "Name": null,
+        "TypeName": "BoolEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Test/update ALL servos (WYSIWYG)",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]>1&&![Settings.test_one]"
+        }
+      },
+      {
+        "PropertyName": "test_one",
+        "CurrentValue": false,
+        "Name": null,
+        "TypeName": "BoolEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": false,
+        "Label": "Test/update only select servo (otherwise all - WYSIWYG)",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]>1&&![Settings.wysiwyg]"
+        }
+      },
+      {
+        "Maximum": 15,
+        "Minimum": 0,
+        "PropertyName": "servo",
+        "CurrentValue": 7,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": false,
+        "Label": "Servo select",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]>1&&[Settings.test_one]"
+        }
+      },
+      {
+        "Maximum": 2,
+        "Minimum": 0,
+        "PropertyName": "test_servos",
+        "CurrentValue": 1,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": false,
+        "Label": "1 == test;  2 == save",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.test_one]&&[Settings.page]>1&&[Settings.servo]<=[Settings.ns]"
+        }
+      },
+      {
+        "Settings": [],
+        "Name": null,
+        "TypeName": "GroupEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM Device: Neutral Offset Percentage (zero g-forces)",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==2"
+        }
+      },
+      {
+        "Maximum": 100,
+        "Minimum": 0,
+        "PropertyName": "neu0",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 0: Neutral",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==2"
+        }
+      },
+      {
+        "Maximum": 100,
+        "Minimum": 0,
+        "PropertyName": "neu1",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 1: Neutral",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==2"
+        }
+      },
+      {
+        "Maximum": 100,
+        "Minimum": 0,
+        "PropertyName": "neu2",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 2: Neutral",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==2&&[Settings.ns]>2"
+        }
+      },
+      {
+        "Maximum": 100,
+        "Minimum": 0,
+        "PropertyName": "neu3",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 3: Neutral",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==2&&[Settings.ns]>3"
+        }
+      },
+      {
+        "Maximum": 100,
+        "Minimum": 0,
+        "PropertyName": "neu4",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 4: Neutral",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==2&&[Settings.ns]>4"
+        }
+      },
+      {
+        "Maximum": 100,
+        "Minimum": 0,
+        "PropertyName": "neu5",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 5: Neutral",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==2&&[Settings.ns]>5"
+        }
+      },
+      {
+        "Maximum": 100,
+        "Minimum": 0,
+        "PropertyName": "neu6",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 6: Neutral",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==2&&[Settings.ns]>6"
+        }
+      },
+      {
+        "Maximum": 100,
+        "Minimum": 0,
+        "PropertyName": "neu7",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 7: Neutral",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==2&&[Settings.ns]>7"
+        }
+      },
+      {
+        "Maximum": 100,
+        "Minimum": 0,
+        "PropertyName": "neu8",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 8: Neutral",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==2&&[Settings.ns]>8"
+        }
+      },
+      {
+        "Maximum": 100,
+        "Minimum": 0,
+        "PropertyName": "neu9",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 9: Neutral",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==2&&[Settings.ns]>9"
+        }
+      },
+      {
+        "Maximum": 100,
+        "Minimum": 0,
+        "PropertyName": "neu10",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 10: Neutral",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==2&&[Settings.ns]>10"
+        }
+      },
+      {
+        "Maximum": 100,
+        "Minimum": 0,
+        "PropertyName": "neu11",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 11: Neutral",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==2&&[Settings.ns]>11"
+        }
+      },
+      {
+        "Maximum": 100,
+        "Minimum": 0,
+        "PropertyName": "neu12",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 12: Neutral",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==2&&[Settings.ns]>12"
+        }
+      },
+      {
+        "Maximum": 100,
+        "Minimum": 0,
+        "PropertyName": "neu13",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 13: Neutral",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==2&&[Settings.ns]>13"
+        }
+      },
+      {
+        "Maximum": 100,
+        "Minimum": 0,
+        "PropertyName": "neu14",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 14: Neutral",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==2&&[Settings.ns]>14"
+        }
+      },
+      {
+        "Settings": [],
+        "Name": null,
+        "TypeName": "GroupEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": false,
+        "Label": "PWM Device: Min Offset",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==3"
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 0,
+        "PropertyName": "min0",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 0: Min",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==3"
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 0,
+        "PropertyName": "min1",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 1: Min",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==3"
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 0,
+        "PropertyName": "min2",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 2: Min",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==3&&[Settings.ns]>2"
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 0,
+        "PropertyName": "min3",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 3: Min",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==3&&[Settings.ns]>3"
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 0,
+        "PropertyName": "min4",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 4: Min",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==3&&[Settings.ns]>4"
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 0,
+        "PropertyName": "min5",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 5: Min",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==3&&[Settings.ns]>5"
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 0,
+        "PropertyName": "min6",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 6: Min",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==3&&[Settings.ns]>6"
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 0,
+        "PropertyName": "min7",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 7: Min",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==3&&[Settings.ns]>7"
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 0,
+        "PropertyName": "min8",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 8: Min",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==3&&[Settings.ns]>8"
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 0,
+        "PropertyName": "min9",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 9: Min",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==3&&[Settings.ns]>9"
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 0,
+        "PropertyName": "min10",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 10: Min",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==3&&[Settings.ns]>10"
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 0,
+        "PropertyName": "min11",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 11: Min",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==3&&[Settings.ns]>11"
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 0,
+        "PropertyName": "min12",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 12: Min",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==3&&[Settings.ns]>12"
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 0,
+        "PropertyName": "min13",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 13: Min",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==3&&[Settings.ns]>13"
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 0,
+        "PropertyName": "min14",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 14: Min",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==3&&[Settings.ns]>14"
+        }
+      },
+      {
+        "Settings": [],
+        "Name": null,
+        "TypeName": "GroupEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": false,
+        "Label": "PWM Device: Max Offset",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==4"
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 0,
+        "PropertyName": "max0",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 0: Max",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==4"
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 0,
+        "PropertyName": "max1",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 1: Max",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==4"
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 0,
+        "PropertyName": "max2",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 2: Max",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==4&&[Settings.ns]>2"
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 0,
+        "PropertyName": "max3",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 3: Max",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==4&&[Settings.ns]>3"
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 0,
+        "PropertyName": "max4",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 4: Max",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==4&&[Settings.ns]>4"
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 0,
+        "PropertyName": "max5",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 5: Max",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==4&&[Settings.ns]>5"
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 0,
+        "PropertyName": "max6",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 6: Max",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==4&&[Settings.ns]>6"
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 0,
+        "PropertyName": "max7",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 7: Max",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==4&&[Settings.ns]>7"
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 0,
+        "PropertyName": "max8",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 8: Max",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==4&&[Settings.ns]>8"
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 0,
+        "PropertyName": "max9",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 9: Max",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==4&&[Settings.ns]>9"
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 0,
+        "PropertyName": "max10",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 10: Max",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==4&&[Settings.ns]>10"
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 0,
+        "PropertyName": "max11",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 11: Max",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==4&&[Settings.ns]>11"
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 0,
+        "PropertyName": "max12",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 12: Max",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==4&&[Settings.ns]>12"
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 0,
+        "PropertyName": "max13",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 13: Max",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==4&&[Settings.ns]>13"
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 0,
+        "PropertyName": "max14",
+        "CurrentValue": 50,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 14: Max",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==4&&[Settings.ns]>14"
+        }
+      },
+      {
+        "Settings": [],
+        "Name": null,
+        "TypeName": "GroupEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": false,
+        "Label": "PWM Device: Scale Offsets to Range (value * 10) [90...1080 degrees]",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==5"
+        }
+      },
+      {
+        "Maximum": 108,
+        "Minimum": 9,
+        "PropertyName": "ran0",
+        "CurrentValue": 27,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 0: Range",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==5"
+        }
+      },
+      {
+        "Maximum": 108,
+        "Minimum": 9,
+        "PropertyName": "ran1",
+        "CurrentValue": 27,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 1: Range",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==5"
+        }
+      },
+      {
+        "Maximum": 108,
+        "Minimum": 9,
+        "PropertyName": "ran2",
+        "CurrentValue": 27,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 2: Range",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==5&&[Settings.ns]>2"
+        }
+      },
+      {
+        "Maximum": 108,
+        "Minimum": 9,
+        "PropertyName": "ran3",
+        "CurrentValue": 27,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 3: Range",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==5&&[Settings.ns]>3"
+        }
+      },
+      {
+        "Maximum": 108,
+        "Minimum": 9,
+        "PropertyName": "ran4",
+        "CurrentValue": 27,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 4: Range",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==5&&[Settings.ns]>4"
+        }
+      },
+      {
+        "Maximum": 108,
+        "Minimum": 9,
+        "PropertyName": "ran5",
+        "CurrentValue": 27,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 5: Range",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==5&&[Settings.ns]>5"
+        }
+      },
+      {
+        "Maximum": 108,
+        "Minimum": 9,
+        "PropertyName": "ran6",
+        "CurrentValue": 27,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 6: Range",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==5&&[Settings.ns]>6"
+        }
+      },
+      {
+        "Maximum": 108,
+        "Minimum": 9,
+        "PropertyName": "ran7",
+        "CurrentValue": 27,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 7: Range",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==5&&[Settings.ns]>7"
+        }
+      },
+      {
+        "Maximum": 108,
+        "Minimum": 9,
+        "PropertyName": "ran8",
+        "CurrentValue": 27,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 8: Range",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==5&&[Settings.ns]>8"
+        }
+      },
+      {
+        "Maximum": 108,
+        "Minimum": 9,
+        "PropertyName": "ran9",
+        "CurrentValue": 27,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 9: Range",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==5&&[Settings.ns]>9"
+        }
+      },
+      {
+        "Maximum": 108,
+        "Minimum": 9,
+        "PropertyName": "ran10",
+        "CurrentValue": 27,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 10: Range",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==5&&[Settings.ns]>10"
+        }
+      },
+      {
+        "Maximum": 108,
+        "Minimum": 9,
+        "PropertyName": "ran11",
+        "CurrentValue": 27,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 11: Range",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==5&&[Settings.ns]>11"
+        }
+      },
+      {
+        "Maximum": 108,
+        "Minimum": 9,
+        "PropertyName": "ran12",
+        "CurrentValue": 27,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 12: Range",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==5&&[Settings.ns]>12"
+        }
+      },
+      {
+        "Maximum": 108,
+        "Minimum": 9,
+        "PropertyName": "ran13",
+        "CurrentValue": 27,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 13: Range",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==5&&[Settings.ns]>13"
+        }
+      },
+      {
+        "Maximum": 108,
+        "Minimum": 9,
+        "PropertyName": "ran14",
+        "CurrentValue": 27,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "PWM 14: Range",
+        "IsVisibleFormula": {
+          "Expression": "[Settings.page]==5&&[Settings.ns]>14"
+        }
+      }
+    ],
+    "IsEditMode": false
+  }
+}

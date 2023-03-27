@@ -126,7 +126,7 @@
         "Maximum": 100,
         "Minimum": 1,
         "PropertyName": "f1",
-        "CurrentValue": 8,
+        "CurrentValue": 57,
         "Name": null,
         "TypeName": "SliderEntry",
         "IsEnabled": true,
@@ -158,24 +158,7 @@
       },
       {
         "Maximum": 64,
-        "Minimum": 0,
-        "PropertyName": "f3",
-        "CurrentValue": 22,
-        "Name": null,
-        "TypeName": "SliderEntry",
-        "IsEnabled": true,
-        "IsEnabledFormula": {
-          "Expression": ""
-        },
-        "IsVisible": true,
-        "Label": "Fake8.3 predistortion amplitude (percent of PWM change)",
-        "IsVisibleFormula": {
-          "Expression": ""
-        }
-      },
-      {
-        "Maximum": 64,
-        "Minimum": 0,
+        "Minimum": 1,
         "PropertyName": "f4",
         "CurrentValue": 23,
         "Name": null,
@@ -185,16 +168,16 @@
           "Expression": ""
         },
         "IsVisible": true,
-        "Label": "Fake8.4 predistortion time (PWM period count)",
+        "Label": "Fake8.4 IIR numerator",
         "IsVisibleFormula": {
           "Expression": ""
         }
       },
       {
         "Maximum": 240,
-        "Minimum": 60,
+        "Minimum": 0,
         "PropertyName": "period",
-        "CurrentValue": 184,
+        "CurrentValue": 22,
         "Name": null,
         "TypeName": "SliderEntry",
         "IsEnabled": true,
@@ -202,7 +185,7 @@
           "Expression": ""
         },
         "IsVisible": true,
-        "Label": "Fake8.5 Test period count: 60 = 1 second",
+        "Label": "Fake8.5 IIR denominator adder (added to Fake8.4);  0=disable",
         "IsVisibleFormula": {
           "Expression": ""
         }
@@ -254,6 +237,23 @@
         },
         "IsVisible": true,
         "Label": "Fake8.8 Test fall count",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 2,
+        "Minimum": 0,
+        "PropertyName": "f9",
+        "CurrentValue": 1,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "F8.9 verbosity: 0 = off; 1 = hex, 2 = decimal",
         "IsVisibleFormula": {
           "Expression": ""
         }

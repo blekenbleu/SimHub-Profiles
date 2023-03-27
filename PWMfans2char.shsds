@@ -1,0 +1,98 @@
+{
+  "AutomaticReconnect": true,
+  "SerialPortName": "COM11",
+  "StartupDelayMs": 0,
+  "IsConnecting": false,
+  "IsEnabled": false,
+  "LogIncomingData": true,
+  "IsConnected": false,
+  "BaudRate": 115200,
+  "UpdateMessages": [
+    {
+      "Message": {
+        "Interpreter": 1,
+        "Expression": "// single character fan speeds\r\nvar L = $prop('Settings.Leftfan');\r\nvar t = $prop('Settings.Testfans');\r\nif (!t) {\r\n  L = $prop('ShakeITBSV3Plugin.Export.SpeedCurv.Left');\r\n  L = (1  > L) ? 1 : (99 < L) ? 99 : L;\r\n}\r\nvar step = [L & 0x7E];\t// left PWM duty cycle\r\n// send duty cycles\r\n// return step.toString(); // would return a comma-separated string of numeric values\r\nvar str = String.fromCharCode.apply(null,step);\t// ASCII code for each step[] value\r\n// return str.length;\t// 1 character\r\nreturn str;"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 0
+    },
+    {
+      "Message": {
+        "Interpreter": 1,
+        "Expression": "// single character fan speeds\r\nvar R = $prop('Settings.Rightfan');\r\nvar t = $prop('Settings.Testfans');\r\nif (!t) {\r\n  R = $prop('ShakeITBSV3Plugin.Export.SpeedCurv.Right');\r\n  R = (1  > R) ? 1 : (99 < R) ? 99 : R;\r\n}\r\nvar step = [R | 1];\t// left PWM duty cycle\r\n// send duty cycles\r\n// return step.toString(); // would return a comma-separated string of numeric values\r\nvar str = String.fromCharCode.apply(null,step);\t// ASCII code for each step[] value\r\n// return str.length;\t// 1 character\r\nreturn str;"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 0
+    }
+  ],
+  "OnConnectMessage": {
+    "Interpreter": 1,
+    "Expression": ""
+  },
+  "OnDisconnectMessage": {
+    "Interpreter": 1,
+    "Expression": "return String.fromCharCode(2,3);\t// minimum fan speeds"
+  },
+  "DtrEnable": true,
+  "RtsEnable": false,
+  "EditorExpanded": true,
+  "Name": "Custom Serial device",
+  "Description": "prototype 2-character commands",
+  "LastErrorDate": "0001-01-01T00:00:00",
+  "LastErrorMessage": null,
+  "IsFreezed": false,
+  "SettingsBuilder": {
+    "Settings": [
+      {
+        "Maximum": 99,
+        "Minimum": 1,
+        "PropertyName": "Leftfan",
+        "CurrentValue": 79,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Left fan",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 99,
+        "Minimum": 1,
+        "PropertyName": "Rightfan",
+        "CurrentValue": 80,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Right fan",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "PropertyName": "Testfans",
+        "CurrentValue": false,
+        "Name": null,
+        "TypeName": "BoolEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Test fans",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      }
+    ],
+    "IsEditMode": false
+  }
+}
