@@ -14,7 +14,6 @@ Profiles of particular interest
    and [seatbelt_profile_with_shakeit.shsds](seatbelt_profile_with_shakeit.shsds)  
   for use e.g. with [Stuyo's sim belt servo tensioner](https://github.com/blekenbleu/Arduino-Blue-Pill/tree/main/Blue_ASCII_Servo)  
   as [described here](https://blekenbleu.github.io/Arduino/Blue_ASCII_Servo/)
-- [sierses_4-channel_wheelslip.siprofile and sierses_4-channel_wheelslip.siprofile](siprofiles.htm)  
 #### [Arduino sketches for these Custom Serial profiles](https://blekenbleu.github.io/Arduino/SimHubCustomSerial) discussion
 #### See [SimHub Custom serial profile atlas](https://blekenbleu.github.io/Arduino/shsds.htm) for details about these:  
    - [tension.shsds](tension.shsds.txt)
@@ -30,3 +29,17 @@ Profiles of particular interest
    - [new_serial.shsds](new_serial.shsds)
    - [compare.shsds](compare.shsds)
 #### [SimHub ShakeIt Bass Shaker profiles](https://blekenbleu.github.io/pedals/shakeit.htm) discussion
+#### [ShakeIt Formulae JavaScript documentation](https://blekenbleu.github.io/pedals/ShakeIt/)  
+#### [sierses_4-channel_wheelslip.siprofile](sierses_4-channel_wheelslip.siprofile)
+- based on [NewLoaded4-chanWheelslipUndersteer.siprofile](NewLoaded4-chanWheelslipUndersteer.siprofile)
+- wrapped effects in an embedded GroupContainer
+    - custom effects for property AbsAcc from abs AccelerationSway, Surge
+    - custom effects for property proxyL, based on Abs.Acc
+    - proxyS properties exported from Wheels Slip effect
+    - custom effect generates proxyL * proxyS / 100
+    - custom effect for under, oversteer properties (and outputs) from proxyS front-rear differences * AbsAcc
+    - custom effect generates mixes of oversteer and loaded slips
+#### [NewLoaded4-chanWheelslipUndersteer.siprofile](NewLoaded4-chanWheelslipUndersteer.siprofile)  
+    same effects as above  
+- *14 Aug 2012* accelerations applied to slip differences for under/oversteer were all wrong  
+- **to do**: replace AbsAcc custom effect with G-Forces effects  
