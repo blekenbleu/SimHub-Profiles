@@ -1,0 +1,31 @@
+// upshifts
+var g = $prop('Gear');
+var s = 0;
+
+// 'Gear' is pathological
+if (g == 'N' || g == 'R')
+  g = 0;
+  
+/* test code e.g. for comparison with downshift
+if (1 < $prop('ShakeITBSV3Plugin.Export.proxyShift.All'))
+  return 100;
+else return 30 * g; 
+*/
+
+// initialize gear history
+if (null == root["gear"]) {
+  root["gear"] = g;
+  root["sb4"] = true;
+}
+
+if (1 < $prop('ShakeITBSV3Plugin.Export.proxyShift.All')) {
+  root["sb4"] = true;
+  if (g > root["gear"])	// upshift?
+    s = $prop('ShakeITBSV3Plugin.Export.proxyRPM.All');
+}
+else {
+  if (root["sb4"])
+    root["gear"] = g;       // gear after shifts
+  root["sb4"] = false;
+}
+return s;

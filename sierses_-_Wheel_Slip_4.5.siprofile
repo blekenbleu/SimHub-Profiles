@@ -1,0 +1,1000 @@
+{
+  "IncludeOutputSettingsInProfile": false,
+  "UnmuteEffectsAfterSimhubRestart": true,
+  "EffectsContainers": [
+    {
+      "EffectsContainers": [
+        {
+          "AutocalibrationMax": 95.0,
+          "Filter": {
+            "GammaValue": 1.0,
+            "InputGain": 100.0,
+            "MinimumForce": 0,
+            "Threshold": 0,
+            "FilterType": "GammaFilter"
+          },
+          "FrontLeftFormula": {
+            "Interpreter": 1,
+            "Expression": "// 1 / gamma multiplier\r\nif (null == root['mult']) {\r\n  if ($prop('DataCorePlugin.CurrentGame') === 'AssettoCorsa')\r\n  \troot['mult'] = 4.0\r\n  else if ($prop('DataCorePlugin.CurrentGame') === 'AssettoCorsaCompetizione')\r\n  \troot['mult'] = 4.5\r\n  else if ($prop('DataCorePlugin.CurrentGame') === 'Automobilista')\r\n  \troot['mult'] = 5.0\r\n  else if ($prop('DataCorePlugin.CurrentGame') === 'Automobilista2')\r\n  \troot['mult'] = 5.5\r\n  else if ($prop('DataCorePlugin.CurrentGame') === 'BeamNG')\r\n  \troot['mult'] = 5.0\r\n  else if ($prop('DataCorePlugin.CurrentGame').search('FH') !== -1) // Forza Horizon\r\n  \troot['mult'] = 5.0\r\n  else if ($prop('DataCorePlugin.CurrentGame') === 'FM7') // Forza Motorsport\r\n  \troot['mult'] = 5.0\r\n  else if ($prop('DataCorePlugin.CurrentGame') === 'IRacing') {\r\n  \tif ($prop('DataCorePlugin.GameRawData.SessionData.WeekendInfo.Category') === 'DirtOval')\r\n  \t  root['mult'] = 3.0\r\n  \telse if ($prop('DataCorePlugin.GameRawData.SessionData.WeekendInfo.Category') === 'Oval' ||\r\n  \t         $prop('DataCorePlugin.GameRawData.SessionData.WeekendInfo.TrackConfigName') === 'Oval')\r\n  \t  root['mult'] = 3.5\r\n  \telse // Road and Rallycross\r\n  \t  root['mult'] = 5.0\r\n  }\r\n  else if ($prop('DataCorePlugin.CurrentGame') === 'KartKraft')\r\n  \troot['mult'] = 5.0\r\n  else if ($prop('DataCorePlugin.CurrentGame') === 'RBR') // Richard Burns Rally\r\n  \troot['mult'] = 5.0\r\n  else if ($prop('DataCorePlugin.CurrentGame') === 'RFactor1')\r\n  \troot['mult'] = 5.0\r\n  else if ($prop('DataCorePlugin.CurrentGame') === 'RFactor2')\r\n  \troot['mult'] = 5.5\r\n  else if ($prop('DataCorePlugin.CurrentGame') === 'RRRE') // Raceroom\r\n  \troot['mult'] = 5.0\r\n  else if ($prop('DataCorePlugin.CurrentGame') === ('ATS' || 'ETS2'))\r\n  \troot['mult'] = 5.0\r\n  else if ($prop('DataCorePlugin.CurrentGame').search('F1') !== -1) // Codemasters F1\r\n  \troot['mult'] = 4.5\r\n  else if ($prop('DataCorePlugin.CurrentGame').search('CodemastersDirtRally') !== -1)\r\n  \troot['mult'] = 4.5\r\n  else if ($prop('DataCorePlugin.CurrentGame').search('CodemastersDirt') !== -1)\r\n  \troot['mult'] = 4.5\r\n  else if ($prop('DataCorePlugin.CurrentGame').search('CodemastersGrid') !== -1)\r\n  \troot['mult'] = 4.5\r\n  else if ($prop('DataCorePlugin.CurrentGame').search('PCars') !== -1) // Project Cars\r\n  \troot['mult'] = 5.5\r\n  else if ($prop('DataCorePlugin.CurrentGame').search('SIMBIN') !== -1) // GTL, GTR, RACE\r\n  \troot['mult'] = 5.0\r\n  else\r\n  \troot['mult'] = 5.0\r\n  root['mult'] = 1 / root['mult']\r\n}\r\n\r\nreturn root['mult']",
+            "SimpleOperationProp": null
+          },
+          "FrontRightFormula": {
+            "Interpreter": 1,
+            "Expression": "",
+            "SimpleOperationProp": null
+          },
+          "RearLeftFormula": {
+            "Interpreter": 1,
+            "Expression": "",
+            "SimpleOperationProp": null
+          },
+          "RearRightFormula": {
+            "Interpreter": 1,
+            "Expression": "",
+            "SimpleOperationProp": null
+          },
+          "ContainerId": "56783de7-4a66-430d-b563-5c50c1e6ba18",
+          "ContainerType": "CustomEffectContainer",
+          "Description": "Per-game Wheel Slip Gamma Multiplier",
+          "AggregationMode": "Mono",
+          "Gain": 0.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 100,
+            "UseHighFrequency": false,
+            "HighFrequency": 30,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": true,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "WheelSlipMultiplierInv",
+            "ExportProperty": true,
+            "DisableOutput": true,
+            "OutputType": "ToneOutput"
+          }
+        },
+        {
+          "EffectsContainers": [
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "Interpreter": 1,
+                "Expression": "// Wheel Load\r\nlet surge = $prop('AccelerationSurge') * 0.01\r\nlet sway  = $prop('AccelerationSway') * -0.01\r\n\r\nreturn 50 * (1 + surge) * (1 + sway)",
+                "SimpleOperationProp": null
+              },
+              "FrontRightFormula": {
+                "Interpreter": 1,
+                "Expression": "// Wheel Load\r\nlet surge = $prop('AccelerationSurge') * 0.01\r\nlet sway  = $prop('AccelerationSway') * 0.01\r\n\r\nreturn 50 * (1 + surge) * (1 + sway)",
+                "SimpleOperationProp": null
+              },
+              "RearLeftFormula": {
+                "Interpreter": 1,
+                "Expression": "// Wheel Load\r\nlet surge = $prop('AccelerationSurge') * -0.01\r\nlet sway  = $prop('AccelerationSway') * -0.01\r\n\r\nreturn 50 * (1 + surge) * (1 + sway)",
+                "SimpleOperationProp": null
+              },
+              "RearRightFormula": {
+                "Interpreter": 1,
+                "Expression": "// Wheel Load\r\nlet surge = $prop('AccelerationSurge') * -0.01\r\nlet sway  = $prop('AccelerationSway') * 0.01\r\n\r\nreturn 50 * (1 + surge) * (1 + sway)",
+                "SimpleOperationProp": null
+              },
+              "ContainerId": "40d22332-fce2-4cce-a6a8-1458d4669741",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "Wheel Load",
+              "AggregationMode": "Corners",
+              "Gain": 0.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 100,
+                "UseHighFrequency": false,
+                "HighFrequency": 30,
+                "WhiteNoise": 10,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": false,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "AssignToChannelGroup": false,
+                "ChannelGroupName": "",
+                "PropertyName": "WheelLoad",
+                "ExportProperty": true,
+                "DisableOutput": true,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "BrakeFilter": 10,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 1.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "MuteWhenLockEffectIsActive": false,
+              "ThrottleFilter": 10,
+              "UseBrakeFilter": false,
+              "UseThrottleFilter": false,
+              "ContainerId": "da2245c2-3fe8-4b0d-a3b0-4cdce22c2f2b",
+              "ContainerType": "WheelsSlipContainer",
+              "Description": "Wheel Slip SimHub",
+              "AggregationMode": "Corners",
+              "Gain": 0.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 100,
+                "UseHighFrequency": false,
+                "HighFrequency": 55,
+                "WhiteNoise": 4,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": false,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": false,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "AssignToChannelGroup": false,
+                "ChannelGroupName": "",
+                "PropertyName": "WheelSlipSimHub",
+                "ExportProperty": true,
+                "DisableOutput": true,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "Interpreter": 1,
+                "Expression": "let s = $prop('ShakeITBSV3Plugin.Export.WheelSlipSimHub.FrontLeft') * 10\r\n\r\n// Wheel Load\r\ns += s * ($prop('ShakeITBSV3Plugin.Export.WheelLoad.FrontLeft') - 50) * 0.02\r\n\r\n// Reduce slip while airborne\r\nif ($prop('ShakeITBSV3Plugin.Export.SuspensionS1.FrontLeft') != null &&\r\n    $prop('ShakeITBSV3Plugin.Export.SuspensionS1.FrontLeft') < 2.5)\r\n  s *= 0.16 * $prop('ShakeITBSV3Plugin.Export.SuspensionS1.FrontLeft')\r\n            * $prop('ShakeITBSV3Plugin.Export.SuspensionS1.FrontLeft')\r\n\r\n// Clipping prevention\r\nif (s > 70)\r\n  if (s > 350)\r\n    s = 99 + 1 * Math.random()\r\n  else if (s > 200)\r\n    s = 85 + s * 0.04\r\n  else\r\n    s = 70 + s * 0.1\r\n\r\n// Per-game gamma adjusted wheel slip\r\nreturn 100 * Math.pow(s * 0.01, $prop('ShakeITBSV3Plugin.Export.WheelSlipMultiplierInv.All'))\r\n",
+                "SimpleOperationProp": null
+              },
+              "FrontRightFormula": {
+                "Interpreter": 1,
+                "Expression": "let s = $prop('ShakeITBSV3Plugin.Export.WheelSlipSimHub.FrontRight') * 10\r\n\r\n// Wheel Load\r\ns += s * ($prop('ShakeITBSV3Plugin.Export.WheelLoad.FrontRight') - 50) * 0.02\r\n\r\n// Reduce slip while airborne\r\nif ($prop('ShakeITBSV3Plugin.Export.SuspensionS1.FrontRight') != null &&\r\n    $prop('ShakeITBSV3Plugin.Export.SuspensionS1.FrontRight') < 2.5)\r\n  s *= 0.16 * $prop('ShakeITBSV3Plugin.Export.SuspensionS1.FrontRight')\r\n            * $prop('ShakeITBSV3Plugin.Export.SuspensionS1.FrontRight')\r\n\r\n// Clipping prevention\r\nif (s > 70)\r\n  if (s > 350)\r\n    s = 99 + 1 * Math.random()\r\n  else if (s > 200)\r\n    s = 85 + s * 0.04\r\n  else\r\n    s = 70 + s * 0.1\r\n\r\n// Per-game gamma adjusted wheel slip\r\nreturn 100 * Math.pow(s * 0.01, $prop('ShakeITBSV3Plugin.Export.WheelSlipMultiplierInv.All'))\r\n",
+                "SimpleOperationProp": null
+              },
+              "RearLeftFormula": {
+                "Interpreter": 1,
+                "Expression": "let s = $prop('ShakeITBSV3Plugin.Export.WheelSlipSimHub.RearLeft') * 10\r\n\r\n// Wheel Load\r\ns += s * ($prop('ShakeITBSV3Plugin.Export.WheelLoad.RearLeft') - 50) * 0.02\r\n\r\n// Reduce slip while airborne\r\nif ($prop('ShakeITBSV3Plugin.Export.SuspensionS1.RearLeft') != null &&\r\n    $prop('ShakeITBSV3Plugin.Export.SuspensionS1.RearLeft') < 2.5)\r\n  s *= 0.16 * $prop('ShakeITBSV3Plugin.Export.SuspensionS1.RearLeft')\r\n            * $prop('ShakeITBSV3Plugin.Export.SuspensionS1.RearLeft')\r\n\r\n// Clipping prevention\r\nif (s > 70)\r\n  if (s > 350)\r\n    s = 99 + 1 * Math.random()\r\n  else if (s > 200)\r\n    s = 85 + s * 0.04\r\n  else\r\n    s = 70 + s * 0.1\r\n\r\n// Per-game gamma adjusted wheel slip\r\nreturn 100 * Math.pow(s * 0.01, $prop('ShakeITBSV3Plugin.Export.WheelSlipMultiplierInv.All'))\r\n",
+                "SimpleOperationProp": null
+              },
+              "RearRightFormula": {
+                "Interpreter": 1,
+                "Expression": "let s = $prop('ShakeITBSV3Plugin.Export.WheelSlipSimHub.RearRight') * 10\r\n\r\n// Wheel Load\r\ns += s * ($prop('ShakeITBSV3Plugin.Export.WheelLoad.RearRight') - 50) * 0.02\r\n\r\n// Reduce slip while airborne\r\nif ($prop('ShakeITBSV3Plugin.Export.Suspension.RearRight') != null &&\r\n    $prop('ShakeITBSV3Plugin.Export.Suspension.RearRight') < 2.5)\r\n  s *= 0.16 * $prop('ShakeITBSV3Plugin.Export.Suspension.RearRight')\r\n            * $prop('ShakeITBSV3Plugin.Export.Suspension.RearRight')\r\n\r\n// Clipping prevention\r\nif (s > 70)\r\n  if (s > 350)\r\n    s = 99 + 1 * Math.random()\r\n  else if (s > 200)\r\n    s = 85 + s * 0.04\r\n  else\r\n    s = 70 + s * 0.1\r\n\r\n// Per-game gamma adjusted wheel slip\r\nreturn 100 * Math.pow(s * 0.01, $prop('ShakeITBSV3Plugin.Export.WheelSlipMultiplierInv.All'))\r\n",
+                "SimpleOperationProp": null
+              },
+              "ContainerId": "c36d19cb-7657-4ba2-9bf1-004daa508510",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "Wheel Slip -> Wheel Load -> Anti-clip -> Per-game gamma curve",
+              "AggregationMode": "Corners",
+              "Gain": 0.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 100,
+                "UseHighFrequency": false,
+                "HighFrequency": 30,
+                "WhiteNoise": 10,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": false,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "AssignToChannelGroup": false,
+                "ChannelGroupName": "",
+                "PropertyName": "WheelSlipG",
+                "ExportProperty": true,
+                "DisableOutput": true,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "Interpreter": 1,
+                "Expression": "const m = 0.1\r\nconst b = 700 * m\r\n\r\nif (null == root['v']) {\r\n  // 13 Sample Moving Average FIR\r\n  // frame     0    1    2    3    4    5     6     7     8     9    10    11    12\r\n  // freq <   60   30   20   15   12   10  8.57   7.5  6.66     6  5.45     5  4.62 Hz\r\n  // delay     0 16.6 33.3 50.0 66.6 83.3 100.0 116.6 133.3 150.0 166.6 183.3 200.0 ms\r\n  root['v'] = [0,   0,   0,   0,   0]//,   0,    0,    0,    0,    0,    0,    0,    0]\r\n}\r\n\r\nfor (let i = root['v'].length - 1; i > 0; i--) {\r\n  root['v'][i] = root['v'][i-1]\r\n}\r\n\r\nroot['v'][0] = $prop('ShakeITBSV3Plugin.Export.WheelSlipG.FrontLeft')\r\n\r\nlet output = (root['v'][0]\r\n           +  root['v'][1]\r\n           +  root['v'][2]\r\n           +  root['v'][3]\r\n           +  root['v'][4])\r\n           * 0.20 // 1/5\r\n\r\nreturn 1.499 * b / (1 + Math.pow(Math.E, -m * (output - b)))\r\n",
+                "SimpleOperationProp": null
+              },
+              "FrontRightFormula": {
+                "Interpreter": 1,
+                "Expression": "const m = 0.1\r\nconst b = 700 * m\r\n\r\nif (null == root['v']) {\r\n  // 13 Sample Moving Average FIR\r\n  // frame     0    1    2    3    4    5     6     7     8     9    10    11    12\r\n  // freq <   60   30   20   15   12   10  8.57   7.5  6.66     6  5.45     5  4.62 Hz\r\n  // delay     0 16.6 33.3 50.0 66.6 83.3 100.0 116.6 133.3 150.0 166.6 183.3 200.0 ms\r\n  root['v'] = [0,   0,   0,   0,   0]//,   0,    0,    0,    0,    0,    0,    0,    0]\r\n}\r\n\r\nfor (let i = root['v'].length - 1; i > 0; i--) {\r\n  root['v'][i] = root['v'][i-1]\r\n}\r\n\r\nroot['v'][0] = $prop('ShakeITBSV3Plugin.Export.WheelSlipG.FrontRight')\r\n\r\nlet output = (root['v'][0]\r\n           +  root['v'][1]\r\n           +  root['v'][2]\r\n           +  root['v'][3]\r\n           +  root['v'][4])\r\n           * 0.20 // 1/5\r\n\r\nreturn 1.499 * b / (1 + Math.pow(Math.E, -m * (output - b)))\r\n",
+                "SimpleOperationProp": null
+              },
+              "RearLeftFormula": {
+                "Interpreter": 1,
+                "Expression": "const m = 0.1\r\nconst b = 700 * m\r\n\r\nif (null == root['v']) {\r\n  // 13 Sample Moving Average FIR\r\n  // frame     0    1    2    3    4    5     6     7     8     9    10    11    12\r\n  // freq <   60   30   20   15   12   10  8.57   7.5  6.66     6  5.45     5  4.62 Hz\r\n  // delay     0 16.6 33.3 50.0 66.6 83.3 100.0 116.6 133.3 150.0 166.6 183.3 200.0 ms\r\n  root['v'] = [0,   0,   0,   0,   0]//,   0,    0,    0,    0,    0,    0,    0,    0]\r\n}\r\n\r\nfor (let i = root['v'].length - 1; i > 0; i--) {\r\n  root['v'][i] = root['v'][i-1]\r\n}\r\n\r\nroot['v'][0] = $prop('ShakeITBSV3Plugin.Export.WheelSlipG.RearLeft')\r\n\r\nlet output = (root['v'][0]\r\n           +  root['v'][1]\r\n           +  root['v'][2]\r\n           +  root['v'][3]\r\n           +  root['v'][4])\r\n           * 0.20 // 1/5\r\n\r\nreturn 1.499 * b / (1 + Math.pow(Math.E, -m * (output - b)))\r\n",
+                "SimpleOperationProp": null
+              },
+              "RearRightFormula": {
+                "Interpreter": 1,
+                "Expression": "const m = 0.1\r\nconst b = 700 * m\r\n\r\nif (null == root['v']) {\r\n  // 13 Sample Moving Average FIR\r\n  // frame     0    1    2    3    4    5     6     7     8     9    10    11    12\r\n  // freq <   60   30   20   15   12   10  8.57   7.5  6.66     6  5.45     5  4.62 Hz\r\n  // delay     0 16.6 33.3 50.0 66.6 83.3 100.0 116.6 133.3 150.0 166.6 183.3 200.0 ms\r\n  root['v'] = [0,   0,   0,   0,   0]//,   0,    0,    0,    0,    0,    0,    0,    0]\r\n}\r\n\r\nfor (let i = root['v'].length - 1; i > 0; i--) {\r\n  root['v'][i] = root['v'][i-1]\r\n}\r\n\r\nroot['v'][0] = $prop('ShakeITBSV3Plugin.Export.WheelSlipG.RearRight')\r\n\r\nlet output = (root['v'][0]\r\n           +  root['v'][1]\r\n           +  root['v'][2]\r\n           +  root['v'][3]\r\n           +  root['v'][4])\r\n           * 0.20 // 1/5\r\n\r\nreturn 1.499 * b / (1 + Math.pow(Math.E, -m * (output - b)))\r\n",
+                "SimpleOperationProp": null
+              },
+              "ContainerId": "596a543d-2671-4e7d-9eb8-393ed5720074",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "Wheel Slip G -> 5-sample Filtering -> S-Curve",
+              "AggregationMode": "Corners",
+              "Gain": 0.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 100,
+                "UseHighFrequency": false,
+                "HighFrequency": 30,
+                "WhiteNoise": 10,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": false,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "AssignToChannelGroup": false,
+                "ChannelGroupName": "",
+                "PropertyName": "WheelSlip",
+                "ExportProperty": true,
+                "DisableOutput": true,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "Interpreter": 1,
+                "Expression": "return ($prop('ShakeITBSV3Plugin.Export.WheelSlip.FrontLeft')\r\n      + $prop('ShakeITBSV3Plugin.Export.WheelSlip.FrontRight')) * 0.5\r\n",
+                "SimpleOperationProp": null
+              },
+              "FrontRightFormula": {
+                "Interpreter": 1,
+                "Expression": "",
+                "SimpleOperationProp": null
+              },
+              "RearLeftFormula": {
+                "Interpreter": 1,
+                "Expression": "return ($prop('ShakeITBSV3Plugin.Export.WheelSlip.RearLeft')\r\n      + $prop('ShakeITBSV3Plugin.Export.WheelSlip.RearRight')) * 0.5\r\n",
+                "SimpleOperationProp": null
+              },
+              "RearRightFormula": {
+                "Interpreter": 1,
+                "Expression": "",
+                "SimpleOperationProp": null
+              },
+              "ContainerId": "8697617b-d519-4dcb-bf02-94acaab701a5",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "Wheel Slip Front/Rear",
+              "AggregationMode": "Front/Rear",
+              "Gain": 0.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 100,
+                "UseHighFrequency": false,
+                "HighFrequency": 30,
+                "WhiteNoise": 10,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": false,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "AssignToChannelGroup": false,
+                "ChannelGroupName": "",
+                "PropertyName": "WheelSlipFR",
+                "ExportProperty": true,
+                "DisableOutput": true,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "Interpreter": 1,
+                "Expression": "return ($prop('ShakeITBSV3Plugin.Export.WheelSlip.FrontLeft')\r\n      + $prop('ShakeITBSV3Plugin.Export.WheelSlip.RearLeft')) * 0.5\r\n",
+                "SimpleOperationProp": null
+              },
+              "FrontRightFormula": {
+                "Interpreter": 1,
+                "Expression": "return ($prop('ShakeITBSV3Plugin.Export.WheelSlip.FrontRight')\r\n      + $prop('ShakeITBSV3Plugin.Export.WheelSlip.RearRight')) * 0.5\r\n",
+                "SimpleOperationProp": null
+              },
+              "RearLeftFormula": {
+                "Interpreter": 1,
+                "Expression": "",
+                "SimpleOperationProp": null
+              },
+              "RearRightFormula": {
+                "Interpreter": 1,
+                "Expression": "",
+                "SimpleOperationProp": null
+              },
+              "ContainerId": "a8057870-73b1-4f02-bb25-ad29666acf13",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "Wheel Slip Left/Right",
+              "AggregationMode": "Left/Right",
+              "Gain": 0.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 100,
+                "UseHighFrequency": false,
+                "HighFrequency": 30,
+                "WhiteNoise": 10,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": false,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "AssignToChannelGroup": false,
+                "ChannelGroupName": "",
+                "PropertyName": "WheelSlipLR",
+                "ExportProperty": true,
+                "DisableOutput": true,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "Interpreter": 1,
+                "Expression": "// front judder\r\n\r\nlet output = ($prop('ShakeITBSV3Plugin.Export.WheelSlip.FrontLeft')\r\n            + $prop('ShakeITBSV3Plugin.Export.WheelSlip.FrontRight'))\r\n           * 0.025 * Math.abs($prop('AccelerationSway'))\r\n\r\n// front left slip\r\n//let lSlip = Math.max(0, $prop('ShakeITBSV3Plugin.Export.LoadedSlip.FrontLeft') - $prop('ShakeITBSV3Plugin.Export.LoadedSlip.RearLeft'))\r\n// front right slip\r\n//let rSlip = Math.max(0, $prop('ShakeITBSV3Plugin.Export.LoadedSlip.FrontRight') - $prop('ShakeITBSV3Plugin.Export.LoadedSlip.RearRight'))\r\n\r\n//let output = Math.sqrt(lSlip * rSlip) * 0.1 * Math.abs($prop('AccelerationSway'))\r\n\r\nreturn output\r\n",
+                "SimpleOperationProp": null
+              },
+              "FrontRightFormula": {
+                "Interpreter": 1,
+                "Expression": "",
+                "SimpleOperationProp": null
+              },
+              "RearLeftFormula": {
+                "Interpreter": 1,
+                "Expression": "// rear judder\r\n\r\nlet output = ($prop('ShakeITBSV3Plugin.Export.WheelSlip.RearLeft')\r\n            + $prop('ShakeITBSV3Plugin.Export.WheelSlip.RearRight'))\r\n           * 0.025 * Math.abs($prop('AccelerationSway'))\r\n\r\n// front left slip\r\n//let lSlip = Math.max(0, -$prop('ShakeITBSV3Plugin.Export.WheelSlip.FrontLeft') + $prop('ShakeITBSV3Plugin.Export.WheelSlip.RearLeft'))\r\n// front right slip\r\n//let rSlip = Math.max(0, -$prop('ShakeITBSV3Plugin.Export.WheelSlip.FrontRight') + $prop('ShakeITBSV3Plugin.Export.WheelSlip.RearRight'))\r\n\r\n//let output = Math.sqrt(lSlip * rSlip) * 0.1 * Math.abs($prop('AccelerationSway'))\r\n\r\nreturn output\r\n",
+                "SimpleOperationProp": null
+              },
+              "RearRightFormula": {
+                "Interpreter": 1,
+                "Expression": "",
+                "SimpleOperationProp": null
+              },
+              "ContainerId": "fae3ebf8-d8d1-4e17-886b-79df8800c460",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "Wheel Judder",
+              "AggregationMode": "Front/Rear",
+              "Gain": 0.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 100,
+                "UseHighFrequency": false,
+                "HighFrequency": 24,
+                "WhiteNoise": 30,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": false,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "AssignToChannelGroup": false,
+                "ChannelGroupName": "Slip (U/O)",
+                "PropertyName": "WheelJudder",
+                "ExportProperty": true,
+                "DisableOutput": true,
+                "OutputType": "ToneOutput"
+              }
+            }
+          ],
+          "Filter": null,
+          "ContainerId": "daf7ec62-7e03-47a5-8923-e3015a0f43c0",
+          "ContainerType": "GroupContainer",
+          "Description": "Wheel Slip Processing",
+          "AggregationMode": null,
+          "Gain": 0.0,
+          "IsEnabled": true,
+          "Output": null
+        },
+        {
+          "EffectsContainers": [
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 1,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "Interpreter": 1,
+                "Expression": "let slip = $prop('ShakeITBSV3Plugin.Export.WheelJudder.Front') * 0.6\r\n         + $prop('ShakeITBSV3Plugin.Export.WheelSlipFR.Front')\r\n\r\nif (null == root['w']) {\r\n  // Single-pole IIR\r\n  root['w'] = 0\r\n}\r\nlet a = 0.6\r\nroot['w'] += a * (slip - root['w'])\r\nslip = root['w']\r\n\r\nreturn (slip < 30) ? slip : 75 - slip * 1.5\r\n\r\n//return (slip < 30) ? slip * 2 : 120 - slip * 2\r\n\r\n//return (slip < 30) ? slip * 2.5 : 105 - slip\r\n\r\n//return (slip < 25) ? slip * 3 : 125 - slip * 2\r\n\r\n//return (slip < 20) ? slip * 4 : 120 - slip * 2\r\n\r\n//return (slip < 100) ? slip : 200 - slip\r\n\r\n//return (slip < 80) ? slip * 1.2 : 176 - slip\r\n\r\n//return (slip < 60) ? slip * 1.667 : 130 - slip * 0.5\r\n\r\n//return (slip < 50) ? slip * 1.5 : 150 - slip * 1.5\r\n\r\n//return (slip < 50) ? slip * 1.75 : 162.5 - slip * 1.5",
+                "SimpleOperationProp": null
+              },
+              "FrontRightFormula": {
+                "Interpreter": 1,
+                "Expression": "",
+                "SimpleOperationProp": null
+              },
+              "RearLeftFormula": {
+                "Interpreter": 1,
+                "Expression": "let slip = $prop('ShakeITBSV3Plugin.Export.WheelJudder.Rear') * 0.6\r\n         + $prop('ShakeITBSV3Plugin.Export.WheelSlipFR.Rear')\r\n\r\nif (null == root['w']) {\r\n  // Single-pole IIR\r\n  root['w'] = 0\r\n}\r\nlet a = 0.6\r\nroot['w'] += a * (slip - root['w'])\r\nslip = root['w']\r\n\r\nreturn (slip < 30) ? slip : 75 - slip * 1.5\r\n",
+                "SimpleOperationProp": null
+              },
+              "RearRightFormula": {
+                "Interpreter": 1,
+                "Expression": "",
+                "SimpleOperationProp": null
+              },
+              "ContainerId": "02b5cb3f-2cd4-45ec-871b-c5aab3b7d578",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "Wheel Slip | Range 3 | Front/Rear Slip + Judder",
+              "AggregationMode": "Front/Rear",
+              "Gain": 60.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 54,
+                "UseHighFrequency": true,
+                "HighFrequency": 48,
+                "WhiteNoise": 8,
+                "UseWhiteNoise": true,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": true,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "AssignToChannelGroup": true,
+                "ChannelGroupName": "Wheel Slip - Range 3",
+                "PropertyName": "Slip Range 3",
+                "ExportProperty": false,
+                "DisableOutput": false,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.2500000000000002,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 1,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "Interpreter": 1,
+                "Expression": "let slip = $prop('ShakeITBSV3Plugin.Export.WheelSlipFR.Front')\r\n\r\nreturn (slip < 30) ? slip : 75 - slip * 1.5\r\n",
+                "SimpleOperationProp": null
+              },
+              "FrontRightFormula": {
+                "Interpreter": 1,
+                "Expression": "",
+                "SimpleOperationProp": null
+              },
+              "RearLeftFormula": {
+                "Interpreter": 1,
+                "Expression": "let slip = $prop('ShakeITBSV3Plugin.Export.WheelSlipFR.Rear')\r\n\r\nreturn (slip < 30) ? slip : 75 - slip * 1.5\r\n",
+                "SimpleOperationProp": null
+              },
+              "RearRightFormula": {
+                "Interpreter": 1,
+                "Expression": "",
+                "SimpleOperationProp": null
+              },
+              "ContainerId": "992671f9-0216-427c-ba1b-76060f184113",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "Wheel Slip | Range 4 | Front/Rear Slip",
+              "AggregationMode": "Front/Rear",
+              "Gain": 80.000000000000114,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 108,
+                "UseHighFrequency": true,
+                "HighFrequency": 96,
+                "WhiteNoise": 12,
+                "UseWhiteNoise": true,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": true,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "AssignToChannelGroup": true,
+                "ChannelGroupName": "Wheel Slip - Range 4",
+                "PropertyName": "Slip Range 4",
+                "ExportProperty": false,
+                "DisableOutput": false,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.2500000000000002,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 1,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "Interpreter": 1,
+                "Expression": "let slip = $prop('ShakeITBSV3Plugin.Export.WheelSlipLR.Left')\r\n\r\nreturn (slip < 30) ? slip : 75 - slip * 1.5\r\n",
+                "SimpleOperationProp": null
+              },
+              "FrontRightFormula": {
+                "Interpreter": 1,
+                "Expression": "let slip = $prop('ShakeITBSV3Plugin.Export.WheelSlipLR.Right')\r\n\r\nreturn (slip < 30) ? slip : 75 - slip * 1.5",
+                "SimpleOperationProp": null
+              },
+              "RearLeftFormula": {
+                "Interpreter": 1,
+                "Expression": "",
+                "SimpleOperationProp": null
+              },
+              "RearRightFormula": {
+                "Interpreter": 1,
+                "Expression": "",
+                "SimpleOperationProp": null
+              },
+              "ContainerId": "066b47af-6047-4578-abd8-e08bd68d13ed",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "Wheel Slip | Range 4 | Left/Right Slip",
+              "AggregationMode": "Left/Right",
+              "Gain": 80.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 108,
+                "UseHighFrequency": true,
+                "HighFrequency": 96,
+                "WhiteNoise": 12,
+                "UseWhiteNoise": true,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": true,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "AssignToChannelGroup": true,
+                "ChannelGroupName": "Wheel Slip - Range 4",
+                "PropertyName": "Slip Range 4",
+                "ExportProperty": false,
+                "DisableOutput": false,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.5000000000000004,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "Interpreter": 1,
+                "Expression": "let slip = $prop('ShakeITBSV3Plugin.Export.WheelJudder.Front')\r\n\r\nreturn (slip < 30) ? slip : 75 - slip * 1.5\r\n",
+                "SimpleOperationProp": null
+              },
+              "FrontRightFormula": {
+                "Interpreter": 1,
+                "Expression": "",
+                "SimpleOperationProp": null
+              },
+              "RearLeftFormula": {
+                "Interpreter": 1,
+                "Expression": "let slip = $prop('ShakeITBSV3Plugin.Export.WheelJudder.Rear')\r\n\r\nreturn (slip < 30) ? slip : 75 - slip * 1.5\r\n",
+                "SimpleOperationProp": null
+              },
+              "RearRightFormula": {
+                "Interpreter": 1,
+                "Expression": "",
+                "SimpleOperationProp": null
+              },
+              "ContainerId": "8f7aa9ce-ae33-4614-b3d2-19495695173d",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "Wheel Slip | Range 4 | Front/Rear Judder",
+              "AggregationMode": "Front/Rear",
+              "Gain": 100.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 118,
+                "UseHighFrequency": true,
+                "HighFrequency": 128,
+                "WhiteNoise": 16,
+                "UseWhiteNoise": true,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": true,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "AssignToChannelGroup": true,
+                "ChannelGroupName": "Wheel Slip - Range 4",
+                "PropertyName": "Slip Range 4",
+                "ExportProperty": false,
+                "DisableOutput": false,
+                "OutputType": "ToneOutput"
+              }
+            }
+          ],
+          "Filter": null,
+          "ContainerId": "2ff3074a-d0d9-4e2b-8918-8eb90a4ce70f",
+          "ContainerType": "GroupContainer",
+          "Description": "Wheel Slip",
+          "AggregationMode": null,
+          "Gain": 100.0,
+          "IsEnabled": true,
+          "Output": null
+        },
+        {
+          "EffectsContainers": [
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.2500000000000002,
+                "InputGain": 50.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "Interpreter": 1,
+                "Expression": "let slip = $prop('ShakeITBSV3Plugin.Export.WheelJudder.Front')\r\n         + $prop('ShakeITBSV3Plugin.Export.WheelSlipFR.Front')\r\n         - 25\r\n\r\nif (null == root['w']) {\r\n  // Single-pole IIR\r\n  root['w'] = 0\r\n}\r\nlet a = 0.4\r\nroot['w'] += a * (slip - root['w'])\r\nslip = root['w']\r\n\r\nreturn slip\r\n\r\n//return (slip < 90) ? slip : 180 - slip\r\n\r\n//return (slip < 92) ? slip : 115 - slip * 0.25\r\n\r\n//return (slip < 100) ? slip : 150 - slip * 0.5\r\n\r\n//return (slip < 70) ? slip * 1.4 : 133 - slip * 0.5",
+                "SimpleOperationProp": null
+              },
+              "FrontRightFormula": {
+                "Interpreter": 1,
+                "Expression": "",
+                "SimpleOperationProp": null
+              },
+              "RearLeftFormula": {
+                "Interpreter": 1,
+                "Expression": "let slip = $prop('ShakeITBSV3Plugin.Export.WheelJudder.Rear')\r\n         + $prop('ShakeITBSV3Plugin.Export.WheelSlipFR.Rear')\r\n         - 25\r\n\r\nif (null == root['w']) {\r\n  // Single-pole IIR\r\n  root['w'] = 0\r\n}\r\nlet a = 0.4\r\nroot['w'] += a * (slip - root['w'])\r\nslip = root['w']\r\n\r\nreturn slip",
+                "SimpleOperationProp": null
+              },
+              "RearRightFormula": {
+                "Interpreter": 1,
+                "Expression": "",
+                "SimpleOperationProp": null
+              },
+              "ContainerId": "0c23a5a3-7f8d-45f6-9305-e6964b80d2bf",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "Wheel Slide | Range 2 | Front/Rear Slip + Judder",
+              "AggregationMode": "Front/Rear",
+              "Gain": 50.000000000000114,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 19,
+                "UseHighFrequency": true,
+                "HighFrequency": 13,
+                "WhiteNoise": 6,
+                "UseWhiteNoise": true,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": true,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "AssignToChannelGroup": true,
+                "ChannelGroupName": "Wheel Slip - Range 2",
+                "PropertyName": "Slip Range 2",
+                "ExportProperty": false,
+                "DisableOutput": false,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.5,
+                "InputGain": 50.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "Interpreter": 1,
+                "Expression": "let slip = $prop('ShakeITBSV3Plugin.Export.WheelJudder.Front')\r\n         + $prop('ShakeITBSV3Plugin.Export.WheelSlipFR.Front')\r\n         - 25\r\n\r\nif (null == root['w']) {\r\n  // Single-pole IIR\r\n  root['w'] = 0\r\n}\r\nlet a = 0.6\r\nroot['w'] += a * (slip - root['w'])\r\nslip = root['w']\r\n\r\nreturn slip\r\n\r\n//return (slip < 80) ? slip : 160 - slip\r\n\r\n//return (slip < 92) ? slip : 115 - slip * 0.25\r\n\r\n//return (slip < 100) ? slip : 150 - slip * 0.5\r\n\r\n//return (slip < 70) ? slip * 1.4 : 133 - slip * 0.5",
+                "SimpleOperationProp": null
+              },
+              "FrontRightFormula": {
+                "Interpreter": 1,
+                "Expression": "",
+                "SimpleOperationProp": null
+              },
+              "RearLeftFormula": {
+                "Interpreter": 1,
+                "Expression": "let slip = $prop('ShakeITBSV3Plugin.Export.WheelJudder.Rear')\r\n         + $prop('ShakeITBSV3Plugin.Export.WheelSlipFR.Rear')\r\n         - 25\r\n\r\nif (null == root['w']) {\r\n  // Single-pole IIR\r\n  root['w'] = 0\r\n}\r\nlet a = 0.6\r\nroot['w'] += a * (slip - root['w'])\r\nslip = root['w']\r\n\r\nreturn slip",
+                "SimpleOperationProp": null
+              },
+              "RearRightFormula": {
+                "Interpreter": 1,
+                "Expression": "",
+                "SimpleOperationProp": null
+              },
+              "ContainerId": "4822fd47-3177-4bc5-aa09-1a72ebcac948",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "Wheel Slide | Range 2 | Front/Rear Slip + Judder",
+              "AggregationMode": "Front/Rear",
+              "Gain": 50.000000000000114,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 38,
+                "UseHighFrequency": true,
+                "HighFrequency": 26,
+                "WhiteNoise": 12,
+                "UseWhiteNoise": true,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": true,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "AssignToChannelGroup": true,
+                "ChannelGroupName": "Wheel Slip - Range 2",
+                "PropertyName": "Slip Range 2",
+                "ExportProperty": false,
+                "DisableOutput": false,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.2499999999999998,
+                "InputGain": 50.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "Interpreter": 1,
+                "Expression": "let slip = $prop('ShakeITBSV3Plugin.Export.WheelSlipFR.Front')\r\n         - 15\r\n\r\nif (null == root['w']) {\r\n  // Single-pole IIR\r\n  root['w'] = 0\r\n}\r\nlet a = 0.8\r\nroot['w'] += a * (slip - root['w'])\r\nslip = root['w']\r\n\r\nreturn slip\r\n\r\n//return (slip < 80) ? slip : 160 - slip\r\n\r\n//return (slip < 80) ? slip * 1.25 : 120 - slip * 0.25\r\n",
+                "SimpleOperationProp": null
+              },
+              "FrontRightFormula": {
+                "Interpreter": 1,
+                "Expression": "",
+                "SimpleOperationProp": null
+              },
+              "RearLeftFormula": {
+                "Interpreter": 1,
+                "Expression": "let slip = $prop('ShakeITBSV3Plugin.Export.WheelSlipFR.Rear')\r\n         - 15\r\n\r\nif (null == root['w']) {\r\n  // Single-pole IIR\r\n  root['w'] = 0\r\n}\r\nlet a = 0.8\r\nroot['w'] += a * (slip - root['w'])\r\nslip = root['w']\r\n\r\nreturn slip\r\n",
+                "SimpleOperationProp": null
+              },
+              "RearRightFormula": {
+                "Interpreter": 1,
+                "Expression": "",
+                "SimpleOperationProp": null
+              },
+              "ContainerId": "4aee7842-42e4-4375-92da-455f50cdc71b",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "Wheel Slide | Range 4 | Front/Rear Slip",
+              "AggregationMode": "Front/Rear",
+              "Gain": 100.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 114,
+                "UseHighFrequency": true,
+                "HighFrequency": 78,
+                "WhiteNoise": 18,
+                "UseWhiteNoise": true,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": true,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "AssignToChannelGroup": true,
+                "ChannelGroupName": "Wheel Slip - Range 4",
+                "PropertyName": "Slip Range 4",
+                "ExportProperty": false,
+                "DisableOutput": false,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.2500000000000004,
+                "InputGain": 50.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "Interpreter": 1,
+                "Expression": "let slip = $prop('ShakeITBSV3Plugin.Export.WheelSlipLR.Left')\r\n         - 15\r\n\r\nif (null == root['w']) {\r\n  // Single-pole IIR\r\n  root['w'] = 0\r\n}\r\nlet a = 0.8\r\nroot['w'] += a * (slip - root['w'])\r\nslip = root['w']\r\n\r\nreturn slip\r\n",
+                "SimpleOperationProp": null
+              },
+              "FrontRightFormula": {
+                "Interpreter": 1,
+                "Expression": "let slip = $prop('ShakeITBSV3Plugin.Export.WheelSlipLR.Right')\r\n         - 15\r\n\r\nif (null == root['w']) {\r\n  // Single-pole IIR\r\n  root['w'] = 0\r\n}\r\nlet a = 0.8\r\nroot['w'] += a * (slip - root['w'])\r\nslip = root['w']\r\n\r\nreturn slip\r\n",
+                "SimpleOperationProp": null
+              },
+              "RearLeftFormula": {
+                "Interpreter": 1,
+                "Expression": "",
+                "SimpleOperationProp": null
+              },
+              "RearRightFormula": {
+                "Interpreter": 1,
+                "Expression": "",
+                "SimpleOperationProp": null
+              },
+              "ContainerId": "35385228-eac7-45ee-aa08-5b98fc4f8813",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "Wheel Slide | Range 4 | Left/Right Slip",
+              "AggregationMode": "Left/Right",
+              "Gain": 100.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 114,
+                "UseHighFrequency": true,
+                "HighFrequency": 78,
+                "WhiteNoise": 18,
+                "UseWhiteNoise": true,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": true,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "AssignToChannelGroup": true,
+                "ChannelGroupName": "Wheel Slip - Range 4",
+                "PropertyName": "Slip Range 4",
+                "ExportProperty": false,
+                "DisableOutput": false,
+                "OutputType": "ToneOutput"
+              }
+            }
+          ],
+          "Filter": null,
+          "ContainerId": "33d1dd6a-f503-4ea2-8724-5a271b9ad1eb",
+          "ContainerType": "GroupContainer",
+          "Description": "Wheel Slide",
+          "AggregationMode": null,
+          "Gain": 75.333333333333371,
+          "IsEnabled": true,
+          "Output": null
+        },
+        {
+          "AutocalibrationMax": 95.0,
+          "Filter": {
+            "GammaValue": 0.39999999999999963,
+            "InputGain": 100.0,
+            "MinimumForce": 0,
+            "Threshold": 0,
+            "FilterType": "GammaFilter"
+          },
+          "FrontLeftFormula": {
+            "Interpreter": 1,
+            "Expression": "let b = ($prop('Brake') - 20) * 1.25\r\nif (b <= 0)\r\n  return 0\r\n\r\nlet slip = ($prop('ShakeITBSV3Plugin.Export.WheelSlipFR.Front') - 15) * 3\r\nslip *= b * b * 0.0001\r\n\r\nreturn (slip < 100) ? slip : 125 - slip * 0.25\r\n\r\n//return (slip < 100) ? slip : 150 - slip * 0.5\r\n\r\n//return (slip < 70) ? slip * 1.4 : 133 - slip * 0.5",
+            "SimpleOperationProp": null
+          },
+          "FrontRightFormula": {
+            "Interpreter": 1,
+            "Expression": "",
+            "SimpleOperationProp": null
+          },
+          "RearLeftFormula": {
+            "Interpreter": 1,
+            "Expression": "let b = ($prop('Brake') - 20) * 1.25\r\nif (b <= 0)\r\n  return 0\r\n\r\nlet slip = ($prop('ShakeITBSV3Plugin.Export.WheelSlipFR.Rear') - 15) * 3\r\nslip *= b * b * 0.0001\r\n\r\nreturn (slip < 100) ? slip : 125 - slip * 0.25",
+            "SimpleOperationProp": null
+          },
+          "RearRightFormula": {
+            "Interpreter": 1,
+            "Expression": "",
+            "SimpleOperationProp": null
+          },
+          "ContainerId": "52c2017e-00d6-46f4-b09b-8fd146d7e742",
+          "ContainerType": "CustomEffectContainer",
+          "Description": "Wheel Skid (while braking) | Front/Rear Slip",
+          "AggregationMode": "Front/Rear",
+          "Gain": 74.666666666666515,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 44,
+            "UseHighFrequency": true,
+            "HighFrequency": 40,
+            "WhiteNoise": 12,
+            "UseWhiteNoise": true,
+            "EnableDurationModulation": true,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": true,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "AssignToChannelGroup": true,
+            "ChannelGroupName": "Wheel Skid",
+            "PropertyName": "Slip Range 2",
+            "ExportProperty": false,
+            "DisableOutput": false,
+            "OutputType": "ToneOutput"
+          }
+        }
+      ],
+      "Filter": null,
+      "ContainerId": "4d4a7786-4098-4d76-8c7b-c83c1efbcb29",
+      "ContainerType": "GroupContainer",
+      "Description": "Wheel Slip 4.5",
+      "AggregationMode": null,
+      "Gain": 60.0,
+      "IsEnabled": true,
+      "Output": null
+    }
+  ],
+  "AutoCalibrationRatio2": 0,
+  "OutputMode": 1,
+  "GlobalGain": 50.0,
+  "UseProfileGain": false,
+  "Error": "",
+  "LastLoaded": "2022-05-12T12:03:34.2401908-07:00",
+  "Description": "- sierses",
+  "Name": "sierses - Wheel Slip 4.5",
+  "ProfileId": "2244c24d-ad2e-4c3c-9be9-36daabc89a30",
+  "GameCode": null
+}

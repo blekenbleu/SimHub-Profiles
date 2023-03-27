@@ -1,0 +1,328 @@
+{
+  "IncludeOutputSettingsInProfile": false,
+  "UnmuteEffectsAfterSimhubRestart": true,
+  "AutomaticSwitch": false,
+  "EffectsContainers": [
+    {
+      "EffectsContainers": [
+        {
+          "Filter": {
+            "GammaValue": 1.5,
+            "FilterType": "SimpleGammaFilter"
+          },
+          "LowForce": 1,
+          "HighForce": 32,
+          "MaxGPercent": 90.0,
+          "AutoMaxG": false,
+          "ContainerId": "df8a9a12-495a-4401-abcf-76f5d0534439",
+          "ContainerType": "AccelerationGforceContainer",
+          "Description": "Provide longitudinal acceleration feedback based on G-Force",
+          "AggregationMode": null,
+          "Gain": 0.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 44,
+            "UseHighFrequency": false,
+            "HighFrequency": 50,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": false,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "gaccel",
+            "ExportProperty": true,
+            "DisableOutput": true,
+            "OutputType": "ToneOutput"
+          }
+        },
+        {
+          "Filter": {
+            "GammaValue": 1.5000000000000004,
+            "FilterType": "SimpleGammaFilter"
+          },
+          "LowForce": 1,
+          "HighForce": 32,
+          "MaxGPercent": 90.0,
+          "AutoMaxG": false,
+          "ContainerId": "48a18f0f-d1e0-4d33-8eca-d1dbb6f37641",
+          "ContainerType": "DecelerationGforceContainer",
+          "Description": "Provide deceleration feedback based on G-Force",
+          "AggregationMode": null,
+          "Gain": 0.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 44,
+            "UseHighFrequency": false,
+            "HighFrequency": 50,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": false,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "gdecel",
+            "ExportProperty": true,
+            "DisableOutput": true,
+            "OutputType": "ToneOutput"
+          }
+        },
+        {
+          "Filter": {
+            "GammaValue": 1.0,
+            "FilterType": "SimpleGammaFilter"
+          },
+          "LowForce": 2,
+          "HighForce": 32,
+          "MaxGPercent": 100.0,
+          "AutoMaxG": false,
+          "ContainerId": "d692a6d5-cadf-496c-993b-d2bc59634efa",
+          "ContainerType": "LateralGforceContainer",
+          "Description": "Provide lateral acceleration feedback based on G-Force",
+          "AggregationMode": null,
+          "Gain": 0.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 44,
+            "UseHighFrequency": false,
+            "HighFrequency": 50,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": false,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "gsway",
+            "ExportProperty": true,
+            "DisableOutput": true,
+            "OutputType": "ToneOutput"
+          }
+        },
+        {
+          "AutocalibrationMax": 95.0,
+          "Filter": {
+            "GammaValue": 1.0,
+            "InputGain": 100.0,
+            "MinimumForce": 0,
+            "Threshold": 0,
+            "FilterType": "GammaFilter"
+          },
+          "FrontLeftFormula": {
+            "Interpreter": 1,
+            "Expression": "if (null == root['a']) {\r\n  root['a'] = [0, 0, 0, 0, 0]\r\n}\r\n\r\nroot['a'][0] = $prop('ShakeITBSV3Plugin.Export.gsway.Left')\r\nlet output = (root['a'][0]\r\n           +  root['a'][1]\r\n           +  root['a'][2]\r\n           +  root['a'][3]\r\n           +  root['a'][4])\r\n           * 0.2000 // 1/5\r\n\r\nfor (let i = root['a'].length - 1; i > 0; i--) {\r\n  root['a'][i] = root['a'][i-1]\r\n}\r\n\r\nreturn output"
+          },
+          "FrontRightFormula": {
+            "Interpreter": 1,
+            "Expression": "if (null == root['a']) {\r\n  root['a'] = [0, 0, 0, 0, 0]\r\n}\r\n\r\nroot['a'][0] = $prop('ShakeITBSV3Plugin.Export.gsway.Right')\r\nlet output = (root['a'][0]\r\n           +  root['a'][1]\r\n           +  root['a'][2]\r\n           +  root['a'][3]\r\n           +  root['a'][4])\r\n           * 0.2000 // 1/5\r\n\r\nfor (let i = root['a'].length - 1; i > 0; i--) {\r\n  root['a'][i] = root['a'][i-1]\r\n}\r\n\r\nreturn output"
+          },
+          "RearLeftFormula": {
+            "Interpreter": 1,
+            "Expression": ""
+          },
+          "RearRightFormula": {
+            "Interpreter": 1,
+            "Expression": ""
+          },
+          "ContainerId": "c5b314a7-6a42-47d9-addb-13041225a476",
+          "ContainerType": "CustomEffectContainer",
+          "Description": "Filtered Sway",
+          "AggregationMode": "Left/Right",
+          "Gain": 0.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 44,
+            "UseHighFrequency": false,
+            "HighFrequency": 50,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": true,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "fsway",
+            "ExportProperty": true,
+            "DisableOutput": true,
+            "OutputType": "ToneOutput"
+          }
+        },
+        {
+          "AutocalibrationMax": 95.0,
+          "Filter": {
+            "GammaValue": 1.0,
+            "InputGain": 100.0,
+            "MinimumForce": 0,
+            "Threshold": 0,
+            "FilterType": "GammaFilter"
+          },
+          "FrontLeftFormula": {
+            "Interpreter": 1,
+            "Expression": "if (null == root['a']) {\r\n  root['a'] = [0, 0, 0, 0, 0]\r\n}\r\n\r\nroot['a'][0] = $prop('ShakeITBSV3Plugin.Export.gdecel.Front')\r\nlet output = (root['a'][0]\r\n           +  root['a'][1]\r\n           +  root['a'][2]\r\n           +  root['a'][3]\r\n           +  root['a'][4])\r\n           * 0.2000 // 1/5\r\n\r\nfor (let i = root['a'].length - 1; i > 0; i--) {\r\n  root['a'][i] = root['a'][i-1]\r\n}\r\n\r\nreturn output"
+          },
+          "FrontRightFormula": {
+            "Interpreter": 1,
+            "Expression": ""
+          },
+          "RearLeftFormula": {
+            "Interpreter": 1,
+            "Expression": "if (null == root['a']) {\r\n  root['a'] = [0, 0, 0, 0, 0, 0, 0]\r\n}\r\n\r\nroot['a'][0] = $prop('ShakeITBSV3Plugin.Export.gaccel.Rear')\r\nlet output = (root['a'][0]\r\n           +  root['a'][1]\r\n           +  root['a'][2]\r\n           +  root['a'][3]\r\n           +  root['a'][4]\r\n           +  root['a'][5]\r\n           +  root['a'][6])\r\n           * 0.1428 // 1/7\r\n\r\nfor (let i = root['a'].length - 1; i > 0; i--) {\r\n  root['a'][i] = root['a'][i-1]\r\n}\r\n\r\nreturn output"
+          },
+          "RearRightFormula": {
+            "Interpreter": 1,
+            "Expression": ""
+          },
+          "ContainerId": "7e86870b-e403-4698-b732-41488c857f44",
+          "ContainerType": "CustomEffectContainer",
+          "Description": "Filtered Surge",
+          "AggregationMode": "Front/Rear",
+          "Gain": 0.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 44,
+            "UseHighFrequency": false,
+            "HighFrequency": 50,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": true,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "fsurge",
+            "ExportProperty": true,
+            "DisableOutput": true,
+            "OutputType": "ToneOutput"
+          }
+        },
+        {
+          "AutocalibrationMax": 95.0,
+          "Filter": {
+            "GammaValue": 1.0,
+            "InputGain": 100.0,
+            "MinimumForce": 0,
+            "Threshold": 0,
+            "FilterType": "GammaFilter"
+          },
+          "FrontLeftFormula": {
+            "Interpreter": 1,
+            "Expression": "if (null == root['a']) {\r\n  root['a'] = [0, 0, 0, 0, 0, 0, 0]\r\n}\r\n\r\nif (null == $prop('AccelerationHeave')) {\r\n  if (null == root['yd1'])\r\n    root['yd1'] = 0\r\n  root['a'][0] = ($prop('GameRawData.YD') - root['yd1']) * $prop('DataCorePlugin.DataUpdateFps') * 50\r\n  root['yd1'] = $prop('GameRawData.YD')\r\n} else {\r\n  root['a'][0] = $prop('AccelerationHeave')\r\n}\r\n\r\nlet output = (root['a'][0]\r\n           +  root['a'][1]\r\n           +  root['a'][2]\r\n           +  root['a'][3]\r\n           +  root['a'][4]\r\n           +  root['a'][5]\r\n           +  root['a'][6])\r\n           * 0.1428 // 1/7\r\n\r\nfor (let i = root['a'].length - 1; i > 0; i--) {\r\n  root['a'][i] = root['a'][i-1]\r\n}\r\n\r\nreturn output * 6"
+          },
+          "FrontRightFormula": {
+            "Interpreter": 1,
+            "Expression": ""
+          },
+          "RearLeftFormula": {
+            "Interpreter": 1,
+            "Expression": "if (null == root['a']) {\r\n  root['a'] = [0, 0, 0, 0, 0, 0, 0]\r\n}\r\n\r\nif (null == $prop('AccelerationHeave')) {\r\n  if (null == root['yd1'])\r\n    root['yd1'] = 0\r\n  root['a'][0] = ($prop('GameRawData.YD') - root['yd1']) * $prop('DataCorePlugin.DataUpdateFps') * 50\r\n  root['yd1'] = $prop('GameRawData.YD')\r\n} else {\r\n  root['a'][0] = $prop('AccelerationHeave')\r\n}\r\n\r\nlet output = (root['a'][0]\r\n           +  root['a'][1]\r\n           +  root['a'][2]\r\n           +  root['a'][3]\r\n           +  root['a'][4]\r\n           +  root['a'][5]\r\n           +  root['a'][6])\r\n           * 0.1428 // 1/7\r\n\r\nfor (let i = root['a'].length - 1; i > 0; i--) {\r\n  root['a'][i] = root['a'][i-1]\r\n}\r\n\r\nreturn output * -6"
+          },
+          "RearRightFormula": {
+            "Interpreter": 1,
+            "Expression": ""
+          },
+          "ContainerId": "ea7ec779-afd4-495b-a409-280e1ae77d37",
+          "ContainerType": "CustomEffectContainer",
+          "Description": "Filtered Heave",
+          "AggregationMode": "Front/Rear",
+          "Gain": 0.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 44,
+            "UseHighFrequency": false,
+            "HighFrequency": 50,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": true,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "fheave",
+            "ExportProperty": true,
+            "DisableOutput": true,
+            "OutputType": "ToneOutput"
+          }
+        },
+        {
+          "Filter": {
+            "GammaValue": 1.0,
+            "FilterType": "SimpleGammaFilter"
+          },
+          "LowSpeed": 1,
+          "HighSpeed": 120,
+          "AutoMaxSpeed": true,
+          "MaxSpeedPercent": 100.0,
+          "OnlyInTurns": false,
+          "Curvature": 50,
+          "ContainerId": "82ce0548-e1b1-4b18-a4ab-26157efd77bd",
+          "ContainerType": "LocalizedSpeedContainer",
+          "Description": "export SpeedCurv property for PWM custom serial fans",
+          "AggregationMode": null,
+          "Gain": 0.0,
+          "IsEnabled": false,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 55,
+            "UseHighFrequency": false,
+            "HighFrequency": 50,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": false,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "blek2SpeedCurv",
+            "ExportProperty": true,
+            "DisableOutput": true,
+            "OutputType": "ToneOutput"
+          }
+        }
+      ],
+      "Filter": null,
+      "ContainerId": "dd4f7dad-01e9-4b3e-b013-902a1090aef3",
+      "ContainerType": "GroupContainer",
+      "Description": "G-forces for blek2char Custom Serial Device",
+      "AggregationMode": null,
+      "Gain": 0.0,
+      "IsEnabled": true,
+      "Output": null
+    }
+  ],
+  "AutoCalibrationRatio2": 100,
+  "LastLoaded": "2022-02-05T22:32:14.235991-07:00",
+  "Name": "G-forces for blek2char Custom Serial Device",
+  "ProfileId": "0284c396-21e3-4d4a-bc3d-7e782ff72311",
+  "OutputMode": 1,
+  "GlobalGain": 50.0,
+  "UseProfileGain": false
+}

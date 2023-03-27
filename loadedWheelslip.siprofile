@@ -1,0 +1,538 @@
+{
+  "OutputManager": {
+    "ChannelsSettings": {
+      "{0.0.0.00000000}.{6278d7be-2d21-4e89-92c5-0468717e613e}": {
+        "ControlVolume": true,
+        "UseLowPassFilter": false,
+        "LowPassFilter": 200,
+        "UseHighPassFilter": false,
+        "HighPassFilter": 20,
+        "IsEnabled": false,
+        "AudioMode": 3,
+        "DeviceType": 0,
+        "EffectToChannelsMapStore": {
+          "CustomEffectContainer": {
+            "Left": {
+              "MapsStore": "0;1;100;|1;0;100;|2;1;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "Right": {
+              "MapsStore": "0;0;100;|1;1;100;|2;0;100;|3;1;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            }
+          },
+          "WheelsSlipContainer": {
+            "FrontLeft": {
+              "MapsStore": "0;1;100;|1;0;100;|2;0;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "FrontRight": {
+              "MapsStore": "0;0;100;|1;1;100;|2;0;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "RearLeft": {
+              "MapsStore": "0;0;100;|1;0;100;|2;1;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "RearRight": {
+              "MapsStore": "0;0;100;|1;0;100;|2;0;100;|3;1;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            }
+          },
+          "RPMContainer": {
+            "All": {
+              "MapsStore": "0;1;100;|1;1;100;|2;1;100;|3;1;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            }
+          }
+        },
+        "GlobalChannelsSettings": {
+          "Quad": {
+            "MapsStore": "0;1;100;Front left|1;1;100;Front right|2;1;100;Rear left|3;1;100;Rear right|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+          },
+          "Custom": {
+            "MapsStore": "0;1;100;|1;1;100;|2;1;100;|3;1;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+          }
+        },
+        "Name": "SPDIF-Out (Sound Blaster X-Fi Surround 5.1 Pro)",
+        "OutputId": "{0.0.0.00000000}.{6278d7be-2d21-4e89-92c5-0468717e613e}",
+        "ShowPerEffectsLevels": false
+      },
+      "{0.0.0.00000000}.{9e79baf5-db7f-433f-b64c-74deed098b4a}": {
+        "ControlVolume": true,
+        "UseLowPassFilter": false,
+        "LowPassFilter": 200,
+        "UseHighPassFilter": false,
+        "HighPassFilter": 20,
+        "IsEnabled": false,
+        "AudioMode": 2,
+        "DeviceType": 0,
+        "EffectToChannelsMapStore": {},
+        "GlobalChannelsSettings": {},
+        "Name": "Realtek Digital Output (Realtek(R) Audio)",
+        "OutputId": "{0.0.0.00000000}.{9e79baf5-db7f-433f-b64c-74deed098b4a}",
+        "ShowPerEffectsLevels": false
+      },
+      "{0.0.0.00000000}.{af7accc6-3986-4fc8-9830-c6c10cbeca8f}": {
+        "ControlVolume": true,
+        "UseLowPassFilter": false,
+        "LowPassFilter": 200,
+        "UseHighPassFilter": false,
+        "HighPassFilter": 20,
+        "IsEnabled": true,
+        "AudioMode": 3,
+        "DeviceType": 0,
+        "EffectToChannelsMapStore": {
+          "CustomEffectContainer": {
+            "All": {
+              "MapsStore": "0;0;100;|1;0;100;|2;1;100;|3;1;100;|4;0;100;|5;0;100;|6;1;100;|7;1;100;"
+            },
+            "Left": {
+              "MapsStore": "0;0;100;|1;0;100;|2;1;100;|3;0;100;|4;0;100;|5;0;100;|6;1;100;|7;0;100;"
+            },
+            "Right": {
+              "MapsStore": "0;0;100;|1;0;100;|2;0;100;|3;1;100;|4;0;100;|5;0;100;|6;0;100;|7;1;100;"
+            },
+            "FrontLeft": {
+              "MapsStore": "0;0;100;|1;0;100;|2;1;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "FrontRight": {
+              "MapsStore": "0;0;100;|1;0;100;|2;0;100;|3;1;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "RearLeft": {
+              "MapsStore": "0;0;100;|1;0;100;|2;0;100;|3;0;100;|4;0;100;|5;0;100;|6;1;100;|7;0;100;"
+            },
+            "RearRight": {
+              "MapsStore": "0;0;100;|1;0;100;|2;0;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;1;100;"
+            },
+            "Front": {
+              "MapsStore": "0;0;100;|1;0;100;|2;1;100;|3;1;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "Rear": {
+              "MapsStore": "0;0;100;|1;0;100;|2;0;100;|3;0;100;|4;0;100;|5;0;100;|6;1;100;|7;1;100;"
+            }
+          },
+          "WheelsSlipContainer": {
+            "FrontLeft": {
+              "MapsStore": "0;0;100;|1;0;100;|2;0;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "FrontRight": {
+              "MapsStore": "0;0;100;|1;0;100;|2;0;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "RearLeft": {
+              "MapsStore": "0;0;100;|1;0;100;|2;0;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "RearRight": {
+              "MapsStore": "0;0;100;|1;0;100;|2;0;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            }
+          },
+          "RPMContainer": {
+            "All": {
+              "MapsStore": "0;0;100;|1;0;100;|2;1;100;|3;1;100;|4;0;100;|5;0;100;|6;1;100;|7;1;100;"
+            }
+          }
+        },
+        "GlobalChannelsSettings": {
+          "Quad": {
+            "MapsStore": "0;1;100;Front left|1;1;100;Front right|2;1;100;Rear left|3;1;100;Rear right|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+          },
+          "Custom": {
+            "MapsStore": "0;1;100;|1;1;100;|2;1;100;|3;1;100;|4;0;100;|5;0;100;|6;0;90;|7;0;90;"
+          }
+        },
+        "Name": "Speakers / Headphones (Realtek(R) Audio)",
+        "OutputId": "{0.0.0.00000000}.{af7accc6-3986-4fc8-9830-c6c10cbeca8f}",
+        "ShowPerEffectsLevels": false
+      },
+      "{0.0.0.00000000}.{c6575bfa-a645-4775-aecb-1ef381747e34}": {
+        "ControlVolume": true,
+        "UseLowPassFilter": false,
+        "LowPassFilter": 200,
+        "UseHighPassFilter": false,
+        "HighPassFilter": 20,
+        "IsEnabled": false,
+        "AudioMode": 2,
+        "DeviceType": 0,
+        "EffectToChannelsMapStore": {},
+        "GlobalChannelsSettings": {},
+        "Name": "Speaker (Sound Blaster X-Fi Surround 5.1 Pro)",
+        "OutputId": "{0.0.0.00000000}.{c6575bfa-a645-4775-aecb-1ef381747e34}",
+        "ShowPerEffectsLevels": false
+      },
+      "{0.0.0.00000000}.{43bdcaec-1095-4815-ac47-5fae7d3ac638}": {
+        "ControlVolume": true,
+        "UseLowPassFilter": false,
+        "LowPassFilter": 200,
+        "UseHighPassFilter": false,
+        "HighPassFilter": 20,
+        "IsEnabled": false,
+        "AudioMode": 2,
+        "DeviceType": 0,
+        "EffectToChannelsMapStore": {},
+        "GlobalChannelsSettings": {},
+        "Name": "Speakers (AudioBox USB)",
+        "OutputId": "{0.0.0.00000000}.{43bdcaec-1095-4815-ac47-5fae7d3ac638}",
+        "ShowPerEffectsLevels": false
+      }
+    },
+    "OutputMode": 1,
+    "TypeName": "SoundOutputManager"
+  },
+  "IncludeOutputSettingsInProfile": true,
+  "UnmuteEffectsAfterSimhubRestart": false,
+  "AutomaticSwitch": false,
+  "Description": "proxy_G properties used by 4-corner loads * slip effects,\r\nfront and rear loads * slip effects,\r\nleft and right loads * slip effects",
+  "EffectsContainers": [
+    {
+      "Filter": {
+        "ControlPoints": [
+          "5;79.2202412673804",
+          "21.8164571970595;38.3423768228283",
+          "26.9385819302822;0",
+          "93;43",
+          "100;58",
+          "86;0"
+        ],
+        "CurveFitting": 0,
+        "FilterType": "SplineFilter"
+      },
+      "IsMuted": false,
+      "ContainerId": "af3dc42f-0e75-4306-b2d6-d54dba3c5dd3",
+      "ContainerType": "RPMContainer",
+      "Description": "Simulates engine RPMS with a full customizable RPM/response curve",
+      "AggregationMode": null,
+      "Gain": 20.60000000000008,
+      "IsEnabled": false,
+      "Output": {
+        "UsePrehemptiveMode": false,
+        "Frequency": 34,
+        "UseHighFrequency": false,
+        "HighFrequency": 50,
+        "WhiteNoise": 40,
+        "UseWhiteNoise": true,
+        "EnableDurationModulation": false,
+        "DurationModulationValue": 34,
+        "FrequencyBasedOnPreFilter": true,
+        "Harmonics": 0,
+        "HoldMode": 1,
+        "DelayEnabled": false,
+        "AssignToChannelGroup": false,
+        "ChannelGroupName": "",
+        "PropertyName": null,
+        "ExportProperty": false,
+        "DisableOutput": false,
+        "OutputType": "ToneOutput"
+      },
+      "Algorythm": null
+    },
+    {
+      "AutocalibrationMax": 95.0,
+      "Filter": {
+        "GammaValue": 3.2999999999999963,
+        "InputGain": 100.0,
+        "MinimumForce": 0,
+        "Threshold": 2,
+        "FilterType": "GammaFilter"
+      },
+      "FrontLeftFormula": {
+        "Interpreter": 1,
+        "Expression": "// left yaw change 0-100\r\nvar y = $prop('OrientationYaw');\r\nconst tc = 3;  // IIR smoothing factor\r\nconst noise = 0.01 // non-linear filter threshold\r\n\r\n// initialize IIR filter history\r\nif(null==root[\"yaw\"]) {\r\n   root[\"yaw\"] = $prop('OrientationYaw');\r\n   root[\"delta_y\"] = 0.2;\r\n}\r\nif (null==root[\"Gyb4\"])\r\n  root[\"Gyb4\"] = 0.5;\r\n\r\nvar dy = y - root[\"yaw\"];       // change between sample intervals\r\n\r\n// yaw flips at +/- 180\r\nif (Math.abs(dy) > 180) {  // yaw went +/- 180\r\n  if (Math.abs(root[\"yaw\"]) > 150)\r\n    dy = -(y + root[\"yaw\"]);\r\n}\r\n\r\nroot[\"yaw\"] = y;\r\ny = root[\"delta_y\"];    // previous sample change\r\n\r\n// mitigate delta spikes from missed samples\r\nvar my = 1;     // sample interval\r\nif ((Math.abs(dy * y) > noise)\r\n && (Math.abs(dy) > Math.abs(1.8 * y)))\r\n  dy /= (my = 2);\r\n\r\nroot[\"delta_y\"] = dy;\r\n\r\n// IIR low-pass filter\r\nvar Gyb4 = root[\"Gyb4\"];        // lowpass IIR output\r\nGyb4 += my * (dy - Gyb4) / tc;\r\nroot[\"Gyb4\"] = Gyb4;\r\nreturn 100 * Gyb4;  "
+      },
+      "FrontRightFormula": {
+        "Interpreter": 1,
+        "Expression": "// deceleration proxy 0 - 100\r\nvar s = $prop('SpeedKmh');\r\nconst tc = 3;  // IIR smoothing factor\r\nconst noise = 0.01 // non-linear filter threshold\r\n\r\n// initialize IIR filter history\r\nif(null==root[\"speed\"]) {\r\n   root[\"speed\"] = $prop('SpeedKmh');\r\n   root[\"delta_s\"] = 0.2;       // for missed sample\r\n}\r\nif (null==root[\"Gsb4\"])\r\n  root[\"Gsb4\"] = 0.5;\r\n\r\nvar ds = root[\"speed\"] - s;       // negative change between sample intervals\r\nroot[\"speed\"] = s;\r\ns = root[\"delta_s\"];    // previous sample change\r\n\r\n// mitigate delta spikes from missed samples\r\nvar ms = 1;     // sample interval\r\nif ((Math.abs(ds * s) > noise)\r\n && (Math.abs(ds) > Math.abs(1.8 * s)))\r\n  ds /= (ms = 2);\r\n\r\nroot[\"delta_s\"] = ds;\r\n\r\n// IIR low-pass filter\r\nvar Gsb4 = root[\"Gsb4\"];        // lowpass IIR output\r\nGsb4 += ms * (ds - Gsb4) / tc;\r\nroot[\"Gsb4\"] = Gsb4;\r\nreturn 100 * Gsb4;  "
+      },
+      "RearLeftFormula": {
+        "Interpreter": 1,
+        "Expression": "// right yaw change 0-100\r\nvar y = $prop('OrientationYaw');\r\nconst tc = 3;  // IIR smoothing factor\r\nconst noise = 0.01 // non-linear filter threshold\r\n\r\n// initialize IIR filter history\r\nif(null==root[\"yaw\"]) {\r\n   root[\"yaw\"] = $prop('OrientationYaw');\r\n   root[\"delta_y\"] = 0.2;\r\n}\r\nif (null==root[\"Gyb4\"])\r\n  root[\"Gyb4\"] = 0.5;\r\n\r\nvar dy = y - root[\"yaw\"];       // change between sample intervals\r\n\r\n// yaw flips at +/- 180\r\nif (Math.abs(dy) > 180) {  // yaw went +/- 180\r\n  if (Math.abs(root[\"yaw\"]) > 150)\r\n    dy = -(y + root[\"yaw\"]);\r\n}\r\n\r\nroot[\"yaw\"] = y;\r\ny = root[\"delta_y\"];    // previous sample change\r\n\r\n// mitigate delta spikes from missed samples\r\nvar my = 1;     // sample interval\r\nif ((Math.abs(dy * y) > noise)\r\n && (Math.abs(dy) > Math.abs(1.8 * y)))\r\n  dy /= (my = 2);\r\n\r\nroot[\"delta_y\"] = dy;\r\n\r\n// IIR low-pass filter\r\nvar Gyb4 = root[\"Gyb4\"];        // lowpass IIR output\r\nGyb4 += my * (dy - Gyb4) / tc;\r\nroot[\"Gyb4\"] = Gyb4;\r\nreturn - 100 * Gyb4;  "
+      },
+      "RearRightFormula": {
+        "Interpreter": 1,
+        "Expression": "// acceleration proxy 0 - 100\r\nvar s = $prop('SpeedKmh');\r\nconst tc = 3;  // IIR smoothing factor\r\nconst noise = 0.01 // non-linear filter threshold\r\n\r\n// initialize IIR filter history\r\nif(null==root[\"speed\"]) {\r\n   root[\"speed\"] = $prop('SpeedKmh');\r\n   root[\"delta_s\"] = 0.2;       // for missed sample\r\n}\r\nif (null==root[\"Gsb4\"])\r\n  root[\"Gsb4\"] = 0.5;\r\n\r\nvar ds = root[\"speed\"] - s;       // negative change between sample intervals\r\nroot[\"speed\"] = s;\r\ns = root[\"delta_s\"];    // previous sample change\r\n\r\n// mitigate delta spikes from missed samples\r\nvar ms = 1;     // sample interval\r\nif ((Math.abs(ds * s) > noise)\r\n && (Math.abs(ds) > Math.abs(1.8 * s)))\r\n  ds /= (ms = 2);\r\n\r\nroot[\"delta_s\"] = ds;\r\n\r\n// IIR low-pass filter\r\nvar Gsb4 = root[\"Gsb4\"];        // lowpass IIR output\r\nGsb4 += ms * (ds - Gsb4) / tc;\r\nroot[\"Gsb4\"] = Gsb4;\r\nreturn -100 * Gsb4;  "
+      },
+      "IsMuted": false,
+      "ContainerId": "3fc86d3c-09d9-40df-afeb-061f6e888fcd",
+      "ContainerType": "CustomEffectContainer",
+      "Description": "generates proxyG properties for custom serial and other ShakeIt effects",
+      "AggregationMode": "Corners",
+      "Gain": 0.0,
+      "IsEnabled": true,
+      "Output": {
+        "UsePrehemptiveMode": false,
+        "Frequency": 30,
+        "UseHighFrequency": false,
+        "HighFrequency": 30,
+        "WhiteNoise": 10,
+        "UseWhiteNoise": false,
+        "EnableDurationModulation": true,
+        "DurationModulationValue": 34,
+        "FrequencyBasedOnPreFilter": false,
+        "Harmonics": 0,
+        "HoldMode": 1,
+        "DelayEnabled": false,
+        "AssignToChannelGroup": false,
+        "ChannelGroupName": "",
+        "PropertyName": "proxy_G",
+        "ExportProperty": true,
+        "DisableOutput": true,
+        "OutputType": "ToneOutput"
+      },
+      "Algorythm": null
+    },
+    {
+      "AutocalibrationMax": 95.0,
+      "Filter": {
+        "GammaValue": 1.0000000000000098,
+        "InputGain": 100.0,
+        "MinimumForce": 0,
+        "Threshold": 0,
+        "FilterType": "GammaFilter"
+      },
+      "FrontLeftFormula": {
+        "Interpreter": 1,
+        "Expression": "// left front load\r\nvar d = $prop('ShakeITBSV3Plugin.Export.proxy_G.FrontRight');\r\nd -= $prop('ShakeITBSV3Plugin.Export.proxy_G.RearRight');\r\n// left load (turning right)\r\nvar L = $prop('ShakeITBSV3Plugin.Export.proxy_G.FrontLeft');\r\nL -= $prop('ShakeITBSV3Plugin.Export.proxy_G.RearLeft');\r\n// d, L range -100 to 100; max magnitude 100*sqrt(2)\r\n// if G are 0, then no load shift and each corner gets 0.25 G\r\nL = 25 + 25 * L / 100;\t// left-right load distribution\r\nL += (L * d / 100);\t\t// fore-aft load distribution\r\nreturn L;"
+      },
+      "FrontRightFormula": {
+        "Interpreter": 1,
+        "Expression": "// load @ front right\r\nvar d = $prop('ShakeITBSV3Plugin.Export.proxy_G.FrontRight');\r\nd -= $prop('ShakeITBSV3Plugin.Export.proxy_G.RearRight');\r\n// right force (turning left)\r\nvar L = - $prop('ShakeITBSV3Plugin.Export.proxy_G.FrontLeft');\r\nL += $prop('ShakeITBSV3Plugin.Export.proxy_G.RearLeft');\r\n// d, L range -100 to 100; max magnitude 100*sqrt(2)\r\n// for 0 acceleeration, no shift and each corner gets 0.25 G\r\nL = 25 + 25 * L / 100;\t// distribute right - left\r\nL += (L * d / 100);\t\t\t// distribute fore - aft\r\nreturn L;"
+      },
+      "RearLeftFormula": {
+        "Interpreter": 1,
+        "Expression": "// left rear corner load\r\nvar d = - $prop('ShakeITBSV3Plugin.Export.proxy_G.FrontRight');\r\nd += $prop('ShakeITBSV3Plugin.Export.proxy_G.RearRight');\r\n// left force (turning right)\r\nvar L = $prop('ShakeITBSV3Plugin.Export.proxy_G.FrontLeft');\r\nL -= $prop('ShakeITBSV3Plugin.Export.proxy_G.RearLeft');\r\n// d, L range -100 to 100; max magnitude 100*sqrt(2)\r\n// no load shift for 0 acceleration; each corner gets 0.25 G\r\nvar L = 25 + 25 * L / 100;\t// left-right distribution\r\nL += (L * d / 100);\t\t// distribute aft-fore\r\nreturn L;"
+      },
+      "RearRightFormula": {
+        "Interpreter": 1,
+        "Expression": "// right rear load\r\nvar d = - $prop('ShakeITBSV3Plugin.Export.proxy_G.FrontRight');\r\nd += $prop('ShakeITBSV3Plugin.Export.proxy_G.RearRight');\r\n// right load (turning left)\r\nvar L = - $prop('ShakeITBSV3Plugin.Export.proxy_G.FrontLeft');\r\nL += $prop('ShakeITBSV3Plugin.Export.proxy_G.RearLeft');\r\n// d, L range -100 to 100; max magnitude 100*sqrt(2)\r\n// if no accelerations, then no shift and each corner gets 0.25 G\r\nL = 25 + 25 * L / 100;\t\t// distribute load rith - left\r\nL += (L * d / 100);\t\t\t// distribute load aft - fore\r\nreturn L;"
+      },
+      "IsMuted": false,
+      "ContainerId": "a3fc7f43-8f9e-4da1-be9c-1ceacc50d9f0",
+      "ContainerType": "CustomEffectContainer",
+      "Description": "generate proxyL corner load properties",
+      "AggregationMode": "Corners",
+      "Gain": 0.0,
+      "IsEnabled": true,
+      "Output": {
+        "UsePrehemptiveMode": false,
+        "Frequency": 906,
+        "UseHighFrequency": true,
+        "HighFrequency": 30,
+        "WhiteNoise": 54,
+        "UseWhiteNoise": true,
+        "EnableDurationModulation": true,
+        "DurationModulationValue": 34,
+        "FrequencyBasedOnPreFilter": true,
+        "Harmonics": 0,
+        "HoldMode": 1,
+        "DelayEnabled": false,
+        "AssignToChannelGroup": false,
+        "ChannelGroupName": "",
+        "PropertyName": "proxyL",
+        "ExportProperty": true,
+        "DisableOutput": false,
+        "OutputType": "ToneOutput"
+      },
+      "Algorythm": null
+    },
+    {
+      "BrakeFilter": 10,
+      "Filter": {
+        "GammaValue": 3.7999999999999945,
+        "InputGain": 1.0,
+        "MinimumForce": 0,
+        "Threshold": 17,
+        "FilterType": "GammaFilter"
+      },
+      "MuteWhenLockEffectIsActive": false,
+      "ThrottleFilter": 10,
+      "UseBrakeFilter": false,
+      "UseThrottleFilter": false,
+      "IsMuted": false,
+      "ContainerId": "d88f9769-4da9-4002-8893-d98e997c68cd",
+      "ContainerType": "WheelsSlipContainer",
+      "Description": "generate proxyS wheel slip properties",
+      "AggregationMode": "Corners",
+      "Gain": 50.0,
+      "IsEnabled": true,
+      "Output": {
+        "UsePrehemptiveMode": false,
+        "Frequency": 50,
+        "UseHighFrequency": false,
+        "HighFrequency": 50,
+        "WhiteNoise": 10,
+        "UseWhiteNoise": false,
+        "EnableDurationModulation": false,
+        "DurationModulationValue": 34,
+        "FrequencyBasedOnPreFilter": false,
+        "Harmonics": 0,
+        "HoldMode": 1,
+        "DelayEnabled": false,
+        "AssignToChannelGroup": false,
+        "ChannelGroupName": "",
+        "PropertyName": "proxyS",
+        "ExportProperty": true,
+        "DisableOutput": true,
+        "OutputType": "ToneOutput"
+      },
+      "Algorythm": "Slip data"
+    },
+    {
+      "AutocalibrationMax": 95.0,
+      "Filter": {
+        "GammaValue": 5.0,
+        "InputGain": 100.0,
+        "MinimumForce": 0,
+        "Threshold": 0,
+        "FilterType": "GammaFilter"
+      },
+      "FrontLeftFormula": {
+        "Interpreter": 1,
+        "Expression": "// left front loaded slip\r\nvar L = $prop('ShakeITBSV3Plugin.Export.proxyL.FrontLeft');\r\n// corner slip\r\ns = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontLeft');\r\nreturn s *  L / 100; \r\n//return s;\r\n"
+      },
+      "FrontRightFormula": {
+        "Interpreter": 1,
+        "Expression": "// front right loaded slip\r\nvar L = $prop('ShakeITBSV3Plugin.Export.proxyL.FrontRight');\r\n// slip\r\ns = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontRight');\r\n// weight slip by load (abs max 100);\r\nreturn s * L / 100;"
+      },
+      "RearLeftFormula": {
+        "Interpreter": 1,
+        "Expression": "// left rear loaded slip\r\nvar L = $prop('ShakeITBSV3Plugin.Export.proxyL.RearLeft');\r\n// corner slip\r\nvar s = $prop('ShakeITBSV3Plugin.Export.proxyS.RearLeft');\r\n// weight slip by load\r\nreturn s *  L / 100; "
+      },
+      "RearRightFormula": {
+        "Interpreter": 1,
+        "Expression": "// right rear loaded slip\r\nvar L = $prop('ShakeITBSV3Plugin.Export.proxyL.RearRight');\r\n// corner slip\r\ns = $prop('ShakeITBSV3Plugin.Export.proxyS.RearRight');\r\n// weight slip by load (abs max 100);\r\nreturn s * L / 100;"
+      },
+      "IsMuted": false,
+      "ContainerId": "cc64cec4-9dc5-4e26-bce2-ef087adb2c84",
+      "ContainerType": "CustomEffectContainer",
+      "Description": "loaded wheel slips for each corner",
+      "AggregationMode": "Corners",
+      "Gain": 100.0,
+      "IsEnabled": true,
+      "Output": {
+        "UsePrehemptiveMode": false,
+        "Frequency": 906,
+        "UseHighFrequency": true,
+        "HighFrequency": 30,
+        "WhiteNoise": 54,
+        "UseWhiteNoise": true,
+        "EnableDurationModulation": true,
+        "DurationModulationValue": 34,
+        "FrequencyBasedOnPreFilter": true,
+        "Harmonics": 0,
+        "HoldMode": 1,
+        "DelayEnabled": false,
+        "AssignToChannelGroup": false,
+        "ChannelGroupName": "",
+        "PropertyName": "proxyS",
+        "ExportProperty": false,
+        "DisableOutput": false,
+        "OutputType": "ToneOutput"
+      },
+      "Algorythm": null
+    },
+    {
+      "AutocalibrationMax": 95.0,
+      "Filter": {
+        "GammaValue": 4.5499999999999918,
+        "InputGain": 100.0,
+        "MinimumForce": 0,
+        "Threshold": 0,
+        "FilterType": "GammaFilter"
+      },
+      "FrontLeftFormula": {
+        "Interpreter": 1,
+        "Expression": "// load @ front\r\nvar L = $prop('ShakeITBSV3Plugin.Export.proxyL.FrontLeft');\r\nL += $prop('ShakeITBSV3Plugin.Export.proxyL.FrontRight');\r\n// front slip\r\nvar s = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontLeft');\r\ns += $prop('ShakeITBSV3Plugin.Export.proxyS.FrontRight');\r\n// weight slip by load\r\nreturn s * L / 400;\r\n"
+      },
+      "FrontRightFormula": {
+        "Expression": ""
+      },
+      "RearLeftFormula": {
+        "Interpreter": 1,
+        "Expression": "// load @ rear\r\nvar L = $prop('ShakeITBSV3Plugin.Export.proxyL.RearLeft');\r\nL += $prop('ShakeITBSV3Plugin.Export.proxyL.RearRight');\r\nvar s = $prop('ShakeITBSV3Plugin.Export.proxyS.RearLeft');\r\ns += $prop('ShakeITBSV3Plugin.Export.proxyS.RearRight');\r\nreturn s * L / 400;"
+      },
+      "RearRightFormula": {
+        "Expression": ""
+      },
+      "IsMuted": false,
+      "ContainerId": "fde99e46-a446-4e25-b8c2-cd3e10f6bef2",
+      "ContainerType": "CustomEffectContainer",
+      "Description": "fore-aft loading of front, rear slips",
+      "AggregationMode": "Front/Rear",
+      "Gain": 40.000000000000227,
+      "IsEnabled": false,
+      "Output": {
+        "UsePrehemptiveMode": false,
+        "Frequency": 855,
+        "UseHighFrequency": true,
+        "HighFrequency": 25,
+        "WhiteNoise": 59,
+        "UseWhiteNoise": true,
+        "EnableDurationModulation": true,
+        "DurationModulationValue": 34,
+        "FrequencyBasedOnPreFilter": true,
+        "Harmonics": 0,
+        "HoldMode": 1,
+        "DelayEnabled": false,
+        "AssignToChannelGroup": false,
+        "ChannelGroupName": "",
+        "PropertyName": null,
+        "ExportProperty": false,
+        "DisableOutput": false,
+        "OutputType": "ToneOutput"
+      },
+      "Algorythm": null
+    },
+    {
+      "AutocalibrationMax": 95.0,
+      "Filter": {
+        "GammaValue": 3.5999999999999952,
+        "InputGain": 100.0,
+        "MinimumForce": 0,
+        "Threshold": 0,
+        "FilterType": "GammaFilter"
+      },
+      "FrontLeftFormula": {
+        "Interpreter": 1,
+        "Expression": "// left load\r\nvar L = $prop('ShakeITBSV3Plugin.Export.proxyL.FrontLeft');\r\nL += $prop('ShakeITBSV3Plugin.Export.proxyL.RearLeft');\r\n// left slip\r\nvar s = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontLeft');\r\ns += $prop('ShakeITBSV3Plugin.Export.proxyS.RearLeft');\r\n// weight left slip by load\r\nreturn s * L / 400;\r\n"
+      },
+      "FrontRightFormula": {
+        "Interpreter": 1,
+        "Expression": "// right load\r\nvar L = $prop('ShakeITBSV3Plugin.Export.proxyL.FrontRight');\r\nL += $prop('ShakeITBSV3Plugin.Export.proxyL.RearRight');\r\n// right slip\r\ns = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontRight');\r\ns += $prop('ShakeITBSV3Plugin.Export.proxyS.RearRight');\r\n// weight right slip by load\r\nreturn s * L / 400;"
+      },
+      "RearLeftFormula": {
+        "Expression": ""
+      },
+      "RearRightFormula": {
+        "Expression": ""
+      },
+      "IsMuted": false,
+      "ContainerId": "b19de096-c48e-4659-84d6-b0aeb26f4316",
+      "ContainerType": "CustomEffectContainer",
+      "Description": "laterally load left & right slips",
+      "AggregationMode": "Left/Right",
+      "Gain": 90.0,
+      "IsEnabled": false,
+      "Output": {
+        "UsePrehemptiveMode": false,
+        "Frequency": 934,
+        "UseHighFrequency": true,
+        "HighFrequency": 30,
+        "WhiteNoise": 86,
+        "UseWhiteNoise": true,
+        "EnableDurationModulation": true,
+        "DurationModulationValue": 34,
+        "FrequencyBasedOnPreFilter": true,
+        "Harmonics": 0,
+        "HoldMode": 1,
+        "DelayEnabled": false,
+        "AssignToChannelGroup": false,
+        "ChannelGroupName": "",
+        "PropertyName": null,
+        "ExportProperty": false,
+        "DisableOutput": false,
+        "OutputType": "ToneOutput"
+      },
+      "Algorythm": null
+    }
+  ],
+  "AutoCalibrationRatio2": 100,
+  "GameCode": "AssettoCorsa",
+  "LastLoaded": "2021-03-04T10:52:44.5772972-05:00",
+  "Name": "LoadedWheelslips",
+  "ProfileId": "ad608bfe-f1b5-4538-b31d-c009fbbb0be4",
+  "OutputMode": 1,
+  "GlobalGain": 50.0,
+  "UseProfileGain": false
+}

@@ -1,0 +1,282 @@
+{
+  "OutputManager": {
+    "ChannelsSettings": {
+      "{0.0.0.00000000}.{9e79baf5-db7f-433f-b64c-74deed098b4a}": {
+        "ControlVolume": true,
+        "UseLowPassFilter": false,
+        "LowPassFilter": 200,
+        "UseHighPassFilter": false,
+        "HighPassFilter": 20,
+        "IsEnabled": false,
+        "AudioMode": 2,
+        "DeviceType": 0,
+        "EffectToChannelsMapStore": {},
+        "GlobalChannelsSettings": {},
+        "Name": "Realtek Digital Output (Realtek(R) Audio)",
+        "OutputId": "{0.0.0.00000000}.{9e79baf5-db7f-433f-b64c-74deed098b4a}",
+        "ShowPerEffectsLevels": false,
+        "IsFavorite": false
+      },
+      "{0.0.0.00000000}.{6278d7be-2d21-4e89-92c5-0468717e613e}": {
+        "ControlVolume": true,
+        "UseLowPassFilter": false,
+        "LowPassFilter": 200,
+        "UseHighPassFilter": false,
+        "HighPassFilter": 20,
+        "IsEnabled": false,
+        "AudioMode": 2,
+        "DeviceType": 0,
+        "EffectToChannelsMapStore": {},
+        "GlobalChannelsSettings": {},
+        "Name": "SPDIF-Out (Sound Blaster X-Fi Surround 5.1 Pro)",
+        "OutputId": "{0.0.0.00000000}.{6278d7be-2d21-4e89-92c5-0468717e613e}",
+        "ShowPerEffectsLevels": false,
+        "IsFavorite": false
+      },
+      "{0.0.0.00000000}.{c6575bfa-a645-4775-aecb-1ef381747e34}": {
+        "ControlVolume": true,
+        "UseLowPassFilter": false,
+        "LowPassFilter": 200,
+        "UseHighPassFilter": false,
+        "HighPassFilter": 20,
+        "IsEnabled": false,
+        "AudioMode": 2,
+        "DeviceType": 0,
+        "EffectToChannelsMapStore": {},
+        "GlobalChannelsSettings": {},
+        "Name": "Speaker (Sound Blaster X-Fi Surround 5.1 Pro)",
+        "OutputId": "{0.0.0.00000000}.{c6575bfa-a645-4775-aecb-1ef381747e34}",
+        "ShowPerEffectsLevels": false,
+        "IsFavorite": false
+      },
+      "{0.0.0.00000000}.{6e000646-45a0-447c-ad74-b07295ed4af4}": {
+        "ControlVolume": true,
+        "UseLowPassFilter": false,
+        "LowPassFilter": 200,
+        "UseHighPassFilter": false,
+        "HighPassFilter": 20,
+        "IsEnabled": false,
+        "AudioMode": 2,
+        "DeviceType": 0,
+        "EffectToChannelsMapStore": {},
+        "GlobalChannelsSettings": {},
+        "Name": "Speakers (2- AudioBox USB)",
+        "OutputId": "{0.0.0.00000000}.{6e000646-45a0-447c-ad74-b07295ed4af4}",
+        "ShowPerEffectsLevels": false,
+        "IsFavorite": false
+      },
+      "{0.0.0.00000000}.{af7accc6-3986-4fc8-9830-c6c10cbeca8f}": {
+        "ControlVolume": true,
+        "UseLowPassFilter": false,
+        "LowPassFilter": 200,
+        "UseHighPassFilter": false,
+        "HighPassFilter": 20,
+        "IsEnabled": true,
+        "AudioMode": 3,
+        "DeviceType": 0,
+        "EffectToChannelsMapStore": {
+          "CustomEffectContainer": {
+            "FrontLeft": {
+              "MapsStore": "0;1;100;|1;0;100;|2;0;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "FrontRight": {
+              "MapsStore": "0;0;100;|1;1;100;|2;0;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "RearLeft": {
+              "MapsStore": "0;0;100;|1;0;100;|2;1;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "RearRight": {
+              "MapsStore": "0;0;100;|1;0;100;|2;0;100;|3;1;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "All": {
+              "MapsStore": "0;1;100;|1;1;100;|2;1;100;|3;1;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            }
+          },
+          "CustomEffectContainerSlipSurgeSway": {
+            "FrontLeft": {
+              "MapsStore": "0;1;100;|1;0;100;|2;0;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "FrontRight": {
+              "MapsStore": "0;0;100;|1;1;100;|2;0;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "RearLeft": {
+              "MapsStore": "0;0;100;|1;0;100;|2;1;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "RearRight": {
+              "MapsStore": "0;0;100;|1;0;100;|2;0;100;|3;1;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            }
+          },
+          "CustomEffectContainerAM": {
+            "All": {
+              "MapsStore": "0;1;47;|1;1;85;|2;1;100;|3;1;100;|4;1;100;|5;1;100;|6;1;100;|7;1;100;"
+            }
+          },
+          "CustomEffectContainermixSlipsOversteer": {
+            "FrontLeft": {
+              "MapsStore": "0;0;100;|1;0;100;|2;1;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "FrontRight": {
+              "MapsStore": "0;0;100;|1;0;100;|2;0;100;|3;1;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "RearLeft": {
+              "MapsStore": "0;0;100;|1;0;100;|2;0;100;|3;0;100;|4;0;100;|5;0;100;|6;1;100;|7;0;100;"
+            },
+            "RearRight": {
+              "MapsStore": "0;0;100;|1;0;100;|2;0;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;1;100;"
+            }
+          }
+        },
+        "GlobalChannelsSettings": {
+          "Quad": {
+            "MapsStore": "0;1;100;Front left|1;1;100;Front right|2;1;100;Rear left|3;1;100;Rear right|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+          },
+          "Custom": {
+            "MapsStore": "0;1;63;|1;1;57;|2;1;100;|3;1;100;|4;0;100;|5;0;100;|6;0;71;|7;0;70;"
+          }
+        },
+        "Name": "Speakers / Headphones (Realtek(R) Audio)",
+        "OutputId": "{0.0.0.00000000}.{af7accc6-3986-4fc8-9830-c6c10cbeca8f}",
+        "ShowPerEffectsLevels": true,
+        "IsFavorite": false
+      },
+      "{0.0.0.00000000}.{bd613f9a-42ae-4e00-b7f5-f25fbf39d90f}": {
+        "ControlVolume": true,
+        "UseLowPassFilter": false,
+        "LowPassFilter": 200,
+        "UseHighPassFilter": false,
+        "HighPassFilter": 20,
+        "IsEnabled": false,
+        "AudioMode": 2,
+        "DeviceType": 0,
+        "EffectToChannelsMapStore": {},
+        "GlobalChannelsSettings": {},
+        "Name": "VoiceMeeter Aux Input (VB-Audio VoiceMeeter AUX VAIO)",
+        "OutputId": "{0.0.0.00000000}.{bd613f9a-42ae-4e00-b7f5-f25fbf39d90f}",
+        "ShowPerEffectsLevels": false,
+        "IsFavorite": false
+      },
+      "{0.0.0.00000000}.{9e69a5d3-d1ab-48a2-966f-426132c1ec68}": {
+        "ControlVolume": true,
+        "UseLowPassFilter": false,
+        "LowPassFilter": 200,
+        "UseHighPassFilter": false,
+        "HighPassFilter": 20,
+        "IsEnabled": false,
+        "AudioMode": 3,
+        "DeviceType": 0,
+        "EffectToChannelsMapStore": {
+          "CustomEffectContainerSlipSurgeSway": {
+            "FrontLeft": {
+              "MapsStore": "0;0;100;|1;0;100;|2;0;100;|3;0;100;|4;1;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "FrontRight": {
+              "MapsStore": "0;0;100;|1;0;100;|2;0;100;|3;0;100;|4;0;100;|5;1;100;|6;0;100;|7;0;100;"
+            },
+            "RearLeft": {
+              "MapsStore": "0;0;100;|1;0;100;|2;0;100;|3;0;100;|4;0;100;|5;0;100;|6;1;100;|7;0;100;"
+            },
+            "RearRight": {
+              "MapsStore": "0;0;100;|1;0;100;|2;0;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;1;100;"
+            }
+          },
+          "CustomEffectContainermixSlipsOversteer": {
+            "FrontLeft": {
+              "MapsStore": "0;1;100;|1;0;100;|2;0;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "FrontRight": {
+              "MapsStore": "0;0;100;|1;1;100;|2;0;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "RearLeft": {
+              "MapsStore": "0;0;100;|1;0;100;|2;1;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "RearRight": {
+              "MapsStore": "0;0;100;|1;0;100;|2;0;100;|3;1;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            }
+          }
+        },
+        "GlobalChannelsSettings": {
+          "Quad": {
+            "MapsStore": "0;1;100;Front left|1;1;100;Front right|2;1;100;Rear left|3;1;100;Rear right|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+          },
+          "Custom": {
+            "MapsStore": "0;1;100;|1;1;100;|2;1;100;|3;1;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+          }
+        },
+        "Name": "VoiceMeeter Input (VB-Audio VoiceMeeter VAIO)",
+        "OutputId": "{0.0.0.00000000}.{9e69a5d3-d1ab-48a2-966f-426132c1ec68}",
+        "ShowPerEffectsLevels": false,
+        "IsFavorite": false
+      }
+    },
+    "OutputMode": 1,
+    "TypeName": "SoundOutputManager"
+  },
+  "IncludeOutputSettingsInProfile": true,
+  "UnmuteEffectsAfterSimhubRestart": false,
+  "EffectsContainers": [
+    {
+      "AutocalibrationMax": 95.0,
+      "Filter": {
+        "GammaValue": 1.0,
+        "InputGain": 80.0,
+        "MinimumForce": 0,
+        "Threshold": 0,
+        "FilterType": "GammaFilter"
+      },
+      "FrontLeftFormula": {
+        "Interpreter": 1,
+        "Expression": "if (null == root['phase']) {  // initialize\r\n  root['phase'] = 0;\r\n  root['inc'] = 1;\r\n}\r\n// avoid log of values < 1\r\nvar a = Math.max(1,10 - 1.7 * Math.log(Math.max(1,$prop('SpeedLocal'))));\r\n//return a\r\n// generate sawtooth approximation to sine\r\nif (a <= root['phase']) {\r\n  root['phase'] = a;\r\n  root['inc'] = -1;\r\n}\r\nelse if (0 >= root['phase'])\r\n  root['inc'] = 1;\r\nroot['phase']+=root['inc'];\r\nreturn (80 / a) * root['phase'];",
+        "SimpleOperationProp": null
+      },
+      "FrontRightFormula": {
+        "Expression": "",
+        "SimpleOperationProp": null
+      },
+      "RearLeftFormula": {
+        "Expression": "",
+        "SimpleOperationProp": null
+      },
+      "RearRightFormula": {
+        "Expression": "",
+        "SimpleOperationProp": null
+      },
+      "IsMuted": false,
+      "ContainerId": "7bd51d96-4ce5-4fe7-94f7-18a50cfc3db1",
+      "ContainerType": "CustomEffectContainer",
+      "Description": "AM:  low frequency by amplitude modulation",
+      "AggregationMode": "Mono",
+      "Gain": 48.000000000000341,
+      "IsEnabled": true,
+      "Output": {
+        "UsePrehemptiveMode": false,
+        "Frequency": 68,
+        "UseHighFrequency": false,
+        "HighFrequency": 50,
+        "WhiteNoise": 3,
+        "UseWhiteNoise": true,
+        "EnableDurationModulation": true,
+        "DurationModulationValue": 34,
+        "FrequencyBasedOnPreFilter": false,
+        "Harmonics": 0,
+        "HoldMode": 1,
+        "DelayEnabled": false,
+        "AssignToChannelGroup": true,
+        "ChannelGroupName": "AM",
+        "PropertyName": null,
+        "ExportProperty": false,
+        "DisableOutput": false,
+        "OutputType": "ToneOutput"
+      }
+    }
+  ],
+  "AutoCalibrationRatio2": 100,
+  "OutputMode": 1,
+  "GlobalGain": 50.0,
+  "UseProfileGain": false,
+  "Error": "",
+  "LastLoaded": "2021-09-18T11:48:50.7431082-04:00",
+  "Description": "Generate low frequency tactile effects in pucks and exciters\r\nby amplitude modulation of frequencies they handle well.\r\nAdjust Base effect frequency to a value that avoids resonances in your rig",
+  "Name": "AM (Amplitude Modulation)",
+  "ProfileId": "91c422ec-2b62-4ce0-8921-7da30caea30a",
+  "GameCode": null
+}

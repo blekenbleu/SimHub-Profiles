@@ -1,0 +1,150 @@
+{
+  "IncludeOutputSettingsInProfile": false,
+  "UnmuteEffectsAfterSimhubRestart": true,
+  "AutomaticSwitch": false,
+  "Description": "Assetto Corsa - AS1.siprofile re-imported with shorter name",
+  "EffectsContainers": [
+    {
+      "BrakeFilter": 10,
+      "Filter": {
+        "GammaValue": 1.0,
+        "InputGain": 103.0,
+        "MinimumForce": 0,
+        "Threshold": 0,
+        "FilterType": "GammaFilter"
+      },
+      "MuteWhenLockEffectIsActive": false,
+      "ThrottleFilter": 10,
+      "UseBrakeFilter": false,
+      "UseThrottleFilter": false,
+      "IsMuted": false,
+      "ContainerId": "9f82a59a-1616-4aa5-b66c-012ed01e31a3",
+      "ContainerType": "WheelsSlipContainer",
+      "Description": "Provide localized wheel slip feedback",
+      "AggregationMode": "Corners",
+      "Gain": 100.0,
+      "IsEnabled": true,
+      "Output": {
+        "UsePrehemptiveMode": false,
+        "Frequency": 120,
+        "UseHighFrequency": true,
+        "HighFrequency": 30,
+        "WhiteNoise": 10,
+        "UseWhiteNoise": false,
+        "EnableDurationModulation": false,
+        "DurationModulationValue": 34,
+        "FrequencyBasedOnPreFilter": false,
+        "Harmonics": 0,
+        "HoldMode": 1,
+        "DelayEnabled": false,
+        "AssignToChannelGroup": false,
+        "ChannelGroupName": "",
+        "PropertyName": null,
+        "ExportProperty": false,
+        "DisableOutput": false,
+        "OutputType": "ToneOutput"
+      },
+      "Algorythm": null
+    },
+    {
+      "Filter": {
+        "ControlPoints": [
+          "5;79.2202412673804",
+          "17.3583115959213;46.7644493968315",
+          "20.298790609438;0",
+          "93;43",
+          "100;58",
+          "86;0"
+        ],
+        "CurveFitting": 0,
+        "FilterType": "SplineFilter"
+      },
+      "IsMuted": false,
+      "ContainerId": "af3dc42f-0e75-4306-b2d6-d54dba3c5dd3",
+      "ContainerType": "RPMContainer",
+      "Description": "Simulates engine RPMS with a full customizable RPM/response curve",
+      "AggregationMode": null,
+      "Gain": 13.6666666666668,
+      "IsEnabled": true,
+      "Output": {
+        "UsePrehemptiveMode": false,
+        "Frequency": 34,
+        "UseHighFrequency": false,
+        "HighFrequency": 50,
+        "WhiteNoise": 40,
+        "UseWhiteNoise": true,
+        "EnableDurationModulation": false,
+        "DurationModulationValue": 34,
+        "FrequencyBasedOnPreFilter": true,
+        "Harmonics": 0,
+        "HoldMode": 1,
+        "DelayEnabled": false,
+        "AssignToChannelGroup": false,
+        "ChannelGroupName": "",
+        "PropertyName": null,
+        "ExportProperty": false,
+        "DisableOutput": false,
+        "OutputType": "ToneOutput"
+      },
+      "Algorythm": null
+    },
+    {
+      "AutocalibrationMax": 95.0,
+      "Filter": {
+        "GammaValue": 1.0,
+        "InputGain": 100.0,
+        "MinimumForce": 0,
+        "Threshold": 0,
+        "FilterType": "GammaFilter"
+      },
+      "FrontLeftFormula": {
+        "Expression": "[OrientationYaw]"
+      },
+      "FrontRightFormula": {
+        "Expression": ""
+      },
+      "RearLeftFormula": {
+        "Expression": ""
+      },
+      "RearRightFormula": {
+        "Expression": ""
+      },
+      "IsMuted": false,
+      "ContainerId": "3fc86d3c-09d9-40df-afeb-061f6e888fcd",
+      "ContainerType": "CustomEffectContainer",
+      "Description": "Provides ability to create your own effect based on game data",
+      "AggregationMode": "Mono",
+      "Gain": 90.0,
+      "IsEnabled": true,
+      "Output": {
+        "UsePrehemptiveMode": false,
+        "Frequency": 44,
+        "UseHighFrequency": false,
+        "HighFrequency": 50,
+        "WhiteNoise": 10,
+        "UseWhiteNoise": false,
+        "EnableDurationModulation": true,
+        "DurationModulationValue": 34,
+        "FrequencyBasedOnPreFilter": false,
+        "Harmonics": 0,
+        "HoldMode": 1,
+        "DelayEnabled": false,
+        "AssignToChannelGroup": false,
+        "ChannelGroupName": "",
+        "PropertyName": "delta_Yaw",
+        "ExportProperty": true,
+        "DisableOutput": false,
+        "OutputType": "ToneOutput"
+      },
+      "Algorythm": null
+    }
+  ],
+  "AutoCalibrationRatio2": 100,
+  "GameCode": "AssettoCorsa",
+  "LastLoaded": "2021-02-05T07:36:58.7188744-05:00",
+  "Name": "AC1",
+  "ProfileId": "cbf3fb1e-16bc-4a98-9ccc-85c5ebc4b30e",
+  "OutputMode": 1,
+  "GlobalGain": 50.0,
+  "UseProfileGain": false
+}

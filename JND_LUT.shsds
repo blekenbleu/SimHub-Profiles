@@ -1,0 +1,186 @@
+{
+  "AutomaticReconnect": true,
+  "SerialPortName": "None",
+  "IsConnecting": false,
+  "IsEnabled": false,
+  "LogIncomingData": false,
+  "IsConnected": false,
+  "BaudRate": 115200,
+  "UpdateMessages": [
+    {
+      "Message": {
+        "Interpreter": 1,
+        "Expression": "// adjust servo movement range and steps\r\n// 20 experimental just noticeable tension increments (21 steps)\r\nvar jndx = [2,9,13,16,19,22,25,28,31,34,37,41,44,48,52,57,62,67,74,82,90];\r\nvar n = jndx.length - 1;\r\nvar base = jndx[0];\r\nfunction tweak(value) {\r\n  return value - base;\r\n}\r\nvar jnd = jndx.map(tweak);\r\n//return jnd.toString();\r\n\r\nvar step = [0];\t// warn Arduino of LUT load\r\nstep[1] = $prop('Settings.LeftOffset');\r\nstep[2] = $prop('Settings.RightOffset');\r\nvar m = ($prop('Settings.tmax') - base) / jnd[n];\t// max tension rescale factor\r\n\r\n// Bresenham thru jnd increments to steps\r\nstep[17] = Math.round(m * jnd[n]);\t\t\t// rescale last step\r\nvar l = 0;\r\nfor (i = 3; i < 17; i++) {\r\n  l += n;\r\n  var j = l / 15;\t\t\t\t// location in jnd[] corresponding to step[i]\r\n  var a = Math.floor(j);\t\t// linear interpolation: index into jnd[]\r\n  var b = jnd[a + 1] - jnd[a];\t// servo steps\r\n  var f = j - a;\t\t\t\t// jnd[] fraction\r\n  step[i] = Math.round(m * (jnd[a] + f * b));\r\n}\r\nreturn step.toString();\r\n\r\nvar l = 16;\t\t// most slack control indices\r\nvar r = 32;\r\nif ($prop('Settings.max_test')) {\r\n  l += 15; // most tense control indices\r\n  r += 15;\r\n}\r\n// send calibration table, then 127, then update servo positions\r\n//return String.fromCharCode(0)+step.toString()+'!'+sl+sr; // Arduino would have to parse ASCII\r\nvar str = String.fromCharCode.apply(null,step)+String.fromCharCode(127,l,r);\r\n// return str.length;\t// 21\r\n// send servo step LUT, 127 sync, then left and right servo position indices using that LUT\r\nreturn str;"
+      },
+      "IsEnabled": false,
+      "MaximumFrequency": 0
+    },
+    {
+      "Message": {
+        "Interpreter": 1,
+        "Expression": "// Repurpose gain sliders for just noticeable tension steps\r\nif ($prop('Settings.max_test') || $prop('Settings.TestOffsets'))\r\n  return;\r\nvar d = new Date();\r\nvar dg = Math.max($prop('Settings.decel_gain'),2);\t// base tension\r\nvar yg = $prop('Settings.yaw_gain');\t\t\t\t// tension increment\r\nif (null == root[\"odg\"]) {\r\n  root[\"odg\"] = dg;\r\n  root[\"oyg\"] = yg;\r\n}\r\nif (dg != root[\"odg\"] || yg != root[\"oyg\"] || null == root[\"Time\"]) {\r\n  root[\"Time\"] = d.getTime();\r\n  root[\"odg\"] = dg;\r\n  root[\"oyg\"] = yg;\r\n}  \r\nvar s = root[\"Time\"];\r\nvar t = d.getTime() - s;\r\n\r\nif (3500 < t)\r\n  d = 2;\t\t\t// timeout: release tension\r\nelse if (3000 < t)\r\n  d = dg + yg;\t\t// base + difference tensions\r\nelse if (2500 < t)\r\n  d = dg;\t\t\t// base tension\r\nelse if (2000 < t)\r\n  d = dg + yg;\r\nelse if (1500 < t)\r\n  d = dg;  \r\nelse if (1000 < t)\r\n  d = dg + yg;\r\nelse if (500 < t)\r\n  d = dg;\r\nelse\r\n  d = dg + yg;\t// may be even or odd\r\nvar o = 1 + d;  // the other one\r\n//return d.toString()+\"\\t\"+o.toString();\r\nreturn String.fromCharCode(d)+String.fromCharCode(o);"
+      },
+      "IsEnabled": false,
+      "MaximumFrequency": 0
+    },
+    {
+      "Message": {
+        "Interpreter": 1,
+        "Expression": "// adjust range of servo movements\r\nvar lo = $prop('Settings.LeftOffset');\r\nvar ro = $prop('Settings.RightOffset');\r\n// send test tension values after setting offsets\r\nvar lt = 2;\t\t// most slack left tension value\r\nif ($prop('Settings.max_test'))\r\n  lt = 126 & $prop('Settings.tmax'); // most tense \r\nvar code = [0,lo,1,ro,lt,1+lt];\r\nreturn String.fromCharCode.apply(null,code);\r\n\r\n"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 60
+    }
+  ],
+  "OnConnectMessage": {
+    "Expression": "' !'"
+  },
+  "OnDisconnectMessage": {
+    "Expression": "' !'"
+  },
+  "DtrEnable": true,
+  "RtsEnable": false,
+  "EditorExpanded": true,
+  "Name": "Custom Serial device",
+  "Description": "noticeable differences tension test",
+  "LastErrorDate": "0001-01-01T00:00:00",
+  "LastErrorMessage": null,
+  "IsFreezed": false,
+  "SettingsBuilder": {
+    "Settings": [
+      {
+        "Maximum": 65,
+        "Minimum": 0,
+        "PropertyName": "LeftOffset",
+        "CurrentValue": 62,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Left untensioned",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 65,
+        "Minimum": 0,
+        "PropertyName": "RightOffset",
+        "CurrentValue": 64,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Right untensioned",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "PropertyName": "TestOffsets",
+        "CurrentValue": false,
+        "Name": null,
+        "TypeName": "BoolEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Test untensioned positions",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 100,
+        "Minimum": 0,
+        "PropertyName": "decel_gain",
+        "CurrentValue": 57,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "base tension",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 80,
+        "Minimum": 0,
+        "PropertyName": "yaw_gain",
+        "CurrentValue": 5,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "tension difference",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 4,
+        "Minimum": 0,
+        "PropertyName": "smooth",
+        "CurrentValue": 2,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "smoothing",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 20,
+        "PropertyName": "tmax",
+        "CurrentValue": 90,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "max tension",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "PropertyName": "max_test",
+        "CurrentValue": false,
+        "Name": null,
+        "TypeName": "BoolEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "test max tension",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      }
+    ],
+    "IsEditMode": false
+  }
+}

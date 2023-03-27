@@ -1,0 +1,155 @@
+{
+  "EditorExpanded": true,
+  "SerialPortName": "COM80",
+  "IsFreezed": false,
+  "BaudRate": 19200,
+  "RtsEnable": true,
+  "DtrEnable": true,
+  "LogIncomingData": false,
+  "AutomaticReconnect": true,
+  "SettingsBuilder": {
+    "Settings": [
+      {
+        "Maximum": 100,
+        "Minimum": 10,
+        "PropertyName": "MaxTravel",
+        "CurrentValue": 70,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "MaxTravel",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 40,
+        "Minimum": 10,
+        "PropertyName": "Maximum G",
+        "CurrentValue": 17,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Maximum Acceleration (m/s²)",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 80,
+        "Minimum": 0,
+        "PropertyName": "Sway Maximum G",
+        "CurrentValue": 39,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Maximum Sway Acceleration (m/s²)",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 15,
+        "Minimum": 0,
+        "PropertyName": "DeadZone",
+        "CurrentValue": 0,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Dead zone  (m/s²)",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 200,
+        "Minimum": 1,
+        "PropertyName": "Lineariy",
+        "CurrentValue": 111,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Lineariy",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 25000,
+        "Minimum": 100,
+        "PropertyName": "maxStepperSpeed",
+        "CurrentValue": 25000,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Stepper speed",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      }
+    ],
+    "IsEditMode": false
+  },
+  "OnConnectMessage": {
+    "Expression": ""
+  },
+  "UpdateMessages": [
+    {
+      "Message": {
+        "Interpreter": 1,
+        "Expression": "var gameRunning = $prop('DataCorePlugin.GameRunning');\r\nvar maxAccel = $prop('Settings.Maximum G');\r\nvar maxSwayAccel = $prop('Settings.Sway Maximum G')\r\nvar maxTravel = $prop('Settings.MaxTravel');\r\nvar linearity = $prop('Settings.Lineariy') / 100\r\n//return linearity; \r\nif(!gameRunning ){\r\n\treturn \"M1 0\\n\";\r\n}else{\r\n\tvar surge = -$prop('AccelerationSurge');\r\n\tvar sway = $prop('AccelerationSway')\r\n\t\r\n\t\r\n\tif(Math.abs(surge) < $prop('Settings.DeadZone')){\r\n\t\tsurge = 0;\r\n\t}\r\n\t\r\n\tif(Math.abs(sway) < $prop('Settings.DeadZone')){\r\n\t\tsway = 0;\r\n\t}\r\n\t\r\n\tvar surgeComponent = -surge / maxAccel;\r\n\tvar swayComponent = - sway / maxSwayAccel;\r\n\t\r\n\tvar res = Math.min(Math.max(surgeComponent + swayComponent,0),1) ;\r\n\t\r\n\tres = Math.pow(res,1/linearity);\r\n\t\r\n\tres =  res * 32767 * maxTravel /100;\r\n\t\r\n\treturn \"M1 \" + format(res,'0') + '\\n';\r\n}\r\n"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 30
+    },
+    {
+      "Message": {
+        "Interpreter": 1,
+        "Expression": "var gameRunning = $prop('DataCorePlugin.GameRunning');\r\nvar maxAccel = $prop('Settings.Maximum G');\r\nvar maxSwayAccel = $prop('Settings.Sway Maximum G')\r\nvar maxTravel = $prop('Settings.MaxTravel');\r\nvar linearity = $prop('Settings.Lineariy') / 50\r\nif(!gameRunning ){\r\n\treturn \"M2 0\\n\";\r\n}else{\r\n\tvar surge = -$prop('AccelerationSurge');\r\n\tvar sway = -$prop('AccelerationSway')\r\n\t\r\n\t\r\n\tif(Math.abs(surge) < $prop('Settings.DeadZone')){\r\n\t\tsurge = 0;\r\n\t}\r\n\t\r\n\tif(Math.abs(sway) < $prop('Settings.DeadZone')){\r\n\t\tsway = 0;\r\n\t}\r\n\t\r\n\tvar surgeComponent = -surge / maxAccel;\r\n\tvar swayComponent = - sway / maxSwayAccel;\r\n\t\r\n\tvar res = Math.min(Math.max(surgeComponent + swayComponent,0),1) ;\r\n\tres = Math.pow(res,1/linearity);\r\n\tres =  res * 32767* maxTravel / 100;\r\n\t\r\n\treturn \"M2 \" + format(res,'0') + '\\n';\r\n}\r\n"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 30
+    },
+    {
+      "Message": {
+        "Expression": "'M1 speed ' +format( [Settings.maxStepperSpeed],'0')\r\n+'\\nM2 speed ' +format( [Settings.maxStepperSpeed],'0') + '\\n'\r\n\r\n"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 5
+    }
+  ],
+  "OnDisconnectMessage": {
+    "Expression": ""
+  },
+  "IsConnecting": false,
+  "IsEnabled": true,
+  "IsConnected": true,
+  "Name": "Custom Serial device",
+  "Description": "Serial device",
+  "LastErrorDate": "0001-01-01T00:00:00",
+  "LastErrorMessage": null
+}

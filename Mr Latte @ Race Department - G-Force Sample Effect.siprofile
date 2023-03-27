@@ -1,0 +1,273 @@
+{
+  "IncludeOutputSettingsInProfile": false,
+  "UnmuteEffectsAfterSimhubRestart": true,
+  "AutomaticSwitch": false,
+  "Description": "Custom created Load effect by blekenbleu\r\nIn this example, we combine all wheels into mono \r\nThen apply multiple layers for a Chassis Based load sensation.\r\n\r\nNote:: Use X-LOW BASS layers on suitable epquipment only/ \r\n",
+  "EffectsContainers": [
+    {
+      "EffectsContainers": [
+        {
+          "AutocalibrationMax": 95.0,
+          "Filter": {
+            "GammaValue": 1.7500000000000007,
+            "InputGain": 100.0,
+            "MinimumForce": 5,
+            "Threshold": 10,
+            "FilterType": "GammaFilter"
+          },
+          "FrontLeftFormula": {
+            "Expression": "(\r\nmax(0,-isnull([DataCorePlugin.GameRawData.Physics.AccG01],0)*20)\r\n+\r\nmax(0,-isnull([DataCorePlugin.GameRawData.Physics.AccG03],0)*25)\r\n)\r\n*2\r\n"
+          },
+          "FrontRightFormula": {
+            "Expression": "(\r\nmax(0,isnull([DataCorePlugin.GameRawData.Physics.AccG01],0)*20)\r\n+\r\nmax(0,-isnull([DataCorePlugin.GameRawData.Physics.AccG03],0)*25)\r\n)\r\n*2\r\n\r\n"
+          },
+          "RearLeftFormula": {
+            "Expression": "(\r\nmax(0,-isnull([DataCorePlugin.GameRawData.Physics.AccG01],0)*25)\r\n+\r\nmax(0,isnull([DataCorePlugin.GameRawData.Physics.AccG03],0)*40)\r\n)\r\n*2\r\n"
+          },
+          "RearRightFormula": {
+            "Expression": "(\r\nmax(0,isnull([DataCorePlugin.GameRawData.Physics.AccG01],0)*25)\r\n+\r\nmax(0,isnull([DataCorePlugin.GameRawData.Physics.AccG03],0)*40)\r\n)\r\n*2\r\n"
+          },
+          "ContainerId": "0c9b7c89-9d0f-4b8d-a868-782be95a6d3a",
+          "ContainerType": "CustomEffectContainer",
+          "Description": "(A) CNR LOAD MONO (X-LOW BASS)",
+          "AggregationMode": "Mono",
+          "Gain": 100.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 3,
+            "UseHighFrequency": true,
+            "HighFrequency": 9,
+            "WhiteNoise": 6,
+            "UseWhiteNoise": true,
+            "EnableDurationModulation": false,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "AssignToChannelGroup": true,
+            "ChannelGroupName": "(A) CNR LOAD (X-LOW BASS)",
+            "PropertyName": null,
+            "ExportProperty": false,
+            "DisableOutput": false,
+            "OutputType": "ToneOutput"
+          },
+          "Algorythm": null
+        },
+        {
+          "AutocalibrationMax": 95.0,
+          "Filter": {
+            "GammaValue": 0.39999999999999997,
+            "InputGain": 100.0,
+            "MinimumForce": 50,
+            "Threshold": 5,
+            "FilterType": "GammaFilter"
+          },
+          "FrontLeftFormula": {
+            "Expression": "(\r\nmax(0,-isnull([DataCorePlugin.GameRawData.Physics.AccG01],0)*20)\r\n+\r\nmax(0,-isnull([DataCorePlugin.GameRawData.Physics.AccG03],0)*25)\r\n)\r\n*2\r\n"
+          },
+          "FrontRightFormula": {
+            "Expression": "(\r\nmax(0,isnull([DataCorePlugin.GameRawData.Physics.AccG01],0)*20)\r\n+\r\nmax(0,-isnull([DataCorePlugin.GameRawData.Physics.AccG03],0)*25)\r\n)\r\n*2\r\n\r\n"
+          },
+          "RearLeftFormula": {
+            "Expression": "(\r\nmax(0,-isnull([DataCorePlugin.GameRawData.Physics.AccG01],0)*25)\r\n+\r\nmax(0,isnull([DataCorePlugin.GameRawData.Physics.AccG03],0)*40)\r\n)\r\n*2\r\n"
+          },
+          "RearRightFormula": {
+            "Expression": "(\r\nmax(0,isnull([DataCorePlugin.GameRawData.Physics.AccG01],0)*25)\r\n+\r\nmax(0,isnull([DataCorePlugin.GameRawData.Physics.AccG03],0)*40)\r\n)\r\n*2\r\n"
+          },
+          "ContainerId": "e2a827bc-532d-49f2-a34e-f53e4ba5de33",
+          "ContainerType": "CustomEffectContainer",
+          "Description": "(B) CNR LOAD MONO (X-LOW BASS)",
+          "AggregationMode": "Mono",
+          "Gain": 100.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 9,
+            "UseHighFrequency": true,
+            "HighFrequency": 6,
+            "WhiteNoise": 0,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": false,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "AssignToChannelGroup": true,
+            "ChannelGroupName": "(B) CNR LOAD (X-LOW BASS)",
+            "PropertyName": null,
+            "ExportProperty": false,
+            "DisableOutput": false,
+            "OutputType": "ToneOutput"
+          },
+          "Algorythm": null
+        },
+        {
+          "AutocalibrationMax": 95.0,
+          "Filter": {
+            "GammaValue": 0.39999999999999997,
+            "InputGain": 100.0,
+            "MinimumForce": 20,
+            "Threshold": 5,
+            "FilterType": "GammaFilter"
+          },
+          "FrontLeftFormula": {
+            "Expression": "(\r\nmax(0,-isnull([DataCorePlugin.GameRawData.Physics.AccG01],0)*20)\r\n+\r\nmax(0,-isnull([DataCorePlugin.GameRawData.Physics.AccG03],0)*25)\r\n)\r\n*2\r\n"
+          },
+          "FrontRightFormula": {
+            "Expression": "(\r\nmax(0,isnull([DataCorePlugin.GameRawData.Physics.AccG01],0)*20)\r\n+\r\nmax(0,-isnull([DataCorePlugin.GameRawData.Physics.AccG03],0)*25)\r\n)\r\n*2\r\n\r\n"
+          },
+          "RearLeftFormula": {
+            "Expression": "(\r\nmax(0,-isnull([DataCorePlugin.GameRawData.Physics.AccG01],0)*25)\r\n+\r\nmax(0,isnull([DataCorePlugin.GameRawData.Physics.AccG03],0)*40)\r\n)\r\n*2\r\n"
+          },
+          "RearRightFormula": {
+            "Expression": "(\r\nmax(0,isnull([DataCorePlugin.GameRawData.Physics.AccG01],0)*25)\r\n+\r\nmax(0,isnull([DataCorePlugin.GameRawData.Physics.AccG03],0)*40)\r\n)\r\n*2\r\n"
+          },
+          "ContainerId": "679c580b-6015-46fa-b8ed-74c4af748687",
+          "ContainerType": "CustomEffectContainer",
+          "Description": "(C) CNR LOAD MONO (X-LOW BASS) ",
+          "AggregationMode": "Mono",
+          "Gain": 100.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 18,
+            "UseHighFrequency": true,
+            "HighFrequency": 6,
+            "WhiteNoise": 0,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": false,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "AssignToChannelGroup": true,
+            "ChannelGroupName": "(C) CNR LOAD (X-LOW BASS)",
+            "PropertyName": null,
+            "ExportProperty": false,
+            "DisableOutput": false,
+            "OutputType": "ToneOutput"
+          },
+          "Algorythm": null
+        },
+        {
+          "AutocalibrationMax": 95.0,
+          "Filter": {
+            "GammaValue": 0.099999999999999686,
+            "InputGain": 100.0,
+            "MinimumForce": 0,
+            "Threshold": 35,
+            "FilterType": "GammaFilter"
+          },
+          "FrontLeftFormula": {
+            "Expression": "(\r\nmax(0,-isnull([DataCorePlugin.GameRawData.Physics.AccG01],0)*20)\r\n+\r\nmax(0,-isnull([DataCorePlugin.GameRawData.Physics.AccG03],0)*25)\r\n)\r\n*2\r\n"
+          },
+          "FrontRightFormula": {
+            "Expression": "(\r\nmax(0,isnull([DataCorePlugin.GameRawData.Physics.AccG01],0)*20)\r\n+\r\nmax(0,-isnull([DataCorePlugin.GameRawData.Physics.AccG03],0)*25)\r\n)\r\n*2\r\n\r\n"
+          },
+          "RearLeftFormula": {
+            "Expression": "(\r\nmax(0,-isnull([DataCorePlugin.GameRawData.Physics.AccG01],0)*25)\r\n+\r\nmax(0,isnull([DataCorePlugin.GameRawData.Physics.AccG03],0)*40)\r\n)\r\n*2\r\n"
+          },
+          "RearRightFormula": {
+            "Expression": "(\r\nmax(0,isnull([DataCorePlugin.GameRawData.Physics.AccG01],0)*25)\r\n+\r\nmax(0,isnull([DataCorePlugin.GameRawData.Physics.AccG03],0)*40)\r\n)\r\n*2\r\n"
+          },
+          "ContainerId": "36f7c5c1-905a-4393-838d-9a80e38b266b",
+          "ContainerType": "CustomEffectContainer",
+          "Description": "(D) CNR LOAD MONO (MID BASS)",
+          "AggregationMode": "Mono",
+          "Gain": 19.999999999998863,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 40,
+            "UseHighFrequency": true,
+            "HighFrequency": 32,
+            "WhiteNoise": 2,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": false,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": true,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "AssignToChannelGroup": true,
+            "ChannelGroupName": "(D) CNR LOAD (MID BASS)",
+            "PropertyName": null,
+            "ExportProperty": false,
+            "DisableOutput": false,
+            "OutputType": "ToneOutput"
+          },
+          "Algorythm": null
+        },
+        {
+          "AutocalibrationMax": 95.0,
+          "Filter": {
+            "GammaValue": 0.35,
+            "InputGain": 60.0,
+            "MinimumForce": 0,
+            "Threshold": 0,
+            "FilterType": "GammaFilter"
+          },
+          "FrontLeftFormula": {
+            "Expression": "(\r\nmax(0,-isnull([DataCorePlugin.GameRawData.Physics.AccG01],0)*20)\r\n+\r\nmax(0,-isnull([DataCorePlugin.GameRawData.Physics.AccG03],0)*25)\r\n)\r\n*2\r\n"
+          },
+          "FrontRightFormula": {
+            "Expression": "(\r\nmax(0,isnull([DataCorePlugin.GameRawData.Physics.AccG01],0)*20)\r\n+\r\nmax(0,-isnull([DataCorePlugin.GameRawData.Physics.AccG03],0)*25)\r\n)\r\n*2\r\n\r\n"
+          },
+          "RearLeftFormula": {
+            "Expression": "(\r\nmax(0,-isnull([DataCorePlugin.GameRawData.Physics.AccG01],0)*25)\r\n+\r\nmax(0,isnull([DataCorePlugin.GameRawData.Physics.AccG03],0)*40)\r\n)\r\n*2\r\n"
+          },
+          "RearRightFormula": {
+            "Expression": "(\r\nmax(0,isnull([DataCorePlugin.GameRawData.Physics.AccG01],0)*25)\r\n+\r\nmax(0,isnull([DataCorePlugin.GameRawData.Physics.AccG03],0)*40)\r\n)\r\n*2\r\n"
+          },
+          "ContainerId": "580c56ce-289b-4a2a-b6d4-aacaac7aee22",
+          "ContainerType": "CustomEffectContainer",
+          "Description": "(E) CNR LOAD MONO (MID BASS)",
+          "AggregationMode": "Mono",
+          "Gain": 100.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 80,
+            "UseHighFrequency": true,
+            "HighFrequency": 64,
+            "WhiteNoise": 2,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": false,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": true,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "AssignToChannelGroup": true,
+            "ChannelGroupName": "(E) CNR LOAD (MID BASS)",
+            "PropertyName": null,
+            "ExportProperty": false,
+            "DisableOutput": false,
+            "OutputType": "ToneOutput"
+          },
+          "Algorythm": null
+        }
+      ],
+      "Filter": null,
+      "ContainerId": "4c928fae-9699-45e6-994c-e98dc907601b",
+      "ContainerType": "GroupContainer",
+      "Description": "Experimental MONO G-Force / Custom Effect by blekenblue / Multilayers by Mr Latte   (Most Suitable For Large BK & Q10B)",
+      "AggregationMode": null,
+      "Gain": 100.0,
+      "IsEnabled": true,
+      "Output": null,
+      "Algorythm": null
+    }
+  ],
+  "AutoCalibrationRatio2": 0,
+  "LastLoaded": "2021-08-23T15:21:27.7378822+01:00",
+  "Name": "Mr Latte @ Race Department - G-Force Sample Effect",
+  "ProfileId": "6842010d-5027-47a1-9d04-b9ef4f653910",
+  "OutputMode": 1,
+  "GlobalGain": 50.0,
+  "UseProfileGain": false
+}

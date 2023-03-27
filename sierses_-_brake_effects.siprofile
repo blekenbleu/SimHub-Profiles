@@ -1,0 +1,138 @@
+{
+  "IncludeOutputSettingsInProfile": false,
+  "UnmuteEffectsAfterSimhubRestart": true,
+  "AutomaticSwitch": false,
+  "Description": "Reducing effect as pad meets rotor, then increasing effect afterward.\r\n\r\n-sierses",
+  "EffectsContainers": [
+    {
+      "EffectsContainers": [
+        {
+          "Filter": {
+            "Duration": 80,
+            "FilterType": "PulseFilter"
+          },
+          "ContainerId": "8b17d778-cccb-4787-8602-5624287ec311",
+          "ContainerType": "ABSActiveEffectContainer",
+          "Description": "Provides feedback when ABS is currently active",
+          "AggregationMode": null,
+          "Gain": 40.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 36,
+            "Harmonics": 0,
+            "DelayEnabled": false,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "BrakeABS",
+            "ExportProperty": false,
+            "DisableOutput": false,
+            "OutputType": "SingleToneOutput"
+          }
+        },
+        {
+          "Grain": 10.0,
+          "Filter": {
+            "GammaValue": 2.9999999999999973,
+            "FilterType": "SimpleGammaFilter"
+          },
+          "LowSpeed": 5,
+          "HighSpeed": 360,
+          "ContainerId": "f3185def-0c49-4bf0-b25c-0cf1a1e51df7",
+          "ContainerType": "RoadTextureContainer",
+          "Description": "Road texture feed for brakes",
+          "AggregationMode": null,
+          "Gain": 0.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 100,
+            "UseHighFrequency": false,
+            "HighFrequency": 30,
+            "WhiteNoise": 4,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": false,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "BrakeTexture",
+            "ExportProperty": true,
+            "DisableOutput": true,
+            "OutputType": "ToneOutput"
+          }
+        },
+        {
+          "AutocalibrationMax": 95.0,
+          "Filter": {
+            "GammaValue": 1.5000000000000004,
+            "InputGain": 100.0,
+            "MinimumForce": 0,
+            "Threshold": 0,
+            "FilterType": "GammaFilter"
+          },
+          "FrontLeftFormula": {
+            "Interpreter": 1,
+            "Expression": "// braking road noise\r\nif ($prop('Brake') > 1 && $prop('ShakeITBSV3Plugin.Export.BrakeTexture.All') > 0) {\r\n  return Math.abs($prop('Brake') - 15) * (100 - $prop('ShakeITBSV3Plugin.Export.BrakeTexture.All')) * 0.0111\r\n} else {\r\n  return 0\r\n}"
+          },
+          "FrontRightFormula": {
+            "Interpreter": 1,
+            "Expression": ""
+          },
+          "RearLeftFormula": {
+            "Interpreter": 1,
+            "Expression": ""
+          },
+          "RearRightFormula": {
+            "Interpreter": 1,
+            "Expression": ""
+          },
+          "ContainerId": "c6cc7512-443a-4c55-95cd-52b9ebfac434",
+          "ContainerType": "CustomEffectContainer",
+          "Description": "Brake pedal: braking road noise",
+          "AggregationMode": "Mono",
+          "Gain": 24.666666666666742,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 43,
+            "UseHighFrequency": true,
+            "HighFrequency": 37,
+            "WhiteNoise": 4,
+            "UseWhiteNoise": true,
+            "EnableDurationModulation": true,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": true,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "AssignToChannelGroup": true,
+            "ChannelGroupName": "Brakes",
+            "PropertyName": null,
+            "ExportProperty": false,
+            "DisableOutput": false,
+            "OutputType": "ToneOutput"
+          }
+        }
+      ],
+      "Filter": null,
+      "ContainerId": "ee3e92b1-2f10-4d9d-b870-f2a1ef516a48",
+      "ContainerType": "GroupContainer",
+      "Description": "Brakes",
+      "AggregationMode": null,
+      "Gain": 50.000000000000227,
+      "IsEnabled": true,
+      "Output": null
+    }
+  ],
+  "AutoCalibrationRatio2": 100,
+  "LastLoaded": "2021-10-27T21:33:05.0512856-07:00",
+  "Name": "sierses - brake effects",
+  "ProfileId": "dc827b22-d583-411d-b576-a6d0d8d6179a",
+  "OutputMode": 1,
+  "GlobalGain": 50.0,
+  "UseProfileGain": false
+}

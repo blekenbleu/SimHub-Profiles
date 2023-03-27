@@ -1,0 +1,12 @@
+// left front loaded slip
+var L = $prop('ShakeITBSV3Plugin.Export.proxyG.FrontLeft');
+L -= $prop('ShakeITBSV3Plugin.Export.proxy_G.RearLeft');
+L = 25 + 25 * L / 100;
+// deceleration load
+var d = $prop('ShakeITBSV3Plugin.Export.proxy_G.FrontRight')
+d -= $prop('ShakeITBSV3Plugin.Export.proxy_G.RearRight');
+L += L * d/100;
+// return L;	// load test
+// corner slip
+var s = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontLeft');
+return s *  L / 100;

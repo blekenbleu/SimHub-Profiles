@@ -1,0 +1,228 @@
+{
+  "AutomaticReconnect": true,
+  "SerialPortName": "COM5",
+  "IsConnecting": false,
+  "IsEnabled": true,
+  "LogIncomingData": true,
+  "IsConnected": true,
+  "BaudRate": 115200,
+  "UpdateMessages": [
+    {
+      "Message": {
+        "Interpreter": 1,
+        "Expression": "// convert 20 experimental just noticeable tension increments (21 steps) to new Arduino LUT\r\nvar jndx = [2,9,13,16,19,22,25,28,31,34,37,41,44,48,52,57,62,67,74,82,90];\r\nvar n = jndx.length - 1;\r\nvar base = jndx[0];\r\nfunction tweak(value) {\r\n  return value - base;\r\n}\r\nvar jnd = jndx.map(tweak);\r\n//return jnd.toString();\r\n\r\nvar step = [0x7F];\t// warn Arduino of LUT load\r\nstep[1] = $prop('Settings.LeftOffset');\r\nstep[2] = $prop('Settings.RightOffset');\r\nvar m = ($prop('Settings.tmax') - base) / jnd[n];\t// max tension rescale factor\r\n\r\n// Bresenham thru jnd increments to steps\r\nstep[17] = Math.round(m * jnd[n]);\t\t\t// rescale last step\r\nvar l = 0;\r\nfor (i = 3; i < 17; i++) {\r\n  l += n;\r\n  var j = l / 15;\t\t\t\t// location in jnd[] corresponding to step[i]\r\n  var a = Math.floor(j);\t\t// linear interpolation: index into jnd[]\r\n  var b = jnd[a + 1] - jnd[a];\t// servo steps\r\n  var f = j - a;\t\t\t\t// jnd[] fraction\r\n  step[i] = Math.round(m * (jnd[a] + f * b));\r\n}\r\n//return step[3]\t\t\t\t// goes to LUT[1] (Lut[0] == 0)\r\n//return step.toString();\r\n\r\nvar l = 16;\t\t// most slack control indices\r\nvar r = 32;\r\nif ($prop('Settings.max_test')) {\r\n  l += 15; // most tense control indices\r\n  r += 15;\r\n}\r\nstep[18] = l;\r\nstep[19] = r;\r\n// send calibration table, then 0x7F (reset), then update servo positions\r\n//return String.fromCharCode(0)+step.toString()+'!'+sl+sr; // Arduino would have to parse ASCII\r\nvar str = String.fromCharCode.apply(null,step);\r\n//return str.length;\t// 21\r\n// send servo step LUT, then left and right servo position indices using that LUT\r\nreturn str;"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 0
+    },
+    {
+      "Message": {
+        "Interpreter": 1,
+        "Expression": "// Repurpose gain sliders for to test just noticeable tension steps\r\nif ($prop('Settings.max_test') || $prop('Settings.TestOffsets'))\r\n  return;\r\nvar d = new Date();\r\nvar dg = Math.max($prop('Settings.decel_gain'),2);\t// base tension\r\nvar yg = $prop('Settings.yaw_gain');\t\t\t\t// tension increment\r\nif (null == root[\"odg\"]) {\r\n  root[\"odg\"] = dg;\r\n  root[\"oyg\"] = yg;\r\n}\r\nif (dg != root[\"odg\"] || yg != root[\"oyg\"] || null == root[\"Time\"]) {\r\n  root[\"Time\"] = d.getTime();\r\n  root[\"odg\"] = dg;\r\n  root[\"oyg\"] = yg;\r\n}  \r\nvar s = root[\"Time\"];\r\nvar t = d.getTime() - s;\r\n\r\nif (3500 < t)\r\n  d = 2;\t\t\t// timeout: release tension\r\nelse if (3000 < t)\r\n  d = dg + yg;\t\t// base + difference tensions\r\nelse if (2500 < t)\r\n  d = dg;\t\t\t// base tension\r\nelse if (2000 < t)\r\n  d = dg + yg;\r\nelse if (1500 < t)\r\n  d = dg;  \r\nelse if (1000 < t)\r\n  d = dg + yg;\r\nelse if (500 < t)\r\n  d = dg;\r\nelse\r\n  d = dg + yg;\t// may be even or odd\r\nvar o = 1 + d;  // the other one\r\n//return d.toString()+\"\\t\"+o.toString();\r\nreturn String.fromCharCode(d)+String.fromCharCode(o);"
+      },
+      "IsEnabled": false,
+      "MaximumFrequency": 0
+    },
+    {
+      "Message": {
+        "Interpreter": 1,
+        "Expression": "// adjust range of original 7-bit servo movements\r\nvar lo = $prop('Settings.LeftOffset');\r\nvar ro = $prop('Settings.RightOffset');\r\n// send test tension values after setting offsets\r\nvar lt = 2;\t\t// most slack left tension value\r\nif ($prop('Settings.max_test'))\r\n  lt = 126 & $prop('Settings.tmax'); // most tense \r\nvar code = [0,lo,1,ro,lt,1+lt];\r\nreturn String.fromCharCode.apply(null,code);\r\n\r\n"
+      },
+      "IsEnabled": false,
+      "MaximumFrequency": 0
+    },
+    {
+      "Message": {
+        "Interpreter": 1,
+        "Expression": "// simulate 4-bit LUT\r\nvar tmax = $prop('Settings.tmax');\t\t\t\t// max tension\r\n// 20 experimental just noticeable tension increments (21 steps)\r\nvar jndx = [2,9,13,16,19,22,25,28,31,34,37,41,44,48,52,57,62,67,74,82,90];\r\n// 21 linear steps for quantization evaluations\r\njndx =[2,6.4,10.8,15.2,19.6,24,28.4,32.8,37.2,41.6,46,50.4,54.8,59.2,63.6,68,72.4,76.8,81.2,85.6,90];\r\nvar base = jndx[0];\r\nif (null == root[\"tmax\"]) {\r\n  root[\"tmax\"] = tmax;\r\n}\r\nif (tmax != root[\"tmax\"] || null == root[\"LUT\"]) {\r\n  root[\"tmax\"] = tmax;\r\n  var n = jndx.length - 1;\r\n  function tweak(value) {\r\n    return value - base;\r\n  }\r\n  var jnd = jndx.map(tweak);\r\n  //return jnd.toString();\r\n  var m = ($prop('Settings.tmax') - base) / jnd[n];\t// max tension rescale factor\r\n  // Bresenham thru jnd increments to steps\r\n  var step = [base];\r\n  step[15] = base + Math.round(m * jnd[n]);\t\t\t// rescale last step\r\n  var l = 0;\r\n  for (i = 1; i < 15; i++) {\r\n    l += n;\r\n    var j = l / 15;\t\t\t\t// location in jnd[] corresponding to step[i]\r\n    var a = Math.floor(j);\t\t// linear interpolation: index into jnd[]\r\n    var b = jnd[a + 1] - jnd[a];\t// servo steps\r\n    var f = j - a;\t\t\t\t// jnd[] fraction\r\n    step[i] = base + Math.round(m * (jnd[a] + f * b));\r\n  }\r\n  \r\n  root[\"LUT\"] = step;\r\n}\r\n\r\nvar LUT = root[\"LUT\"];\r\nvar tens = [0x7E & LUT[0], 1 | LUT[0]];\r\nvar lin = [2,3];\r\nif ($prop('Settings.max_test'))\r\n  tens = [0x7E & LUT[15], 1 | LUT[15]];\r\nelse if (!$prop('Settings.TestOffsets')) {\r\n  var surge = Math.max(-$prop('AccelerationSurge'),0) * $prop('Settings.decel_gain') / 33;\r\n  var sway = $prop('AccelerationSway') * $prop('Settings.yaw_gain') / 33;\r\n//  sway = 0.7;\r\n//  surge = 0.7;\r\n  var right;\r\n  var left = Math.sqrt(surge*surge + sway*sway);\t// increase tension\r\n  if (0 < sway)\r\n    right = Math.max(surge + surge - left,0);\r\n  else {\t// negative sway: increase right tension\r\n    right = left;\r\n    left = Math.max(surge + surge - right,0);\r\n  }  \r\n  // left is constrained to even values, right to odd\r\n  // 4-bit indices into servo LUT\r\n  tens = [0x7E & LUT[Math.min(Math.round(left),15)], 1 | LUT[Math.min(Math.round(right),15)]];\r\n// full 7-bit precision servo values\r\n  lin = [0x7E & Math.min(tmax,Math.round(base + left*5.7)), 1 | Math.min(tmax,Math.round(base + right*5.7))];\r\n}\r\n//return surge.toString()+','+sway.toString();\r\n//return tens.toString();//+' '+lin.toString();\t// ASCII decimal values\r\n//return String.fromCharCode.apply(null,tens); // 7-bit character values from 4-bit LUT\r\nreturn String.fromCharCode.apply(null,lin);  // 7-bit character values with 7-bit granularity\r\n"
+      },
+      "IsEnabled": false,
+      "MaximumFrequency": 0
+    },
+    {
+      "Message": {
+        "Interpreter": 1,
+        "Expression": "// special: 0 = reset; 1 = clip(F); 2 = echo (0-F); 3 = echo full hex\r\nvar s = 0x70 + $prop('Settings.special');\r\n//return s\r\nreturn String.fromCharCode(s);"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 0
+    },
+    {
+      "Message": {
+        "Interpreter": 1,
+        "Expression": "// 4-bit tension LUT indices\r\nvar tens = [0, 0x10];\t// LUT[0] for servo 0,1\r\nif ($prop('Settings.max_test'))\r\n  tens = [15, 0x1F];\t// LUT[15] for servo 0,1\r\nelse if (!$prop('Settings.TestOffsets')) {\r\n  var surge = Math.max(-$prop('AccelerationSurge'),0) * $prop('Settings.decel_gain') / 33;\r\n  var sway = $prop('AccelerationSway') * $prop('Settings.yaw_gain') / 33;\r\n//  sway = 0.7;\r\n//  surge = 0.7;\r\n  var right;\r\n  var left = Math.sqrt(surge*surge + sway*sway);\t// increase tension\r\n  if (0 < sway)\r\n    right = Math.max(surge + surge - left,0);\r\n  else {\t// negative sway: increase right tension\r\n    right = left;\r\n    left = Math.max(surge + surge - right,0);\r\n  }  \r\n  // 4-bit indices for servo LUT\r\n  tens = [Math.min(Math.round(left),15), 0x10 | Math.min(Math.round(right),15)];\r\n//return tens.toString();\r\n}\r\nreturn String.fromCharCode.apply(null,tens);  // 7-bit characters with 4-bit LUT granularity"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 0
+    }
+  ],
+  "OnConnectMessage": {
+    "Expression": "' !'"
+  },
+  "OnDisconnectMessage": {
+    "Interpreter": 1,
+    "Expression": "return String.fromCharCode(0,16);\t// servos 0,1 slack LUT indices"
+  },
+  "DtrEnable": true,
+  "RtsEnable": false,
+  "EditorExpanded": true,
+  "Name": "Custom Serial device",
+  "Description": "noticeable differences tension test",
+  "LastErrorDate": "2021-06-14T12:55:12.7155025-04:00",
+  "LastErrorMessage": null,
+  "IsFreezed": false,
+  "SettingsBuilder": {
+    "Settings": [
+      {
+        "Maximum": 75,
+        "Minimum": 0,
+        "PropertyName": "LeftOffset",
+        "CurrentValue": 65,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Left untensioned",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 75,
+        "Minimum": 0,
+        "PropertyName": "RightOffset",
+        "CurrentValue": 26,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Right untensioned",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "PropertyName": "TestOffsets",
+        "CurrentValue": false,
+        "Name": null,
+        "TypeName": "BoolEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Test untensioned positions",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 100,
+        "Minimum": 0,
+        "PropertyName": "decel_gain",
+        "CurrentValue": 59,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "decel gain",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 80,
+        "Minimum": 0,
+        "PropertyName": "yaw_gain",
+        "CurrentValue": 45,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "yaw gain",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 4,
+        "Minimum": 0,
+        "PropertyName": "smooth",
+        "CurrentValue": 2,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "smoothing",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 20,
+        "PropertyName": "tmax",
+        "CurrentValue": 86,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "max tension",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "PropertyName": "max_test",
+        "CurrentValue": false,
+        "Name": null,
+        "TypeName": "BoolEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "test max tension",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 3,
+        "Minimum": 0,
+        "PropertyName": "special",
+        "CurrentValue": 3,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "special: 0=reset;  1=echo F(clip?);  2=echo 0-F;  3=echo full hex",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      }
+    ],
+    "IsEditMode": false
+  }
+}

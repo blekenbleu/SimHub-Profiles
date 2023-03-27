@@ -1,0 +1,37 @@
+{
+  "AutomaticReconnect": true,
+  "SerialPortName": "COM5",
+  "IsConnecting": false,
+  "IsEnabled": true,
+  "LogIncomingData": true,
+  "IsConnected": true,
+  "BaudRate": 115200,
+  "UpdateMessages": [
+    {
+      "Message": {
+        "Interpreter": 1,
+        "Expression": "// Initialize history\r\nif(root[\"speed\"]==null) {\r\n   root[\"speed\"] = $prop('SpeedMph');\r\n   root[\"delta_s\"] = 0.2;\r\n}\r\nif(root[\"yaw\"]==null) {\r\n   root[\"yaw\"] = $prop('OrientationYaw');\r\n   root[\"delta_y\"] = 0.2;\r\n}\r\n\r\nvar s = $prop('SpeedMph');\r\nvar y = $prop('OrientationYaw');\r\nvar ds = root[\"speed\"] - s;\t\t// negative of speed change\r\nvar dy = y - root[\"yaw\"];\r\n\r\nif (Math.abs(dy) > 180) {  // yaw went +/- 180\r\n  if (Math.abs(root[\"yaw\"]) > 150)\r\n    dy = -(y + root[\"yaw\"]);\r\n}\r\nvar YawGain = 72;\r\nvar DecelGain = 178;\r\nvar Gy = YawGain * dy;\r\nvar Gs = DecelGain * ds;\r\nvar ms = 1;\r\nvar my = 1;  // sample interval factors\r\n\r\n// check for delta spikes from missed samples\r\nvar t = 2;                                   // non-linear spike threshold\r\nif (Math.abs(dy * root[\"delta_y\"]) > t && Math.abs(dy) > Math.abs(1.8 * root[\"delta_y\"]))\r\n  Gy /= (my = 2);      // compensate sampling artifacts\r\nif ((ds * root[\"delta_s\"])  > t && ds > 1.8 * root[\"delta_s\"])\r\n  Gs /= (ms = 2);      // compensate sampling artifacts\r\n  \r\n// low-pass IIR filters\r\nif (null==root[\"Gsb4\"]) {\r\n  root[\"Gsb4\"] = DecelGain * 0.5;\r\n  root[\"Gyb4\"] = YawGain * 0.5;\r\n}\r\nvar Gsb4 = root[\"Gsb4\"], Gyb4 = root[\"Gyb4\"];\r\nvar tc = 3;  // lowpass IIR\r\nGsb4 += ms * (Gs - Gsb4) / tc;\r\nGyb4 += my * (Gy - Gyb4) / tc;\r\nroot[\"Gsb4\"] = Gsb4; root[\"Gyb4\"] = Gyb4; // preserve lowpass IIR outputs for next samples\r\n\r\n// store unfiltered values for next increment\r\nroot[\"speed\"] = s;\r\nroot[\"yaw\"] = y;\r\nroot[\"delta_y\"] = dy;\r\nroot[\"delta_s\"] = ds;\r\n\r\n// SimHub\r\nvar accel = $prop('GlobalAccelerationG');\r\nvar acc01 = $prop('GameRawData.Physics.AccG01');\r\nvar acc02 = $prop('GameRawData.Physics.AccG02');\r\nvar acc03 = $prop('GameRawData.Physics.AccG03');\r\nvar acs = accel.toString();\r\nvar a1s = acc01.toString();\r\nvar a2s = acc02.toString();\r\nvar a3s = acc03.toString();\r\nvar dys = dy.toString();\r\nvar dss = ds.toString();\r\nreturn dys.concat('\\t',dss,'\\t',acs,'\\t',a1s,'\\t',a2s,'\\t',a3s,'\\r\\n');\r\n"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 0
+    }
+  ],
+  "OnConnectMessage": {
+    "Expression": "'# dys\\tdss\\tacs\\ta1s\\ta2s\\ta3s\\r\\n'"
+  },
+  "OnDisconnectMessage": {
+    "Expression": ""
+  },
+  "DtrEnable": true,
+  "RtsEnable": true,
+  "EditorExpanded": true,
+  "Name": "Custom Serial device",
+  "Description": "compare accelerations",
+  "LastErrorDate": "0001-01-01T00:00:00",
+  "LastErrorMessage": null,
+  "IsFreezed": false,
+  "SettingsBuilder": {
+    "Settings": [],
+    "IsEditMode": false
+  }
+}

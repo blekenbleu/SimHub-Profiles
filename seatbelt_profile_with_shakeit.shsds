@@ -1,0 +1,213 @@
+{
+  "AutomaticReconnect": true,
+  "SerialPortName": "COM3",
+  "StartupDelayMs": 0,
+  "IsConnecting": false,
+  "IsEnabled": true,
+  "LogIncomingData": false,
+  "IsConnected": true,
+  "BaudRate": 9600,
+  "UpdateMessages": [
+    {
+      "Message": {
+        "Interpreter": 1,
+        "Expression": "// adjust range of servo movements\r\nvar l = [$prop('Settings.LeftOffset')];\r\nvar r = [$prop('Settings.RightOffset')];\r\nconst zero = [0];\t// offset adjust control codes\r\nconst one = [1];\r\nvar two = [2];\t\t// most slack control values\r\nvar three = [3];\r\nif ($prop('Settings.max_test')) {\r\n  two = 126 & $prop('Settings.tmax'); // most tense control values\r\n  three = 1 + two;\r\n}  \r\nconst right = String.fromCharCode(one);\r\nconst left = String.fromCharCode(zero);\r\nvar s2 = String.fromCharCode(two); // send tension control characters after setting new offsets\r\nvar s3 = String.fromCharCode(three);\r\nvar sl = String.fromCharCode.apply(String, l);\r\nvar sr = String.fromCharCode.apply(String, r);\r\n// send updated offsets, then servo positions\r\nreturn left.concat(sl,right,sr,s2,s3);"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 0
+    },
+    {
+      "Message": {
+        "Interpreter": 1,
+        "Expression": "var GameRunning = $prop('DataCorePlugin.GameRunning');\r\nvar CurrentGame = $prop('DataCorePlugin.CurrentGame');\r\n\r\n//Variables from shakeit motors\r\nvar swayl = $prop('ShakeITMotorsV3Plugin.Export.sway.Left')\r\nvar swayr = $prop('ShakeITMotorsV3Plugin.Export.sway.Right')\r\nvar decel =  $prop('ShakeITMotorsV3Plugin.Export.deccelg.Front');\r\nvar accel =  $prop('ShakeITMotorsV3Plugin.Export.accelg.Rear');\r\n\r\n//propperties for settings sliders\r\nvar tmax = $prop('Settings.tmax') & 126;\t// limit servos\r\nswayl *= $prop('Settings.yawl_gain') * 0.02;\r\nswayr *= $prop('Settings.yawr_gain') * 0.02;\r\ndecel *= $prop('Settings.decel_gain') * 0.02;\r\naccel *= $prop('Settings.accel_gain') * 0.02;\r\n\r\n// convert speed and yaw changes to left and right tension values\r\n// turning right should increase right harness tension (body pushed left) \r\nvar r = Math.sqrt(decel*decel + swayl*swayl); // Deceleration\r\nvar l = Math.sqrt(decel*decel + swayr*swayr);\r\nif (0 < accel) { \r\n  var r1 = Math.sqrt(accel*accel + swayl*swayl); // accelleration\r\n  var l1 = Math.sqrt(accel*accel + swayr*swayr);\t\r\n  r = r1;\r\n  l = l1;\r\n}\r\n\r\n\r\n// Low-pass IIR filtering of left and right tension values\r\nif (null == root[\"lb4\"]) {\r\n  root[\"rb4\"] = r;  root[\"lb4\"] = l;\t// initialize\r\n}\r\nvar rb4 = root[\"rb4\"];\r\nvar lb4 = root[\"lb4\"]; // previously filtered values\r\nvar tc = 1 + $prop('Settings.smooth');\r\nrb4 += (r - rb4) / tc;\r\nlb4 += (l - lb4) / tc;\r\nroot[\"lb4\"] = lb4;\r\nroot[\"rb4\"] = rb4;\r\n\r\nl = lb4; r = rb4; // filtered tensions;  comment out for unfiltered (or set Settings.smooth = 1)\r\nif (l > tmax)\r\n  l = tmax;\r\nelse if (l < 2)\r\n  l = 2;\r\nl &= 0x7E;      // left lsb is 0\r\ntmax |= 1;\r\nif (r > tmax)\r\n  r = tmax;\r\nelse if (r < 3)\r\n  r = 3;\r\nr |= 1;         // right lsb is 1\r\n\r\nif ($prop('Settings.max_test') || $prop('Settings.TestOffsets')) {\r\n  // disable normal message output\r\n  // slider changes will provoke first message outputs\r\n  root[\"rb4\"] = root[\"lb4\"] = 0;  // reset IIR filters\r\n} else {\r\n//* servo control output\r\n  var ls = String.fromCharCode(l);      // tension control characters\r\n  var rs = String.fromCharCode(r);\r\n//*/\r\n\r\n/* gnuplot output **************************************\r\n  var s = $prop('SpeedMph');\r\n  var ls = l.toString();\r\n  var rs = r.toString();\r\n  var ss = s.toString();\r\n  var Gys = Gy.toString();\r\n  var Gss = Gs.toString();\r\n  rs = ls.concat('\\t',rs,'\\r\\n');  // gnuplot columns\r\n  ls = ss.concat('\\t'); \r\n*/\r\nreturn ls.concat(rs);\r\n}"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 0
+    }
+  ],
+  "OnConnectMessage": {
+    "Expression": "' !'"
+  },
+  "OnDisconnectMessage": {
+    "Expression": "' !'"
+  },
+  "DtrEnable": true,
+  "RtsEnable": true,
+  "EditorExpanded": true,
+  "Name": "Custom Serial device",
+  "Description": "seatbelt tensioner final",
+  "LastErrorDate": "2023-01-31T13:39:06.0053116+01:00",
+  "LastErrorMessage": null,
+  "IsFreezed": false,
+  "SettingsBuilder": {
+    "Settings": [
+      {
+        "Maximum": 80,
+        "Minimum": 0,
+        "PropertyName": "RightOffset",
+        "CurrentValue": 0,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Right untensioned",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 80,
+        "Minimum": 0,
+        "PropertyName": "LeftOffset",
+        "CurrentValue": 0,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Left untensioned",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "PropertyName": "TestOffsets",
+        "CurrentValue": false,
+        "Name": null,
+        "TypeName": "BoolEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Test untensioned positions",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 100,
+        "Minimum": 0,
+        "PropertyName": "decel_gain",
+        "CurrentValue": 37,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "decel gain",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 100,
+        "Minimum": 0,
+        "PropertyName": "accel_gain",
+        "CurrentValue": 37,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "acceleration gain",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 100,
+        "Minimum": 0,
+        "PropertyName": "yawl_gain",
+        "CurrentValue": 36,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "delta yaw gain left",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 100,
+        "Minimum": 0,
+        "PropertyName": "yawr_gain",
+        "CurrentValue": 36,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "delta yaw right",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 10,
+        "Minimum": 0,
+        "PropertyName": "smooth",
+        "CurrentValue": 0,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "smoothing",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 0,
+        "PropertyName": "tmax",
+        "CurrentValue": 65,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "max tension",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "PropertyName": "max_test",
+        "CurrentValue": false,
+        "Name": null,
+        "TypeName": "BoolEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "test max tension",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      }
+    ],
+    "IsEditMode": false
+  }
+}

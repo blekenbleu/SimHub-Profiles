@@ -1,0 +1,282 @@
+{
+  "IncludeOutputSettingsInProfile": false,
+  "UnmuteEffectsAfterSimhubRestart": false,
+  "Description": "Exports telemetry properties for blek2char and new2char custom serial devices",
+  "EffectsContainers": [
+    {
+      "EffectsContainers": [
+        {
+          "Filter": {
+            "GammaValue": 1.5,
+            "FilterType": "SimpleGammaFilter"
+          },
+          "LowForce": 1,
+          "HighForce": 15,
+          "MaxGPercent": 90.0,
+          "AutoMaxG": false,
+          "IsMuted": true,
+          "ContainerId": "df8a9a12-495a-4401-abcf-76f5d0534439",
+          "ContainerType": "AccelerationGforceContainer",
+          "Description": "Provide longitudinal acceleration feedback based on G-Force",
+          "AggregationMode": null,
+          "Gain": 0.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 44,
+            "UseHighFrequency": false,
+            "HighFrequency": 50,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": false,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "blek2accel",
+            "ExportProperty": true,
+            "DisableOutput": true,
+            "OutputType": "ToneOutput"
+          }
+        },
+        {
+          "Filter": {
+            "GammaValue": 1.5000000000000004,
+            "FilterType": "SimpleGammaFilter"
+          },
+          "LowForce": 1,
+          "HighForce": 30,
+          "MaxGPercent": 90.0,
+          "AutoMaxG": false,
+          "IsMuted": true,
+          "ContainerId": "48a18f0f-d1e0-4d33-8eca-d1dbb6f37641",
+          "ContainerType": "DecelerationGforceContainer",
+          "Description": "Provide deceleration feedback based on G-Force",
+          "AggregationMode": null,
+          "Gain": 0.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 44,
+            "UseHighFrequency": false,
+            "HighFrequency": 50,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": false,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "blek2decel",
+            "ExportProperty": true,
+            "DisableOutput": true,
+            "OutputType": "ToneOutput"
+          }
+        },
+        {
+          "Filter": {
+            "GammaValue": 1.0,
+            "FilterType": "SimpleGammaFilter"
+          },
+          "LowForce": 1,
+          "HighForce": 15,
+          "MaxGPercent": 100.0,
+          "AutoMaxG": false,
+          "IsMuted": true,
+          "ContainerId": "d692a6d5-cadf-496c-993b-d2bc59634efa",
+          "ContainerType": "LateralGforceContainer",
+          "Description": "Provide lateral acceleration feedback based on G-Force",
+          "AggregationMode": null,
+          "Gain": 0.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 44,
+            "UseHighFrequency": false,
+            "HighFrequency": 50,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": false,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "sway",
+            "ExportProperty": true,
+            "DisableOutput": true,
+            "OutputType": "ToneOutput"
+          }
+        },
+        {
+          "AutocalibrationMax": 95.0,
+          "Filter": {
+            "GammaValue": 1.0,
+            "InputGain": 100.0,
+            "MinimumForce": 0,
+            "Threshold": 0,
+            "FilterType": "GammaFilter"
+          },
+          "FrontLeftFormula": {
+            "Interpreter": 1,
+            "Expression": "var sway = $prop('ShakeITBSV3Plugin.Export.sway.Right') - $prop('ShakeITBSV3Plugin.Export.sway.Left');\r\nif (null == root['sway1']) { // sway previous\r\n  root['sway1'] = 0;\r\n  root['sway2'] = 0;\r\n}\r\n\r\nvar ds = (sway - root['sway2']) * $prop('DataCorePlugin.DataUpdateFps') * 0.5;\r\nvar sm = Math.min(0.2 + Math.abs(ds) * 0.0028, 1);\r\nvar smc = 1 - sm;\r\nsway = sway * sm + root['sway1'] * smc * 0.67 + root['sway2'] * smc * 0.33;\r\nif (Math.abs(sway) < 0.1) sway = 0;\r\n\r\nroot['sway2'] = root['sway1'];\r\nroot['sway1'] = sway;\r\n\r\nreturn 50 + sway/2;"
+          },
+          "FrontRightFormula": {
+            "Interpreter": 1,
+            "Expression": ""
+          },
+          "RearLeftFormula": {
+            "Interpreter": 1,
+            "Expression": ""
+          },
+          "RearRightFormula": {
+            "Expression": ""
+          },
+          "IsMuted": true,
+          "ContainerId": "c5b314a7-6a42-47d9-addb-13041225a476",
+          "ContainerType": "CustomEffectContainer",
+          "Description": "Sway",
+          "AggregationMode": "Mono",
+          "Gain": 0.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 44,
+            "UseHighFrequency": false,
+            "HighFrequency": 50,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": true,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "blek2sway",
+            "ExportProperty": true,
+            "DisableOutput": true,
+            "OutputType": "ToneOutput"
+          }
+        },
+        {
+          "AutocalibrationMax": 95.0,
+          "Filter": {
+            "GammaValue": 1.5000000000000004,
+            "InputGain": 100.0,
+            "MinimumForce": 0,
+            "Threshold": 0,
+            "FilterType": "GammaFilter"
+          },
+          "FrontLeftFormula": {
+            "Interpreter": 1,
+            "Expression": "var heave;\r\nif (null == root['heave1']) { // heave previous\r\n  root['heave1'] = 0;\r\n  root['heave2'] = 0;\r\n}\r\n\r\nif (null == $prop('AccelerationHeave')) {\r\n  if (null == root['yd1'])\r\n    root['yd1'] = 0;\r\n  //heave = $prop('GameRawData.YD') * 100;\r\n  heave = ($prop('GameRawData.YD') - root['yd1']) * $prop('DataCorePlugin.DataUpdateFps') * 50;\r\n  root['yd1'] = $prop('GameRawData.YD');\r\n} else {\r\n  heave = $prop('AccelerationHeave');\r\n}\r\n\r\n//heave = heave * 0.7 + root['heave1'] * 0.2 + root['heave2'] * 0.1;\r\nvar dh = (heave - root['heave2']) * $prop('DataCorePlugin.DataUpdateFps') * 0.5;\r\nvar sm = Math.min(0.2 + Math.abs(dh) * .0042, 1);\r\nvar smc = 1 - sm;\r\nheave = heave * sm + root['heave1'] * smc * .67 + root['heave2'] * smc * .33;\r\nif (Math.abs(heave) < 0.1) heave = 0;\r\n\r\nroot['heave2'] = root['heave1'];\r\nroot['heave1'] = heave;\r\n\r\nreturn heave * 5;"
+          },
+          "FrontRightFormula": {
+            "Expression": ""
+          },
+          "RearLeftFormula": {
+            "Interpreter": 1,
+            "Expression": "var heave;\r\nif (null == root['heave1']) { // heave previous\r\n  root['heave1'] = 0;\r\n  root['heave2'] = 0;\r\n}\r\n\r\nif (null == $prop('AccelerationHeave')) {\r\n  if (null == root['yd1'])\r\n    root['yd1'] = 0;\r\n  //heave = $prop('GameRawData.YD') * 100;\r\n  heave = ($prop('GameRawData.YD') - root['yd1']) * $prop('DataCorePlugin.DataUpdateFps') * 50;\r\n  root['yd1'] = $prop('GameRawData.YD');\r\n} else {\r\n  heave = $prop('AccelerationHeave');\r\n}\r\n\r\n//heave = heave * 0.7 + root['heave1'] * 0.2 + root['heave2'] * 0.1;\r\nvar dh = (heave - root['heave2']) * $prop('DataCorePlugin.DataUpdateFps') * 0.5;\r\nvar sm = Math.min(0.2 + Math.abs(dh) * .0042, 1);\r\nvar smc = 1 - sm;\r\nheave = heave * sm + root['heave1'] * smc * .67 + root['heave2'] * smc * .33;\r\nif (Math.abs(heave) < 0.1) heave = 0;\r\n\r\nroot['heave2'] = root['heave1'];\r\nroot['heave1'] = heave;\r\n\r\nreturn heave * -5;"
+          },
+          "RearRightFormula": {
+            "Expression": ""
+          },
+          "IsMuted": true,
+          "ContainerId": "3f871688-d0a9-4561-b05b-691006f698eb",
+          "ContainerType": "CustomEffectContainer",
+          "Description": "Heave",
+          "AggregationMode": "Front/Rear",
+          "Gain": 0.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 44,
+            "UseHighFrequency": false,
+            "HighFrequency": 50,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": true,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "blek2heave",
+            "ExportProperty": true,
+            "DisableOutput": true,
+            "OutputType": "ToneOutput"
+          }
+        },
+        {
+          "Filter": {
+            "GammaValue": 1.0,
+            "FilterType": "SimpleGammaFilter"
+          },
+          "LowSpeed": 1,
+          "HighSpeed": 120,
+          "AutoMaxSpeed": true,
+          "MaxSpeedPercent": 100.0,
+          "OnlyInTurns": false,
+          "Curvature": 50,
+          "IsMuted": true,
+          "ContainerId": "82ce0548-e1b1-4b18-a4ab-26157efd77bd",
+          "ContainerType": "LocalizedSpeedContainer",
+          "Description": "export SpeedCurv property for PWM custom serial fans",
+          "AggregationMode": null,
+          "Gain": 0.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 55,
+            "UseHighFrequency": false,
+            "HighFrequency": 50,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": false,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "blek2SpeedCurv",
+            "ExportProperty": true,
+            "DisableOutput": true,
+            "OutputType": "ToneOutput"
+          }
+        }
+      ],
+      "Filter": null,
+      "IsMuted": true,
+      "ContainerId": "8e01a4c8-018f-4360-9277-1743304b8548",
+      "ContainerType": "GroupContainer",
+      "Description": "G-forces for blek2char Custom Serial Device",
+      "AggregationMode": null,
+      "Gain": 0.0,
+      "IsEnabled": true,
+      "Output": null
+    }
+  ],
+  "AutoCalibrationRatio2": 100,
+  "OutputMode": 1,
+  "GlobalGain": 50.0,
+  "UseProfileGain": false,
+  "Error": "",
+  "LastLoaded": "2021-10-28T07:18:07.8400119-04:00",
+  "Name": "blek2char telemetry properties with sierses' smoothing for sway and heave",
+  "ProfileId": "0fd27ecd-13c7-4310-b15d-cc68f93df7c6",
+  "GameCode": null
+}

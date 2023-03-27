@@ -1,0 +1,3 @@
+// condition wheel slip property
+var s = $prop('GameRawData.Physics.WheelSlip01');
+return 4 * Math.pow(s, 1/4) - 2;

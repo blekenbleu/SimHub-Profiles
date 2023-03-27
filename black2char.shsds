@@ -1,0 +1,282 @@
+{
+  "AutomaticReconnect": true,
+  "SerialPortName": "COM11",
+  "StartupDelayMs": 0,
+  "IsConnecting": false,
+  "IsEnabled": false,
+  "LogIncomingData": true,
+  "IsConnected": false,
+  "BaudRate": 115200,
+  "UpdateMessages": [
+    {
+      "Message": {
+        "Interpreter": 1,
+        "Expression": "// special: 0 = silent; 1 = clip(*); 3 = hex; 4 = ASCII; 5 = LUT\r\nreturn String.fromCharCode(0x5F, 0x3F & $prop('Settings.info'));\r\n"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 0
+    },
+    {
+      "Message": {
+        "Interpreter": 1,
+        "Expression": "// servo count\r\nreturn String.fromCharCode(0x5E, $prop('Settings.ns'));"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 0
+    },
+    {
+      "Message": {
+        "Interpreter": 1,
+        "Expression": "// update servo positions from telemetry or test & set\r\nvar a = $prop('Settings.tmax_a');\r\nvar b = $prop('Settings.tmax_b');\r\n\r\nvar ns = $prop('Settings.ns');  // number of supported servos\r\nif (null == root['offsets']) {  // servo untensioned positions\r\n  // offset values here get updated by adjusting sliders\r\n  root['offsets'] = [61, 62, 63, 64, 65, 66, 66, 68, 69, 70, 71, 72, 73, 73];\r\n  root['t1'] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0];   // IIR for servos\r\n  root['tmaxs'] = [a, b, a, b, a, b, a, b, a, b, a, b, a, b];\r\n}\r\n\r\nvar no = root['offsets'].length;\r\nfor (var i = no; i < ns; i++) { // extend arrays as needed\r\n  root['offsets'][i] = 61 + i;\r\n  root['t1'][i] = 0;\r\n  root['tmaxs'] = (1 & i) ? b : a;\r\n}\r\n//return root['offsets'].length;\r\n\r\na = $prop('Settings.servo_a');\r\na = (ns < a) ? -1 : a - 1;\r\nb = $prop('Settings.servo_b');\r\nb = (ns < b) ? -1 : b - 1;\r\n//return b;\r\nvar ts = '';    // initialize string to send\r\nvar o;\r\nif (0 <= a && root['offsets'][a] != (o = $prop('Settings.offset_a'))) {\r\n  ts += String.fromCharCode(0x40 + a | (0x40 & o)>>1);                // set offsets\r\n  ts += String.fromCharCode(0x3F & o);                                  // 6 lsb\r\n  root['offsets'][a] = o;\r\n}\r\n//return o\r\nif (0 <= b && root['offsets'][b] != (o = $prop('Settings.offset_b')) && b != a) {\r\n  ts += String.fromCharCode(0x40 + b | (0x40 & o)>>1);                // set offsets\r\n  ts += String.fromCharCode(0x3F & o);                                  // 6 lsb\r\n  root['offsets'][b] = o;\r\n}\r\n//return root['offsets'].toString();\r\n//return ts.charCodeAt(0);\r\n//return ts.split('').toString();\r\n\r\n// update servo positions from telemetry\r\n// Set up data and reset IIR filters\r\n// G-forces from SimHub properties\r\nvar Gsway  = - $prop('AccelerationSway');       // lateral acceleration (feels like yaw)\r\nvar Gsurge = - $prop('AccelerationSurge');      // deceleration\r\nGsway  *= $prop('Settings.yaw_gain');\r\nGsurge *= $prop('Settings.decel_gain');\r\nif (0 > Gsurge)\r\n  Gsurge = 0;    // non-negative deceleration\r\n  \r\n// convert speed and yaw changes to left and right tension values\r\n// turning right should increase right harness tension (body pushed left)\r\nvar r = Math.sqrt(Gsurge*Gsurge + Gsway*Gsway)\r\nvar l = Gsurge + Gsurge - r\r\nif (0 > Gsway) {\r\n  var n = r;    // negative Gsway increases left tension\r\n  r = l;\r\n  l = n;\r\n}\r\n\r\nvar tc = 1 - ($prop('Settings.smooth') * 0.2);\r\nvar test = $prop('Settings.test_tmax');\r\n// update Arduino tmax table?\r\nvar tt = 0;     // min tension test\r\nif (test && ((0 <= a && root['tmaxs'][a] != $prop('Settings.tmax_a'))\r\n         || (0 <= b && root['tmaxs'][b] != $prop('Settings.tmax_b' && b != a)))) {\r\n  tt = 1;  // max tension test\r\n  if (0 <= a)\r\n    root['tmaxs'][a] = $prop('Settings.tmax_a');\r\n  if (0 <= b && b != a)\r\n    root['tmaxs'][b] = $prop('Settings.tmax_b');\r\n  // add special 5 command for ns tmax entries\r\n  ts +=  String.fromCharCode(0x5F,5,ns)+String.fromCharCode.apply(null, root['tmaxs'].slice(0,ns));\r\n}\r\ntest = test || $prop('Settings.test_offsets');  // max / min tension test\r\n//return root['tmaxs'].toString();\r\nvar tmax = root['tmaxs'];\r\n\r\nvar e = 3;      // epsilon for perceptible change threshold\r\nvar t1 = [0];   // array of tensions from telemetry\r\nfor (var i = 0; i < ns; i++) {\r\n  t1[i] = (1 & i) ? r : l;      // only for test purposes\r\n  // Low-pass IIR filter\r\n  var ft = root['t1'][i];\r\n  ft += (t1[i] - ft) * tc;   // filtered tension\r\n  if (ft > tmax[i]) ft = tmax[i];  // limit tension to tmax\r\n\r\n  if ((i == a || i == b) && test ) {    // override telemetry for limit tests\r\n    var tab = tmax[i] * tt;\r\n    ts += String.fromCharCode(0x40 | (ns + i) | ((0x40 & tab)>>1));\r\n    ts += String.fromCharCode(0x3F & tab);\r\n  }\r\n  // skip change if it is smaller than e\r\n  else if (Math.abs(ft - root['t1'][i]) > e) {\r\n    ts += String.fromCharCode(0x40 | (ns + i) | ((0x40 & ft)>>1));  // set tension\r\n    ts += String.fromCharCode(0x3F & ft);                           // 6 lsb\r\n  }\r\n  root['t1'][i] = ft;\r\n}\r\n//return ts.length;\r\nif (0 & ts.length) {\r\n  var s = '; '+ts.charCodeAt(0);\r\n  for (i = 1; i < ts.length; i++)\r\n    s += ','+ts.charCodeAt(i);\r\n  return s;\r\n}\r\n//return ts.split('').toString();\r\nreturn ts;"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 0
+    },
+    {
+      "Message": {
+        "Interpreter": 1,
+        "Expression": "// DEBUG ASCII string: Current slider selected offset values\r\nvar sa = $prop('Settings.servo_a') - 1;\r\nvar oa = $prop('Settings.offset_a');\r\nvar sb = $prop('Settings.servo_b') - 1;\r\nvar ob = $prop('Settings.offset_b');\r\nvar s;\r\nvar t;\r\nif (null == root[\"foo\"])\r\n  root[\"foo\"] = [61, 62, 63, 64, 65, 66, 66, 68, 69, 70, 71, 72, 73, 73];\r\nif (0 <= sa) {\r\n  s = ('a:'+ sa.toString()+'='+ oa.toString());\r\n  root['foo'][sa] = oa;\r\n} else s = '(no a)';\r\nif (0 <= sb && sb != sa) {\r\n  t = ('a:'+ sb.toString()+'='+ ob.toString());\r\n  root['foo'][sb] = ob;\r\n} else t = '(no b)';\r\nreturn s+'; '+t+' ['+root['foo']+']\\n';"
+      },
+      "IsEnabled": false,
+      "MaximumFrequency": 0
+    }
+  ],
+  "OnConnectMessage": {
+    "Interpreter": 1,
+    "Expression": "var reset = String.fromCharCode(0x7F);\t// reset Arduino, initialize offsets\r\nvar o = [61, 62, 63, 64, 65, 66, 66, 68, 69, 70, 71, 72, 73, 73]; // also in telemetry message\r\nvar ns = $prop('Settings.ns');  // number of supported servos\r\nfor (var i = 0; i < ns; i++) {\r\n    reset += String.fromCharCode((0x40 + i) | ((0x40 & o[i])>>1));\t\t// set offsets\r\n    reset += String.fromCharCode(0x3F & o[i]);\t\t\t\t\t\t// 6 lsb\r\n}\r\nreturn reset;"
+  },
+  "OnDisconnectMessage": {
+    "Interpreter": 1,
+    "Expression": ""
+  },
+  "DtrEnable": true,
+  "RtsEnable": false,
+  "EditorExpanded": true,
+  "Name": "Custom Serial device",
+  "Description": "multi-channel black2char",
+  "LastErrorDate": "2021-10-01T12:12:23.8092538-04:00",
+  "LastErrorMessage": null,
+  "IsFreezed": false,
+  "SettingsBuilder": {
+    "Settings": [
+      {
+        "PropertyName": "test_offsets",
+        "CurrentValue": false,
+        "Name": null,
+        "TypeName": "BoolEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Test and set selected A,B minimum tension positions",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "PropertyName": "test_tmax",
+        "CurrentValue": true,
+        "Name": null,
+        "TypeName": "BoolEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Test and set selected A,B maximum tension positions",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 14,
+        "Minimum": 0,
+        "PropertyName": "servo_a",
+        "CurrentValue": 6,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Servo A select (0 is off)",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 110,
+        "Minimum": 0,
+        "PropertyName": "offset_a",
+        "CurrentValue": 69,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Servo A: untensioned position",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 0,
+        "PropertyName": "tmax_a",
+        "CurrentValue": 83,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Servo A: max tension",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 14,
+        "Minimum": 0,
+        "PropertyName": "servo_b",
+        "CurrentValue": 7,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Servo B select (0 is off)",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 110,
+        "Minimum": 0,
+        "PropertyName": "offset_b",
+        "CurrentValue": 55,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Servo B: untensioned position",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 12,
+        "PropertyName": "tmax_b",
+        "CurrentValue": 87,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Servo B: max tension",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 100,
+        "Minimum": 0,
+        "PropertyName": "decel_gain",
+        "CurrentValue": 44,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Deceleration gain",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 80,
+        "Minimum": 0,
+        "PropertyName": "yaw_gain",
+        "CurrentValue": 37,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Yaw gain",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 4,
+        "Minimum": 0,
+        "PropertyName": "smooth",
+        "CurrentValue": 2,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Smoothing (20% per step)",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 4,
+        "Minimum": 0,
+        "PropertyName": "info",
+        "CurrentValue": 3,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "info: 0=silent; 1=E*; 2=servo; 3=hex; 4=ASCII",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 14,
+        "Minimum": 2,
+        "PropertyName": "ns",
+        "CurrentValue": 8,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Active servo count",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      }
+    ],
+    "IsEditMode": false
+  }
+}

@@ -1,0 +1,318 @@
+{
+  "OutputManager": {
+    "ChannelsSettings": {
+      "{0.0.0.00000000}.{6278d7be-2d21-4e89-92c5-0468717e613e}": {
+        "ControlVolume": true,
+        "UseLowPassFilter": false,
+        "LowPassFilter": 200,
+        "UseHighPassFilter": false,
+        "HighPassFilter": 20,
+        "IsEnabled": false,
+        "AudioMode": 3,
+        "DeviceType": 0,
+        "EffectToChannelsMapStore": {
+          "CustomEffectContainer": {
+            "Left": {
+              "MapsStore": "0;1;100;|1;0;100;|2;1;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "Right": {
+              "MapsStore": "0;0;100;|1;1;100;|2;0;100;|3;1;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            }
+          },
+          "WheelsSlipContainer": {
+            "FrontLeft": {
+              "MapsStore": "0;1;100;|1;0;100;|2;0;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "FrontRight": {
+              "MapsStore": "0;0;100;|1;1;100;|2;0;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "RearLeft": {
+              "MapsStore": "0;0;100;|1;0;100;|2;1;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "RearRight": {
+              "MapsStore": "0;0;100;|1;0;100;|2;0;100;|3;1;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            }
+          },
+          "RPMContainer": {
+            "All": {
+              "MapsStore": "0;1;100;|1;1;100;|2;1;100;|3;1;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            }
+          }
+        },
+        "GlobalChannelsSettings": {
+          "Quad": {
+            "MapsStore": "0;1;100;Front left|1;1;100;Front right|2;1;100;Rear left|3;1;100;Rear right|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+          },
+          "Custom": {
+            "MapsStore": "0;1;100;|1;1;100;|2;1;100;|3;1;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+          }
+        },
+        "Name": "SPDIF-Out (Sound Blaster X-Fi Surround 5.1 Pro)",
+        "OutputId": "{0.0.0.00000000}.{6278d7be-2d21-4e89-92c5-0468717e613e}",
+        "ShowPerEffectsLevels": false
+      },
+      "{0.0.0.00000000}.{9e79baf5-db7f-433f-b64c-74deed098b4a}": {
+        "ControlVolume": true,
+        "UseLowPassFilter": false,
+        "LowPassFilter": 200,
+        "UseHighPassFilter": false,
+        "HighPassFilter": 20,
+        "IsEnabled": false,
+        "AudioMode": 2,
+        "DeviceType": 0,
+        "EffectToChannelsMapStore": {},
+        "GlobalChannelsSettings": {},
+        "Name": "Realtek Digital Output (Realtek(R) Audio)",
+        "OutputId": "{0.0.0.00000000}.{9e79baf5-db7f-433f-b64c-74deed098b4a}",
+        "ShowPerEffectsLevels": false
+      },
+      "{0.0.0.00000000}.{af7accc6-3986-4fc8-9830-c6c10cbeca8f}": {
+        "ControlVolume": true,
+        "UseLowPassFilter": false,
+        "LowPassFilter": 200,
+        "UseHighPassFilter": false,
+        "HighPassFilter": 20,
+        "IsEnabled": true,
+        "AudioMode": 3,
+        "DeviceType": 0,
+        "EffectToChannelsMapStore": {
+          "CustomEffectContainer": {
+            "All": {
+              "MapsStore": "0;0;100;|1;0;100;|2;0;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "Left": {
+              "MapsStore": "0;0;100;|1;0;100;|2;0;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "Right": {
+              "MapsStore": "0;0;100;|1;0;100;|2;0;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "FrontLeft": {
+              "MapsStore": "0;0;100;|1;0;100;|2;1;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "FrontRight": {
+              "MapsStore": "0;0;100;|1;0;100;|2;0;100;|3;1;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "RearLeft": {
+              "MapsStore": "0;0;100;|1;0;100;|2;0;100;|3;0;100;|4;0;100;|5;0;100;|6;1;100;|7;0;100;"
+            },
+            "RearRight": {
+              "MapsStore": "0;0;100;|1;0;100;|2;0;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;1;100;"
+            }
+          },
+          "WheelsSlipContainer": {
+            "FrontLeft": {
+              "MapsStore": "0;0;100;|1;0;100;|2;0;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "FrontRight": {
+              "MapsStore": "0;0;100;|1;0;100;|2;0;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "RearLeft": {
+              "MapsStore": "0;0;100;|1;0;100;|2;0;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            },
+            "RearRight": {
+              "MapsStore": "0;0;100;|1;0;100;|2;0;100;|3;0;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+            }
+          },
+          "RPMContainer": {
+            "All": {
+              "MapsStore": "0;0;100;|1;0;100;|2;1;100;|3;1;100;|4;0;100;|5;0;100;|6;1;100;|7;1;100;"
+            }
+          }
+        },
+        "GlobalChannelsSettings": {
+          "Quad": {
+            "MapsStore": "0;1;100;Front left|1;1;100;Front right|2;1;100;Rear left|3;1;100;Rear right|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+          },
+          "Custom": {
+            "MapsStore": "0;1;100;|1;1;100;|2;1;100;|3;1;100;|4;0;100;|5;0;100;|6;0;100;|7;0;100;"
+          }
+        },
+        "Name": "Speakers / Headphones (Realtek(R) Audio)",
+        "OutputId": "{0.0.0.00000000}.{af7accc6-3986-4fc8-9830-c6c10cbeca8f}",
+        "ShowPerEffectsLevels": false
+      },
+      "{0.0.0.00000000}.{c6575bfa-a645-4775-aecb-1ef381747e34}": {
+        "ControlVolume": true,
+        "UseLowPassFilter": false,
+        "LowPassFilter": 200,
+        "UseHighPassFilter": false,
+        "HighPassFilter": 20,
+        "IsEnabled": false,
+        "AudioMode": 2,
+        "DeviceType": 0,
+        "EffectToChannelsMapStore": {},
+        "GlobalChannelsSettings": {},
+        "Name": "Speaker (Sound Blaster X-Fi Surround 5.1 Pro)",
+        "OutputId": "{0.0.0.00000000}.{c6575bfa-a645-4775-aecb-1ef381747e34}",
+        "ShowPerEffectsLevels": false
+      },
+      "{0.0.0.00000000}.{43bdcaec-1095-4815-ac47-5fae7d3ac638}": {
+        "ControlVolume": true,
+        "UseLowPassFilter": false,
+        "LowPassFilter": 200,
+        "UseHighPassFilter": false,
+        "HighPassFilter": 20,
+        "IsEnabled": false,
+        "AudioMode": 2,
+        "DeviceType": 0,
+        "EffectToChannelsMapStore": {},
+        "GlobalChannelsSettings": {},
+        "Name": "Speakers (AudioBox USB)",
+        "OutputId": "{0.0.0.00000000}.{43bdcaec-1095-4815-ac47-5fae7d3ac638}",
+        "ShowPerEffectsLevels": false
+      }
+    },
+    "OutputMode": 1,
+    "TypeName": "SoundOutputManager"
+  },
+  "IncludeOutputSettingsInProfile": true,
+  "UnmuteEffectsAfterSimhubRestart": false,
+  "AutomaticSwitch": false,
+  "Description": "First effect left channel is upshifts; right is downshifts",
+  "EffectsContainers": [
+    {
+      "AutocalibrationMax": 95.0,
+      "Filter": {
+        "GammaValue": 1.0,
+        "InputGain": 100.0,
+        "MinimumForce": 0,
+        "Threshold": 0,
+        "FilterType": "GammaFilter"
+      },
+      "FrontLeftFormula": {
+        "Interpreter": 1,
+        "Expression": "// upshifts\r\nvar g = $prop('Gear');\r\nvar s = 0;\r\n\r\n// 'Gear' is pathological\r\nif (g == 'N' || g == 'R')\r\n  g = 0;\r\n  \r\n/* test code e.g. for comparison with downshift\r\nif (1 < $prop('ShakeITBSV3Plugin.Export.proxyShift.All'))\r\n  return 100;\r\nelse return 30 * g; \r\n*/\r\n\r\n// initialize gear history\r\nif (null == root[\"gear\"]) {\r\n  root[\"gear\"] = g;\r\n  root[\"sb4\"] = true;\r\n}\r\n\r\nif (1 < $prop('ShakeITBSV3Plugin.Export.proxyShift.All')) {\r\n  root[\"sb4\"] = true;\r\n  if (g > root[\"gear\"])\t// upshift?\r\n    s = $prop('ShakeITBSV3Plugin.Export.proxyRPM.All');\r\n}\r\nelse {\r\n  if (root[\"sb4\"])\r\n    root[\"gear\"] = g;       // gear after shifts\r\n  root[\"sb4\"] = false;\r\n}\r\nreturn s;"
+      },
+      "FrontRightFormula": {
+        "Interpreter": 1,
+        "Expression": "// downshifts\r\nvar g = $prop('Gear');\r\nvar s = 0;\r\n\r\n// 'Gear' is pathological\r\nif (g == 'N' || g == 'R')\r\n  g = 0;\r\n\r\n// initialize gear history\r\nif (null == root[\"gear\"]) {\r\n  root[\"gear\"] = g;\r\n  root[\"sb4\"] = 0;\r\n}\r\n\r\nif (1 < $prop('ShakeITBSV3Plugin.Export.proxyShift.All')) {\r\n  if (3 < root[\"sb4\"]) {\t// ignore neutral at beginning of shift\r\n    if (g < root[\"gear\"]) { // downshift?\r\n      s = $prop('ShakeITBSV3Plugin.Export.proxyRPM.All');\r\n    }\r\n  }\r\n  root[\"sb4\"]++;\r\n}\r\nelse {\r\n  if (1 < root[\"sb4\"])\r\n    root[\"gear\"] = g;       // gear after shifts\r\n  root[\"sb4\"] = 0;\r\n}\r\nreturn s;\r\n"
+      },
+      "RearLeftFormula": {
+        "Expression": ""
+      },
+      "RearRightFormula": {
+        "Expression": ""
+      },
+      "IsMuted": false,
+      "ContainerId": "3fc86d3c-09d9-40df-afeb-061f6e888fcd",
+      "ContainerType": "CustomEffectContainer",
+      "Description": "RPM-modulated up/down shifts",
+      "AggregationMode": "Left/Right",
+      "Gain": 49.999999999999886,
+      "IsEnabled": true,
+      "Output": {
+        "UsePrehemptiveMode": false,
+        "Frequency": 30,
+        "UseHighFrequency": false,
+        "HighFrequency": 30,
+        "WhiteNoise": 10,
+        "UseWhiteNoise": false,
+        "EnableDurationModulation": true,
+        "DurationModulationValue": 34,
+        "FrequencyBasedOnPreFilter": false,
+        "Harmonics": 0,
+        "HoldMode": 1,
+        "DelayEnabled": false,
+        "AssignToChannelGroup": false,
+        "ChannelGroupName": "",
+        "PropertyName": "proxy_G",
+        "ExportProperty": false,
+        "DisableOutput": false,
+        "OutputType": "ToneOutput"
+      },
+      "Algorythm": null
+    },
+    {
+      "AutocalibrationMax": 95.0,
+      "Filter": {
+        "GammaValue": 1.0000000000000002,
+        "InputGain": 100.0,
+        "MinimumForce": 0,
+        "Threshold": 0,
+        "FilterType": "GammaFilter"
+      },
+      "FrontLeftFormula": {
+        "Interpreter": 1,
+        "Expression": "// Filter shift property\r\nreturn 100 * $prop('Rpms') / $prop('MaxRpm');\r\n\r\n"
+      },
+      "FrontRightFormula": {
+        "Interpreter": 1,
+        "Expression": ""
+      },
+      "RearLeftFormula": {
+        "Interpreter": 1,
+        "Expression": ""
+      },
+      "RearRightFormula": {
+        "Interpreter": 1,
+        "Expression": ""
+      },
+      "IsMuted": false,
+      "ContainerId": "cc64cec4-9dc5-4e26-bce2-ef087adb2c84",
+      "ContainerType": "CustomEffectContainer",
+      "Description": "RPM property",
+      "AggregationMode": "Mono",
+      "Gain": 1.0,
+      "IsEnabled": true,
+      "Output": {
+        "UsePrehemptiveMode": false,
+        "Frequency": 30,
+        "UseHighFrequency": false,
+        "HighFrequency": 30,
+        "WhiteNoise": 0,
+        "UseWhiteNoise": false,
+        "EnableDurationModulation": true,
+        "DurationModulationValue": 34,
+        "FrequencyBasedOnPreFilter": false,
+        "Harmonics": 0,
+        "HoldMode": 1,
+        "DelayEnabled": false,
+        "AssignToChannelGroup": false,
+        "ChannelGroupName": "",
+        "PropertyName": "proxyRPM",
+        "ExportProperty": true,
+        "DisableOutput": true,
+        "OutputType": "ToneOutput"
+      },
+      "Algorythm": null
+    },
+    {
+      "AlwaysIgnoreNeutral": false,
+      "IgnoreNeutral": true,
+      "NeutralDebouningTime": 200.0,
+      "Filter": {
+        "Duration": 309,
+        "MaxValue": 1.0,
+        "ShowDurationWarn": false,
+        "FilterType": "PulseFilter"
+      },
+      "IsMuted": false,
+      "ContainerId": "d8395c93-c0ab-4959-be2b-a3ad480f4578",
+      "ContainerType": "GearEffectContainer",
+      "Description": "Gear shift pulse effect property",
+      "AggregationMode": null,
+      "Gain": 100.0,
+      "IsEnabled": true,
+      "Output": {
+        "UsePrehemptiveMode": false,
+        "Frequency": 44,
+        "Harmonics": 0,
+        "DelayEnabled": false,
+        "AssignToChannelGroup": false,
+        "ChannelGroupName": "",
+        "PropertyName": "proxyShift",
+        "ExportProperty": true,
+        "DisableOutput": false,
+        "OutputType": "SingleToneOutput"
+      },
+      "Algorythm": null
+    }
+  ],
+  "AutoCalibrationRatio2": 0,
+  "LastLoaded": "2021-03-09T17:15:18.2351061-05:00",
+  "Name": "RPM-modulated up/downshifts",
+  "ProfileId": "1afd57aa-f7cd-4cc4-a25d-bb1e094e734d",
+  "OutputMode": 1,
+  "GlobalGain": 50.0,
+  "UseProfileGain": false
+}

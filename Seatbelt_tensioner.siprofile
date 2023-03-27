@@ -1,0 +1,87 @@
+{
+  "IncludeOutputSettingsInProfile": false,
+  "UnmuteEffectsAfterSimhubRestart": true,
+  "EffectsContainers": [
+    {
+      "Filter": {
+        "GammaValue": 1.0,
+        "FilterType": "SimpleGammaFilter"
+      },
+      "LowForce": 2,
+      "HighForce": 6,
+      "MaxGPercent": 80.0,
+      "AutoMaxG": true,
+      "ContainerId": "8cfaacec-8ad8-41e4-ad62-ef0359f1b6a4",
+      "ContainerType": "AccelerationGforceContainer",
+      "Description": "Provide longitudinal acceleration feedback based on G-Force",
+      "AggregationMode": null,
+      "Gain": 100.0,
+      "IsEnabled": true,
+      "Output": {
+        "AssignToChannelGroup": false,
+        "ChannelGroupName": "",
+        "PropertyName": "accelg",
+        "ExportProperty": true,
+        "DisableOutput": false,
+        "OutputType": "VibrationOutput"
+      }
+    },
+    {
+      "Filter": {
+        "GammaValue": 1.0,
+        "FilterType": "SimpleGammaFilter"
+      },
+      "LowForce": 4,
+      "HighForce": 12,
+      "MaxGPercent": 90.0,
+      "AutoMaxG": true,
+      "ContainerId": "4b8236c6-37c1-4527-88fb-12b986481b83",
+      "ContainerType": "DecelerationGforceContainer",
+      "Description": "Provide deceleration feedback based on G-Force",
+      "AggregationMode": null,
+      "Gain": 100.0,
+      "IsEnabled": true,
+      "Output": {
+        "AssignToChannelGroup": false,
+        "ChannelGroupName": "",
+        "PropertyName": "deccelg",
+        "ExportProperty": true,
+        "DisableOutput": false,
+        "OutputType": "VibrationOutput"
+      }
+    },
+    {
+      "Filter": {
+        "GammaValue": 1.0,
+        "FilterType": "SimpleGammaFilter"
+      },
+      "LowForce": 1,
+      "HighForce": 20,
+      "MaxGPercent": 100.0,
+      "AutoMaxG": true,
+      "ContainerId": "bbcb1c38-8e81-4e9e-ae27-eebdbfe1e0e6",
+      "ContainerType": "LateralGforceContainer",
+      "Description": "Provide lateral acceleration feedback based on G-Force",
+      "AggregationMode": null,
+      "Gain": 100.0,
+      "IsEnabled": true,
+      "Output": {
+        "AssignToChannelGroup": false,
+        "ChannelGroupName": "",
+        "PropertyName": "sway",
+        "ExportProperty": true,
+        "DisableOutput": false,
+        "OutputType": "VibrationOutput"
+      }
+    }
+  ],
+  "AutoCalibrationRatio2": 100,
+  "OutputMode": 0,
+  "GlobalGain": 50.0,
+  "UseProfileGain": true,
+  "Error": "",
+  "LastLoaded": "2023-02-21T22:33:19.0870928+01:00",
+  "Name": "Seatbelt tensioner",
+  "ProfileId": "43c274d6-6deb-4f4b-a9ef-fa90af215c9c",
+  "GameCode": null
+}

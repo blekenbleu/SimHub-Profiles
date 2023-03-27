@@ -1,0 +1,11 @@
+// left front load
+var d = $prop('ShakeITBSV3Plugin.Export.proxy_G.FrontRight');
+d -= $prop('ShakeITBSV3Plugin.Export.proxy_G.RearRight');
+// left load (turning right)
+var L = $prop('ShakeITBSV3Plugin.Export.proxy_G.FrontLeft');
+L -= $prop('ShakeITBSV3Plugin.Export.proxy_G.RearLeft');
+// d, L range -100 to 100; max magnitude 100*sqrt(2)
+// if G are 0, then no load shift and each corner gets 0.25 G
+L = 25 + 25 * L / 100;	// left-right load distribution
+L += (L * d / 100);		// fore-aft load distribution
+return L;

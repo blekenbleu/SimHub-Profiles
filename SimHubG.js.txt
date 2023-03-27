@@ -1,0 +1,66 @@
+// G-forces from SimHub properties
+var Gy = - $prop('GameRawData.Physics.AccG01');	// lateral (yaw) acceleration
+var Gs = - $prop('GameRawData.Physics.AccG03');	// deceleration
+Gy *= $prop('Settings.yaw_gain') * 0.77;	// 72
+Gs *= $prop('Settings.decel_gain') * 0.39;	// 178
+if (0 > Gs)
+  Gs = 0;				// non-negative deceleration
+
+// convert speed and yaw changes to left and right tension values
+// turning right should increase right harness tension (body pushed left)
+var r = Math.sqrt(Gs*Gs + Gy*Gy);
+var l = Gs + Gs - r;
+if (0 > Gy) {
+  var t = r;	// negative Gy increases left tension
+  r = l;
+  l = t;
+}
+
+// Low-pass IIR filtering of left and right tension values
+if (null == root["lb4"]) {
+  root["rb4"] = r;  root["lb4"] = l;	// initialize
+}
+var rb4 = root["rb4"];
+var lb4 = root["lb4"]; // previously filtered values
+var tc = 1 + $prop('Settings.smooth');
+rb4 += (r - rb4) / tc;
+lb4 += (l - lb4) / tc;
+root["lb4"] = lb4;
+root["rb4"] = rb4;
+
+l = lb4; r = rb4; // filtered tensions;  comment out for unfiltered (or set Settings.smooth = 1)
+var tmax = $prop('Settings.tmax') & 126;
+if (l > tmax)
+  l = tmax;
+else if (l < 2)
+  l = 2;
+l &= 0x7E;      // left lsb is 0
+tmax |= 1;
+if (r > tmax)
+  r = tmax;
+else if (r < 3)
+  r = 3;
+r |= 1;         // right lsb is 1
+
+if ($prop('Settings.max_test') || $prop('Settings.TestOffsets')) {
+  // disable normal message output
+  // slider changes will provoke first message outputs
+  root["lb4"] = root["rb4"] = 0;
+} else {
+//* servo control output
+  var ls = String.fromCharCode(l);      // tension control characters
+  var rs = String.fromCharCode(r);
+//*/
+
+/* gnuplot output **************************************
+  var s = $prop('SpeedMph');
+  var ls = l.toString();
+  var rs = r.toString();
+  var ss = s.toString();
+  var Gys = Gy.toString();
+  var Gss = Gs.toString();
+  rs = ls.concat('\t',rs,'\r\n');  // gnuplot columns
+  ls = ss.concat('\t'); 
+*/
+  return ls.concat(rs);
+}

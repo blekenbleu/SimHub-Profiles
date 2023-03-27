@@ -1,0 +1,206 @@
+{
+  "IncludeOutputSettingsInProfile": false,
+  "UnmuteEffectsAfterSimhubRestart": false,
+  "AutomaticSwitch": false,
+  "Description": "https://www.simhubdash.com/community-2/basshaker-profiles/per-wheel-slip-for-iracing/",
+  "EffectsContainers": [
+    {
+      "EffectsContainers": [
+        {
+          "BrakeFilter": 10,
+          "Filter": {
+            "GammaValue": 0.59999999999999964,
+            "InputGain": 100.0,
+            "MinimumForce": 10,
+            "Threshold": 0,
+            "FilterType": "GammaFilter"
+          },
+          "MuteWhenLockEffectIsActive": false,
+          "ThrottleFilter": 10,
+          "UseBrakeFilter": false,
+          "UseThrottleFilter": false,
+          "IsMuted": true,
+          "ContainerId": "7c4170a3-579b-4a31-8c0b-ae25a1f56560",
+          "ContainerType": "WheelsSlipContainer",
+          "Description": "Provide localized wheel slip feedback ",
+          "AggregationMode": "Corners",
+          "Gain": 52.333333333333314,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 44,
+            "UseHighFrequency": false,
+            "HighFrequency": 95,
+            "WhiteNoise": 5,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": false,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": true,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "slip",
+            "ExportProperty": true,
+            "DisableOutput": true,
+            "OutputType": "ToneOutput"
+          }
+        },
+        {
+          "Filter": {
+            "GammaValue": 1.0,
+            "FilterType": "SimpleGammaFilter"
+          },
+          "LowSpeed": 5,
+          "HighSpeed": 120,
+          "AutoMaxSpeed": true,
+          "MaxSpeedPercent": 90.0,
+          "OnlyInTurns": true,
+          "Curvature": 100,
+          "IsMuted": true,
+          "ContainerId": "254ee7ff-4dfa-4bf4-9441-403647831e0b",
+          "ContainerType": "LocalizedSpeedContainer",
+          "Description": "Curve detection Subtractor",
+          "AggregationMode": null,
+          "Gain": 52.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 44,
+            "UseHighFrequency": false,
+            "HighFrequency": 50,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": false,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "sideways",
+            "ExportProperty": true,
+            "DisableOutput": false,
+            "OutputType": "ToneOutput"
+          }
+        },
+        {
+          "AutocalibrationMax": 95.0,
+          "Filter": {
+            "GammaValue": 1.0,
+            "InputGain": 70.0,
+            "MinimumForce": 0,
+            "Threshold": 2,
+            "FilterType": "GammaFilter"
+          },
+          "FrontLeftFormula": {
+            "Expression": "[GameRawData.Telemetry.LongAccel]*-1*10"
+          },
+          "FrontRightFormula": {
+            "Expression": "[GameRawData.Telemetry.LongAccel]*-1*10"
+          },
+          "RearLeftFormula": {
+            "Expression": "[GameRawData.Telemetry.LongAccel]*10\r\n"
+          },
+          "RearRightFormula": {
+            "Expression": "[GameRawData.Telemetry.LongAccel]*10"
+          },
+          "IsMuted": true,
+          "ContainerId": "5bed03da-7c2b-43ca-b77e-ad262a0d2ca3",
+          "ContainerType": "CustomEffectContainer",
+          "Description": "long shift substractor",
+          "AggregationMode": "Corners",
+          "Gain": 90.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 44,
+            "UseHighFrequency": false,
+            "HighFrequency": 50,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": false,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "long shift",
+            "ExportProperty": true,
+            "DisableOutput": true,
+            "OutputType": "ToneOutput"
+          }
+        },
+        {
+          "AutocalibrationMax": 95.0,
+          "Filter": {
+            "GammaValue": 1.0,
+            "InputGain": 90.0,
+            "MinimumForce": 20,
+            "Threshold": 13,
+            "FilterType": "GammaFilter"
+          },
+          "FrontLeftFormula": {
+            "Expression": "[ShakeITBSV3Plugin.Export.slip.FrontLeft]-[ShakeITBSV3Plugin.Export.sideways.Left]-[ShakeITBSV3Plugin.Export.long shift.RearLeft]"
+          },
+          "FrontRightFormula": {
+            "Expression": "[ShakeITBSV3Plugin.Export.slip.FrontRight]-[ShakeITBSV3Plugin.Export.sideways.Right]-[ShakeITBSV3Plugin.Export.long shift.RearRight]"
+          },
+          "RearLeftFormula": {
+            "Expression": "[ShakeITBSV3Plugin.Export.slip.RearLeft]-[ShakeITBSV3Plugin.Export.sideways.Left]-[ShakeITBSV3Plugin.Export.long shift.FrontLeft]"
+          },
+          "RearRightFormula": {
+            "Expression": "[ShakeITBSV3Plugin.Export.slip.RearRight]-[ShakeITBSV3Plugin.Export.sideways.Right]-[ShakeITBSV3Plugin.Export.long shift.FrontRight]"
+          },
+          "IsMuted": false,
+          "ContainerId": "3d0e7457-23d3-422a-b3b1-1c21fd7a3974",
+          "ContainerType": "CustomEffectContainer",
+          "Description": "4-Corner Slip",
+          "AggregationMode": "Corners",
+          "Gain": 49.999999999999886,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 130,
+            "UseHighFrequency": true,
+            "HighFrequency": 80,
+            "WhiteNoise": 5,
+            "UseWhiteNoise": true,
+            "EnableDurationModulation": false,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": null,
+            "ExportProperty": false,
+            "DisableOutput": false,
+            "OutputType": "ToneOutput"
+          }
+        }
+      ],
+      "Filter": null,
+      "IsMuted": false,
+      "ContainerId": "ccda5948-7580-4c4a-933e-9b1e4f24df55",
+      "ContainerType": "GroupContainer",
+      "Description": "Experimental 4-corner Wheelslip for ir",
+      "AggregationMode": null,
+      "Gain": 100.0,
+      "IsEnabled": true,
+      "Output": null
+    }
+  ],
+  "AutoCalibrationRatio2": 100,
+  "LastLoaded": "2021-09-04T12:27:25.8048291-04:00",
+  "Name": "Schnirbus experimental slip",
+  "ProfileId": "0de4d1f5-b50d-42ef-9dba-21d99df1651b",
+  "OutputMode": 1,
+  "GlobalGain": 50.0,
+  "UseProfileGain": false
+}
