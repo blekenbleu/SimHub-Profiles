@@ -1,0 +1,186 @@
+{
+  "AutomaticReconnect": true,
+  "SerialPortName": "COM5",
+  "IsConnecting": false,
+  "IsEnabled": true,
+  "LogIncomingData": false,
+  "IsConnected": true,
+  "BaudRate": 115200,
+  "UpdateMessages": [
+    {
+      "Message": {
+        "Interpreter": 1,
+        "Expression": "// adjust range of servo movements\r\nvar l = [$prop('Settings.LeftOffset')];\r\nvar r = [$prop('Settings.RightOffset')];\r\nconst zero = [0];\t// offset adjust control codes\r\nconst one = [1];\r\nvar two = [2];\t\t// most slack control values\r\nvar three = [3];\r\nif ($prop('Settings.max_test')) {\r\n  two = 126 & $prop('Settings.tmax'); // most tense control values\r\n  three = 1 + two;\r\n}  \r\nconst right = String.fromCharCode(one);\r\nconst left = String.fromCharCode(zero);\r\nvar l2 = String.fromCharCode(two); // send tension control characters after setting new offsets\r\nvar r3 = String.fromCharCode(three);\r\nvar ls = String.fromCharCode.apply(String, l);\r\nvar rs = String.fromCharCode.apply(String, r);\r\n// send updated offsets, then zero servos\r\nreturn left.concat(ls,right,rs,l2,r3);"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 0
+    },
+    {
+      "Message": {
+        "Interpreter": 1,
+        "Expression": "// standalone G-force estimation with sampling deglitch and simple low pass IIR filters\r\nvar t = 2;                                   // non-linear spike threshold\r\nvar tc = $prop('Settings.smooth');  // lowpass IIR\r\n\r\n// Initialize history\r\nif(root[\"speed\"]==null) {\r\n   root[\"speed\"] = $prop('SpeedMph');\r\n   root[\"delta_s\"] = 0.2;\r\n}\r\nif(root[\"yaw\"]==null) {\r\n   root[\"yaw\"] = $prop('OrientationYaw');\r\n   root[\"delta_y\"] = 0.2;\r\n}\r\n\r\nvar s = $prop('SpeedMph');\r\nvar y = $prop('OrientationYaw');\r\nvar ds = root[\"speed\"] - s;\t\t// negative of speed change\r\nvar dy = y - root[\"yaw\"];\r\n\r\nif (0 > ds)     // we are only interested in deceleration\r\n     ds = 0;\r\n\r\nif (Math.abs(dy) > 180) {  // yaw went +/- 180\r\n  if (Math.abs(root[\"yaw\"]) > 150)\r\n    dy = -(y + root[\"yaw\"]);\r\n}\r\n\r\nvar Gy = $prop('Settings.yaw_gain') * dy;\r\nvar Gs = $prop('Settings.decel_gain') * ds;\r\nvar ms = 1, my = 1;  // sample interval factors\r\n\r\n// check for delta spikes from missed samples\r\nif (Math.abs(dy * root[\"delta_y\"]) > t && Math.abs(dy) > Math.abs(1.8 * root[\"delta_y\"]))\r\n  Gy /= (my = 2);      // compensate sampling artifacts\r\nif ((ds * root[\"delta_s\"])  > t && ds > 1.8 * root[\"delta_s\"])\r\n  Gs /= (ms = 2);      // compensate sampling artifacts\r\n  \r\n// low-pass IIR filters\r\nif (null==root[\"Gsb4\"]) {\r\n  root[\"Gsb4\"] = $prop('Settings.decel_gain') * 0.5;\r\n  root[\"Gyb4\"] = $prop('Settings.yaw_gain') * 0.5;\r\n}\r\nvar Gsb4 = root[\"Gsb4\"], Gyb4 = root[\"Gyb4\"];\r\nGsb4 += ms * (Gs - Gsb4) / tc;\r\nGyb4 += my * (Gy - Gyb4) / tc;\r\nroot[\"Gsb4\"] = Gsb4; root[\"Gyb4\"] = Gyb4; // preserve lowpass IIR outputs for next samples\r\n\r\n// store unfiltered values for next increment\r\nroot[\"speed\"] = s;\r\nroot[\"yaw\"] = y;\r\nroot[\"delta_y\"] = dy;\r\nroot[\"delta_s\"] = ds;\r\n\r\n// convert from braking and delta yaw to left and right tension control values\r\nvar l = Math.round(Gsb4 + Gyb4);\t// your other left\r\nvar r = Math.round(Gsb4 - Gyb4);\r\nvar tmax = $prop('Settings.tmax') & 126;\r\nif (l > tmax)\r\n  l = tmax;\r\nelse if (2 > l)\r\n  l = 2;\r\nl &= 0x7E;      // left lsb is 0\r\ntmax |= 1;\r\nif (r > tmax)\r\n  r = tmax;\r\nelse if (3 > r)\r\n  r = 3;\r\nr |= 1;         // right lsb is 1\r\n/*\r\nvar ls = l.toString();\t// to debug, e.g. substitute s,y or ds,dy or Gs,Gy for l,r\r\nvar rs = r.toString();\r\nvar ss = s.toString();\r\nvar ys = y.toString();\r\nGyb4 = Math.round(Gyb4);\r\nGsb4 = Math.round(Gsb4);\r\nvar Gys = Gyb4.toString();\r\nvar Gss = Gsb4.toString();\r\nvar dys = dy.toString();\r\nvar dss = ds.toString();\r\nreturn ls.concat(' ',rs,' ',ss,' ',ys,' ',Gss,' ',Gys,' ',dss,' ',dys,'\\r\\n');\t// gnuplot columns \r\n*/\r\n\r\nif ($prop('Settings.TestOffsets')) {\r\n  root[\"delta_s\"] = 0.2;  // re-initialize\r\n  root[\"delta_y\"] = 0.2;\r\n  root[\"Gyb4\"] = $prop('Settings.yaw_gain') * 0.5;\r\n  root[\"Gsb4\"] = $prop('Settings.decel_gain') * 0.5;\r\n}\r\nelse {\r\n  var ls = String.fromCharCode(l);\t// tension control characters\r\n  var rs = String.fromCharCode(r);\r\n  return ls.concat(rs);\r\n} "
+      },
+      "IsEnabled": false,
+      "MaximumFrequency": 0
+    },
+    {
+      "Message": {
+        "Interpreter": 1,
+        "Expression": "var Gy = $prop('ShakeITBSV3Plugin.Export.proxy_G.Left') - 50;\t// lateral (yaw) acceleration proxy\r\nvar Gs = $prop('ShakeITBSV3Plugin.Export.proxy_G.Right') - 50;\t// deceleration proxy\r\nGy *= $prop('Settings.yaw_gain')/30;\r\nGs *= ($prop('Settings.decel_gain')/100);\t// positive deceleration\r\n\r\n// convert speed and yaw changes to left and right tension values\r\nvar l = Math.round(Gs - Gy) / 2;        // your other left\r\nvar r = Math.round(Gs + Gy) / 2;\r\n\r\n// Low-pass IIR filtering of left and right tension values\r\nif (null==root[\"lb4\"]) {\r\n  root[\"rb4\"] = r;  root[\"lb4\"] = l;\t// initialize\r\n}\r\nvar rb4 = root[\"rb4\"], lb4 = root[\"lb4\"]; // previously filtered values\r\nvar tc = $prop('Settings.smooth');\r\nrb4 += (r - rb4) / tc;\r\nlb4 += (l - lb4) / tc;\r\nroot[\"lb4\"] = lb4;\r\nroot[\"rb4\"] = rb4;\r\n\r\nl = lb4; r = rb4; // filtered tensions;  comment out for unfiltered (or set Settings.smooth = 1)\r\nvar tmax = $prop('Settings.tmax') & 126;\r\nif (l > tmax)\r\n  l = tmax;\r\nelse if (l < 2)\r\n  l = 2;\r\nl &= 0x7E;      // left lsb is 0\r\ntmax |= 1;\r\nif (r > tmax)\r\n  r = tmax;\r\nelse if (r < 3)\r\n  r = 3;\r\nr |= 1;         // right lsb is 1\r\n\r\n//* servo control output\r\nvar ls = String.fromCharCode(l);      // tension control characters\r\nvar rs = String.fromCharCode(r);\r\nreturn ls.concat(rs);\r\n//*/\r\n\r\n/* gnuplot output **************************************\r\nvar s = $prop('SpeedMph');\r\nvar y = $prop('OrientationYaw');\r\n\r\n// Initialize history\r\nif(root[\"speed\"]==null) {\r\n   root[\"speed\"] = s;\r\n}\r\nif(root[\"yaw\"]==null) {\r\n   root[\"yaw\"] = y;\r\n}  \r\nvar ds = 100 * (root[\"speed\"] - s);\t// unfiltered, glitchy deltas\r\nvar dy = 80 * (y - root[\"yaw\"]);\r\n\r\nroot[\"yaw\"] = y;\r\nroot[\"speed\"] = s;\r\nvar ls = l.toString();\t\t// to debug, e.g. substitute s,y or ds,dy or Gs,Gy for l,r\r\nvar rs = r.toString();\r\nvar ss = s.toString();\r\nvar ys = y.toString();\r\nvar dys = dy.toString();\r\nvar dss = ds.toString();\r\nvar Gys = Gy.toString();\r\nvar Gss = Gs.toString();\r\nvar rb4s = rb4.toString();\r\nvar lb4s = lb4.toString();\r\nreturn ls.concat(' ',rs,' ',Gss,' ',Gys,' ',ss,' ',ys,' ',dss,' ',dys,' ',lb4s,' ',rb4s,'\\r\\n');  // gnuplot columns\r\n*/"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 0
+    }
+  ],
+  "OnConnectMessage": {
+    "Expression": "' !'"
+  },
+  "OnDisconnectMessage": {
+    "Expression": "' !'"
+  },
+  "DtrEnable": true,
+  "RtsEnable": true,
+  "EditorExpanded": true,
+  "Name": "Custom Serial device",
+  "Description": "Blue Pill harness servos",
+  "LastErrorDate": "2021-02-09T16:05:02.5348133-05:00",
+  "LastErrorMessage": null,
+  "IsFreezed": false,
+  "SettingsBuilder": {
+    "Settings": [
+      {
+        "Maximum": 65,
+        "Minimum": 0,
+        "PropertyName": "LeftOffset",
+        "CurrentValue": 62,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Left untensioned",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 65,
+        "Minimum": 0,
+        "PropertyName": "RightOffset",
+        "CurrentValue": 65,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Right untensioned",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "PropertyName": "TestOffsets",
+        "CurrentValue": false,
+        "Name": null,
+        "TypeName": "BoolEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Test untensioned positions",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 250,
+        "Minimum": 0,
+        "PropertyName": "decel_gain",
+        "CurrentValue": 178,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "decel gain",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 100,
+        "Minimum": 0,
+        "PropertyName": "yaw_gain",
+        "CurrentValue": 72,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "delta yaw gain",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 5,
+        "Minimum": 1,
+        "PropertyName": "smooth",
+        "CurrentValue": 3,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "smoothing",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 127,
+        "Minimum": 20,
+        "PropertyName": "tmax",
+        "CurrentValue": 90,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "max tension",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "PropertyName": "max_test",
+        "CurrentValue": false,
+        "Name": null,
+        "TypeName": "BoolEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "test max tension",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      }
+    ],
+    "IsEditMode": false
+  }
+}
