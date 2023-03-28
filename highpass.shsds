@@ -3,9 +3,9 @@
   "SerialPortName": "COM8",
   "StartupDelayMs": 0,
   "IsConnecting": false,
-  "IsEnabled": true,
+  "IsEnabled": false,
   "LogIncomingData": true,
-  "IsConnected": true,
+  "IsConnected": false,
   "BaudRate": 115200,
   "UpdateMessages": [
     {
@@ -70,6 +70,20 @@
       },
       "IsEnabled": true,
       "MaximumFrequency": 60
+    },
+    {
+      "Message": {
+        "Expression": "if(changed(20,[Settings.fall]) && [Settings.enable],replace('f9=foo;','foo',[Settings.f9]),'')"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 60
+    },
+    {
+      "Message": {
+        "Expression": "if(changed(20,[Settings.fall]) && [Settings.enable],replace('fa=foo;','foo',[Settings.attenuation]),'')"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 60
     }
   ],
   "OnConnectMessage": {
@@ -84,9 +98,9 @@
   "RtsEnable": false,
   "EditorExpanded": true,
   "Name": "Custom Serial device",
-  "Description": "Fake8 using new2char for ShakeIt blek2char effect group telemetry",
-  "LastErrorDate": "2023-03-10T20:09:15.1298373-05:00",
-  "LastErrorMessage": null,
+  "Description": "High-pass filter for Fake8 plugin and PWM_FullConfiguration Arduino sketch",
+  "LastErrorDate": "2023-03-28T17:54:21.5810104-04:00",
+  "LastErrorMessage": "Collection was modified; enumeration operation may not execute.",
   "IsFreezed": false,
   "SettingsBuilder": {
     "Settings": [
@@ -159,6 +173,23 @@
       {
         "Maximum": 64,
         "Minimum": 1,
+        "PropertyName": "f3",
+        "CurrentValue": 23,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Fake8.3 high-pass range",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 255,
+        "Minimum": 1,
         "PropertyName": "f4",
         "CurrentValue": 23,
         "Name": null,
@@ -168,14 +199,31 @@
           "Expression": ""
         },
         "IsVisible": true,
-        "Label": "Fake8.4 high-pass range",
+        "Label": "Fake8.4 high-pass damping",
         "IsVisibleFormula": {
           "Expression": ""
         }
       },
       {
-        "Maximum": 240,
-        "Minimum": 1,
+        "Maximum": 255,
+        "Minimum": 0,
+        "PropertyName": "attenuation",
+        "CurrentValue": 0,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Fake8.a high-pass attenuation",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 600,
+        "Minimum": 60,
         "PropertyName": "period",
         "CurrentValue": 22,
         "Name": null,
@@ -185,7 +233,7 @@
           "Expression": ""
         },
         "IsVisible": true,
-        "Label": "Fake8.5 high-pass damping",
+        "Label": "Fake8.5 test period",
         "IsVisibleFormula": {
           "Expression": ""
         }
@@ -254,23 +302,6 @@
         },
         "IsVisible": true,
         "Label": "Fake8.9 verbosity: 0 = off; 1 = hex, 2 = decimal",
-        "IsVisibleFormula": {
-          "Expression": ""
-        }
-      },
-      {
-        "Maximum": 100,
-        "Minimum": 0,
-        "PropertyName": "attenuation",
-        "CurrentValue": 0,
-        "Name": null,
-        "TypeName": "SliderEntry",
-        "IsEnabled": true,
-        "IsEnabledFormula": {
-          "Expression": ""
-        },
-        "IsVisible": true,
-        "Label": "Fake8.a high-pass attenuation",
         "IsVisibleFormula": {
           "Expression": ""
         }
