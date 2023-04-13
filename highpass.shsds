@@ -3,9 +3,9 @@
   "SerialPortName": "COM8",
   "StartupDelayMs": 0,
   "IsConnecting": false,
-  "IsEnabled": false,
+  "IsEnabled": true,
   "LogIncomingData": true,
-  "IsConnected": false,
+  "IsConnected": true,
   "BaudRate": 115200,
   "UpdateMessages": [
     {
@@ -73,14 +73,14 @@
     },
     {
       "Message": {
-        "Expression": "if(changed(20,[Settings.fall]) && [Settings.enable],replace('f9=foo;','foo',[Settings.f9]),'')"
+        "Expression": "if(changed(20,[Settings.f9]) && [Settings.enable],replace('f9=foo;','foo',[Settings.f9]),'')"
       },
       "IsEnabled": true,
       "MaximumFrequency": 60
     },
     {
       "Message": {
-        "Expression": "if(changed(20,[Settings.fall]) && [Settings.enable],replace('fa=foo;','foo',[Settings.attenuation]),'')"
+        "Expression": "if(changed(20,[Settings.attenuation]) && [Settings.enable],replace('fa=foo;','foo',[Settings.attenuation]),'')"
       },
       "IsEnabled": true,
       "MaximumFrequency": 60
@@ -100,7 +100,7 @@
   "Name": "Custom Serial device",
   "Description": "High-pass filter for Fake8 plugin and PWM_FullConfiguration Arduino sketch",
   "LastErrorDate": "2023-03-28T17:54:21.5810104-04:00",
-  "LastErrorMessage": "Collection was modified; enumeration operation may not execute.",
+  "LastErrorMessage": null,
   "IsFreezed": false,
   "SettingsBuilder": {
     "Settings": [
@@ -140,7 +140,7 @@
         "Maximum": 100,
         "Minimum": 1,
         "PropertyName": "f1",
-        "CurrentValue": 57,
+        "CurrentValue": 56,
         "Name": null,
         "TypeName": "SliderEntry",
         "IsEnabled": true,
@@ -293,7 +293,7 @@
         "Maximum": 2,
         "Minimum": 0,
         "PropertyName": "f9",
-        "CurrentValue": 1,
+        "CurrentValue": 2,
         "Name": null,
         "TypeName": "SliderEntry",
         "IsEnabled": true,
