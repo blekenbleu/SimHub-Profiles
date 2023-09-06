@@ -1,4 +1,5 @@
 # SimHub profiles
+ SimHub looks for these profiles in `Documents\SimHub\`  
  ShakeIt and Custom Serial e.g. for harness tensioning, etc;&nbsp; NOT dashes  
  Where there are file names different only by `.txt` suffix, that `.txt` version is usually older, since unused by SimHub.  
  The newer version is not necessarily better;&nbsp; it may be some ongoing or unsuccessful experiment.  
