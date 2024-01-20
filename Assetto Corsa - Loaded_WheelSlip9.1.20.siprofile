@@ -1,278 +1,13 @@
 {
-  "OutputManager": {
-    "ChannelsSettings": {
-      "{0.0.0.00000000}.{c5ae44a7-c068-4d7c-89d6-cd3c00d0ca5c}": {
-        "ControlVolume": true,
-        "UseLowPassFilter": false,
-        "LowPassFilter": 200,
-        "UseHighPassFilter": false,
-        "HighPassFilter": 20,
-        "IsEnabled": false,
-        "AudioMode": 2,
-        "DeviceType": 0,
-        "IsDefaultEndpoint": false,
-        "IsIdling": false,
-        "EffectToChannelsMapStore": {},
-        "GlobalChannelsSettings": {},
-        "IsOrphan": false,
-        "Name": "CABLE Input (VB-Audio Virtual Cable)",
-        "OutputId": "{0.0.0.00000000}.{c5ae44a7-c068-4d7c-89d6-cd3c00d0ca5c}",
-        "ShowPerEffectsLevels": false,
-        "IsFavorite": false
-      },
-      "{0.0.0.00000000}.{90bc06e3-4265-441f-99d5-8a3616696be5}": {
-        "ControlVolume": true,
-        "UseLowPassFilter": false,
-        "LowPassFilter": 200,
-        "UseHighPassFilter": false,
-        "HighPassFilter": 20,
-        "IsEnabled": false,
-        "AudioMode": 2,
-        "DeviceType": 0,
-        "IsDefaultEndpoint": false,
-        "IsIdling": false,
-        "EffectToChannelsMapStore": {},
-        "GlobalChannelsSettings": {},
-        "IsOrphan": false,
-        "Name": "DENON-AVAMP (HD Audio Driver for Display Audio)",
-        "OutputId": "{0.0.0.00000000}.{90bc06e3-4265-441f-99d5-8a3616696be5}",
-        "ShowPerEffectsLevels": false,
-        "IsFavorite": false
-      },
-      "{0.0.0.00000000}.{cbfea7a0-838b-4299-a94b-f52d69f39827}": {
-        "ControlVolume": true,
-        "UseLowPassFilter": false,
-        "LowPassFilter": 200,
-        "UseHighPassFilter": false,
-        "HighPassFilter": 20,
-        "IsEnabled": false,
-        "AudioMode": 2,
-        "DeviceType": 0,
-        "IsDefaultEndpoint": false,
-        "IsIdling": false,
-        "EffectToChannelsMapStore": {},
-        "GlobalChannelsSettings": {},
-        "IsOrphan": false,
-        "Name": "Realtek Digital Output (Realtek USB Audio)",
-        "OutputId": "{0.0.0.00000000}.{cbfea7a0-838b-4299-a94b-f52d69f39827}",
-        "ShowPerEffectsLevels": false,
-        "IsFavorite": false
-      },
-      "{0.0.0.00000000}.{485324ac-4c5b-4128-ace2-7b48c916eed3}": {
-        "ControlVolume": true,
-        "UseLowPassFilter": false,
-        "LowPassFilter": 200,
-        "UseHighPassFilter": false,
-        "HighPassFilter": 20,
-        "IsEnabled": false,
-        "AudioMode": 2,
-        "DeviceType": 0,
-        "IsDefaultEndpoint": false,
-        "IsIdling": false,
-        "EffectToChannelsMapStore": {},
-        "GlobalChannelsSettings": {},
-        "IsOrphan": false,
-        "Name": "SPDIF-Out (Sound Blaster X-Fi Surround 5.1 Pro)",
-        "OutputId": "{0.0.0.00000000}.{485324ac-4c5b-4128-ace2-7b48c916eed3}",
-        "ShowPerEffectsLevels": false,
-        "IsFavorite": false
-      },
-      "{0.0.0.00000000}.{82af7ab9-500b-4be4-8818-4d73bfe03a6f}": {
-        "ControlVolume": true,
-        "UseLowPassFilter": false,
-        "LowPassFilter": 200,
-        "UseHighPassFilter": false,
-        "HighPassFilter": 20,
-        "IsEnabled": false,
-        "AudioMode": 2,
-        "DeviceType": 0,
-        "IsDefaultEndpoint": false,
-        "IsIdling": false,
-        "EffectToChannelsMapStore": {},
-        "GlobalChannelsSettings": {},
-        "IsOrphan": false,
-        "Name": "Speaker (Sound Blaster X-Fi Surround 5.1 Pro)",
-        "OutputId": "{0.0.0.00000000}.{82af7ab9-500b-4be4-8818-4d73bfe03a6f}",
-        "ShowPerEffectsLevels": false,
-        "IsFavorite": false
-      },
-      "{0.0.0.00000000}.{3968c8b5-8317-43c1-ad0e-e6975f0c53d3}": {
-        "ControlVolume": true,
-        "UseLowPassFilter": false,
-        "LowPassFilter": 200,
-        "UseHighPassFilter": false,
-        "HighPassFilter": 20,
-        "IsEnabled": false,
-        "AudioMode": 2,
-        "DeviceType": 0,
-        "IsDefaultEndpoint": false,
-        "IsIdling": false,
-        "EffectToChannelsMapStore": {},
-        "GlobalChannelsSettings": {},
-        "IsOrphan": false,
-        "Name": "Speakers (2- AudioBox USB)",
-        "OutputId": "{0.0.0.00000000}.{3968c8b5-8317-43c1-ad0e-e6975f0c53d3}",
-        "ShowPerEffectsLevels": false,
-        "IsFavorite": false
-      },
-      "{0.0.0.00000000}.{617d38b6-38d9-4572-b51d-17751337ffdf}": {
-        "ControlVolume": true,
-        "UseLowPassFilter": false,
-        "LowPassFilter": 200,
-        "UseHighPassFilter": false,
-        "HighPassFilter": 20,
-        "IsEnabled": false,
-        "AudioMode": 2,
-        "DeviceType": 0,
-        "IsDefaultEndpoint": false,
-        "IsIdling": false,
-        "EffectToChannelsMapStore": {},
-        "GlobalChannelsSettings": {},
-        "IsOrphan": false,
-        "Name": "Speakers (Realtek USB Audio)",
-        "OutputId": "{0.0.0.00000000}.{617d38b6-38d9-4572-b51d-17751337ffdf}",
-        "ShowPerEffectsLevels": false,
-        "IsFavorite": false
-      },
-      "{0.0.0.00000000}.{a8c88f95-b089-400a-b5fa-29271d135cf6}": {
-        "ControlVolume": true,
-        "UseLowPassFilter": false,
-        "LowPassFilter": 200,
-        "UseHighPassFilter": false,
-        "HighPassFilter": 20,
-        "IsEnabled": true,
-        "AudioMode": 3,
-        "DeviceType": 0,
-        "IsDefaultEndpoint": false,
-        "IsIdling": false,
-        "EffectToChannelsMapStore": {
-          "CustomEffectContainer": {
-            "FrontLeft": {
-              "MapsStore": "0;1;100;;;|1;0;100;;;|2;0;100;;;|3;0;100;;;|4;0;100;;;|5;0;100;;;|6;0;100;;;|7;0;100;;;"
-            },
-            "FrontRight": {
-              "MapsStore": "0;0;100;;;|1;1;100;;;|2;0;100;;;|3;0;100;;;|4;0;100;;;|5;0;100;;;|6;0;100;;;|7;0;100;;;"
-            },
-            "RearLeft": {
-              "MapsStore": "0;0;100;;;|1;0;100;;;|2;0;100;;;|3;0;100;;;|4;1;100;;;|5;0;100;;;|6;0;100;;;|7;0;100;;;"
-            },
-            "RearRight": {
-              "MapsStore": "0;0;100;;;|1;0;100;;;|2;0;100;;;|3;0;100;;;|4;0;100;;;|5;1;100;;;|6;0;100;;;|7;0;100;;;"
-            }
-          }
-        },
-        "GlobalChannelsSettings": {
-          "Quad": {
-            "MapsStore": "0;1;100;Front left;;|1;1;100;Front right;;|2;1;100;Rear left;;|3;1;100;Rear right;;|4;0;100;;;|5;0;100;;;|6;0;100;;;|7;0;100;;;"
-          },
-          "Custom": {
-            "MapsStore": "0;1;64;;;|1;1;65;;;|2;1;100;;;|3;1;100;;;|4;0;100;;;|5;0;100;;;|6;0;100;;;|7;0;100;;;"
-          }
-        },
-        "IsOrphan": false,
-        "Name": "VoiceMeeter Aux Input (VB-Audio VoiceMeeter AUX VAIO)",
-        "OutputId": "{0.0.0.00000000}.{a8c88f95-b089-400a-b5fa-29271d135cf6}",
-        "ShowPerEffectsLevels": false,
-        "IsFavorite": false
-      },
-      "{0.0.0.00000000}.{6788ebab-b537-4a69-b3b7-552344193306}": {
-        "ControlVolume": true,
-        "UseLowPassFilter": false,
-        "LowPassFilter": 200,
-        "UseHighPassFilter": false,
-        "HighPassFilter": 20,
-        "IsEnabled": false,
-        "AudioMode": 2,
-        "DeviceType": 0,
-        "IsDefaultEndpoint": true,
-        "IsIdling": false,
-        "EffectToChannelsMapStore": {},
-        "GlobalChannelsSettings": {},
-        "IsOrphan": false,
-        "Name": "VoiceMeeter Input (VB-Audio VoiceMeeter VAIO)",
-        "OutputId": "{0.0.0.00000000}.{6788ebab-b537-4a69-b3b7-552344193306}",
-        "ShowPerEffectsLevels": false,
-        "IsFavorite": false
-      }
-    },
-    "ShowOfflineDevices": false,
-    "OutputMode": 1,
-    "CanShowOfflineDevices": true,
-    "TypeName": "SoundOutputManager"
-  },
-  "IncludeOutputSettingsInProfile": true,
+  "IncludeOutputSettingsInProfile": false,
   "UnmuteEffectsAfterSimhubRestart": false,
   "EffectsContainers": [
-    {
-      "AutocalibrationMax": 95.0,
-      "Filter": {
-        "GammaValue": 0.74999999999999978,
-        "InputGain": 47.0,
-        "MinimumForce": 0,
-        "Threshold": 0,
-        "FilterType": "GammaFilter"
-      },
-      "FrontLeftFormula": {
-        "Expression": "[GameRawData.Physics.WheelLoad01]*[ShakeITBSV3Plugin.Export.slip.FrontLeft]/2000"
-      },
-      "FrontRightFormula": {
-        "Expression": "[GameRawData.Physics.WheelLoad02]*[ShakeITBSV3Plugin.Export.slip.FrontRight]/2000"
-      },
-      "RearLeftFormula": {
-        "Expression": "[GameRawData.Physics.WheelLoad03]*[ShakeITBSV3Plugin.Export.slip.RearLeft]/2000"
-      },
-      "RearRightFormula": {
-        "Expression": "[GameRawData.Physics.WheelLoad04]*[ShakeITBSV3Plugin.Export.slip.RearRight]/2000"
-      },
-      "ForceFrequencies": true,
-      "FrontLeftFrequencyFormula": {
-        "Expression": "8*(rand(40)+100-[ShakeITBSV3Plugin.Export.slip.FrontLeft])"
-      },
-      "FrontRightFrequencyFormula": {
-        "Expression": "8*(rand(40)+100-[ShakeITBSV3Plugin.Export.slip.FrontRight])"
-      },
-      "RearLeftFrequencyFormula": {
-        "Expression": "8*(rand(40)+100-[ShakeITBSV3Plugin.Export.slip.RearLeft])"
-      },
-      "RearRightFrequencyFormula": {
-        "Expression": "8*(rand(40)+100-[ShakeITBSV3Plugin.Export.slip.RearRight])"
-      },
-      "SupportWarnInfo": null,
-      "IsMuted": false,
-      "ContainerId": "05c7d3e0-f0b3-492f-82f2-1cb4799631b8",
-      "ContainerType": "CustomEffectContainer",
-      "Description": "Provides ability to create your own effect based on game data",
-      "AggregationMode": "Corners",
-      "Gain": 90.0,
-      "IsEnabled": true,
-      "Output": {
-        "UsePrehemptiveMode": false,
-        "Frequency": 44,
-        "UseHighFrequency": false,
-        "HighFrequency": 50,
-        "WhiteNoise": 10,
-        "UseWhiteNoise": false,
-        "EnableDurationModulation": true,
-        "DurationModulationValue": 34,
-        "FrequencyBasedOnPreFilter": false,
-        "Harmonics": 0,
-        "HoldMode": 1,
-        "DelayEnabled": false,
-        "IsAudio": true,
-        "AssignToChannelGroup": false,
-        "ChannelGroupName": "",
-        "PropertyName": null,
-        "ExportProperty": false,
-        "DisableOutput": false,
-        "OutputType": "ToneOutput"
-      }
-    },
     {
       "SupportWarnInfo": null,
       "BrakeFilter": 10,
       "Filter": {
         "GammaValue": 1.3000000000000003,
-        "InputGain": 129.0,
+        "InputGain": 107.0,
         "MinimumForce": 0,
         "Threshold": 0,
         "FilterType": "GammaFilter"
@@ -286,7 +21,7 @@
       "ContainerType": "WheelsSlipContainer",
       "Description": "Provide localized wheel slip feedback",
       "AggregationMode": "Corners",
-      "Gain": 49.0,
+      "Gain": 50.0,
       "IsEnabled": true,
       "Output": {
         "UsePrehemptiveMode": false,
@@ -307,6 +42,113 @@
         "PropertyName": "slip",
         "ExportProperty": true,
         "DisableOutput": true,
+        "OutputType": "ToneOutput"
+      }
+    },
+    {
+      "SupportWarnInfo": null,
+      "BrakeFilter": 10,
+      "Filter": {
+        "GammaValue": 5.0,
+        "InputGain": 500.0,
+        "MinimumForce": 0,
+        "Threshold": 0,
+        "FilterType": "GammaFilter"
+      },
+      "MuteWhenLockEffectIsActive": false,
+      "ThrottleFilter": 10,
+      "UseBrakeFilter": false,
+      "UseThrottleFilter": false,
+      "IsMuted": false,
+      "ContainerId": "e0f0cfd0-b0a5-4001-bea7-9e176bce760f",
+      "ContainerType": "WheelsSlipContainer",
+      "Description": "Provide localized wheel slip feedback",
+      "AggregationMode": "Corners",
+      "Gain": 50.0,
+      "IsEnabled": true,
+      "Output": {
+        "UsePrehemptiveMode": false,
+        "Frequency": 50,
+        "UseHighFrequency": false,
+        "HighFrequency": 50,
+        "WhiteNoise": 10,
+        "UseWhiteNoise": false,
+        "EnableDurationModulation": false,
+        "DurationModulationValue": 34,
+        "FrequencyBasedOnPreFilter": false,
+        "Harmonics": 0,
+        "HoldMode": 1,
+        "DelayEnabled": false,
+        "IsAudio": true,
+        "AssignToChannelGroup": false,
+        "ChannelGroupName": "",
+        "PropertyName": "nlslip",
+        "ExportProperty": true,
+        "DisableOutput": true,
+        "OutputType": "ToneOutput"
+      }
+    },
+    {
+      "AutocalibrationMax": 95.0,
+      "Filter": {
+        "GammaValue": 0.39999999999999963,
+        "InputGain": 104.0,
+        "MinimumForce": 0,
+        "Threshold": 0,
+        "FilterType": "GammaFilter"
+      },
+      "FrontLeftFormula": {
+        "Expression": "[GameRawData.Physics.WheelLoad01]*[ShakeITBSV3Plugin.Export.nlslip.FrontLeft]/6000"
+      },
+      "FrontRightFormula": {
+        "Expression": "[GameRawData.Physics.WheelLoad02]*[ShakeITBSV3Plugin.Export.nlslip.FrontRight]/6000"
+      },
+      "RearLeftFormula": {
+        "Expression": "[GameRawData.Physics.WheelLoad03]*[ShakeITBSV3Plugin.Export.nlslip.RearLeft]/6000"
+      },
+      "RearRightFormula": {
+        "Expression": "[GameRawData.Physics.WheelLoad04]*[ShakeITBSV3Plugin.Export.nlslip.RearRight]/6000"
+      },
+      "ForceFrequencies": true,
+      "FrontLeftFrequencyFormula": {
+        "Expression": "8*(rand(40)+100-[ShakeITBSV3Plugin.Export.slip.FrontLeft])"
+      },
+      "FrontRightFrequencyFormula": {
+        "Expression": "8*(rand(40)+100-[ShakeITBSV3Plugin.Export.slip.FrontRight])"
+      },
+      "RearLeftFrequencyFormula": {
+        "Expression": "8*(rand(40)+100-[ShakeITBSV3Plugin.Export.slip.RearLeft])"
+      },
+      "RearRightFrequencyFormula": {
+        "Expression": "8*(rand(40)+100-[ShakeITBSV3Plugin.Export.slip.RearRight])"
+      },
+      "SupportWarnInfo": null,
+      "IsMuted": false,
+      "ContainerId": "05c7d3e0-f0b3-492f-82f2-1cb4799631b8",
+      "ContainerType": "CustomEffectContainer",
+      "Description": "Provides ability to create your own effect based on game data",
+      "AggregationMode": "Corners",
+      "Gain": 88.0,
+      "IsEnabled": true,
+      "Output": {
+        "UsePrehemptiveMode": false,
+        "Frequency": 44,
+        "UseHighFrequency": false,
+        "HighFrequency": 50,
+        "WhiteNoise": 10,
+        "UseWhiteNoise": false,
+        "EnableDurationModulation": true,
+        "DurationModulationValue": 34,
+        "FrequencyBasedOnPreFilter": false,
+        "Harmonics": 0,
+        "HoldMode": 1,
+        "DelayEnabled": false,
+        "IsAudio": true,
+        "AssignToChannelGroup": false,
+        "ChannelGroupName": "",
+        "PropertyName": null,
+        "ExportProperty": false,
+        "DisableOutput": false,
         "OutputType": "ToneOutput"
       }
     }
