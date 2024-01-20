@@ -14,23 +14,15 @@
             "FilterType": "GammaFilter"
           },
           "FrontLeftFormula": {
-            "JSExt": 3,
-            "Interpreter": 1,
-            "Expression": "// sway\r\nreturn Math.abs($prop('AccelerationSway')) * 5"
+            "Expression": "Abs([AccelerationSway])*5"
           },
           "FrontRightFormula": {
-            "JSExt": 3,
-            "Interpreter": 1,
-            "Expression": "// surge\r\nreturn Math.abs($prop('AccelerationSurge')) * 5;"
+            "Expression": "Abs([AccelerationSurge])*5"
           },
           "RearLeftFormula": {
-            "JSExt": 3,
-            "Interpreter": 1,
             "Expression": ""
           },
           "RearRightFormula": {
-            "JSExt": 3,
-            "Interpreter": 1,
             "Expression": ""
           },
           "ForceFrequencies": false,
@@ -86,22 +78,22 @@
             "FilterType": "GammaFilter"
           },
           "FrontLeftFormula": {
-            "JSExt": 3,
+            "JSExt": 1,
             "Interpreter": 1,
             "Expression": "// front left load\r\nd = $prop('ShakeITBSV3Plugin.Export.AbsAcc.Right')\r\nd = (0<$prop('AccelerationSurge')) ? d : -d;\r\n// left load (turning right)\r\nvar L = $prop('ShakeITBSV3Plugin.Export.AbsAcc.Left')\r\nL = (0>$prop('AccelerationSway')) ? L : -L;\r\n//return d;\r\n// d, L range -100 to 100; max magnitude 100*sqrt(2)\r\n// if G are 0, then no load shift and each corner gets 0.25 G\r\nL = 25 + 25 * L / 100;\t// left-right load distribution\r\nL += (L * d / 100);\t\t// fore-aft load distribution\r\nreturn L;"
           },
           "FrontRightFormula": {
-            "JSExt": 3,
+            "JSExt": 1,
             "Interpreter": 1,
             "Expression": "// front right load\r\nvar d = $prop('ShakeITBSV3Plugin.Export.AbsAcc.Right')\r\n// deceleration\r\nd = (0<$prop('AccelerationSurge')) ? d : -d;\r\nvar L = $prop('ShakeITBSV3Plugin.Export.AbsAcc.Left')\r\n// right force (turning left)\r\nL = (0<$prop('AccelerationSway')) ? L : -L;\r\n//return d;\r\n// d, L range -100 to 100; max magnitude 100*sqrt(2)\r\n// for 0 acceleeration, no shift and each corner gets 0.25 G\r\nL = 25 + 25 * L / 100;\t// distribute right - left\r\nL += (L * d / 100);\t\t\t// distribute fore - aft\r\nreturn L;"
           },
           "RearLeftFormula": {
-            "JSExt": 3,
+            "JSExt": 1,
             "Interpreter": 1,
             "Expression": "// rear left corner load\r\nvar d = $prop('ShakeITBSV3Plugin.Export.AbsAcc.Right')\r\n// deceleration force\r\nd = (0>$prop('AccelerationSurge')) ? d : -d;\r\n// left force (turning right)\r\nvar L = $prop('ShakeITBSV3Plugin.Export.AbsAcc.Left')\r\nL = (0>$prop('AccelerationSway')) ? L : -L;\r\n// d, L range -100 to 100; max magnitude 100*sqrt(2)\r\n// no load shift for 0 acceleration; each corner gets 0.25 G\r\nvar L = 25 + 25 * L / 100;\t// left-right distribution\r\nL += (L * d / 100);\t\t// distribute aft-fore\r\nreturn L;"
           },
           "RearRightFormula": {
-            "JSExt": 3,
+            "JSExt": 1,
             "Interpreter": 1,
             "Expression": "// rear right load\r\nvar d = $prop('ShakeITBSV3Plugin.Export.AbsAcc.Right')\r\nd = (0>$prop('AccelerationSurge')) ? d : -d;\r\nvar L = $prop('ShakeITBSV3Plugin.Export.AbsAcc.Left')\r\nL = (0<$prop('AccelerationSway')) ? L : -L;\r\n// d, L range -100 to 100; max magnitude 100*sqrt(2)\r\n// if no accelerations, then no shift and each corner gets 0.25 G\r\nL = 25 + 25 * L / 100;\t\t// distribute load right - left\r\nL += (L * d / 100);\t\t\t// distribute load aft - fore\r\nreturn L;"
           },
@@ -128,7 +120,7 @@
           "IsEnabled": true,
           "Output": {
             "UsePrehemptiveMode": false,
-            "Frequency": 1000,
+            "Frequency": 1,
             "UseHighFrequency": false,
             "HighFrequency": 30,
             "WhiteNoise": 10,
@@ -171,7 +163,7 @@
           "IsEnabled": true,
           "Output": {
             "UsePrehemptiveMode": false,
-            "Frequency": 1000,
+            "Frequency": 1,
             "UseHighFrequency": false,
             "HighFrequency": 55,
             "WhiteNoise": 4,
@@ -201,22 +193,22 @@
             "FilterType": "GammaFilter"
           },
           "FrontLeftFormula": {
-            "JSExt": 3,
+            "JSExt": 1,
             "Interpreter": 1,
             "Expression": "// front left loaded slip\r\nvar L = $prop('ShakeITBSV3Plugin.Export.proxyL.FrontLeft');\r\n// corner slip\r\ns = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontLeft');\r\nreturn s *  L / 100; \r\n//return s;"
           },
           "FrontRightFormula": {
-            "JSExt": 3,
+            "JSExt": 1,
             "Interpreter": 1,
             "Expression": "// front right loaded slip\r\nvar L = $prop('ShakeITBSV3Plugin.Export.proxyL.FrontRight');\r\n// slip\r\ns = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontRight');\r\n// weight slip by load (abs max 100);\r\nreturn s * L / 100;"
           },
           "RearLeftFormula": {
-            "JSExt": 3,
+            "JSExt": 1,
             "Interpreter": 1,
             "Expression": "// rear left loaded slip\r\nvar L = $prop('ShakeITBSV3Plugin.Export.proxyL.RearLeft');\r\n// corner slip\r\nvar s = $prop('ShakeITBSV3Plugin.Export.proxyS.RearLeft');\r\n// weight slip by load\r\nreturn s *  L / 100;"
           },
           "RearRightFormula": {
-            "JSExt": 3,
+            "JSExt": 1,
             "Interpreter": 1,
             "Expression": "// rear right loaded slip\r\nvar L = $prop('ShakeITBSV3Plugin.Export.proxyL.RearRight');\r\n// corner slip\r\ns = $prop('ShakeITBSV3Plugin.Export.proxyS.RearRight');\r\n// weight slip by load (abs max 100);\r\nreturn s * L / 100;"
           },
@@ -243,7 +235,7 @@
           "IsEnabled": true,
           "Output": {
             "UsePrehemptiveMode": false,
-            "Frequency": 1000,
+            "Frequency": 1,
             "UseHighFrequency": false,
             "HighFrequency": 30,
             "WhiteNoise": 10,
@@ -273,7 +265,7 @@
             "FilterType": "GammaFilter"
           },
           "FrontLeftFormula": {
-            "JSExt": 3,
+            "JSExt": 1,
             "Interpreter": 1,
             "Expression": "// understeer\r\n// front left slip\r\nvar s = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontLeft');\r\ns = Math.max(0, s - $prop('ShakeITBSV3Plugin.Export.proxyS.RearLeft'));\r\n// front right slip\r\nvar r = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontRight');\r\nr = Math.max(0, r - $prop('ShakeITBSV3Plugin.Export.proxyS.RearRight'));\r\n// correlate slip differences\r\nreturn Math.sqrt(r*s) * $prop('ShakeITBSV3Plugin.Export.AbsAcc.Left') / 15;"
           },
@@ -283,7 +275,7 @@
             "Expression": ""
           },
           "RearLeftFormula": {
-            "JSExt": 3,
+            "JSExt": 1,
             "Interpreter": 1,
             "Expression": "// oversteer\r\n// front left slip\r\nvar s = - $prop('ShakeITBSV3Plugin.Export.proxyS.FrontLeft');\r\ns = Math.max(0, s + $prop('ShakeITBSV3Plugin.Export.proxyS.RearLeft'));\r\n// front right slip\r\nvar r = - $prop('ShakeITBSV3Plugin.Export.proxyS.FrontRight');\r\nr = Math.max(0, r + $prop('ShakeITBSV3Plugin.Export.proxyS.RearRight'));\r\n// correlate slip differences\r\nreturn Math.sqrt(r*s) * $prop('ShakeITBSV3Plugin.Export.AbsAcc.Left') / 15;"
           },
@@ -315,7 +307,7 @@
           "IsEnabled": true,
           "Output": {
             "UsePrehemptiveMode": false,
-            "Frequency": 1000,
+            "Frequency": 1,
             "UseHighFrequency": false,
             "HighFrequency": 30,
             "WhiteNoise": 10,
@@ -416,7 +408,7 @@
   "OutputMode": 1,
   "GlobalGain": 50.0,
   "UseProfileGain": true,
-  "LastLoaded": "2024-01-20T10:54:51.0814157-05:00",
+  "LastLoaded": "2024-01-20T14:54:59.26662-05:00",
   "Description": "2024-01-20\r\nhttps://www.racedepartment.com/threads/simhub-shakeit-bass-shakers-custom-4-corner-tire-slip.198455/post-3406020\r\nhttps://www.racedepartment.com/attachments/newloaded4-chanwheelslipundersteer-siprofile-txt.485970/\r\nhttps://www.racedepartment.com/threads/simhub-shakeit-bass-shakers-custom-4-corner-tire-slip.198455/post-3740571",
   "Name": "4-channel wheelslip - CUSTOM Forced Frequency",
   "ProfileId": "e9e2d3d0-0694-48a1-ab41-f14ef0b51dd4",
