@@ -1,0 +1,424 @@
+{
+  "IncludeOutputSettingsInProfile": false,
+  "UnmuteEffectsAfterSimhubRestart": false,
+  "EffectsContainers": [
+    {
+      "EffectsContainers": [
+        {
+          "AutocalibrationMax": 95.0,
+          "Filter": {
+            "GammaValue": 3.0,
+            "InputGain": 100.0,
+            "MinimumForce": 0,
+            "Threshold": 0,
+            "FilterType": "GammaFilter"
+          },
+          "FrontLeftFormula": {
+            "JSExt": 3,
+            "Interpreter": 1,
+            "Expression": "// sway\r\nreturn Math.abs($prop('AccelerationSway')) * 5"
+          },
+          "FrontRightFormula": {
+            "JSExt": 3,
+            "Interpreter": 1,
+            "Expression": "// surge\r\nreturn Math.abs($prop('AccelerationSurge')) * 5;"
+          },
+          "RearLeftFormula": {
+            "JSExt": 3,
+            "Interpreter": 1,
+            "Expression": ""
+          },
+          "RearRightFormula": {
+            "JSExt": 3,
+            "Interpreter": 1,
+            "Expression": ""
+          },
+          "ForceFrequencies": false,
+          "FrontLeftFrequencyFormula": {
+            "Expression": ""
+          },
+          "FrontRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearLeftFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "SupportWarnInfo": null,
+          "IsMuted": false,
+          "ContainerId": "0cfb4921-4477-49ed-bc3f-2e7bfe8ad615",
+          "ContainerType": "CustomEffectContainer",
+          "Description": "absolute lateral, longitudinal accelerations",
+          "AggregationMode": "Left/Right",
+          "Gain": 0.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 1000,
+            "UseHighFrequency": false,
+            "HighFrequency": 30,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": true,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "IsAudio": true,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "AbsAcc",
+            "ExportProperty": true,
+            "DisableOutput": true,
+            "OutputType": "ToneOutput"
+          }
+        },
+        {
+          "AutocalibrationMax": 95.0,
+          "Filter": {
+            "GammaValue": 1.0,
+            "InputGain": 100.0,
+            "MinimumForce": 0,
+            "Threshold": 0,
+            "FilterType": "GammaFilter"
+          },
+          "FrontLeftFormula": {
+            "JSExt": 3,
+            "Interpreter": 1,
+            "Expression": "// front left load\r\nd = $prop('ShakeITBSV3Plugin.Export.AbsAcc.Right')\r\nd = (0<$prop('AccelerationSurge')) ? d : -d;\r\n// left load (turning right)\r\nvar L = $prop('ShakeITBSV3Plugin.Export.AbsAcc.Left')\r\nL = (0>$prop('AccelerationSway')) ? L : -L;\r\n//return d;\r\n// d, L range -100 to 100; max magnitude 100*sqrt(2)\r\n// if G are 0, then no load shift and each corner gets 0.25 G\r\nL = 25 + 25 * L / 100;\t// left-right load distribution\r\nL += (L * d / 100);\t\t// fore-aft load distribution\r\nreturn L;"
+          },
+          "FrontRightFormula": {
+            "JSExt": 3,
+            "Interpreter": 1,
+            "Expression": "// front right load\r\nvar d = $prop('ShakeITBSV3Plugin.Export.AbsAcc.Right')\r\n// deceleration\r\nd = (0<$prop('AccelerationSurge')) ? d : -d;\r\nvar L = $prop('ShakeITBSV3Plugin.Export.AbsAcc.Left')\r\n// right force (turning left)\r\nL = (0<$prop('AccelerationSway')) ? L : -L;\r\n//return d;\r\n// d, L range -100 to 100; max magnitude 100*sqrt(2)\r\n// for 0 acceleeration, no shift and each corner gets 0.25 G\r\nL = 25 + 25 * L / 100;\t// distribute right - left\r\nL += (L * d / 100);\t\t\t// distribute fore - aft\r\nreturn L;"
+          },
+          "RearLeftFormula": {
+            "JSExt": 3,
+            "Interpreter": 1,
+            "Expression": "// rear left corner load\r\nvar d = $prop('ShakeITBSV3Plugin.Export.AbsAcc.Right')\r\n// deceleration force\r\nd = (0>$prop('AccelerationSurge')) ? d : -d;\r\n// left force (turning right)\r\nvar L = $prop('ShakeITBSV3Plugin.Export.AbsAcc.Left')\r\nL = (0>$prop('AccelerationSway')) ? L : -L;\r\n// d, L range -100 to 100; max magnitude 100*sqrt(2)\r\n// no load shift for 0 acceleration; each corner gets 0.25 G\r\nvar L = 25 + 25 * L / 100;\t// left-right distribution\r\nL += (L * d / 100);\t\t// distribute aft-fore\r\nreturn L;"
+          },
+          "RearRightFormula": {
+            "JSExt": 3,
+            "Interpreter": 1,
+            "Expression": "// rear right load\r\nvar d = $prop('ShakeITBSV3Plugin.Export.AbsAcc.Right')\r\nd = (0>$prop('AccelerationSurge')) ? d : -d;\r\nvar L = $prop('ShakeITBSV3Plugin.Export.AbsAcc.Left')\r\nL = (0<$prop('AccelerationSway')) ? L : -L;\r\n// d, L range -100 to 100; max magnitude 100*sqrt(2)\r\n// if no accelerations, then no shift and each corner gets 0.25 G\r\nL = 25 + 25 * L / 100;\t\t// distribute load right - left\r\nL += (L * d / 100);\t\t\t// distribute load aft - fore\r\nreturn L;"
+          },
+          "ForceFrequencies": false,
+          "FrontLeftFrequencyFormula": {
+            "Expression": ""
+          },
+          "FrontRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearLeftFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "SupportWarnInfo": null,
+          "IsMuted": false,
+          "ContainerId": "2f037683-26d1-4bc0-bcac-6d8a861aea80",
+          "ContainerType": "CustomEffectContainer",
+          "Description": "generate proxyL[oad] corner load properties",
+          "AggregationMode": "Corners",
+          "Gain": 0.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 1000,
+            "UseHighFrequency": false,
+            "HighFrequency": 30,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": true,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "IsAudio": true,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "proxyL",
+            "ExportProperty": true,
+            "DisableOutput": true,
+            "OutputType": "ToneOutput"
+          }
+        },
+        {
+          "SupportWarnInfo": null,
+          "BrakeFilter": 10,
+          "Filter": {
+            "GammaValue": 2.0,
+            "InputGain": 6.0,
+            "MinimumForce": 0,
+            "Threshold": 0,
+            "FilterType": "GammaFilter"
+          },
+          "MuteWhenLockEffectIsActive": false,
+          "ThrottleFilter": 10,
+          "UseBrakeFilter": false,
+          "UseThrottleFilter": false,
+          "IsMuted": false,
+          "ContainerId": "da2245c2-3fe8-4b0d-a3b0-4cdce22c2f2b",
+          "ContainerType": "WheelsSlipContainer",
+          "Description": "condition wheel slips to proxyS[lip] properties",
+          "AggregationMode": "Corners",
+          "Gain": 0.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 1000,
+            "UseHighFrequency": false,
+            "HighFrequency": 55,
+            "WhiteNoise": 4,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": false,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "IsAudio": true,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "proxyS",
+            "ExportProperty": true,
+            "DisableOutput": true,
+            "OutputType": "ToneOutput"
+          }
+        },
+        {
+          "AutocalibrationMax": 95.0,
+          "Filter": {
+            "GammaValue": 1.8,
+            "InputGain": 100.0,
+            "MinimumForce": 0,
+            "Threshold": 0,
+            "FilterType": "GammaFilter"
+          },
+          "FrontLeftFormula": {
+            "JSExt": 3,
+            "Interpreter": 1,
+            "Expression": "// front left loaded slip\r\nvar L = $prop('ShakeITBSV3Plugin.Export.proxyL.FrontLeft');\r\n// corner slip\r\ns = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontLeft');\r\nreturn s *  L / 100; \r\n//return s;"
+          },
+          "FrontRightFormula": {
+            "JSExt": 3,
+            "Interpreter": 1,
+            "Expression": "// front right loaded slip\r\nvar L = $prop('ShakeITBSV3Plugin.Export.proxyL.FrontRight');\r\n// slip\r\ns = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontRight');\r\n// weight slip by load (abs max 100);\r\nreturn s * L / 100;"
+          },
+          "RearLeftFormula": {
+            "JSExt": 3,
+            "Interpreter": 1,
+            "Expression": "// rear left loaded slip\r\nvar L = $prop('ShakeITBSV3Plugin.Export.proxyL.RearLeft');\r\n// corner slip\r\nvar s = $prop('ShakeITBSV3Plugin.Export.proxyS.RearLeft');\r\n// weight slip by load\r\nreturn s *  L / 100;"
+          },
+          "RearRightFormula": {
+            "JSExt": 3,
+            "Interpreter": 1,
+            "Expression": "// rear right loaded slip\r\nvar L = $prop('ShakeITBSV3Plugin.Export.proxyL.RearRight');\r\n// corner slip\r\ns = $prop('ShakeITBSV3Plugin.Export.proxyS.RearRight');\r\n// weight slip by load (abs max 100);\r\nreturn s * L / 100;"
+          },
+          "ForceFrequencies": false,
+          "FrontLeftFrequencyFormula": {
+            "Expression": ""
+          },
+          "FrontRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearLeftFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "SupportWarnInfo": null,
+          "IsMuted": false,
+          "ContainerId": "b6a37174-466c-4181-877c-81f5a83e39e9",
+          "ContainerType": "CustomEffectContainer",
+          "Description": "loaded wheel slips for each corner",
+          "AggregationMode": "Corners",
+          "Gain": 0.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 1000,
+            "UseHighFrequency": false,
+            "HighFrequency": 30,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": true,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "IsAudio": true,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "LoadedSlip",
+            "ExportProperty": true,
+            "DisableOutput": true,
+            "OutputType": "ToneOutput"
+          }
+        },
+        {
+          "AutocalibrationMax": 95.0,
+          "Filter": {
+            "GammaValue": 0.85,
+            "InputGain": 100.0,
+            "MinimumForce": 0,
+            "Threshold": 9,
+            "FilterType": "GammaFilter"
+          },
+          "FrontLeftFormula": {
+            "JSExt": 3,
+            "Interpreter": 1,
+            "Expression": "// understeer\r\n// front left slip\r\nvar s = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontLeft');\r\ns = Math.max(0, s - $prop('ShakeITBSV3Plugin.Export.proxyS.RearLeft'));\r\n// front right slip\r\nvar r = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontRight');\r\nr = Math.max(0, r - $prop('ShakeITBSV3Plugin.Export.proxyS.RearRight'));\r\n// correlate slip differences\r\nreturn Math.sqrt(r*s) * $prop('ShakeITBSV3Plugin.Export.AbsAcc.Left') / 15;"
+          },
+          "FrontRightFormula": {
+            "JSExt": 3,
+            "Interpreter": 1,
+            "Expression": ""
+          },
+          "RearLeftFormula": {
+            "JSExt": 3,
+            "Interpreter": 1,
+            "Expression": "// oversteer\r\n// front left slip\r\nvar s = - $prop('ShakeITBSV3Plugin.Export.proxyS.FrontLeft');\r\ns = Math.max(0, s + $prop('ShakeITBSV3Plugin.Export.proxyS.RearLeft'));\r\n// front right slip\r\nvar r = - $prop('ShakeITBSV3Plugin.Export.proxyS.FrontRight');\r\nr = Math.max(0, r + $prop('ShakeITBSV3Plugin.Export.proxyS.RearRight'));\r\n// correlate slip differences\r\nreturn Math.sqrt(r*s) * $prop('ShakeITBSV3Plugin.Export.AbsAcc.Left') / 15;"
+          },
+          "RearRightFormula": {
+            "JSExt": 3,
+            "Interpreter": 1,
+            "Expression": ""
+          },
+          "ForceFrequencies": false,
+          "FrontLeftFrequencyFormula": {
+            "Expression": ""
+          },
+          "FrontRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearLeftFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "SupportWarnInfo": null,
+          "IsMuted": false,
+          "ContainerId": "9be9dbca-84fc-49dc-af85-71b78c1442b6",
+          "ContainerType": "CustomEffectContainer",
+          "Description": "understeer, oversteer",
+          "AggregationMode": "Front/Rear",
+          "Gain": 0.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 1000,
+            "UseHighFrequency": false,
+            "HighFrequency": 30,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": true,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "IsAudio": true,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "UnderOversteer",
+            "ExportProperty": true,
+            "DisableOutput": true,
+            "OutputType": "ToneOutput"
+          }
+        },
+        {
+          "AutocalibrationMax": 95.0,
+          "Filter": {
+            "GammaValue": 1.0,
+            "InputGain": 100.0,
+            "MinimumForce": 0,
+            "Threshold": 2,
+            "FilterType": "GammaFilter"
+          },
+          "FrontLeftFormula": {
+            "Expression": "([ShakeITBSV3Plugin.Export.UnderOversteer.Front]+[ShakeITBSV3Plugin.Export.LoadedSlip.FrontLeft]+[ShakeITBSV3Plugin.Export.proxyS.FrontLeft])/2"
+          },
+          "FrontRightFormula": {
+            "Expression": "([ShakeITBSV3Plugin.Export.UnderOversteer.Front]+[ShakeITBSV3Plugin.Export.LoadedSlip.FrontRight]+[ShakeITBSV3Plugin.Export.proxyS.FrontRight])/2"
+          },
+          "RearLeftFormula": {
+            "Expression": "([ShakeITBSV3Plugin.Export.UnderOversteer.Rear]+[ShakeITBSV3Plugin.Export.LoadedSlip.RearLeft]+[ShakeITBSV3Plugin.Export.proxyS.RearLeft])/2"
+          },
+          "RearRightFormula": {
+            "Expression": "([ShakeITBSV3Plugin.Export.UnderOversteer.Rear]+[ShakeITBSV3Plugin.Export.LoadedSlip.RearRight]+[ShakeITBSV3Plugin.Export.proxyS.RearRight])/2"
+          },
+          "ForceFrequencies": true,
+          "FrontLeftFrequencyFormula": {
+            "Expression": "8*(rand(40)+100-[ShakeITBSV3Plugin.Export.proxyS.FrontLeft])"
+          },
+          "FrontRightFrequencyFormula": {
+            "Expression": "8*(rand(40)+100-[ShakeITBSV3Plugin.Export.proxyS.FrontRight])"
+          },
+          "RearLeftFrequencyFormula": {
+            "Expression": "8*(rand(40)+100-[ShakeITBSV3Plugin.Export.proxyS.RearLeft])"
+          },
+          "RearRightFrequencyFormula": {
+            "Expression": "8*(rand(40)+100-[ShakeITBSV3Plugin.Export.proxyS.RearRight])"
+          },
+          "SupportWarnInfo": null,
+          "IsMuted": false,
+          "ContainerId": "3d08c9f0-6760-43d3-be94-822dbc0c57a8",
+          "ContainerType": "CustomEffectContainer",
+          "Description": "final mix of slips",
+          "AggregationMode": "Corners",
+          "Gain": 100.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 92,
+            "UseHighFrequency": false,
+            "HighFrequency": 95,
+            "WhiteNoise": 16,
+            "UseWhiteNoise": true,
+            "EnableDurationModulation": true,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": true,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "IsAudio": true,
+            "AssignToChannelGroup": true,
+            "ChannelGroupName": "Wheel Slip",
+            "PropertyName": null,
+            "ExportProperty": false,
+            "DisableOutput": false,
+            "OutputType": "ToneOutput"
+          }
+        }
+      ],
+      "Filter": null,
+      "SupportWarnInfo": null,
+      "IsMuted": false,
+      "ContainerId": "583ba06f-d9a8-447a-8c0d-75a730ea80fe",
+      "ContainerType": "GroupContainer",
+      "Description": "Lock & Slip",
+      "AggregationMode": null,
+      "Gain": 75.333333333333258,
+      "IsEnabled": true,
+      "Output": null
+    }
+  ],
+  "AutoCalibrationRatio2": 100,
+  "OutputMode": 1,
+  "GlobalGain": 50.0,
+  "UseProfileGain": true,
+  "LastLoaded": "2024-01-20T10:54:51.0814157-05:00",
+  "Description": "2024-01-20\r\nhttps://www.racedepartment.com/threads/simhub-shakeit-bass-shakers-custom-4-corner-tire-slip.198455/post-3406020\r\nhttps://www.racedepartment.com/attachments/newloaded4-chanwheelslipundersteer-siprofile-txt.485970/\r\nhttps://www.racedepartment.com/threads/simhub-shakeit-bass-shakers-custom-4-corner-tire-slip.198455/post-3740571",
+  "Name": "4-channel wheelslip - CUSTOM Forced Frequency",
+  "ProfileId": "e9e2d3d0-0694-48a1-ab41-f14ef0b51dd4",
+  "GameCode": null
+}
