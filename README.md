@@ -11,10 +11,10 @@
 - [Assetto Corsa - Loaded_WheelSlip9.1.20](<Assetto Corsa - Loaded_WheelSlip9.1.20.siprofile>)  discussed [here](https://www.racedepartment.com/threads/simhub-shakeit-bass-shakers-custom-4-corner-tire-slip.198455/post-3739847)  
 	SimHub 9.1.20 added `Forced Frequencies` to CUSTOM EFFECT, and AC has `GameRawData.Physics.WheelLoad0x` telemetry properties, 
     allowing this a simple low overhead profile for loaded wheel slip simulating tire squeal to shudder based on increasing slip, with amplitude based on tire load (no load = no tactile)  
-- Revised [GmodulatedWheelSlip.siprofile.txt](GmodulatedWheelSlip.siprofile.txt)
-  AKA [**SimHub ShakeIt Bass Shakers custom 4 corner tire slip**](https://www.racedepartment.com/threads/simhub-shakeit-bass-shakers-custom-4-corner-tire-slip.198455/)  
+#### [SimHub ShakeIt Bass Shakers custom 4 corner tire slip](GmodulatedWheelSlip.siprofile.txt) *updated to* [`Forced Frequencies`](file:///C:/Users/bleke/Documents/SimHub/Any%20Game%20-%204-channel%20wheelslip%20-%20CUSTOM%20Forced%20Frequency.siprofile) 
+   AKA [GmodulatedWheelSlip.siprofile.txt](https://www.racedepartment.com/threads/simhub-shakeit-bass-shakers-custom-4-corner-tire-slip.198455/)
    and [the orginal](GmodulatedWheelSlip.siprofile), as described [here](https://blekenbleu.github.io/pedals/#Simshakeseat).  
-#### [sierses_4-channel_wheelslip.siprofile](sierses_4-channel_wheelslip.siprofile) - *updated to*: [Forced Frequency squeal-shudder](<Any Game - 4-channel wheelslip - CUSTOM Forced Frequency.siprofile>)  
+#### [sierses_4-channel_wheelslip.siprofile](sierses_4-channel_wheelslip.siprofile) - *updated to*: [Forced Frequency squeal-shudder](<Any Game - 4-channel wheelslip mix - CUSTOM Forced Frequency.siprofile>)  
 - based on [NewLoaded4-chanWheelslipUndersteer.siprofile](NewLoaded4-chanWheelslipUndersteer.siprofile)
 - wrapped effects in an embedded GroupContainer
     - custom effects for property AbsAcc from abs AccelerationSway, Surge
