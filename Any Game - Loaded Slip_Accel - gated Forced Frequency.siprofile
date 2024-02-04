@@ -236,16 +236,16 @@
             "FilterType": "GammaFilter"
           },
           "FrontLeftFormula": {
-            "Expression": "100*Abs(.005*[ShakeITBSV3Plugin.Export.proxyS.FrontLeft]/[GlobalAccelerationG])"
+            "Expression": "100*Abs(.005*[ShakeITBSV3Plugin.Export.proxyS.FrontLeft]/Max(.1,Abs([GlobalAccelerationG])))"
           },
           "FrontRightFormula": {
-            "Expression": "100*Abs(.005*[ShakeITBSV3Plugin.Export.proxyS.FrontRight]/[GlobalAccelerationG])"
+            "Expression": "100*Abs(.005*[ShakeITBSV3Plugin.Export.proxyS.FrontRight]/Max(.1,Abs([GlobalAccelerationG])))"
           },
           "RearLeftFormula": {
-            "Expression": "100*Abs(.005*[ShakeITBSV3Plugin.Export.proxyS.RearLeft]/[GlobalAccelerationG])"
+            "Expression": "100*Abs(.005*[ShakeITBSV3Plugin.Export.proxyS.RearLeft]/Max(.1,Abs([GlobalAccelerationG])))"
           },
           "RearRightFormula": {
-            "Expression": "100*Abs(.005*[ShakeITBSV3Plugin.Export.proxyS.RearRight]/[GlobalAccelerationG])"
+            "Expression": "100*Abs(.005*[ShakeITBSV3Plugin.Export.proxyS.RearRight]/Max(.1,Abs([GlobalAccelerationG])))"
           },
           "ForceFrequencies": false,
           "FrontLeftFrequencyFormula": {
