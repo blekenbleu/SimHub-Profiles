@@ -145,9 +145,9 @@
           "BrakeFilter": 10,
           "Filter": {
             "GammaValue": 0.99999999999999889,
-            "InputGain": 50.0,
+            "InputGain": 53.0,
             "MinimumForce": 0,
-            "Threshold": 15,
+            "Threshold": 10,
             "FilterType": "GammaFilter"
           },
           "MuteWhenLockEffectIsActive": false,
@@ -250,6 +250,70 @@
         {
           "AutocalibrationMax": 95.0,
           "Filter": {
+            "GammaValue": 1.0,
+            "InputGain": 100.0,
+            "MinimumForce": 0,
+            "Threshold": 0,
+            "FilterType": "GammaFilter"
+          },
+          "FrontLeftFormula": {
+            "Expression": "25"
+          },
+          "FrontRightFormula": {
+            "Expression": "100"
+          },
+          "RearLeftFormula": {
+            "Expression": ".075*(10*[ShakeITBSV3Plugin.Export.limit.FrontRight]-[ShakeITBSV3Plugin.Export.limit.FrontLeft])/[ShakeITBSV3Plugin.Export.limit.FrontRight]"
+          },
+          "RearRightFormula": {
+            "Expression": ""
+          },
+          "ForceFrequencies": false,
+          "FrontLeftFrequencyFormula": {
+            "Expression": ""
+          },
+          "FrontRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearLeftFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "SupportWarnInfo": null,
+          "IsMuted": false,
+          "ContainerId": "8f549932-b60a-4cbb-9956-0c922b95aa9a",
+          "ContainerType": "CustomEffectContainer",
+          "Description": "frequency limits:  left=low, right=high/10",
+          "AggregationMode": "Corners",
+          "Gain": 0.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 44,
+            "UseHighFrequency": false,
+            "HighFrequency": 50,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": true,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "IsAudio": true,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "limit",
+            "ExportProperty": true,
+            "DisableOutput": true,
+            "OutputType": "ToneOutput"
+          }
+        },
+        {
+          "AutocalibrationMax": 95.0,
+          "Filter": {
             "GammaValue": 0.49999999999999961,
             "InputGain": 100.0,
             "MinimumForce": 4,
@@ -257,16 +321,16 @@
             "FilterType": "GammaFilter"
           },
           "FrontLeftFormula": {
-            "Expression": "0.8*(rand(34-[ShakeITBSV3Plugin.Export.proxySG.FrontLeft]/3)+103-[ShakeITBSV3Plugin.Export.proxySG.FrontLeft])"
+            "Expression": "[ShakeITBSV3Plugin.Export.limit.RearLeft] * (rand(1 + (100-[ShakeITBSV3Plugin.Export.ProxySG.FrontLeft])/3) + 100 -[ShakeITBSV3Plugin.Export.ProxySG.FrontLeft])"
           },
           "FrontRightFormula": {
-            "Expression": "0.8*(rand(34-[ShakeITBSV3Plugin.Export.proxySG.FrontRight]/3)+103-[ShakeITBSV3Plugin.Export.proxySG.FrontRight])"
+            "Expression": "[ShakeITBSV3Plugin.Export.limit.RearLeft] * (rand(1 + (100-[ShakeITBSV3Plugin.Export.ProxySG.FrontRight])/3) + 100 -[ShakeITBSV3Plugin.Export.ProxySG.FrontRight])"
           },
           "RearLeftFormula": {
-            "Expression": "0.8*(rand(34-[ShakeITBSV3Plugin.Export.proxySG.RearLeft]/3)+103-[ShakeITBSV3Plugin.Export.proxySG.RearLeft])"
+            "Expression": "[ShakeITBSV3Plugin.Export.limit.RearLeft] * (rand(1 + (100-[ShakeITBSV3Plugin.Export.ProxySG.RearLeft])/3) + 100 -[ShakeITBSV3Plugin.Export.ProxySG.RearLeft])"
           },
           "RearRightFormula": {
-            "Expression": "0.8*(rand(34-[ShakeITBSV3Plugin.Export.proxySG.RearRight]/3)+103-[ShakeITBSV3Plugin.Export.proxySG.RearRight])"
+            "Expression": "[ShakeITBSV3Plugin.Export.limit.RearLeft] * (rand(1 + (100-[ShakeITBSV3Plugin.Export.ProxySG.RearRight])/3) + 100 -[ShakeITBSV3Plugin.Export.ProxySG.RearRight])"
           },
           "ForceFrequencies": false,
           "FrontLeftFrequencyFormula": {
@@ -334,16 +398,16 @@
           },
           "ForceFrequencies": true,
           "FrontLeftFrequencyFormula": {
-            "Expression": "9*[ShakeITBSV3Plugin.Export.noisy.FrontLeft]"
+            "Expression": "[ShakeITBSV3Plugin.Export.limit.FrontLeft] + 0.1 * [ShakeITBSV3Plugin.Export.limit.FrontRight] * [ShakeITBSV3Plugin.Export.noisy.FrontLeft]"
           },
           "FrontRightFrequencyFormula": {
-            "Expression": "9*[ShakeITBSV3Plugin.Export.noisy.FrontRight]"
+            "Expression": "[ShakeITBSV3Plugin.Export.limit.FrontLeft] + 0.1 * [ShakeITBSV3Plugin.Export.limit.FrontRight] * [ShakeITBSV3Plugin.Export.noisy.FrontRight]"
           },
           "RearLeftFrequencyFormula": {
-            "Expression": "9*[ShakeITBSV3Plugin.Export.noisy.RearLeft]"
+            "Expression": "[ShakeITBSV3Plugin.Export.limit.FrontLeft] + 0.1 * [ShakeITBSV3Plugin.Export.limit.FrontRight] * [ShakeITBSV3Plugin.Export.noisy.RearLeft]"
           },
           "RearRightFrequencyFormula": {
-            "Expression": "9*[ShakeITBSV3Plugin.Export.noisy.RearRight]"
+            "Expression": "[ShakeITBSV3Plugin.Export.limit.FrontLeft] + 0.1 * [ShakeITBSV3Plugin.Export.limit.FrontRight] * [ShakeITBSV3Plugin.Export.noisy.RearRight]"
           },
           "SupportWarnInfo": null,
           "IsMuted": false,
@@ -351,7 +415,7 @@
           "ContainerType": "CustomEffectContainer",
           "Description": "output: loaded gated wheel slips",
           "AggregationMode": "Corners",
-          "Gain": 99.0,
+          "Gain": 98.0,
           "IsEnabled": true,
           "Output": {
             "UsePrehemptiveMode": false,
