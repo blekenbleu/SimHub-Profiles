@@ -116,7 +116,7 @@
           "ContainerType": "CustomEffectContainer",
           "Description": "proxyL: corner Load properties",
           "AggregationMode": "Corners",
-          "Gain": 0.0,
+          "Gain": 2.0,
           "IsEnabled": true,
           "Output": {
             "UsePrehemptiveMode": false,
@@ -159,7 +159,7 @@
           "ContainerType": "WheelsSlipContainer",
           "Description": "ProxyS: wheel slip for tire squeal forced freq",
           "AggregationMode": "Corners",
-          "Gain": 3.0,
+          "Gain": 0.0,
           "IsEnabled": true,
           "Output": {
             "UsePrehemptiveMode": false,
@@ -351,7 +351,7 @@
           "ContainerType": "CustomEffectContainer",
           "Description": "noisy: frequencies",
           "AggregationMode": "Corners",
-          "Gain": 1.0,
+          "Gain": 0.0,
           "IsEnabled": true,
           "Output": {
             "UsePrehemptiveMode": false,
@@ -415,7 +415,7 @@
           "ContainerType": "CustomEffectContainer",
           "Description": "output: loaded gated wheel slips",
           "AggregationMode": "Corners",
-          "Gain": 98.0,
+          "Gain": 100.0,
           "IsEnabled": true,
           "Output": {
             "UsePrehemptiveMode": false,
@@ -456,7 +456,7 @@
   "OutputMode": 1,
   "GlobalGain": 50.0,
   "UseProfileGain": true,
-  "LastLoaded": "2024-02-03T05:08:46.7926608-05:00",
+  "LastLoaded": "2024-02-05T18:11:03.5906504-05:00",
   "Description": "2024-01-20\r\nhttps://www.racedepartment.com/threads/simhub-shakeit-bass-shakers-custom-4-corner-tire-slip.198455/post-3406020\r\nhttps://www.racedepartment.com/attachments/newloaded4-chanwheelslipundersteer-siprofile-txt.485970/\r\nhttps://www.racedepartment.com/threads/simhub-shakeit-bass-shakers-custom-4-corner-tire-slip.198455/post-3740571",
   "Name": "Loaded Slip/Accel - gated Forced Frequency",
   "ProfileId": "e9e2d3d0-0694-48a1-ab41-f14ef0b51dd4",
