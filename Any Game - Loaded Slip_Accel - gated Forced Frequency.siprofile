@@ -116,7 +116,7 @@
           "ContainerType": "CustomEffectContainer",
           "Description": "proxyL: corner Load properties",
           "AggregationMode": "Corners",
-          "Gain": 2.0,
+          "Gain": 0.0,
           "IsEnabled": true,
           "Output": {
             "UsePrehemptiveMode": false,
