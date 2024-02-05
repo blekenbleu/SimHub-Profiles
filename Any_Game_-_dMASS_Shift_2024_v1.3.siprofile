@@ -1,0 +1,347 @@
+{
+  "IncludeOutputSettingsInProfile": false,
+  "UnmuteEffectsAfterSimhubRestart": false,
+  "EffectsContainers": [
+    {
+      "EffectsContainers": [
+        {
+          "AutocalibrationMax": 95.0,
+          "Filter": {
+            "GammaValue": 1.0,
+            "InputGain": 100.0,
+            "MinimumForce": 0,
+            "Threshold": 0,
+            "FilterType": "GammaFilter"
+          },
+          "FrontLeftFormula": {
+            "JSExt": 3,
+            "Interpreter": 1,
+            "Expression": "// upshifts\r\nvar g = $prop('Gear');\r\nvar s = 0;\r\n\r\n// 'Gear' is pathological\r\nif (g == 'N' || g == 'R')\r\n  g = 0;\r\n  \r\n/* test code e.g. for comparison with downshift\r\nif (1 < $prop('ShakeITBSV3Plugin.Export.proxyShift.All'))\r\n  return 100;\r\nelse return 30 * g; \r\n*/\r\n\r\n// initialize gear history\r\nif (null == root[\"gear\"]) {\r\n  root[\"gear\"] = g;\r\n  root[\"sb4\"] = true;\r\n}\r\n\r\nif (1 < $prop('ShakeITBSV3Plugin.Export.proxyShift.All')) {\r\n  root[\"sb4\"] = true;\r\n  if (g > root[\"gear\"])\t// upshift?\r\n    s = $prop('ShakeITBSV3Plugin.Export.proxyRPM.All');\r\n}\r\nelse {\r\n  if (root[\"sb4\"])\r\n    root[\"gear\"] = g;       // gear after shifts\r\n  root[\"sb4\"] = false;\r\n}\r\nreturn s;"
+          },
+          "FrontRightFormula": {
+            "JSExt": 3,
+            "Interpreter": 1,
+            "Expression": ""
+          },
+          "RearLeftFormula": {
+            "Expression": ""
+          },
+          "RearRightFormula": {
+            "Expression": ""
+          },
+          "ForceFrequencies": false,
+          "FrontLeftFrequencyFormula": {
+            "Expression": ""
+          },
+          "FrontRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearLeftFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "SupportWarnInfo": null,
+          "GainChangeStep": 1,
+          "IsMuted": false,
+          "ToggleMute": {
+            "Triggers": [
+              {
+                "Trigger": "PropertyServerPlugin.Upshifts-toggle-mute",
+                "PressType": 4
+              }
+            ]
+          },
+          "IncrementGainAction": {
+            "Triggers": [
+              {
+                "Trigger": "PropertyServerPlugin.Upshifts-low-Up",
+                "PressType": 4
+              }
+            ]
+          },
+          "DecrementGainAction": {
+            "Triggers": [
+              {
+                "Trigger": "PropertyServerPlugin.Upshifts-low-Down",
+                "PressType": 4
+              }
+            ]
+          },
+          "ContainerId": "3fc86d3c-09d9-40df-afeb-061f6e888fcd",
+          "ContainerType": "CustomEffectContainer",
+          "Description": "RPM-modulated Upshifts",
+          "AggregationMode": "Mono",
+          "Gain": 70.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 30,
+            "UseHighFrequency": false,
+            "HighFrequency": 30,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": true,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "IsAudio": true,
+            "AssignToChannelGroup": true,
+            "ChannelGroupName": "Gears - Upshifts",
+            "PropertyName": "proxy_G",
+            "ExportProperty": false,
+            "DisableOutput": false,
+            "OutputType": "ToneOutput"
+          }
+        },
+        {
+          "AutocalibrationMax": 95.0,
+          "Filter": {
+            "GammaValue": 1.0,
+            "InputGain": 100.0,
+            "MinimumForce": 0,
+            "Threshold": 0,
+            "FilterType": "GammaFilter"
+          },
+          "FrontLeftFormula": {
+            "JSExt": 3,
+            "Interpreter": 1,
+            "Expression": "// downshifts\r\nvar g = $prop('Gear');\r\nvar s = 0;\r\n\r\n// 'Gear' is pathological\r\nif (g == 'N' || g == 'R')\r\n  g = 0;\r\n\r\n// initialize gear history\r\nif (null == root[\"gear\"]) {\r\n  root[\"gear\"] = g;\r\n  root[\"sb4\"] = 0;\r\n}\r\n\r\nif (1 < $prop('ShakeITBSV3Plugin.Export.proxyShift.All')) {\r\n  if (3 < root[\"sb4\"]) {\t// ignore neutral at beginning of shift\r\n    if (g < root[\"gear\"]) { // downshift?\r\n      s = $prop('ShakeITBSV3Plugin.Export.proxyRPM.All');\r\n    }\r\n  }\r\n  root[\"sb4\"]++;\r\n}\r\nelse {\r\n  if (1 < root[\"sb4\"])\r\n    root[\"gear\"] = g;       // gear after shifts\r\n  root[\"sb4\"] = 0;\r\n}\r\nreturn s;\r\n"
+          },
+          "FrontRightFormula": {
+            "JSExt": 3,
+            "Interpreter": 1,
+            "Expression": ""
+          },
+          "RearLeftFormula": {
+            "Expression": ""
+          },
+          "RearRightFormula": {
+            "Expression": ""
+          },
+          "ForceFrequencies": true,
+          "FrontLeftFrequencyFormula": {
+            "Expression": "[CarSettings_CurrentDisplayedRPMPercent]"
+          },
+          "FrontRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearLeftFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "SupportWarnInfo": null,
+          "GainChangeStep": 1,
+          "IsMuted": false,
+          "ToggleMute": {
+            "Triggers": [
+              {
+                "Trigger": "PropertyServerPlugin.Downshifts-toggle-mute",
+                "PressType": 4
+              }
+            ]
+          },
+          "IncrementGainAction": {
+            "Triggers": [
+              {
+                "Trigger": "PropertyServerPlugin.Downshifts-high-Up",
+                "PressType": 4
+              }
+            ]
+          },
+          "DecrementGainAction": {
+            "Triggers": [
+              {
+                "Trigger": "PropertyServerPlugin.Downshifts-high-Down",
+                "PressType": 4
+              }
+            ]
+          },
+          "ContainerId": "b7b4bd29-458b-4bc7-819b-5d6ee9b9cb9d",
+          "ContainerType": "CustomEffectContainer",
+          "Description": "RPM-modulated Downshifts",
+          "AggregationMode": "Mono",
+          "Gain": 50.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 30,
+            "UseHighFrequency": false,
+            "HighFrequency": 30,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": true,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "IsAudio": true,
+            "AssignToChannelGroup": true,
+            "ChannelGroupName": "Gears - Downshifts",
+            "PropertyName": "proxy_G",
+            "ExportProperty": false,
+            "DisableOutput": false,
+            "OutputType": "ToneOutput"
+          }
+        },
+        {
+          "AutocalibrationMax": 95.0,
+          "Filter": {
+            "GammaValue": 1.0000000000000002,
+            "InputGain": 100.0,
+            "MinimumForce": 0,
+            "Threshold": 0,
+            "FilterType": "GammaFilter"
+          },
+          "FrontLeftFormula": {
+            "JSExt": 3,
+            "Interpreter": 1,
+            "Expression": "// Filter shift property\r\nreturn 100 * $prop('Rpms') / $prop('MaxRpm');\r\n\r\n"
+          },
+          "FrontRightFormula": {
+            "JSExt": 3,
+            "Interpreter": 1,
+            "Expression": ""
+          },
+          "RearLeftFormula": {
+            "JSExt": 3,
+            "Interpreter": 1,
+            "Expression": ""
+          },
+          "RearRightFormula": {
+            "JSExt": 3,
+            "Interpreter": 1,
+            "Expression": ""
+          },
+          "ForceFrequencies": false,
+          "FrontLeftFrequencyFormula": {
+            "Expression": ""
+          },
+          "FrontRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearLeftFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "SupportWarnInfo": null,
+          "IsMuted": false,
+          "ContainerId": "cc64cec4-9dc5-4e26-bce2-ef087adb2c84",
+          "ContainerType": "CustomEffectContainer",
+          "Description": "RPM property",
+          "AggregationMode": "Mono",
+          "Gain": 1.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 30,
+            "UseHighFrequency": false,
+            "HighFrequency": 30,
+            "WhiteNoise": 0,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": true,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "IsAudio": true,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "proxyRPM",
+            "ExportProperty": true,
+            "DisableOutput": true,
+            "OutputType": "ToneOutput"
+          }
+        },
+        {
+          "ModulateGainUsingRpms": false,
+          "MaxFeedbackRpmPercent": 90,
+          "MinFeedbackRpmPercent": 50,
+          "GearMode": 2,
+          "AlwaysIgnoreNeutral": false,
+          "IgnoreNeutral": true,
+          "NeutralDebouningTime": 200.0,
+          "EngagingDebouningTime": 1000.0,
+          "Filter": {
+            "Duration": 300,
+            "FilterType": "PulseFilter"
+          },
+          "SupportWarnInfo": null,
+          "IsMuted": false,
+          "ContainerId": "d8395c93-c0ab-4959-be2b-a3ad480f4578",
+          "ContainerType": "GearEffectContainer",
+          "Description": "Gear shift pulse effect property",
+          "AggregationMode": null,
+          "Gain": 0.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 44,
+            "Harmonics": 0,
+            "DelayEnabled": false,
+            "IsAudio": true,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "proxyShift",
+            "ExportProperty": true,
+            "DisableOutput": true,
+            "OutputType": "SingleToneOutput"
+          }
+        }
+      ],
+      "Filter": null,
+      "SupportWarnInfo": null,
+      "GainChangeStep": 1,
+      "IsMuted": false,
+      "ToggleMute": {
+        "Triggers": [
+          {
+            "Trigger": "PropertyServerPlugin.Shift-toggle-mute",
+            "PressType": 4
+          }
+        ]
+      },
+      "IncrementGainAction": {
+        "Triggers": [
+          {
+            "Trigger": "PropertyServerPlugin.Shift-Up",
+            "PressType": 4
+          }
+        ]
+      },
+      "DecrementGainAction": {
+        "Triggers": [
+          {
+            "Trigger": "PropertyServerPlugin.Shift-Down",
+            "PressType": 4
+          }
+        ]
+      },
+      "ContainerId": "5008dd70-1f23-48be-8769-ea94cb01e7f3",
+      "ContainerType": "GroupContainer",
+      "Description": "New Shift 2024 v1.3",
+      "AggregationMode": null,
+      "Gain": 90.333333333333371,
+      "IsEnabled": true,
+      "Output": null
+    }
+  ],
+  "AutoCalibrationRatio2": 100,
+  "OutputMode": 1,
+  "GlobalGain": 100.0,
+  "UseProfileGain": true,
+  "LastLoaded": "2024-02-05T12:18:00.7594124+11:00",
+  "Description": "2024-01-20\r\nhttps://www.racedepartment.com/threads/simhub-shakeit-bass-shakers-custom-4-corner-tire-slip.198455/post-3406020\r\nhttps://www.racedepartment.com/attachments/newloaded4-chanwheelslipundersteer-siprofile-txt.485970/\r\nhttps://www.racedepartment.com/threads/simhub-shakeit-bass-shakers-custom-4-corner-tire-slip.198455/post-3740571",
+  "Name": "New Shift 2024 v1.3",
+  "ProfileId": "e9e2d3d0-0694-48a1-ab41-f14ef0b51dd4",
+  "GameCode": null
+}
