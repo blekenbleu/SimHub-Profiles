@@ -1,0 +1,236 @@
+{
+  "IncludeOutputSettingsInProfile": false,
+  "UnmuteEffectsAfterSimhubRestart": false,
+  "EffectsContainers": [
+    {
+      "EffectsContainers": [
+        {
+          "SupportWarnInfo": null,
+          "BrakeFilter": 10,
+          "Filter": {
+            "GammaValue": 0.99999999999999889,
+            "InputGain": 53.0,
+            "MinimumForce": 0,
+            "Threshold": 10,
+            "FilterType": "GammaFilter"
+          },
+          "MuteWhenLockEffectIsActive": false,
+          "ThrottleFilter": 10,
+          "UseBrakeFilter": false,
+          "UseThrottleFilter": false,
+          "IsMuted": false,
+          "ContainerId": "da2245c2-3fe8-4b0d-a3b0-4cdce22c2f2b",
+          "ContainerType": "WheelsSlipContainer",
+          "Description": "ProxyS: wheel slip for tire squeal forced freq",
+          "AggregationMode": "Corners",
+          "Gain": 0.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 1,
+            "UseHighFrequency": false,
+            "HighFrequency": 55,
+            "WhiteNoise": 4,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": false,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "IsAudio": true,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "proxyS",
+            "ExportProperty": true,
+            "DisableOutput": true,
+            "OutputType": "ToneOutput"
+          }
+        },
+        {
+          "AutocalibrationMax": 95.0,
+          "Filter": {
+            "GammaValue": 0.49999999999999961,
+            "InputGain": 100.0,
+            "MinimumForce": 4,
+            "Threshold": 0,
+            "FilterType": "GammaFilter"
+          },
+          "FrontLeftFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "s = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontLeft');\r\n//return SG(s, $prop('GlobalAccelerationG'))\r\n//return noise(0)\r\nreturn noise(SG(s, $prop('GlobalAccelerationG')));",
+            "PreExpression": "const low = 25;\r\nconst high = 1000;\r\nconst fact = .75 * (high - low) / high;\r\nfunction SG(s, g) { return Math.min(100, Math.abs(.5*s/Math.max(.1,Math.abs(g)))) };\r\nfunction noise(y) { return fact * (Math.random() * (1 + (100 - y) / 3) + 100 - y) };\r\nvar s;\r\n"
+          },
+          "FrontRightFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "s = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontRight');\r\n//return SG(s, $prop('GlobalAccelerationG'))\r\nreturn noise(SG(s, $prop('GlobalAccelerationG')));",
+            "PreExpression": "const low = 25;\r\nconst high = 1000;\r\nconst fact = .75 * (high - low) / high;\r\nfunction SG(s, g) { return Math.abs(.5*s/Math.max(.1,Math.abs(g))) };\r\nfunction noise(y) { return fact * (Math.random() * (1 + (100 - y) / 3) + 100 - y) };\r\nvar s;"
+          },
+          "RearLeftFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "s = $prop('ShakeITBSV3Plugin.Export.proxyS.RearLeft');\r\nreturn noise(SG(s, $prop('GlobalAccelerationG')));",
+            "PreExpression": "const low = 25;\r\nconst high = 1000;\r\nconst fact = .75 * (high - low) / high;\r\nfunction SG(s, g) { return Math.min(100, Math.abs(.5*s/Math.max(.1,Math.abs(g)))) };\r\nfunction noise(y) { return fact * (Math.random() * (1 + (100 - y) / 3) + 100 - y) };\r\nvar s;"
+          },
+          "RearRightFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "s = $prop('ShakeITBSV3Plugin.Export.proxyS.RearRight');\r\nreturn noise(SG(s, $prop('GlobalAccelerationG')));",
+            "PreExpression": "const low = 25;\r\nconst high = 1000;\r\nconst fact = .75 * (high - low) / high;\r\nfunction SG(s, g) { return Math.min(100, Math.abs(.5*s/Math.max(.1,Math.abs(g)))) };\r\nfunction noise(y) { return fact * (Math.random() * (1 + (100 - y) / 3) + 100 - y) };\r\nvar s;"
+          },
+          "ForceFrequencies": false,
+          "FrontLeftFrequencyFormula": {
+            "Expression": ""
+          },
+          "FrontRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearLeftFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "SupportWarnInfo": null,
+          "IsMuted": false,
+          "ContainerId": "bf2d5c62-174a-4276-aa8c-d38e19902568",
+          "ContainerType": "CustomEffectContainer",
+          "Description": "noisy: frequencies",
+          "AggregationMode": "Corners",
+          "Gain": 0.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 1,
+            "UseHighFrequency": false,
+            "HighFrequency": 50,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": true,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "IsAudio": true,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "noisy",
+            "ExportProperty": true,
+            "DisableOutput": true,
+            "OutputType": "ToneOutput"
+          }
+        },
+        {
+          "AutocalibrationMax": 95.0,
+          "Filter": {
+            "GammaValue": 0.99999999999999933,
+            "InputGain": 100.0,
+            "MinimumForce": 0,
+            "Threshold": 0,
+            "FilterType": "GammaFilter"
+          },
+          "FrontLeftFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "// front left load\r\n// left load (turning right)\r\nd = (0 > (s = $prop('AccelerationSway'))) ? 4 : -4;\r\nL = 25 + AbsAcc(s) / d  // 0-50% left-right distribution\r\nd = (0 < (s = $prop('AccelerationSurge'))) ? 100 : -100\r\n// if both accel are 0, then no load shift and each corner gets 25%\r\nL *= (1 + AbsAcc(s) / d); // 0-100% fore-aft distribution\r\ns = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontLeft');\r\ng = $prop('GlobalAccelerationG');\r\nreturn .01 * L*Math.min(100, 35*SG(s,g));",
+            "PreExpression": "function AbsAcc(a) { return 100 * Math.abs(.05 * a)**0.3 }\r\nfunction SG(s, g) { return Math.abs(.5 * s / Math.max(.1, Math.abs(g))) - 5 };\r\nvar s,g,L;"
+          },
+          "FrontRightFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "// front right load\r\n// right load (turning right)\r\nd = (0 < (s = $prop('AccelerationSway'))) ? 4 : -4;\r\nL = 25 + AbsAcc(s) / d  // 0-50% left-right distribution\r\nd = (0 < (s = $prop('AccelerationSurge'))) ? 100 : -100\r\n// if both accel are 0, then no load shift and each corner gets 25%\r\nL *= (1 + AbsAcc(s) / d); // 0-100% fore-aft distribution\r\ns = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontRight');\r\ng = $prop('GlobalAccelerationG');\r\nreturn .01 * L * Math.min(100, 35 * SG(s, g));",
+            "PreExpression": "function AbsAcc(a) { return 100 * Math.abs(.05 * a)**0.3 }\r\nfunction SG(s, g) { return Math.abs(.5 * s / Math.max(.1, Math.abs(g))) - 5 };\r\nvar s,g,L;"
+          },
+          "RearLeftFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "// rear left load\r\n// left load (turning right)\r\nd = (0 > (s = $prop('AccelerationSway'))) ? 4 : -4;\r\nL = 25 + AbsAcc(s) / d  // 0-50% left-right distribution\r\n// acceleration force\r\nd = (0 > (s = $prop('AccelerationSurge'))) ? 100 : -100\r\n// if both accel are 0, then no load shift and each corner gets 25%\r\nL *= (1 + AbsAcc(s) / d); // 0-100% fore-aft distribution\r\ns = $prop('ShakeITBSV3Plugin.Export.proxyS.RearLeft');\r\ng = $prop('GlobalAccelerationG');\r\nreturn .01 * L * Math.min(100, 35 * SG(s, g));\r\n",
+            "PreExpression": "function AbsAcc(a) { return 100 * Math.abs(.05 * a)**0.3 }\r\nfunction SG(s, g) { return Math.abs(.5 * s / Math.max(.1, Math.abs(g))) - 5 };\r\nvar s,g,L;"
+          },
+          "RearRightFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "// rear right load\r\n// right load (turning right)\r\nd = (0 < (s = $prop('AccelerationSway'))) ? 4 : -4;\r\nL = 25 + AbsAcc(s) / d  // 0-50% left-right distribution\r\n// acceleration\r\nd = (0 > (s = $prop('AccelerationSurge'))) ? 100 : -100\r\n// if both accel are 0, then no load shift and each corner gets 25%\r\nL *= (1 + AbsAcc(s) / d); // 0-100% fore-aft distribution\r\ns = $prop('ShakeITBSV3Plugin.Export.proxyS.RearRight');\r\ng = $prop('GlobalAccelerationG');\r\nreturn .01 * L * Math.min(100, 35 * SG(s, g));",
+            "PreExpression": "function AbsAcc(a) { return 100 * Math.abs(.05 * a)**0.3 }\r\nfunction SG(s, g) { return Math.abs(.5 * s / Math.max(.1, Math.abs(g))) - 5 };\r\nvar s,g,L;"
+          },
+          "ForceFrequencies": true,
+          "FrontLeftFrequencyFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "return low + 0.01 * high * $prop('ShakeITBSV3Plugin.Export.noisy.FrontLeft')",
+            "PreExpression": "const low = 25;\r\nconst high = 1000;"
+          },
+          "FrontRightFrequencyFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "return low + 0.01 * high * $prop('ShakeITBSV3Plugin.Export.noisy.FrontRight')",
+            "PreExpression": "const low = 25;\r\nconst high = 1000;"
+          },
+          "RearLeftFrequencyFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "return low + 0.01 * high * $prop('ShakeITBSV3Plugin.Export.noisy.RearLeft')",
+            "PreExpression": "const low = 25;\r\nconst high = 1000;"
+          },
+          "RearRightFrequencyFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "return low + 0.01 * high * $prop('ShakeITBSV3Plugin.Export.noisy.RearRight')",
+            "PreExpression": "const low = 25;\r\nconst high = 1000;"
+          },
+          "SupportWarnInfo": null,
+          "IsMuted": false,
+          "ContainerId": "b6a37174-466c-4181-877c-81f5a83e39e9",
+          "ContainerType": "CustomEffectContainer",
+          "Description": "output: loaded gated wheel slips",
+          "AggregationMode": "Corners",
+          "Gain": 100.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 1,
+            "UseHighFrequency": false,
+            "HighFrequency": 30,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": true,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "IsAudio": true,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "LoadedSlip",
+            "ExportProperty": false,
+            "DisableOutput": false,
+            "OutputType": "ToneOutput"
+          }
+        }
+      ],
+      "Filter": null,
+      "SupportWarnInfo": null,
+      "IsMuted": false,
+      "ContainerId": "583ba06f-d9a8-447a-8c0d-75a730ea80fe",
+      "ContainerType": "GroupContainer",
+      "Description": "Loaded Slip",
+      "AggregationMode": null,
+      "Gain": 100.0,
+      "IsEnabled": true,
+      "Output": null
+    }
+  ],
+  "AutoCalibrationRatio2": 100,
+  "OutputMode": 1,
+  "GlobalGain": 50.0,
+  "UseProfileGain": true,
+  "LastLoaded": "2024-02-08T12:36:45.7352416-05:00",
+  "Description": "2024-01-20\r\nhttps://www.racedepartment.com/threads/simhub-shakeit-bass-shakers-custom-4-corner-tire-slip.198455/post-3406020\r\nhttps://www.racedepartment.com/attachments/newloaded4-chanwheelslipundersteer-siprofile-txt.485970/\r\nhttps://www.racedepartment.com/threads/simhub-shakeit-bass-shakers-custom-4-corner-tire-slip.198455/post-3740571",
+  "Name": "Loaded Slip/G - gated Frequency",
+  "ProfileId": "e9e2d3d0-0694-48a1-ab41-f14ef0b51dd4",
+  "GameCode": null
+}
