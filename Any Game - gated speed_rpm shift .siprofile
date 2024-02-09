@@ -1,0 +1,133 @@
+{
+  "IncludeOutputSettingsInProfile": false,
+  "UnmuteEffectsAfterSimhubRestart": false,
+  "EffectsContainers": [
+    {
+      "EffectsContainers": [
+        {
+          "ModulateGainUsingRpms": false,
+          "MaxFeedbackRpmPercent": 90,
+          "MinFeedbackRpmPercent": 50,
+          "GearMode": 2,
+          "AlwaysIgnoreNeutral": false,
+          "IgnoreNeutral": true,
+          "NeutralDebouningTime": 200.0,
+          "EngagingDebouningTime": 0.0,
+          "Filter": {
+            "Duration": 250,
+            "FilterType": "PulseFilter"
+          },
+          "SupportWarnInfo": null,
+          "IsMuted": false,
+          "ContainerId": "53c625a0-d577-4f65-888d-10c4ece6d810",
+          "ContainerType": "GearEffectContainer",
+          "Description": "Provides a pulse effect for gear shifting",
+          "AggregationMode": null,
+          "Gain": 0.0,
+          "IsEnabled": true,
+          "Output": {
+            "Frequency": 1,
+            "UsePrehemptiveMode": false,
+            "Harmonics": 0,
+            "DelayEnabled": false,
+            "IsAudio": true,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "shift",
+            "ExportProperty": true,
+            "DisableOutput": true,
+            "OutputType": "SingleToneOutput"
+          }
+        },
+        {
+          "AutocalibrationMax": 95.0,
+          "Filter": {
+            "GammaValue": 1.6000000000000005,
+            "InputGain": 110.0,
+            "MinimumForce": 0,
+            "Threshold": 17,
+            "FilterType": "GammaFilter"
+          },
+          "FrontLeftFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "return 0.1 * Math.abs(iirH(3000 * $prop('SpeedMph') / (1 + $prop('Rpms')))) * $prop('ShakeITBSV3Plugin.Export.shift.All')",
+            "PreExpression": "root[\"low\"] = 38;\t// whatever initial value should be\r\nconst tc = 3;\t\t// higher values increase sensitivity\r\nfunction iirH(i) {\r\n\ti -= root[\"low\"]; \r\n\troot[\"low\"] += i / tc;\r\n\treturn i;\r\n}"
+          },
+          "FrontRightFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "return 3000 * $prop('SpeedMph') / (1 + $prop('Rpms'));"
+          },
+          "RearLeftFormula": {
+            "Expression": ""
+          },
+          "RearRightFormula": {
+            "Expression": ""
+          },
+          "ForceFrequencies": true,
+          "FrontLeftFrequencyFormula": {
+            "Expression": "[Rpms]/60"
+          },
+          "FrontRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearLeftFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "SupportWarnInfo": null,
+          "IsMuted": false,
+          "ContainerId": "5b3a2660-d8b6-4037-8fe4-0260a5ea2a67",
+          "ContainerType": "CustomEffectContainer",
+          "Description": "speed/rpm high pass gear shift",
+          "AggregationMode": "Left/Right",
+          "Gain": 100.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 44,
+            "UseHighFrequency": false,
+            "HighFrequency": 50,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": true,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "IsAudio": true,
+            "AssignToChannelGroup": true,
+            "ChannelGroupName": "shifts",
+            "PropertyName": "shift_rpm",
+            "ExportProperty": true,
+            "DisableOutput": false,
+            "OutputType": "ToneOutput"
+          }
+        }
+      ],
+      "Filter": null,
+      "SupportWarnInfo": null,
+      "IsMuted": false,
+      "ContainerId": "33613478-22d5-4896-8aa4-5e3d2d2f15d6",
+      "ContainerType": "GroupContainer",
+      "Description": "gated speed/rpm shift group",
+      "AggregationMode": null,
+      "Gain": 100.0,
+      "IsEnabled": true,
+      "Output": null
+    }
+  ],
+  "AutoCalibrationRatio2": 100,
+  "OutputMode": 1,
+  "GlobalGain": 50.0,
+  "UseProfileGain": false,
+  "LastLoaded": "2024-02-09T14:53:35.2708076-05:00",
+  "Description": "2024-02-09\r\nscaled iirH speed/rpm properties gated by GEAR SHIFT effect",
+  "Name": "gated speed/rpm shift ",
+  "ProfileId": "e9e2d3d0-0694-48a1-ab41-f14ef0b51dd4",
+  "GameCode": null
+}
