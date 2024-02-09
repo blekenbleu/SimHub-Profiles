@@ -60,25 +60,25 @@
             "JSExt": 0,
             "Interpreter": 1,
             "Expression": "s = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontLeft');\r\n//return SG(s, $prop('GlobalAccelerationG'))\r\n//return noise(0)\r\nreturn noise(SG(s, $prop('GlobalAccelerationG')));",
-            "PreExpression": "const n = 3;\t\t// fraction of range for random()\r\nconst f = n / (1 + n);\r\nfunction SG(s, g) { return Math.min(100, Math.abs(.5*s/Math.max(.1,Math.abs(g)))) };\r\nfunction noise(y) { return f * (Math.random() * (1 + (100 - y) / n) + 100 - y) };\r\nvar s;\r\n"
+            "PreExpression": "const n = 3;\t\t// fraction of range for random()\r\nconst f = n / (1 + n);\r\nfunction SG(s, g) { return 100 - Math.min(100, Math.abs(.5*s/Math.max(.1,Math.abs(g)))) };\r\nfunction noise(sg) { return f * (sg + Math.random() * (1 + sg / n)) };\r\nvar s;\r\n"
           },
           "FrontRightFormula": {
             "JSExt": 0,
             "Interpreter": 1,
             "Expression": "s = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontRight');\r\n//return SG(s, $prop('GlobalAccelerationG'))\r\nreturn noise(SG(s, $prop('GlobalAccelerationG')));",
-            "PreExpression": "const n = 3;\t\t// fraction of range for random()\r\nconst f = n / (1 + n);\r\nfunction SG(s, g) { return Math.abs(.5*s/Math.max(.1,Math.abs(g))) };\r\nfunction noise(y) { return f * (Math.random() * (1 + (100 - y) / n) + 100 - y) };\r\nvar s;"
+            "PreExpression": "const n = 3;\t\t// fraction of range for random()\r\nconst f = n / (1 + n);\r\nfunction SG(s, g) { return 100 - Math.abs(.5*s/Math.max(.1,Math.abs(g))) };\r\nfunction noise(sg) { return f * (sg + Math.random() * (1 + sg / n)) };\r\nvar s;"
           },
           "RearLeftFormula": {
             "JSExt": 0,
             "Interpreter": 1,
             "Expression": "s = $prop('ShakeITBSV3Plugin.Export.proxyS.RearLeft');\r\nreturn noise(SG(s, $prop('GlobalAccelerationG')));",
-            "PreExpression": "const n = 3;\t\t// fraction of range for random()\r\nconst f = n / (1 + n);\r\nfunction SG(s, g) { return Math.min(100, Math.abs(.5*s/Math.max(.1,Math.abs(g)))) };\r\nfunction noise(y) { return f * (Math.random() * (1 + (100 - y) / n) + 100 - y) };\r\nvar s;"
+            "PreExpression": "const n = 3;\t\t// fraction of range for random()\r\nconst f = n / (1 + n);\r\nfunction SG(s, g) { return 100 - Math.min(100, Math.abs(.5*s/Math.max(.1,Math.abs(g)))) };\r\nfunction noise(sg) { return f * (sg + Math.random() * (1 + sg / n)) };\r\nvar s;"
           },
           "RearRightFormula": {
             "JSExt": 0,
             "Interpreter": 1,
             "Expression": "s = $prop('ShakeITBSV3Plugin.Export.proxyS.RearRight');\r\nreturn noise(SG(s, $prop('GlobalAccelerationG')));",
-            "PreExpression": "const n = 3;\t\t// fraction of range for random()\r\nconst f = n / (1 + n);\r\nfunction SG(s, g) { return Math.min(100, Math.abs(.5*s/Math.max(.1,Math.abs(g)))) };\r\nfunction noise(y) { return f * (Math.random() * (1 + (100 - y) / n) + 100 - y) };\r\nvar s;"
+            "PreExpression": "const n = 3;\t\t// fraction of range for random()\r\nconst f = n / (1 + n);\r\nfunction SG(s, g) { return 100 - Math.min(100, Math.abs(.5*s/Math.max(.1,Math.abs(g)))) };\r\nfunction noise(sg) { return f * (sg + Math.random() * (1 + sg / n)) };\r\nvar s;"
           },
           "ForceFrequencies": false,
           "FrontLeftFrequencyFormula": {
