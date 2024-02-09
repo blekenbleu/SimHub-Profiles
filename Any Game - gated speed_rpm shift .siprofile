@@ -103,7 +103,7 @@
             "AssignToChannelGroup": true,
             "ChannelGroupName": "shifts",
             "PropertyName": "shift_rpm",
-            "ExportProperty": true,
+            "ExportProperty": false,
             "DisableOutput": false,
             "OutputType": "ToneOutput"
           }
