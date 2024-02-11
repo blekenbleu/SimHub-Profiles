@@ -1,0 +1,347 @@
+{
+  "AutomaticReconnect": true,
+  "SerialPortName": "COM8",
+  "StartupDelayMs": 0,
+  "IsConnecting": false,
+  "IsEnabled": true,
+  "LogIncomingData": true,
+  "IsConnected": true,
+  "BaudRate": 9600,
+  "UpdateMessages": [
+    {
+      "Message": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "changed('f0', $prop('Settings.f0'));",
+        "PreExpression": "root['set'] = $prop('Settings.f0');\r\nfunction changed(f, p) {\r\n\tif (root['set'] != p) {\r\n\t\troot['set'] = p;\r\n\t\tif ($prop('Settings.enable'))\r\n\t\t\treturn f + '=' + p + ';';\r\n\t}\r\n}"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 60
+    },
+    {
+      "Message": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "changed('f1', $prop('Settings.f1'));",
+        "PreExpression": "root['set'] = $prop('Settings.f1');\r\nfunction changed(f, p) {\r\n\tif (root['set'] != p) {\r\n\t\troot['set'] = p;\r\n\t\tif ($prop('Settings.enable'))\r\n\t\t\treturn f + '=' + p + ';';\r\n\t}\r\n}"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 60
+    },
+    {
+      "Message": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "changed('f2', $prop('Settings.f2'));",
+        "PreExpression": "root['set'] = $prop('Settings.f2');\r\nfunction changed(f, p) {\r\n\tif (root['set'] != p) {\r\n\t\troot['set'] = p;\r\n\t\tif ($prop('Settings.enable'))\r\n\t\t\treturn f + '=' + p + ';';\r\n\t}\r\n}"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 60
+    },
+    {
+      "Message": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "changed('f3', $prop('Settings.f3'));",
+        "PreExpression": "root['set'] = $prop('Settings.f3');\r\nfunction changed(f, p) {\r\n\tif (root['set'] != p) {\r\n\t\troot['set'] = p;\r\n\t\tif ($prop('Settings.enable'))\r\n\t\t\treturn f + '=' + p + ';';\r\n\t}\r\n}"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 60
+    },
+    {
+      "Message": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "changed('f4', $prop('Settings.f4'));",
+        "PreExpression": "root['set'] = $prop('Settings.f4');\r\nfunction changed(f, p) {\r\n\tif (root['set'] != p) {\r\n\t\troot['set'] = p;\r\n\t\tif ($prop('Settings.enable'))\r\n\t\t\treturn f + '=' + p + ';';\r\n\t}\r\n}"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 60
+    },
+    {
+      "Message": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "changed('f5', $prop('Settings.period'));",
+        "PreExpression": "root['set'] = $prop('Settings.period');\r\nfunction changed(f, p) {\r\n\tif (root['set'] != p) {\r\n\t\troot['set'] = p;\r\n\t\tif ($prop('Settings.enable'))\r\n\t\t\treturn f + '=' + p + ';';\r\n\t}\r\n}"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 60
+    },
+    {
+      "Message": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "changed('f6', $prop('Settings.rise'));",
+        "PreExpression": "root['set'] = $prop('Settings.rise');\r\nfunction changed(f, p) {\r\n\tif (root['set'] != p) {\r\n\t\troot['set'] = p;\r\n\t\tif ($prop('Settings.enable'))\r\n\t\t\treturn f + '=' + p + ';';\r\n\t}\r\n}"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 60
+    },
+    {
+      "Message": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "changed('f7', $prop('Settings.hold'));",
+        "PreExpression": "root['set'] = $prop('Settings.hold');\r\nfunction changed(f, p) {\r\n\tif (root['set'] != p) {\r\n\t\troot['set'] = p;\r\n\t\tif ($prop('Settings.enable'))\r\n\t\t\treturn f + '=' + p + ';';\r\n\t}\r\n}"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 60
+    },
+    {
+      "Message": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "changed('f8', $prop('Settings.fall'));",
+        "PreExpression": "root['set'] = $prop('Settings.fall');\r\nfunction changed(f, p) {\r\n\tif (root['set'] != p) {\r\n\t\troot['set'] = p;\r\n\t\tif ($prop('Settings.enable'))\r\n\t\t\treturn f + '=' + p + ';';\r\n\t}\r\n}"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 60
+    },
+    {
+      "Message": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "changed('f9', $prop('Settings.f9'));",
+        "PreExpression": "root['set'] = $prop('Settings.f9');\r\nfunction changed(f, p) {\r\n\tif (root['set'] != p) {\r\n\t\troot['set'] = p;\r\n\t\tif ($prop('Settings.enable'))\r\n\t\t\treturn f + '=' + p + ';';\r\n\t}\r\n}"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 60
+    },
+    {
+      "Message": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "changed('fa',$prop('Settings.attenuation'));",
+        "PreExpression": "root['set'] = $prop('Settings.attenuation');\r\nfunction changed(f, p) {\r\n\tif (root['set'] != p) {\r\n\t\troot['set'] = p;\r\n\t\tif ($prop('Settings.enable'))\r\n\t\t\treturn f + '=' + p + ';';\r\n\t}\r\n}"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 60
+    }
+  ],
+  "OnConnectMessage": {
+    "JSExt": 3,
+    "Interpreter": 1,
+    "Expression": "r=\"f0=\"+$prop('Settings.f0')+\";f1=\"+$prop('Settings.f1')+\";f2=\"+$prop('Settings.f2');\r\nr+=\";f3=\"+$prop('Settings.f3')+\";f4=\"+$prop('Settings.f4')+\";f5=\"+$prop('Settings.period');\r\nr+=\";f6=\"+$prop('Settings.rise')+\";f7=\"+$prop('Settings.hold')+\";f8=\"+$prop('Settings.fall');\r\nreturn r+\";f9=\"+$prop('Settings.f9')+\";fa=\"+$prop('Settings.attenuation')+\";\";"
+  },
+  "OnDisconnectMessage": {
+    "JSExt": 3,
+    "Interpreter": 1,
+    "Expression": "return \"f9=0;\"\t// jiggle the Arduino"
+  },
+  "DtrEnable": false,
+  "RtsEnable": false,
+  "EditorExpanded": true,
+  "Name": "Custom Serial device",
+  "Description": "fiirH for Fake8 plugin and PWM_FullConfiguration sketch",
+  "LastErrorDate": "0001-01-01T00:00:00",
+  "LastErrorMessage": null,
+  "IsFreezed": false,
+  "SettingsBuilder": {
+    "Settings": [
+      {
+        "PropertyName": "enable",
+        "CurrentValue": true,
+        "Name": null,
+        "TypeName": "BoolEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Enable Fake8 sliders",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 10000,
+        "Minimum": 1,
+        "PropertyName": "f0",
+        "CurrentValue": 1687,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Fake8.0 PWM period (usec / 50) (10000 = 0.5 seconds)",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 100,
+        "Minimum": 1,
+        "PropertyName": "f1",
+        "CurrentValue": 53,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Fake8.1 max amplitude (PWM %)",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 10,
+        "Minimum": 0,
+        "PropertyName": "f2",
+        "CurrentValue": 1,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Fake8.2 Min amplitude: (PWM %)",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 64,
+        "Minimum": 1,
+        "PropertyName": "f3",
+        "CurrentValue": 22,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Fake8.3 high-pass range",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 255,
+        "Minimum": 1,
+        "PropertyName": "f4",
+        "CurrentValue": 23,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Fake8.4 high-pass damping",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 255,
+        "Minimum": 0,
+        "PropertyName": "attenuation",
+        "CurrentValue": 3,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Fake8.a high-pass attenuation",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 600,
+        "Minimum": 60,
+        "PropertyName": "period",
+        "CurrentValue": 150,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Fake8.5 test period",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 64,
+        "Minimum": 0,
+        "PropertyName": "rise",
+        "CurrentValue": 24,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Fake8.6 Test rise count",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 64,
+        "Minimum": 0,
+        "PropertyName": "hold",
+        "CurrentValue": 34,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Fake8.7 Test hold count",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 64,
+        "Minimum": 0,
+        "PropertyName": "fall",
+        "CurrentValue": 26,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Fake8.8 Test fall count",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      },
+      {
+        "Maximum": 2,
+        "Minimum": 0,
+        "PropertyName": "f9",
+        "CurrentValue": 2,
+        "Name": null,
+        "TypeName": "SliderEntry",
+        "IsEnabled": true,
+        "IsEnabledFormula": {
+          "Expression": ""
+        },
+        "IsVisible": true,
+        "Label": "Fake8.9 verbosity: 0 = off; 1 = hex, 2 = decimal",
+        "IsVisibleFormula": {
+          "Expression": ""
+        }
+      }
+    ],
+    "IsEditMode": false
+  }
+}
