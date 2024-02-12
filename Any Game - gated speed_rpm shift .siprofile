@@ -131,9 +131,9 @@
   "OutputMode": 1,
   "GlobalGain": 50.0,
   "UseProfileGain": false,
-  "LastLoaded": "2024-02-09T14:53:35.2708076-05:00",
+  "LastLoaded": "2024-02-12T13:57:08.4743696-05:00",
   "Description": "2024-02-09\r\nscaled iirH speed/rpm properties gated by GEAR SHIFT effect",
   "Name": "gated speed/rpm shift ",
-  "ProfileId": "e9e2d3d0-0694-48a1-ab41-f14ef0b51dd4",
+  "ProfileId": "130358e9-e7aa-4177-8921-7e51128985a7",
   "GameCode": null
 }
