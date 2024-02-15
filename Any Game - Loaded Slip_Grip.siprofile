@@ -208,8 +208,8 @@
           "FrontLeftFormula": {
             "JSExt": 0,
             "Interpreter": 1,
-            "Expression": "// front left load\r\n// left load (turning right)\r\nd = (0 > (s = $prop('AccelerationSway'))) ? 4 : -4;\r\nL = 25 + AbsAcc(s) / d  // 0-50% left-right distribution\r\nd = (0 < (s = $prop('AccelerationSurge'))) ? 100 : -100\r\n// if both accel are 0, then no load shift and each corner gets 25%\r\nL *= (1 + AbsAcc(s) / d); // 0-100% fore-aft distribution\r\ns = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontLeft');\r\n// return Sgain * s / $prop('ShakeITBSV3Plugin.Export.Grip.All');\r\n// return $prop('ShakeITBSV3Plugin.Export.Grip.All')\r\n// return 100 * SG(s, $prop('ShakeITBSV3Plugin.Export.Grip.All'));\r\nreturn L * SG(s, $prop('ShakeITBSV3Plugin.Export.Grip.All'));",
-            "PreExpression": "Sgain = 20;\r\nfunction SG(s, g) { return Math.min(1, Sgain * s / g) };\r\nfunction AbsAcc(a) { return 100 * Math.abs(.05 * a)**0.3 }\r\nvar s,d,L;"
+            "Expression": "// front left load\r\nL = proxyL($prop('AccelerationSway'), $prop('AccelerationSurge'));\r\ns = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontLeft');\r\n// return Sgain * s / $prop('ShakeITBSV3Plugin.Export.Grip.All');\r\n// return $prop('ShakeITBSV3Plugin.Export.Grip.All')\r\n// return 100 * SG(s, $prop('ShakeITBSV3Plugin.Export.Grip.All'));\r\nreturn L * SG(s, $prop('ShakeITBSV3Plugin.Export.Grip.All'));",
+            "PreExpression": "Sgain = 20;\r\nfunction SG(s, g) { return Math.min(1, Sgain * s / g) };\r\nfunction AbsAcc(a) { return 100 * Math.abs(.05 * a)**0.3 }\r\n// increasing left load when turning right\r\n// if both sway and surge are 0, then no load shift and each corner gets 25%\r\nfunction proxyL(sway, surge) {\r\n\tvar d = (0 > sway) ? 4 : -4;\r\n\tvar L = 25 + AbsAcc(sway) / d  // 0-50% left-right distribution\r\n\td = (0 < surge) ? 100 : -100\r\n\treturn L * (1 + AbsAcc(surge) / d); // 0-100% fore-aft distribution\r\n}\r\nvar s, L;"
           },
           "FrontRightFormula": {
             "JSExt": 0,
@@ -260,7 +260,7 @@
           "ContainerType": "CustomEffectContainer",
           "Description": "output: loaded gated wheel slips",
           "AggregationMode": "Corners",
-          "Gain": 100.0,
+          "Gain": 99.0,
           "IsEnabled": true,
           "Output": {
             "UsePrehemptiveMode": false,
