@@ -9,7 +9,7 @@
           "BrakeFilter": 10,
           "Filter": {
             "GammaValue": 0.99999999999999889,
-            "InputGain": 49.0,
+            "InputGain": 44.0,
             "MinimumForce": 0,
             "Threshold": 15,
             "FilterType": "GammaFilter"
@@ -51,7 +51,7 @@
           "AutocalibrationMax": 95.0,
           "Filter": {
             "GammaValue": 1.0,
-            "InputGain": 100.0,
+            "InputGain": 67.0,
             "MinimumForce": 1,
             "Threshold": 0,
             "FilterType": "GammaFilter"
@@ -59,8 +59,8 @@
           "FrontLeftFormula": {
             "JSExt": 0,
             "Interpreter": 1,
-            "Expression": "return L($prop('AccelerationHeave')) * RMS($prop('AccelerationSurge'), Ygain * $prop('OrientationYawAcceleration'));",
-            "PreExpression": "const gain = 5;\r\nconst Ygain = 200;\t// approx ratio of Surge or Heave to Yaw acceleration property values\r\nfunction RMS(a, b) { return Math.pow(a * a + b * b, 0.5); }\t// 2D accel (estimated grip)\r\nconst Hgain = 3 / 50; // for Heave (and Surge), a gain of 3 yields about 50 for 1 G\r\nfunction L(h) { return gain * (1 + Hgain * h); }"
+            "Expression": "y = Ygain * $prop('OrientationYawAcceleration');\r\nreturn L($prop('AccelerationHeave'), RMS($prop('AccelerationSurge'), y));",
+            "PreExpression": "const gain = 9;\r\nconst Ygain = 200;\t// approx ratio of Surge or Heave to Yaw acceleration property values\r\nfunction RMS(a, b) { return Math.pow(a * a + b * b, 0.5); }\t// 2D accel (estimated grip)\r\nconst Hgain = 3 / 50; // for Heave (and Surge), a gain of 3 yields about 50 for 1 G\r\nfunction L(h, g) { return gain * (1 + Hgain * h) * g; }\r\nvar y;"
           },
           "FrontRightFormula": {
             "JSExt": 0,
@@ -133,25 +133,25 @@
             "JSExt": 0,
             "Interpreter": 1,
             "Expression": "slip = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontLeft');\r\n//return SG(slip, $prop('ShakeITBSV3Plugin.Export.Grip.all'))\r\n//return noise(0)\r\nreturn noise(SG(slip, $prop('ShakeITBSV3Plugin.Export.Grip.all')));",
-            "PreExpression": "const n = 3;\t\t// fraction of range for random()\r\nconst f = n / (1 + n);\r\nconst Sgain = .8;\r\nvar slip;\r\nfunction SG(s, g) { return 100 - 100 * Math.min(1, Sgain * s / g) };\r\nfunction noise(sg) { return f * (sg + Math.random() * (1 + sg / n)) };\r\n"
+            "PreExpression": "const n = 3;\t\t// fraction of range for random()\r\nconst f = n / (1 + n);\r\nconst Sgain = .7;\r\nvar slip;\r\nfunction SG(s, g) { return 100 - 100 * Math.min(1, Sgain * s / g) };\r\nfunction noise(sg) { return f * (sg + Math.random() * (1 + sg / n)) };\r\n"
           },
           "FrontRightFormula": {
             "JSExt": 0,
             "Interpreter": 1,
             "Expression": "slip = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontRight');\r\nreturn noise(SG(slip, $prop('ShakeITBSV3Plugin.Export.Grip.all')));",
-            "PreExpression": "const n = 3;\t\t// fraction of slip/grip range for random()\r\nconst f = n / (1 + n);\r\nconst Sgain = .8;\r\nvar slip;\r\nfunction SG(s, g) { return 100 - 100 * Math.min(1, Sgain * s / g) };\r\nfunction noise(sg) { return f * (sg + Math.random() * (1 + sg / n)) };"
+            "PreExpression": "const n = 3;\t\t// fraction of slip/grip range for random()\r\nconst f = n / (1 + n);\r\nconst Sgain = .7;\r\nvar slip;\r\nfunction SG(s, g) { return 100 - 100 * Math.min(1, Sgain * s / g) };\r\nfunction noise(sg) { return f * (sg + Math.random() * (1 + sg / n)) };"
           },
           "RearLeftFormula": {
             "JSExt": 0,
             "Interpreter": 1,
             "Expression": "slip = $prop('ShakeITBSV3Plugin.Export.proxyS.RearLeft');\r\nreturn noise(SG(slip, $prop('ShakeITBSV3Plugin.Export.Grip.all')));",
-            "PreExpression": "const n = 3;\t\t// fraction of range for random()\r\nconst f = n / (1 + n);\r\nSgain = .8;\r\nfunction SG(s, g) { return 100 - 100 * Math.min(1, Sgain * s / g) };\r\nfunction noise(sg) { return f * (sg + Math.random() * (1 + sg / n)) };\r\nvar slip;"
+            "PreExpression": "const n = 3;\t\t// fraction of range for random()\r\nconst f = n / (1 + n);\r\nSgain = .7;\r\nfunction SG(s, g) { return 100 - 100 * Math.min(1, Sgain * s / g) };\r\nfunction noise(sg) { return f * (sg + Math.random() * (1 + sg / n)) };\r\nvar slip;"
           },
           "RearRightFormula": {
             "JSExt": 0,
             "Interpreter": 1,
             "Expression": "slip = $prop('ShakeITBSV3Plugin.Export.proxyS.RearRight');\r\nreturn noise(SG(slip, $prop('ShakeITBSV3Plugin.Export.Grip.all')));",
-            "PreExpression": "const n = 3;\t\t// fraction of range for random()\r\nconst f = n / (1 + n);\r\nconst Sgain = .8;\r\nvar slip;\r\nfunction SG(s, g) { return 100 - 100 * Math.min(1, Sgain * s / g) };\r\nfunction noise(sg) { return f * (sg + Math.random() * (1 + sg / n)) };"
+            "PreExpression": "const n = 3;\t\t// fraction of range for random()\r\nconst f = n / (1 + n);\r\nconst Sgain = .7;\r\nvar slip;\r\nfunction SG(s, g) { return 100 - 100 * Math.min(1, Sgain * s / g) };\r\nfunction noise(sg) { return f * (sg + Math.random() * (1 + sg / n)) };"
           },
           "ForceFrequencies": false,
           "FrontLeftFrequencyFormula": {
