@@ -9,7 +9,7 @@
           "BrakeFilter": 10,
           "Filter": {
             "GammaValue": 0.84999999999999876,
-            "InputGain": 78.0,
+            "InputGain": 62.0,
             "MinimumForce": 0,
             "Threshold": 10,
             "FilterType": "GammaFilter"
