@@ -8,10 +8,10 @@
           "SupportWarnInfo": null,
           "BrakeFilter": 10,
           "Filter": {
-            "GammaValue": 0.99999999999999889,
-            "InputGain": 44.0,
+            "GammaValue": 0.84999999999999876,
+            "InputGain": 78.0,
             "MinimumForce": 0,
-            "Threshold": 15,
+            "Threshold": 10,
             "FilterType": "GammaFilter"
           },
           "MuteWhenLockEffectIsActive": false,
@@ -51,7 +51,7 @@
           "AutocalibrationMax": 95.0,
           "Filter": {
             "GammaValue": 1.0,
-            "InputGain": 67.0,
+            "InputGain": 94.0,
             "MinimumForce": 1,
             "Threshold": 0,
             "FilterType": "GammaFilter"
@@ -60,7 +60,7 @@
             "JSExt": 0,
             "Interpreter": 1,
             "Expression": "y = Ygain * $prop('OrientationYawAcceleration');\r\nreturn L($prop('AccelerationHeave'), RMS($prop('AccelerationSurge'), y));",
-            "PreExpression": "const gain = 9;\r\nconst Ygain = 200;\t// approx ratio of Surge or Heave to Yaw acceleration property values\r\nfunction RMS(a, b) { return Math.pow(a * a + b * b, 0.5); }\t// 2D accel (estimated grip)\r\nconst Hgain = 3 / 50; // for Heave (and Surge), a gain of 3 yields about 50 for 1 G\r\nfunction L(h, g) { return gain * (1 + Hgain * h) * g; }\r\nvar y;"
+            "PreExpression": "const gain = 9;\r\nconst Ygain = 100;\t// approx ratio of Surge or Heave to Yaw acceleration property values\r\nfunction RMS(a, b) { return Math.pow(a * a + b * b, 0.5); }\t// 2D accel (estimated grip)\r\nconst Hgain = 3 / 50; // for Heave (and Surge), a gain of 3 yields about 50 for 1 G\r\nfunction L(h, g) { return gain * (1 + Hgain * h) * g; }\r\nvar y;"
           },
           "FrontRightFormula": {
             "JSExt": 0,
@@ -123,7 +123,7 @@
         {
           "AutocalibrationMax": 95.0,
           "Filter": {
-            "GammaValue": 0.49999999999999961,
+            "GammaValue": 0.59999999999999964,
             "InputGain": 100.0,
             "MinimumForce": 0,
             "Threshold": 0,
@@ -208,26 +208,26 @@
           "FrontLeftFormula": {
             "JSExt": 0,
             "Interpreter": 1,
-            "Expression": "// front left load\r\nL = proxyL($prop('AccelerationSway'), $prop('AccelerationSurge'));\r\ns = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontLeft');\r\n// return Sgain * s / $prop('ShakeITBSV3Plugin.Export.Grip.All');\r\n// return $prop('ShakeITBSV3Plugin.Export.Grip.All')\r\n// return 100 * SG(s, $prop('ShakeITBSV3Plugin.Export.Grip.All'));\r\nreturn L * SG(s, $prop('ShakeITBSV3Plugin.Export.Grip.All'));",
-            "PreExpression": "Sgain = 20;\r\nfunction SG(s, g) { return Math.min(1, Sgain * s / g) };\r\nfunction AbsAcc(a) { return 100 * Math.abs(.05 * a)**0.3 }\r\n// increasing left load when turning right\r\n// if both sway and surge are 0, then no load shift and each corner gets 25%\r\nfunction proxyL(sway, surge) {\r\n\tvar d = (0 > sway) ? 4 : -4;\r\n\tvar L = 25 + AbsAcc(sway) / d  // 0-50% left-right distribution\r\n\td = (0 < surge) ? 100 : -100\r\n\treturn L * (1 + AbsAcc(surge) / d); // 0-100% fore-aft distribution\r\n}\r\nvar s, L;"
+            "Expression": "// front left load\r\nLoad = proxyL($prop('AccelerationSway'), $prop('AccelerationSurge'));\r\nslip = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontLeft');\r\n// return Sgain * s / $prop('ShakeITBSV3Plugin.Export.Grip.All');\r\n// return $prop('ShakeITBSV3Plugin.Export.Grip.All')\r\n// return 100 * SG(s, $prop('ShakeITBSV3Plugin.Export.Grip.All'));\r\nreturn Load * SG(slip, $prop('ShakeITBSV3Plugin.Export.Grip.All'));",
+            "PreExpression": "Sgain = 20;\r\nfunction SG(s, g) { return Math.min(1, Sgain * s / g) };\r\nfunction AbsAcc(a) { return 100 * Math.abs(.05 * a)**0.3 }\r\n// increasing left load when turning right\r\n// if both sway and surge are 0, then no load shift and each corner gets 25%\r\nfunction proxyL(sway, surge) {\r\n\tvar d = (0 > sway) ? 4 : -4;\r\n\tvar L = 25 + AbsAcc(sway) / d  // 0-50% left-right distribution\r\n\td = (0 < surge) ? 100 : -100\r\n\treturn L * (1 + AbsAcc(surge) / d); // 0-100% fore-aft distribution\r\n}\r\nvar slip, Load;"
           },
           "FrontRightFormula": {
             "JSExt": 0,
             "Interpreter": 1,
-            "Expression": "// front right load\r\n// right load (turning right)\r\nd = (0 < (s = $prop('AccelerationSway'))) ? 4 : -4;\r\nL = 25 + AbsAcc(s) / d  // 0-50% left-right distribution\r\nd = (0 < (s = $prop('AccelerationSurge'))) ? 100 : -100\r\n// if both accel are 0, then no load shift and each corner gets 25%\r\nL *= (1 + AbsAcc(s) / d); // 0-100% fore-aft distribution\r\ns = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontRight');\r\nreturn L * SG(s, $prop('GlobalAccelerationG'));",
-            "PreExpression": "Sgain = 20;\r\nfunction SG(s, g) { return Math.min(1, Sgain * s / g) };\r\nfunction AbsAcc(a) { return 100 * Math.abs(.05 * a)**0.3 }\r\nvar s,d,L;"
+            "Expression": "Load = proxyL($prop('AccelerationSway'), $prop('AccelerationSurge'));\r\nslip = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontRight');\r\nreturn Load * SG(slip, $prop('ShakeITBSV3Plugin.Export.Grip.All'));",
+            "PreExpression": "Sgain = 20;\r\nfunction SG(s, g) { return Math.min(1, Sgain * s / g) };\r\nfunction AbsAcc(a) { return 100 * Math.abs(.05 * a)**0.3 }\r\n// decreasing right load when turning right\r\n// if both sway and surge are 0, then no load shift and each corner gets 25%\r\nfunction proxyL(sway, surge) {\r\n    var d = (0 < sway) ? 4 : -4;\r\n    var L = 25 + AbsAcc(sway) / d  // 0-50% left-right distribution\r\n    d = (0 < surge) ? 100 : -100\r\n    return L * (1 + AbsAcc(surge) / d); // 0-100% fore-aft distribution\r\n}\r\nvar slip, Load;"
           },
           "RearLeftFormula": {
             "JSExt": 0,
             "Interpreter": 1,
-            "Expression": "// rear left load\r\n// left load (turning right)\r\nd = (0 > (s = $prop('AccelerationSway'))) ? 4 : -4;\r\nL = 25 + AbsAcc(s) / d  // 0-50% left-right distribution\r\n// acceleration force\r\nd = (0 > (s = $prop('AccelerationSurge'))) ? 100 : -100\r\n// if both accel are 0, then no load shift and each corner gets 25%\r\nL *= (1 + AbsAcc(s) / d); // 0-100% fore-aft distribution\r\ns = $prop('ShakeITBSV3Plugin.Export.proxyS.RearLeft');\r\nreturn L * SG(s, $prop('ShakeITBSV3Plugin.Export.Grip.All'));\r\n",
-            "PreExpression": "Sgain = 20;\t\t// force SC() to act as a gate\r\nfunction SG(s, g) { return Math.min(1, Sgain * s / g) };\r\nfunction AbsAcc(a) { return 100 * Math.abs(.05 * a)**0.3 }\r\nvar s,d,L;"
+            "Expression": "Load = proxyL($prop('AccelerationSway'), $prop('AccelerationSurge'));\r\nslip = $prop('ShakeITBSV3Plugin.Export.proxyS.RearLeft');\r\nreturn Load * SG(slip, $prop('ShakeITBSV3Plugin.Export.Grip.All'));\r\n",
+            "PreExpression": "Sgain = 20;\t\t// force SC() to act as a gate\r\nfunction SG(s, g) { return Math.min(1, Sgain * s / g) };\r\nfunction AbsAcc(a) { return 100 * Math.abs(.05 * a)**0.3 }\r\nfunction proxyL(sway, surge) {\r\n    var d = (0 > sway) ? 4 : -4;\r\n    var L = 25 + AbsAcc(sway) / d  // 0-50% left-right distribution\r\n    d = (0 > surge) ? 100 : -100\r\n    return L * (1 + AbsAcc(surge) / d); // 0-100% fore-aft distribution\r\n} \r\nvar slip, Load;"
           },
           "RearRightFormula": {
             "JSExt": 0,
             "Interpreter": 1,
-            "Expression": "// rear right load\r\n// right load (turning right)\r\nd = (0 < (s = $prop('AccelerationSway'))) ? 4 : -4;\r\nLoad = 25 + AbsAcc(s) / d  // 0-50% left-right distribution\r\n// acceleration\r\nd = (0 > (s = $prop('AccelerationSurge'))) ? 100 : -100\r\n// if both accel are 0, then no load shift and each corner gets 25%\r\nLoad *= (1 + AbsAcc(s) / d); // 0-100% fore-aft distribution\r\nslip = $prop('ShakeITBSV3Plugin.Export.proxyS.RearRight');\r\n// return 100 * SG(slip, $prop('ShakeITBSV3Plugin.Export.Grip.All'));\r\nreturn Load * SG(slip, $prop('ShakeITBSV3Plugin.Export.Grip.All'));",
-            "PreExpression": "Sgain = 20;\t\t// force SG() to act as a gate\r\nfunction SG(s, g) { return Math.min(1, Sgain * s / g) };\r\nvar slip, d, Load;\r\nfunction AbsAcc(a) { return 100 * Math.abs(.05 * a)**0.3 }"
+            "Expression": "Load = proxyL($prop('AccelerationSway'), $prop('AccelerationSurge'));\r\nslip = $prop('ShakeITBSV3Plugin.Export.proxyS.RearRight');\r\nreturn Load * SG(slip, $prop('ShakeITBSV3Plugin.Export.Grip.All'));",
+            "PreExpression": "Sgain = 20;\t\t// force SG() to act as a gate\r\nfunction SG(s, g) { return Math.min(1, Sgain * s / g) };\r\nfunction proxyL(sway, surge) {\r\n    var d = (0 < sway) ? 4 : -4;\r\n    var L = 25 + AbsAcc(sway) / d  // 0-50% left-right distribution\r\n    d = (0 > surge) ? 100 : -100\r\n    return L * (1 + AbsAcc(surge) / d); // 0-100% fore-aft distribution\r\n} \r\nvar slip, Load;\r\nfunction AbsAcc(a) { return 100 * Math.abs(.05 * a)**0.3 }"
           },
           "ForceFrequencies": true,
           "FrontLeftFrequencyFormula": {
@@ -297,7 +297,7 @@
       "Output": null
     }
   ],
-  "AutoCalibrationRatio2": 100,
+  "AutoCalibrationRatio2": 67,
   "OutputMode": 1,
   "GlobalGain": 50.0,
   "UseProfileGain": true,
