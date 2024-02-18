@@ -1,0 +1,683 @@
+{
+  "IncludeOutputSettingsInProfile": false,
+  "UnmuteEffectsAfterSimhubRestart": false,
+  "EffectsContainers": [
+    {
+      "EffectsContainers": [
+        {
+          "EffectsContainers": [
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": "// upshifts\r\nvar g = $prop('Gear');\r\nvar s = 0;\r\n\r\n// 'Gear' is pathological\r\nif (g == 'N' || g == 'R')\r\n  g = 0;\r\n  \r\n/* test code e.g. for comparison with downshift\r\nif (1 < $prop('ShakeITBSV3Plugin.Export.proxyShift.All'))\r\n  return 100;\r\nelse return 30 * g; \r\n*/\r\n\r\n// initialize gear history\r\nif (null == root[\"gear\"]) {\r\n  root[\"gear\"] = g;\r\n  root[\"sb4\"] = true;\r\n}\r\n\r\nif (1 < $prop('ShakeITBSV3Plugin.Export.proxyGear.All')) {\r\n  root[\"sb4\"] = true;\r\n  if (g > root[\"gear\"])\t// upshift?\r\n    s = $prop('ShakeITBSV3Plugin.Export.proxyRPM.All');\r\n}\r\nelse {\r\n  if (root[\"sb4\"])\r\n    root[\"gear\"] = g;       // gear after shifts\r\n  root[\"sb4\"] = false;\r\n}\r\nreturn s;"
+              },
+              "FrontRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearLeftFormula": {
+                "Expression": ""
+              },
+              "RearRightFormula": {
+                "Expression": ""
+              },
+              "ForceFrequencies": false,
+              "FrontLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "FrontRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "SupportWarnInfo": null,
+              "GainChangeStep": 1,
+              "IsMuted": false,
+              "ToggleMute": {
+                "Triggers": [
+                  {
+                    "Trigger": "PropertyServerPlugin.Upshifts-toggle-mute",
+                    "PressType": 4
+                  }
+                ]
+              },
+              "IncrementGainAction": {
+                "Triggers": [
+                  {
+                    "Trigger": "PropertyServerPlugin.Upshifts-low-Up",
+                    "PressType": 4
+                  }
+                ]
+              },
+              "DecrementGainAction": {
+                "Triggers": [
+                  {
+                    "Trigger": "PropertyServerPlugin.Upshifts-low-Down",
+                    "PressType": 4
+                  }
+                ]
+              },
+              "ContainerId": "3fc86d3c-09d9-40df-afeb-061f6e888fcd",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "RPM-modulated Upshifts",
+              "AggregationMode": "Mono",
+              "Gain": 0.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 1,
+                "UseHighFrequency": false,
+                "HighFrequency": 30,
+                "WhiteNoise": 10,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": false,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": false,
+                "ChannelGroupName": "",
+                "PropertyName": "proxyShift",
+                "ExportProperty": true,
+                "DisableOutput": true,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0000000000000002,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": "// Filter shift property\r\nreturn 100 * $prop('Rpms') / $prop('MaxRpm');\r\n\r\n"
+              },
+              "FrontRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "ForceFrequencies": false,
+              "FrontLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "FrontRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "SupportWarnInfo": null,
+              "IsMuted": false,
+              "ContainerId": "cc64cec4-9dc5-4e26-bce2-ef087adb2c84",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "RPM property",
+              "AggregationMode": "Mono",
+              "Gain": 0.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 1,
+                "UseHighFrequency": false,
+                "HighFrequency": 30,
+                "WhiteNoise": 0,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": false,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": false,
+                "ChannelGroupName": "",
+                "PropertyName": "proxyRPM",
+                "ExportProperty": true,
+                "DisableOutput": true,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "ModulateGainUsingRpms": false,
+              "MaxFeedbackRpmPercent": 90,
+              "MinFeedbackRpmPercent": 50,
+              "GearMode": 2,
+              "AlwaysIgnoreNeutral": false,
+              "IgnoreNeutral": true,
+              "NeutralDebouningTime": 200.0,
+              "EngagingDebouningTime": 500.0,
+              "Filter": {
+                "Duration": 300,
+                "FilterType": "PulseFilter"
+              },
+              "SupportWarnInfo": null,
+              "IsMuted": false,
+              "ContainerId": "d8395c93-c0ab-4959-be2b-a3ad480f4578",
+              "ContainerType": "GearEffectContainer",
+              "Description": "Gear shift pulse effect property",
+              "AggregationMode": null,
+              "Gain": 0.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 44,
+                "Harmonics": 0,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": false,
+                "ChannelGroupName": "",
+                "PropertyName": "proxyGear",
+                "ExportProperty": true,
+                "DisableOutput": true,
+                "OutputType": "SingleToneOutput"
+              }
+            },
+            {
+              "SupportWarnInfo": null,
+              "BrakeFilter": 10,
+              "Filter": {
+                "GammaValue": 0.4999999999999985,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "MuteWhenLockEffectIsActive": false,
+              "ThrottleFilter": 10,
+              "UseBrakeFilter": false,
+              "UseThrottleFilter": false,
+              "IsMuted": false,
+              "ContainerId": "da2245c2-3fe8-4b0d-a3b0-4cdce22c2f2b",
+              "ContainerType": "WheelsSlipContainer",
+              "Description": "rawProxyS: wheel slip for tire squeal forced freq",
+              "AggregationMode": "Corners",
+              "Gain": 0.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 1,
+                "UseHighFrequency": false,
+                "HighFrequency": 55,
+                "WhiteNoise": 4,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": false,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": false,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": false,
+                "ChannelGroupName": "",
+                "PropertyName": "rawproxyS",
+                "ExportProperty": true,
+                "DisableOutput": true,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 94.0,
+                "MinimumForce": 1,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": "y = Ygain * $prop('OrientationYawAcceleration');\r\nreturn L($prop('AccelerationHeave'), RMS($prop('AccelerationSurge'), y));",
+                "PreExpression": "const gain = 9;\r\nconst Ygain = 100;\t// approx ratio of Surge or Heave to Yaw acceleration property values\r\nfunction RMS(a, b) { return Math.pow(a * a + b * b, 0.5); }\t// 2D accel (estimated grip)\r\nconst Hgain = 3 / 50; // for Heave (and Surge), a gain of 3 yields about 50 for 1 G\r\nfunction L(h, g) { return gain * (1 + Hgain * h) * g; }\r\nvar y;"
+              },
+              "FrontRightFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearLeftFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearRightFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "ForceFrequencies": false,
+              "FrontLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "FrontRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "SupportWarnInfo": null,
+              "IsMuted": false,
+              "ContainerId": "aaa82527-c541-4a55-b4b8-d399b17e8918",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "Grip estimate",
+              "AggregationMode": "Mono",
+              "Gain": 0.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 1,
+                "UseHighFrequency": false,
+                "HighFrequency": 50,
+                "WhiteNoise": 10,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": false,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": false,
+                "ChannelGroupName": "",
+                "PropertyName": "Grip",
+                "ExportProperty": true,
+                "DisableOutput": true,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 0.59999999999999964,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": "slip = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontLeft');\r\n//return SG(slip, $prop('ShakeITBSV3Plugin.Export.Grip.all'))\r\n//return noise(0)\r\nreturn noise(SG(slip, $prop('ShakeITBSV3Plugin.Export.Grip.all')));",
+                "PreExpression": "const n = 3;\t\t// fraction of range for random()\r\nconst f = n / (1 + n);\r\nconst Sgain = .7;\r\nvar slip;\r\nfunction SG(s, g) { return 100 - 100 * Math.min(1, Sgain * s / g) };\r\nfunction noise(sg) { return f * (sg + Math.random() * (1 + sg / n)) };\r\n"
+              },
+              "FrontRightFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": "slip = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontRight');\r\nreturn noise(SG(slip, $prop('ShakeITBSV3Plugin.Export.Grip.all')));",
+                "PreExpression": "const n = 3;\t\t// fraction of slip/grip range for random()\r\nconst f = n / (1 + n);\r\nconst Sgain = .7;\r\nvar slip;\r\nfunction SG(s, g) { return 100 - 100 * Math.min(1, Sgain * s / g) };\r\nfunction noise(sg) { return f * (sg + Math.random() * (1 + sg / n)) };"
+              },
+              "RearLeftFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": "slip = $prop('ShakeITBSV3Plugin.Export.proxyS.RearLeft');\r\nreturn noise(SG(slip, $prop('ShakeITBSV3Plugin.Export.Grip.all')));",
+                "PreExpression": "const n = 3;\t\t// fraction of range for random()\r\nconst f = n / (1 + n);\r\nSgain = .7;\r\nfunction SG(s, g) { return 100 - 100 * Math.min(1, Sgain * s / g) };\r\nfunction noise(sg) { return f * (sg + Math.random() * (1 + sg / n)) };\r\nvar slip;"
+              },
+              "RearRightFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": "slip = $prop('ShakeITBSV3Plugin.Export.proxyS.RearRight');\r\nreturn noise(SG(slip, $prop('ShakeITBSV3Plugin.Export.Grip.all')));",
+                "PreExpression": "const n = 3;\t\t// fraction of range for random()\r\nconst f = n / (1 + n);\r\nconst Sgain = .7;\r\nvar slip;\r\nfunction SG(s, g) { return 100 - 100 * Math.min(1, Sgain * s / g) };\r\nfunction noise(sg) { return f * (sg + Math.random() * (1 + sg / n)) };"
+              },
+              "ForceFrequencies": false,
+              "FrontLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "FrontRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "SupportWarnInfo": null,
+              "IsMuted": false,
+              "ContainerId": "bf2d5c62-174a-4276-aa8c-d38e19902568",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "noisy: frequencies",
+              "AggregationMode": "Corners",
+              "Gain": 0.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 1,
+                "UseHighFrequency": false,
+                "HighFrequency": 50,
+                "WhiteNoise": 10,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": false,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": false,
+                "ChannelGroupName": "",
+                "PropertyName": "noisy",
+                "ExportProperty": true,
+                "DisableOutput": true,
+                "OutputType": "ToneOutput"
+              }
+            }
+          ],
+          "Filter": null,
+          "SupportWarnInfo": null,
+          "GainChangeStep": 1,
+          "IsMuted": false,
+          "ToggleMute": {
+            "Triggers": [
+              {
+                "Trigger": "PropertyServerPlugin.Shift-toggle-mute",
+                "PressType": 4
+              }
+            ]
+          },
+          "IncrementGainAction": {
+            "Triggers": [
+              {
+                "Trigger": "PropertyServerPlugin.Shift-Up",
+                "PressType": 4
+              }
+            ]
+          },
+          "DecrementGainAction": {
+            "Triggers": [
+              {
+                "Trigger": "PropertyServerPlugin.Shift-Down",
+                "PressType": 4
+              }
+            ]
+          },
+          "ContainerId": "60bbc1ff-dd04-445f-b3aa-ce76f512491d",
+          "ContainerType": "GroupContainer",
+          "Description": "Processing",
+          "AggregationMode": null,
+          "Gain": 0.0,
+          "IsEnabled": true,
+          "Output": null
+        },
+        {
+          "AutocalibrationMax": 95.0,
+          "Filter": {
+            "GammaValue": 1.0,
+            "InputGain": 100.0,
+            "MinimumForce": 0,
+            "Threshold": 0,
+            "FilterType": "GammaFilter"
+          },
+          "FrontLeftFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "if ($prop('DataCorePlugin.CurrentGame') === 'Automobilista2'){\r\n//AMS2\r\n\r\nif ($prop('CarId') === 'Alpine A110 Cup') return 0;\r\nelse if ($prop('CarId') === 'Alpine A110 Cup') return 0;\r\nelse if ($prop('CarId') === 'Alpine A110 GT4') return 0;\r\nelse if ($prop('CarId') === 'Aston Martin V12 Vantage GT3') return 0;\r\nelse if ($prop('CarId') === 'Audi R8 LMS') return 0;\r\nelse if ($prop('CarId') === 'Audi S1 EKS RX quattro') return 0;\r\nelse if ($prop('CarId') === 'Audi TT Cup') return 0;\r\nelse if ($prop('CarId') === 'Audi V8 quattro DTM') return 0;\r\nelse if ($prop('CarId') === 'Aussie Racing Camaro') return 0;\r\nelse if ($prop('CarId') === 'Bentley Continental GT3') return 0;\r\nelse if ($prop('CarId') === 'BMW 2002 Turbo') return 0;\r\nelse if ($prop('CarId') === 'BMW M Hybrid V8') return 8;\r\nelse if ($prop('CarId') === 'BMW M Hybrid V8 - Low Downforce') return 8;\r\nelse if ($prop('CarId') === 'BMW 320 Turbo Gr5') return 0;\r\nelse if ($prop('CarId') === 'BMW M1 Procar') return 0;\r\nelse if ($prop('CarId') === 'BMW M3 Sport Evo Group A') return 0;\r\nelse if ($prop('CarId') === 'BMW M4 GT3') return 0;\r\nelse if ($prop('CarId') === 'BMW M4 GT3 - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'BMW M4 GT4') return 0;\r\nelse if ($prop('CarId') === 'BMW M6 GT3') return 0;\r\nelse if ($prop('CarId') === 'BMW M8 GTE') return 0;\r\nelse if ($prop('CarId') === 'BMW V12 LMR') return 0;\r\nelse if ($prop('CarId') === 'BMW Z4 GT3') return 0;\r\nelse if ($prop('CarId') === 'Brabham BT26A') return 0;\r\nelse if ($prop('CarId') === 'Brabham BT44') return 0;\r\nelse if ($prop('CarId') === 'Brabham BT46B') return 0;\r\nelse if ($prop('CarId') === 'Brabham BT49') return 0;\r\nelse if ($prop('CarId') === 'Brabham BT52') return 0;\r\nelse if ($prop('CarId') === 'Brabham BT62') return 0;\r\nelse if ($prop('CarId') === 'Cadillac ATS-V.R GT3') return 0;\r\nelse if ($prop('CarId') === 'Cadillac DPi-VR') return 0;\r\nelse if ($prop('CarId') === 'Cadillac V-Series.R') return 0;\r\nelse if ($prop('CarId') === 'Cadillac V-Series.R - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'Caterham 620R') return 0;\r\nelse if ($prop('CarId') === 'Caterham Academy') return 0;\r\nelse if ($prop('CarId') === 'Caterham Superlight') return 0;\r\nelse if ($prop('CarId') === 'Caterham Supersport') return 0;\r\nelse if ($prop('CarId') === 'Chevrolet Camaro GT4.R') return 0;\r\nelse if ($prop('CarId') === 'Chevrolet Camaro SS') return 0;\r\nelse if ($prop('CarId') === 'Chevrolet Chevette') return 0;\r\nelse if ($prop('CarId') === 'Chevrolet Corvette C3') return 0;\r\nelse if ($prop('CarId') === 'Chevrolet Corvette C3-R') return 0;\r\nelse if ($prop('CarId') === 'Chevrolet Corvette C7.R') return 0;\r\nelse if ($prop('CarId') === 'Chevrolet Corvette C8 Z06') return 0;\r\nelse if ($prop('CarId') === 'Chevrolet Corvette C8.R') return 0;\r\nelse if ($prop('CarId') === 'Chevrolet Corvette GTP') return 0;\r\nelse if ($prop('CarId') === 'Chevrolet Corvette GTP - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'Chevrolet Cruze Stock Car 2019') return 0;\r\nelse if ($prop('CarId') === 'Chevrolet Cruze Stock Car 2020') return 0;\r\nelse if ($prop('CarId') === 'Chevrolet Cruze Stock Car 2021') return 0;\r\nelse if ($prop('CarId') === 'Chevrolet Cruze Stock Car 2022') return 0;\r\nelse if ($prop('CarId') === 'Chevrolet Omega Stock Car 1999') return 0;\r\nelse if ($prop('CarId') === 'Chevrolet Opala Old Stock Race') return 0;\r\nelse if ($prop('CarId') === 'Chevrolet Opala Stock Cars 1979') return 0;\r\nelse if ($prop('CarId') === 'Chevrolet Opala Stock Cars 1986') return 0;\r\nelse if ($prop('CarId') === 'Citroen DS3 RX') return 0;\r\nelse if ($prop('CarId') === 'Copa Fusca') return 0;\r\nelse if ($prop('CarId') === 'Copa Montana') return 0;\r\nelse if ($prop('CarId') === 'Copa Uno') return 0;\r\nelse if ($prop('CarId') === 'F301') return 0;\r\nelse if ($prop('CarId') === 'F309') return 0;\r\nelse if ($prop('CarId') === 'Datsun 280ZX IMSA GTX') return 0;\r\nelse if ($prop('CarId') === 'Dodge Challenger Hellcat') return 0;\r\nelse if ($prop('CarId') === 'Dodge Viper ACR GT3') return 0;\r\nelse if ($prop('CarId') === 'Dodge Viper SRT10') return 0;\r\nelse if ($prop('CarId') === 'Ferrari 250 GTO') return 0;\r\nelse if ($prop('CarId') === 'Ferrari 430 Scuderia') return 0;\r\nelse if ($prop('CarId') === 'Ferrari 430 Scuderia Trackday') return 0;\r\nelse if ($prop('CarId') === 'Ferrari 458 Italia') return 0;\r\nelse if ($prop('CarId') === 'Ferrari 488 Challenge (EU)') return 0;\r\nelse if ($prop('CarId') === 'Ferrari 488 GT3') return 0;\r\nelse if ($prop('CarId') === 'Ferrari F355 Challenge') return 0;\r\nelse if ($prop('CarId') === 'Ferrari F40') return 0;\r\nelse if ($prop('CarId') === 'Ferrari F40 Track Days') return 0;\r\nelse if ($prop('CarId') === 'Ferrari FXX K') return 0;\r\nelse if ($prop('CarId') === 'FIA-GT1 Aston Martin DBR9') return 0;\r\nelse if ($prop('CarId') === 'FIA-GT1 Chevrolet Corvette C6.R GT1') return 0;\r\nelse if ($prop('CarId') === 'FIA-GT1 Lamborghini Murcielago R-SV GT1') return 0;\r\nelse if ($prop('CarId') === 'FIA-GT1 Maserati MC12 GT1') return 0;\r\nelse if ($prop('CarId') === 'FIA-GT1 Matech Ford GT GT1') return 0;\r\nelse if ($prop('CarId') === 'FIA-GT1 Nissan GT-R GT1') return 0;\r\nelse if ($prop('CarId') === 'Ford Focus RS RX') return 0;\r\nelse if ($prop('CarId') === 'Ford GT') return 0;\r\nelse if ($prop('CarId') === 'Ford GT LM') return 0;\r\nelse if ($prop('CarId') === 'Ford Sierra Cosworth RS500 Group A') return 0;\r\nelse if ($prop('CarId') === 'Ford GT Trackday') return 0;\r\nelse if ($prop('CarId') === 'Ford Shelby GT500') return 0;\r\nelse if ($prop('CarId') === 'Ford Shelby GT500 Trackday') return 0;\r\nelse if ($prop('CarId') === 'Formula Classic Gen1 Model1') return 0;\r\nelse if ($prop('CarId') === 'Formula Classic Gen1 Model2') return 0;\r\nelse if ($prop('CarId') === 'Formula Classic Gen2 Model1') return 0;\r\nelse if ($prop('CarId') === 'Formula Classic Gen2 Model1 - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'Formula Classic Gen2 Model2') return 0;\r\nelse if ($prop('CarId') === 'Formula Classic Gen2 Model2 - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'Formula Classic Gen2 Model3') return 0;\r\nelse if ($prop('CarId') === 'Formula Classic Gen2 Model3 - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'Formula Classic Gen3 Model1') return 0;\r\nelse if ($prop('CarId') === 'Formula Classic Gen3 Model1 - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'Formula Classic Gen3 Model2') return 0;\r\nelse if ($prop('CarId') === 'Formula Classic Gen3 Model2 - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'Formula Classic Gen3 Model3') return 0;\r\nelse if ($prop('CarId') === 'Formula Classic Gen3 Model3 - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'Formula Classic Gen3 Model4') return 0;\r\nelse if ($prop('CarId') === 'Formula Classic Gen3 Model4 - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'Formula Classic Gen4 Model1') return 0;\r\nelse if ($prop('CarId') === 'Formula Classic Gen4 Model1 - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'Formula Classic Gen4 Model2') return 0;\r\nelse if ($prop('CarId') === 'Formula Classic Gen4 Model2 - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'Formula Classic Gen4 Model3') return 0;\r\nelse if ($prop('CarId') === 'Formula Classic Gen4 Model3 - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'Formula Dirt') return 0;\r\nelse if ($prop('CarId') === 'Formula HiTech Gen1 Model1') return 0;\r\nelse if ($prop('CarId') === 'Formula HiTech Gen1 Model1 - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'Formula HiTech Gen1 Model2') return 0;\r\nelse if ($prop('CarId') === 'Formula HiTech Gen1 Model2 - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'Formula HiTech Gen1 Model3') return 0;\r\nelse if ($prop('CarId') === 'Formula HiTech Gen1 Model3 - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'Formula HiTech Gen1 Model4') return 0;\r\nelse if ($prop('CarId') === 'Formula HiTech Gen1 Model4 - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'Formula HiTech Gen2 Model1') return 0;\r\nelse if ($prop('CarId') === 'Formula HiTech Gen2 Model1 - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'Formula HiTech Gen2 Model2') return 0;\r\nelse if ($prop('CarId') === 'Formula HiTech Gen2 Model2 - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'Formula HiTech Gen2 Model3') return 0;\r\nelse if ($prop('CarId') === 'Formula HiTech Gen2 Model3 - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'Formula Inter MG-15') return 0;\r\nelse if ($prop('CarId') === 'Formula Reiza') return 0;\r\nelse if ($prop('CarId') === 'Formula Junior') return 0;\r\nelse if ($prop('CarId') === 'Formula Reiza - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'Formula Renault 3.5') return 0;\r\nelse if ($prop('CarId') === 'Formula Retro Gen2') return 0;\r\nelse if ($prop('CarId') === 'Formula Retro Gen3 DFY') return 0;\r\nelse if ($prop('CarId') === 'Formula Retro Gen3 Turbo') return 0;\r\nelse if ($prop('CarId') === 'Formula Retro V12') return 0;\r\nelse if ($prop('CarId') === 'Formula Retro V8') return 0;\r\nelse if ($prop('CarId') === 'Formula Trainer') return 0;\r\nelse if ($prop('CarId') === 'Formula Trainer Advanced') return 0;\r\nelse if ($prop('CarId') === 'Formula Ultimate 2019') return 0;\r\nelse if ($prop('CarId') === 'Formula Ultimate 2019 - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'Formula Ultimate Gen2') return 7;\r\nelse if ($prop('CarId') === 'Formula Ultimate Gen2 - Low Downforce') return 7;\r\nelse if ($prop('CarId') === 'Formula USA 2023') return 0;\r\nelse if ($prop('CarId') === 'Formula USA 2023 - Speedway') return 0;\r\nelse if ($prop('CarId') === 'Formula USA 2023 - Short Oval') return 0;\r\nelse if ($prop('CarId') === 'Formula V10 Gen1') return 0;\r\nelse if ($prop('CarId') === 'Formula V10 Gen1 - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'Formula V10 Gen2') return 0;\r\nelse if ($prop('CarId') === 'Formula V10 Gen2 - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'Formula V12') return 0;\r\nelse if ($prop('CarId') === 'Formula V12 - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'Formula Vee') return 0;\r\nelse if ($prop('CarId') === 'Formula Vee Fin') return 0;\r\nelse if ($prop('CarId') === 'Formula Vintage Gen1 Model1') return 0;\r\nelse if ($prop('CarId') === 'Formula Vintage Gen1 Model2') return 0;\r\nelse if ($prop('CarId') === 'Formula Vintage Gen2 Model1') return 0;\r\nelse if ($prop('CarId') === 'Formula Vintage Gen2 Model2') return 0;\r\nelse if ($prop('CarId') === 'Fusca 1 Hot Cars') return 0;\r\nelse if ($prop('CarId') === 'Fusca 2 Hot Cars') return 0;\r\nelse if ($prop('CarId') === 'Fusca Classic FL') return 0;\r\nelse if ($prop('CarId') === 'Ginetta G40') return 0;\r\nelse if ($prop('CarId') === 'Ginetta G40 Cup') return 0;\r\nelse if ($prop('CarId') === 'Ginetta G55 GT3') return 0;\r\nelse if ($prop('CarId') === 'Ginetta G55 GT4') return 0;\r\nelse if ($prop('CarId') === 'Ginetta G55 GT4 Supercup') return 0;\r\nelse if ($prop('CarId') === 'Ginetta G57') return 0;\r\nelse if ($prop('CarId') === 'Ginetta G58') return 0;\r\nelse if ($prop('CarId') === 'Ginetta G58 Gen2') return 0;\r\nelse if ($prop('CarId') === 'Gol Classic B') return 0;\r\nelse if ($prop('CarId') === 'Gol Classic FL') return 0;\r\nelse if ($prop('CarId') === 'Gol Hot Cars') return 0;\r\nelse if ($prop('CarId') === 'HondaCivicCoupeGRC') return 0;\r\nelse if ($prop('CarId') === 'Honda NSX GT3') return 0;\r\nelse if ($prop('CarId') === 'Iveco Stralis') return 0;\r\nelse if ($prop('CarId') === 'Jaguar F-Type SVR GT3') return 0;\r\nelse if ($prop('CarId') === 'Jaguar XJ220 S') return 0;\r\nelse if ($prop('CarId') === 'Jaguar XJ220S Track Days') return 0;\r\nelse if ($prop('CarId') === 'Jaguar XJR-9') return 0;\r\nelse if ($prop('CarId') === 'Jaguar XE SV Project 8') return 0;\r\nelse if ($prop('CarId') === 'Kart 125cc 2STROKE') return 0;\r\nelse if ($prop('CarId') === 'Kart 125cc Shifter') return 0;\r\nelse if ($prop('CarId') === 'Kart Cross') return 0;\r\nelse if ($prop('CarId') === 'Kart GX390 Race') return 0;\r\nelse if ($prop('CarId') === 'Kart GX390 Rental') return 0;\r\nelse if ($prop('CarId') === 'KTM X-Bow Cup') return 0;\r\nelse if ($prop('CarId') === 'KTM X-Bow GT4') return 0;\r\nelse if ($prop('CarId') === 'KTM X-Bow R') return 0;\r\nelse if ($prop('CarId') === 'Lamborghini Essenza SCV12') return 0;\r\nelse if ($prop('CarId') === 'Lamborghini Huracan GT3') return 0;\r\nelse if ($prop('CarId') === 'LamborghiniHuracanLP6202SuperTrofeo') return 0;\r\nelse if ($prop('CarId') === 'Lexus LFA') return 0;\r\nelse if ($prop('CarId') === 'Lexus LFA Trackday') return 0;\r\nelse if ($prop('CarId') === 'Ligier JS P2 Honda') return 0;\r\nelse if ($prop('CarId') === 'Ligier JS P2 Judd') return 0;\r\nelse if ($prop('CarId') === 'Ligier JS P2 Nissan') return 0;\r\nelse if ($prop('CarId') === 'Lola B2K00 Ford-Cosworth') return 0;\r\nelse if ($prop('CarId') === 'Lola B2K00 Ford-Cosworth - Superspeedway') return 0;\r\nelse if ($prop('CarId') === 'Lola B2K00 Ford-Cosworth - Speedway') return 0;\r\nelse if ($prop('CarId') === 'Lola B2K00 Ford-Cosworth - Short Oval') return 0;\r\nelse if ($prop('CarId') === 'Lola B2K00 Mercedes-Benz') return 0;\r\nelse if ($prop('CarId') === 'Lola B2K00 Mercedes-Benz - Superspeedway') return 0;\r\nelse if ($prop('CarId') === 'Lola B2K00 Mercedes-Benz - Speedway') return 0;\r\nelse if ($prop('CarId') === 'Lola B2K00 Mercedes-Benz - Short Oval') return 0;\r\nelse if ($prop('CarId') === 'Lola B2K00 Toyota') return 0;\r\nelse if ($prop('CarId') === 'Lola B2K00 Toyota - Superspeedway') return 0;\r\nelse if ($prop('CarId') === 'Lola B2K00 Toyota - Speedway') return 0;\r\nelse if ($prop('CarId') === 'Lola B2K00 Toyota - Short Oval') return 0;\r\nelse if ($prop('CarId') === 'Lola T95/00 Ford-Cosworth') return 0;\r\nelse if ($prop('CarId') === 'Lola T95/00 Ford-Cosworth - Superspeedway') return 0;\r\nelse if ($prop('CarId') === 'Lola T95/00 Ford-Cosworth - Speedway') return 0;\r\nelse if ($prop('CarId') === 'Lola T95/00 Ford-Cosworth - Short Oval') return 0;\r\nelse if ($prop('CarId') === 'Lola T95/00 Mercedes-Benz') return 0;\r\nelse if ($prop('CarId') === 'Lola T95/00 Mercedes-Benz - Superspeedway') return 0;\r\nelse if ($prop('CarId') === 'Lola T95/00 Mercedes-Benz - Speedway') return 0;\r\nelse if ($prop('CarId') === 'Lola T95/00 Mercedes-Benz - Short Oval') return 0;\r\nelse if ($prop('CarId') === 'Lola T98/00 Ford-Cosworth') return 0;\r\nelse if ($prop('CarId') === 'Lola T98/00 Ford-Cosworth - Superspeedway') return 0;\r\nelse if ($prop('CarId') === 'Lola T98/00 Ford-Cosworth - Speedway') return 0;\r\nelse if ($prop('CarId') === 'Lola T98/00 Ford-Cosworth - Short Oval') return 0;\r\nelse if ($prop('CarId') === 'Lotus 23') return 0;\r\nelse if ($prop('CarId') === 'Lotus 49C') return 0;\r\nelse if ($prop('CarId') === 'Lotus 72E') return 0;\r\nelse if ($prop('CarId') === 'Lotus 79') return 0;\r\nelse if ($prop('CarId') === 'Lotus 98T') return 0;\r\nelse if ($prop('CarId') === 'Lotus Exige V6 Cup') return 0;\r\nelse if ($prop('CarId') === 'MAN TGX') return 0;\r\nelse if ($prop('CarId') === 'Mazda 787b') return 0;\r\nelse if ($prop('CarId') === 'Mazda RX-7 Rocket Bunny Road') return 0;\r\nelse if ($prop('CarId') === 'McLaren 570S GT4') return 0;\r\nelse if ($prop('CarId') === 'McLaren 650S GT3') return 0;\r\nelse if ($prop('CarId') === 'McLaren 720S GT3') return 0;\r\nelse if ($prop('CarId') === 'McLaren 720S GT3 Evo') return 0;\r\nelse if ($prop('CarId') === 'McLaren 720S GT3 Evo - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'McLaren F1') return 0;\r\nelse if ($prop('CarId') === 'McLaren F1 GTR') return 0;\r\nelse if ($prop('CarId') === 'McLaren F1 GTR - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'McLaren F1 LM') return 0;\r\nelse if ($prop('CarId') === 'McLaren F1 Track Days') return 0;\r\nelse if ($prop('CarId') === 'McLaren M23') return 0;\r\nelse if ($prop('CarId') === 'McLaren MP4/12') return 0;\r\nelse if ($prop('CarId') === 'McLaren MP4/12 LD') return 0;\r\nelse if ($prop('CarId') === 'McLaren MP4/1C') return 0;\r\nelse if ($prop('CarId') === 'McLaren MP4/4') return 0;\r\nelse if ($prop('CarId') === 'McLaren MP4/5B') return 0;\r\nelse if ($prop('CarId') === 'McLaren MP4/5B - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'McLaren MP4/6') return 0;\r\nelse if ($prop('CarId') === 'McLaren MP4/6 - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'McLaren MP4/7A') return 0;\r\nelse if ($prop('CarId') === 'McLaren MP4/7A - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'McLaren MP4/8') return 0;\r\nelse if ($prop('CarId') === 'McLaren MP4/8 - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'McLaren Senna') return 0;\r\nelse if ($prop('CarId') === 'MCR S2000') return 0;\r\nelse if ($prop('CarId') === 'Mercedes-AMG A 45 SMS-R Rallycross') return 0;\r\nelse if ($prop('CarId') === 'Mercedes-AMG GT3') return 0;\r\nelse if ($prop('CarId') === 'Mercedes-AMG GT3 Evo') return 0;\r\nelse if ($prop('CarId') === 'Mercedes-AMG GT3 Evo - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'Mercedes-AMG GT4') return 0;\r\nelse if ($prop('CarId') === 'Mercedes-Benz 190E 2.5-16 Evo II DTM') return 0;\r\nelse if ($prop('CarId') === 'Mercedes-Benz Actros') return 0;\r\nelse if ($prop('CarId') === 'Mercedes-Benz CLK LM') return 0;\r\nelse if ($prop('CarId') === 'Mercedes-Benz CLK LM - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'MetalMoro AJR Chevrolet') return 0;\r\nelse if ($prop('CarId') === 'MetalMoro AJR Gen2 Chevrolet') return 0;\r\nelse if ($prop('CarId') === 'MetalMoro AJR Gen2 Honda') return 0;\r\nelse if ($prop('CarId') === 'MetalMoro AJR Gen2 Nissan') return 0;\r\nelse if ($prop('CarId') === 'MetalMoro AJR Honda') return 0;\r\nelse if ($prop('CarId') === 'MetalMoro AJR Judd') return 0;\r\nelse if ($prop('CarId') === 'MetalMoro AJR Nissan') return 0;\r\nelse if ($prop('CarId') === 'MetalMoro MRX Duratec P4') return 0;\r\nelse if ($prop('CarId') === 'MetalMoro MRX Duratec Turbo P2') return 0;\r\nelse if ($prop('CarId') === 'MetalMoro MRX Duratec Turbo P3') return 0;\r\nelse if ($prop('CarId') === 'MetalMoro MRX Honda P3') return 0;\r\nelse if ($prop('CarId') === 'MINI Cooper JCW') return 0;\r\nelse if ($prop('CarId') === 'MINI Cooper S 1965') return 0;\r\nelse if ($prop('CarId') === 'Mini Countryman R60 RX') return 0;\r\nelse if ($prop('CarId') === 'Mitsubishi Lancer Evo10 RX') return 0;\r\nelse if ($prop('CarId') === 'MINI Cooper S 1965 B') return 0;\r\nelse if ($prop('CarId') === 'Mitsubishi Lancer R') return 0;\r\nelse if ($prop('CarId') === 'Mitsubishi Lancer RS') return 0;\r\nelse if ($prop('CarId') === 'Nissan GT-R Nismo GT3') return 0;\r\nelse if ($prop('CarId') === 'Nissan GT-R Nismo GT3 (R35)') return 0;\r\nelse if ($prop('CarId') === 'Nissan GTP ZX-Turbo') return 0;\r\nelse if ($prop('CarId') === 'Nissan R390 GT1') return 0;\r\nelse if ($prop('CarId') === 'Nissan R390 GT1 - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'Nissan R89C') return 0;\r\nelse if ($prop('CarId') === 'Nissan R89C - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'Nissan Silvia S15 Rocket Bunny') return 0;\r\nelse if ($prop('CarId') === 'Nissan Skyline Super Silhouette') return 0;\r\nelse if ($prop('CarId') === 'Panoz Esperante GTR1') return 0;\r\nelse if ($prop('CarId') === 'Passat Classic B') return 0;\r\nelse if ($prop('CarId') === 'Passat Classic FL') return 0;\r\nelse if ($prop('CarId') === 'Passat Hot Cars') return 0;\r\nelse if ($prop('CarId') === 'Porsche 911 GT1-98') return 0;\r\nelse if ($prop('CarId') === 'Porsche 911 GT1-98 - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'Porsche 911 GT3 2018') return 0;\r\nelse if ($prop('CarId') === 'Porsche 911 GT3 2018 Trackday') return 0;\r\nelse if ($prop('CarId') === 'Porsche 911 GT3 2022') return 0;\r\nelse if ($prop('CarId') === 'Porsche 911 GT3 Cup (992)') return 0;\r\nelse if ($prop('CarId') === 'Porsche 911 GT3 Cup 3.8') return 0;\r\nelse if ($prop('CarId') === 'Porsche 911 GT3 Cup 4.0') return 0;\r\nelse if ($prop('CarId') === 'Porsche 911 GT3 R') return 0;\r\nelse if ($prop('CarId') === 'Porsche 911 GT3R') return 0;\r\nelse if ($prop('CarId') === 'Porsche 911 GT3 Touring') return 0;\r\nelse if ($prop('CarId') === 'Porsche 911 GT3 Touring Trackday') return 0;\r\nelse if ($prop('CarId') === 'Porsche 911 RSR 74') return 0;\r\nelse if ($prop('CarId') === 'Porsche 911 RSR GTE') return 0;\r\nelse if ($prop('CarId') === 'Porsche 911 Touring 2022') return 0;\r\nelse if ($prop('CarId') === 'Porsche 935') return 0;\r\nelse if ($prop('CarId') === 'Porsche 935/77') return 0;\r\nelse if ($prop('CarId') === 'Porsche 935/80') return 0;\r\nelse if ($prop('CarId') === 'Porsche 959 S') return 0;\r\nelse if ($prop('CarId') === 'Porsche 959S Track Days') return 0;\r\nelse if ($prop('CarId') === 'Porsche 962C') return 0;\r\nelse if ($prop('CarId') === 'Porsche 962C - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'Porsche 963') return 0;\r\nelse if ($prop('CarId') === 'Porsche 963 - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'Porsche 992 GT3 R') return 0;\r\nelse if ($prop('CarId') === 'Porsche 992 GT3 R - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'Porsche Cayman GT4 Clubsport MR') return 0;\r\nelse if ($prop('CarId') === 'Puma GTB') return 0;\r\nelse if ($prop('CarId') === 'Puma GTE') return 0;\r\nelse if ($prop('CarId') === 'Puma P052') return 0;\r\nelse if ($prop('CarId') === 'Radical SR3-RS') return 0;\r\nelse if ($prop('CarId') === 'Renault Clio Cup') return 0;\r\nelse if ($prop('CarId') === 'RenaultMeganeRSSMSRRallycross') return 0;\r\nelse if ($prop('CarId') === 'RenaultMeganeTrophyV6') return 0;\r\nelse if ($prop('CarId') === 'Reynard 2Ki Ford-Cosworth') return 0;\r\nelse if ($prop('CarId') === 'Reynard 2Ki Ford-Cosworth - Superspeedway') return 0;\r\nelse if ($prop('CarId') === 'Reynard 2Ki Ford-Cosworth - Speedway') return 0;\r\nelse if ($prop('CarId') === 'Reynard 2Ki Ford-Cosworth - Short Oval') return 0;\r\nelse if ($prop('CarId') === 'Reynard 2Ki Honda') return 0;\r\nelse if ($prop('CarId') === 'Reynard 2Ki Honda - Superspeedway') return 0;\r\nelse if ($prop('CarId') === 'Reynard 2Ki Honda - Speedway') return 0;\r\nelse if ($prop('CarId') === 'Reynard 2Ki Honda - Short Oval') return 0;\r\nelse if ($prop('CarId') === 'Reynard 2Ki Mercedes-Benz') return 0;\r\nelse if ($prop('CarId') === 'Reynard 2Ki Mercedes-Benz - Superspeedway') return 0;\r\nelse if ($prop('CarId') === 'Reynard 2Ki Mercedes-Benz - Speedway') return 0;\r\nelse if ($prop('CarId') === 'Reynard 2Ki Mercedes-Benz - Short Oval') return 0;\r\nelse if ($prop('CarId') === 'Reynard 2Ki Toyota') return 0;\r\nelse if ($prop('CarId') === 'Reynard 2Ki Toyota - Superspeedway') return 0;\r\nelse if ($prop('CarId') === 'Reynard 2Ki Toyota - Speedway') return 0;\r\nelse if ($prop('CarId') === 'Reynard 2Ki Toyota - Short Oval') return 0;\r\nelse if ($prop('CarId') === 'Reynard 95i Ford-Cosworth') return 0;\r\nelse if ($prop('CarId') === 'Reynard 95i Ford-Cosworth - Superspeedway') return 0;\r\nelse if ($prop('CarId') === 'Reynard 95i Ford-Cosworth - Speedway') return 0;\r\nelse if ($prop('CarId') === 'Reynard 95i Ford-Cosworth - Short Oval') return 0;\r\nelse if ($prop('CarId') === 'Reynard 95i Honda') return 0;\r\nelse if ($prop('CarId') === 'Reynard 95i Honda - Superspeedway') return 0;\r\nelse if ($prop('CarId') === 'Reynard 95i Honda - Speedway') return 0;\r\nelse if ($prop('CarId') === 'Reynard 95i Honda - Short Oval') return 0;\r\nelse if ($prop('CarId') === 'Reynard 95i Mercedes-Benz') return 0;\r\nelse if ($prop('CarId') === 'Reynard 95i Mercedes-Benz - Superspeedway') return 0;\r\nelse if ($prop('CarId') === 'Reynard 95i Mercedes-Benz - Speedway') return 0;\r\nelse if ($prop('CarId') === 'Reynard 95i Mercedes-Benz - Short Oval') return 0;\r\nelse if ($prop('CarId') === 'Reynard 98i Ford-Cosworth') return 0;\r\nelse if ($prop('CarId') === 'Reynard 98i Ford-Cosworth - Superspeedway') return 0;\r\nelse if ($prop('CarId') === 'Reynard 98i Ford-Cosworth - Speedway') return 0;\r\nelse if ($prop('CarId') === 'Reynard 98i Ford-Cosworth - Short Oval') return 0;\r\nelse if ($prop('CarId') === 'Reynard 98i Honda') return 0;\r\nelse if ($prop('CarId') === 'Reynard 98i Honda - Superspeedway') return 0;\r\nelse if ($prop('CarId') === 'Reynard 98i Honda - Speedway') return 0;\r\nelse if ($prop('CarId') === 'Reynard 98i Honda - Short Oval') return 0;\r\nelse if ($prop('CarId') === 'Reynard 98i Mercedes-Benz') return 0;\r\nelse if ($prop('CarId') === 'Reynard 98i Mercedes-Benz - Superspeedway') return 0;\r\nelse if ($prop('CarId') === 'Reynard 98i Mercedes-Benz - Speedway') return 0;\r\nelse if ($prop('CarId') === 'Reynard 98i Mercedes-Benz - Short Oval') return 0;\r\nelse if ($prop('CarId') === 'Reynard 98i Toyota') return 0;\r\nelse if ($prop('CarId') === 'Reynard 98i Toyota - Superspeedway') return 0;\r\nelse if ($prop('CarId') === 'Reynard 98i Toyota - Speedway') return 0;\r\nelse if ($prop('CarId') === 'Reynard 98i Toyota - Short Oval') return 0;\r\nelse if ($prop('CarId') === 'Roco 001') return 0;\r\nelse if ($prop('CarId') === 'Sauber Mercedes C9') return 0;\r\nelse if ($prop('CarId') === 'Sauber Mercedes C9 - Low Downforce') return 0;\r\nelse if ($prop('CarId') === 'Sigma P1') return 0;\r\nelse if ($prop('CarId') === 'Sigma P1 G5') return 0;\r\nelse if ($prop('CarId') === 'Sprint Race') return 0;\r\nelse if ($prop('CarId') === 'Super V8') return 0;\r\nelse if ($prop('CarId') === 'Superkart 250cc') return 0;\r\nelse if ($prop('CarId') === 'Swift 009c Ford-Cosworth') return 0;\r\nelse if ($prop('CarId') === 'Swift 009c Ford-Cosworth - Superspeedway') return 0;\r\nelse if ($prop('CarId') === 'Swift 009c Ford-Cosworth - Speedway') return 0;\r\nelse if ($prop('CarId') === 'Swift 009c Ford-Cosworth - Short Oval') return 0;\r\nelse if ($prop('CarId') === 'Team Penske') return 0;\r\nelse if ($prop('CarId') === 'Toyota Corolla Stock Car 2020') return 0;\r\nelse if ($prop('CarId') === 'Toyota Corolla Stock Car 2021') return 0;\r\nelse if ($prop('CarId') === 'Toyota Corolla Stock Car 2022') return 0;\r\nelse if ($prop('CarId') === 'Toyota Corolla Stock Car 2023') return 0;\r\nelse if ($prop('CarId') === 'Toyota GR Supra GT3') return 0;\r\nelse if ($prop('CarId') === 'Toyota GT-One (1998)') return 0;\r\nelse if ($prop('CarId') === 'Ultima GTR') return 0;\r\nelse if ($prop('CarId') === 'Ultima GTR Race') return 0;\r\nelse if ($prop('CarId') === 'Uno Classic B') return 0;\r\nelse if ($prop('CarId') === 'VRC Auriel 90 GTO') return 0;\r\nelse if ($prop('CarId') === 'VRC Chevrette') return 0;\r\nelse if ($prop('CarId') === 'Vulkan Truck') return 0;\r\nelse if ($prop('CarId') === 'Zakspeed Ford Capri Group 5') return 0;\r\nelse if ($prop('CarId') === 'VW Constellation') return 0;\r\nelse if ($prop('CarId') === 'VW Polo') return 0;\r\nelse if ($prop('CarId') === 'VW Polo GTS') return 0;\r\nelse if ($prop('CarId') === 'Volkswagen Polo RX') return 0;\r\nelse if ($prop('CarId') === 'VW Virtus') return 0;\r\nelse if ($prop('CarId') === 'VW Virtus GTS') return 0;\r\n\r\n\r\n\r\n\r\n\r\n} else if ($prop('DataCorePlugin.CurrentGame') === 'AssettoCorsaCompetizione') {\r\n// Assetto Corsa Competizione\r\n\r\nif ($prop('CarId') === 'amr_v12_vantage_gt3') return 0;\r\nelse if ($prop('CarId') === 'amr_v8_vantage_gt3') return 0;\r\nelse if ($prop('CarId') === 'audi_r8_lms') return 0;\r\nelse if ($prop('CarId') === 'audi_r8_lms_evo') return 0;\r\nelse if ($prop('CarId') === 'audi_r8_lms_evo_ii') return 0;\r\nelse if ($prop('CarId') === 'bentley_continental_gt3_2016') return 0;\r\nelse if ($prop('CarId') === 'bentley_continental_gt3_2018') return 0;\r\nelse if ($prop('CarId') === 'bmw_m4_gt3') return 0;\r\nelse if ($prop('CarId') === 'bmw_m6_gt3') return 0;\r\nelse if ($prop('CarId') === 'bmw_m2_cs_racing') return 0;\r\nelse if ($prop('CarId') === 'jaguar_g3') return 0;\r\nelse if ($prop('CarId') === 'ferrari_296_gt3') return 0;\r\nelse if ($prop('CarId') === 'ferrari_488_gt3') return 0;\r\nelse if ($prop('CarId') === 'ferrari_488_gt3_evo') return 0;\r\nelse if ($prop('CarId') === 'ferrari_488_challenge_evo') return 10;\r\nelse if ($prop('CarId') === 'honda_nsx_gt3') return 0;\r\nelse if ($prop('CarId') === 'honda_nsx_gt3_evo') return 0;\r\nelse if ($prop('CarId') === 'lamborghini_gallardo_rex') return 0;\r\nelse if ($prop('CarId') === 'lamborghini_huracan_gt3') return 0;\r\nelse if ($prop('CarId') === 'lamborghini_huracan_gt3_evo') return 0;\r\nelse if ($prop('CarId') === 'lamborghini_huracan_gt3_evo2') return 0;\r\nelse if ($prop('CarId') === 'lamborghini_huracan_st') return 0;\r\nelse if ($prop('CarId') === 'lamborghini_huracan_st_evo2') return 0;\r\nelse if ($prop('CarId') === 'lexus_rc_f_gt3') return 0;\r\nelse if ($prop('CarId') === 'mclaren_650s_gt3') return 0;\r\nelse if ($prop('CarId') === 'mclaren_720s_gt3') return 0;\r\nelse if ($prop('CarId') === 'mclaren_720s_gt3_evo') return 0;\r\nelse if ($prop('CarId') === 'mercedes_amg_gt3') return 0;\r\nelse if ($prop('CarId') === 'mercedes_amg_gt3_evo') return 0;\r\nelse if ($prop('CarId') === 'nissan_gt_r_gt3_2017') return 0;\r\nelse if ($prop('CarId') === 'nissan_gt_r_gt3_2018') return 0;\r\nelse if ($prop('CarId') === 'porsche_991_gt3_r') return 0;\r\nelse if ($prop('CarId') === 'porsche_991ii_gt3_r') return 0;\r\nelse if ($prop('CarId') === 'porsche_991ii_gt3_cup') return 0;\r\nelse if ($prop('CarId') === 'porsche_992_gt3_cup') return 0;\r\nelse if ($prop('CarId') === 'porsche_992_gt3_r') return 0;\r\nelse if ($prop('CarId') === 'alpine_a110_gt4') return 0;\r\nelse if ($prop('CarId') === 'amr_v8_vantage_gt4') return 0;\r\nelse if ($prop('CarId') === 'audi_r8_gt4') return 0;\r\nelse if ($prop('CarId') === 'bmw_m4_gt4') return 0;\r\nelse if ($prop('CarId') === 'chevrolet_camaro_gt4r') return 0;\r\nelse if ($prop('CarId') === 'ginetta_g55_gt4') return 0;\r\nelse if ($prop('CarId') === 'ktm_xbow_gt4') return 0;\r\nelse if ($prop('CarId') === 'maserati_mc_gt4') return 0;\r\nelse if ($prop('CarId') === 'mclaren_570s_gt4') return 0;\r\nelse if ($prop('CarId') === 'mercedes_amg_gt4') return 0;\r\nelse if ($prop('CarId') === 'porsche_718_cayman_gt4_mr') return 0;\r\n\r\n\r\n\r\n\r\n\r\n\r\n} else if ($prop('DataCorePlugin.CurrentGame') === 'AssettoCorsa') {\r\n// Assetto Corsa\r\n\r\n//  Abarth 500 Assetto Corse\r\nif ($prop('CarId') === 'ks_abarth500_assetto_corse') return 0;\r\n//  Abarth 500 EsseEsse\r\nelse if ($prop('CarId') === 'abarth500') return 0;\r\n//  Abarth 500 EsseEsse Step1\r\nelse if ($prop('CarId') === 'abarth500_s1') return 0;\r\n//  Abarth 595 SS\r\nelse if ($prop('CarId') === 'ks_abarth_595ss') return 0;\r\n//  Abarth 595 SS Step 1\r\nelse if ($prop('CarId') === 'ks_abarth_595ss_s1') return 0;\r\n//  Abarth 595 SS Step 2\r\nelse if ($prop('CarId') === 'ks_abarth_595ss_s2') return 0;\r\n//  ABflug S900 (JZA80)\r\nelse if ($prop('CarId') === 'gmp_abflug_s900') return 0;\r\n//  Acura NSX 1992\r\nelse if ($prop('CarId') === 'some1_acura_nsx_1992') return 0;\r\n//  Acura NSX 1994\r\nelse if ($prop('CarId') === 'some1_acura_nsx_1994') return 0;\r\n//  Acura NSX S1\r\nelse if ($prop('CarId') === 'some1_acura_nsx_1994_s1') return 0;\r\n//  Acura NSX Zanardi Edition\r\nelse if ($prop('CarId') === 'some1_acura_nsx_zanardi_1999') return 0;\r\n//  Alfa Romeo 155 TI V6\r\nelse if ($prop('CarId') === 'ks_alfa_romeo_155_v6') return 0;\r\n//  Alfa Romeo 4C\r\nelse if ($prop('CarId') === 'ks_alfa_romeo_4c') return 0;\r\n//  Alfa Romeo Giulia Quadrifoglio\r\nelse if ($prop('CarId') === 'ks_alfa_giulia_qv') return 0;\r\n//  Giulietta QV\r\nelse if ($prop('CarId') === 'alfa_romeo_giulietta_qv') return 0;\r\n//  Giulietta QV Launch Edition 2014\r\nelse if ($prop('CarId') === 'alfa_romeo_giulietta_qv_le') return 0;\r\n//  Alfa Romeo Giulia TZ\r\nelse if ($prop('CarId') === 'alfa_tz') return 0;\r\n//  Alfa Romeo Giulia TZ Stradale\r\nelse if ($prop('CarId') === 'alfa_tz_road') return 0;\r\n//  Alfa Romeo GTA\r\nelse if ($prop('CarId') === 'ks_alfa_romeo_gta') return 0;\r\n//  Alfa Romeo GTAM\r\nelse if ($prop('CarId') === 'alfa_romeo_gtam') return 0;\r\n//  Alfa Romeo Mito QV\r\nelse if ($prop('CarId') === 'ks_alfa_mito_qv') return 0;\r\n//  Alpha Romeo 33 Stradale\r\nelse if ($prop('CarId') === 'ks_alfa_33_stradale') return 0;\r\n//  Alpine A110 2017 Premiere Edition\r\nelse if ($prop('CarId') === 'l26_a110_2017') return 0;\r\n//  AMR EGT\r\nelse if ($prop('CarId') === 'urd_amr_egt_2019') return 0;\r\n//  Audi R18 e-tron quattro 2014\r\nelse if ($prop('CarId') === 'ks_audi_r18_etron_quattro') return 0;\r\n//  Audi R8 LMS\r\nelse if ($prop('CarId') === 'audi_r8_lms') return 0;\r\n//  Audi R8 LMS 2016\r\nelse if ($prop('CarId') === 'ks_audi_r8_lms_2016') return 0;\r\n//  Audi R8 LMS Ultra\r\nelse if ($prop('CarId') === 'ks_audi_r8_lms') return 0;\r\n//  Audi R8 V10 Plus\r\nelse if ($prop('CarId') === 'ks_audi_r8_plus') return 0;\r\n//  Audi S1\r\nelse if ($prop('CarId') === 'ks_audi_a1s1') return 0;\r\n//  Audi Sport quattro\r\nelse if ($prop('CarId') === 'ks_audi_sport_quattro') return 0;\r\n//  Audi Sport quattro S1 E2\r\nelse if ($prop('CarId') === 'ks_audi_sport_quattro_rally') return 0;\r\n//  Audi Sport quattro Step1\r\nelse if ($prop('CarId') === 'ks_audi_sport_quattro_s1') return 0;\r\n//  Audi TT Cup\r\nelse if ($prop('CarId') === 'ks_audi_tt_cup') return 0;\r\n//  Audi TT RS (VLN)\r\nelse if ($prop('CarId') === 'ks_audi_tt_vln') return 0;\r\n//  Austin Mini Cooper S 1000 Group 2\r\nelse if ($prop('CarId') === 'austin_mini_cooper_s_1000') return 0;\r\n//  Austin Mini Cooper S FIA App.K Historic Racing\r\nelse if ($prop('CarId') === 'austin_mini_cooper_s_appk') return 0;\r\n//  Auto Union Type C\r\nelse if ($prop('CarId') === 'auto_union_type_c') return 0;\r\n//  Bayro EGT\r\nelse if ($prop('CarId') === 'urd_bayro_egt_2018') return 0;\r\n//  BMW 1M\r\nelse if ($prop('CarId') === 'bmw_1m') return 0;\r\n//  BMW 1M Stage 3\r\nelse if ($prop('CarId') === 'bmw_1m_s3') return 0;\r\n//  BMW 320i STW-BTCC\r\nelse if ($prop('CarId') === 'pm3dm_bmw_320i_stw') return 0;\r\n//  BMW E30 BigTurbo\r\nelse if ($prop('CarId') === 'bmw_m3_e30_bigturbo') return 0;\r\n//  BMW E30 Boss\r\nelse if ($prop('CarId') === 'bmw_m3_e30_boss') return 0;\r\n//  BMW M235i Racing\r\nelse if ($prop('CarId') === 'ks_bmw_m235i_racing') return 0;\r\n//  BMW M3 E30\r\nelse if ($prop('CarId') === 'bmw_m3_e30') return 0;\r\n//  BMW M3 E30 Drift\r\nelse if ($prop('CarId') === 'bmw_m3_e30_drift') return 0;\r\n//  BMW M3 E30 Gr.A 92\r\nelse if ($prop('CarId') === 'bmw_m3_e30_dtm') return 0;\r\n//  BMW M3 E30 Group A\r\nelse if ($prop('CarId') === 'bmw_m3_e30_gra') return 0;\r\n//  BMW M3 E30 Step1\r\nelse if ($prop('CarId') === 'bmw_m3_e30_s1') return 0;\r\n//  BMW M3 E92\r\nelse if ($prop('CarId') === 'bmw_m3_e92') return 0;\r\n//  BMW M3 E92 drift\r\nelse if ($prop('CarId') === 'bmw_m3_e92_drift') return 0;\r\n//  BMW M3 E92 Step1\r\nelse if ($prop('CarId') === 'bmw_m3_e92_s1') return 0;\r\n//  BMW M3 GT2\r\nelse if ($prop('CarId') === 'bmw_m3_gt2') return 0;\r\n//  BMW M4\r\nelse if ($prop('CarId') === 'ks_bmw_m4') return 0;\r\n//  BMW M4 Akrapovic\r\nelse if ($prop('CarId') === 'ks_bmw_m4_akrapovic') return 0;\r\n//  BMW M4 Competition Ring Tool\r\nelse if ($prop('CarId') === 'jbw_bmw_m4c_ring_tool') return 0;\r\n//  BMW Z4 E89\r\nelse if ($prop('CarId') === 'bmw_z4') return 0;\r\n//  BMW Z4 E89 Drift\r\nelse if ($prop('CarId') === 'bmw_z4_drift') return 0;\r\n//  BMW Z4 E89 Step1\r\nelse if ($prop('CarId') === 'bmw_z4_s1') return 0;\r\n//  BMW Z4 GT3\r\nelse if ($prop('CarId') === 'bmw_z4_gt3') return 0;\r\n//  Calibra DTM\r\nelse if ($prop('CarId') === 'zs_calibra_dtm') return 0;\r\n//  Caterham 165 LHD\r\nelse if ($prop('CarId') === 'bo_caterham_165_lhd') return 0;\r\n//  Caterham 165 RHD\r\nelse if ($prop('CarId') === 'bo_caterham_165_rhd') return 0;\r\n//  Caterham 420R 2020\r\nelse if ($prop('CarId') === 'bo_caterham_420r') return 0;\r\n//  Caterham Academy\r\nelse if ($prop('CarId') === 'caterham_academy') return 0;\r\n//  Caterham Academy 2020\r\nelse if ($prop('CarId') === 'bo_caterham_academy') return 0;\r\n//  Caterham R300 2008\r\nelse if ($prop('CarId') === 'bo_caterham_r300') return 0;\r\n//  Caterham Super7 1700 Super Sprint Clamshell\r\nelse if ($prop('CarId') === 'bo_caterham_s7_1700_ss_clamshell') return 0;\r\n//  Caterham Super7 1700 Super Sprint LHD\r\nelse if ($prop('CarId') === 'bo_caterham_s7_1700_ss_lhd') return 0;\r\n//  Caterham Super7 1700 Super Sprint RHD\r\nelse if ($prop('CarId') === 'bo_caterham_s7_1700_ss_rhd') return 0;\r\n//  Chevrolet Corvette C4 ZR-1\r\nelse if ($prop('CarId') === 'some1_corvette_c4_zr1_1990') return 0;\r\n//  Chevrolet Corvette C4 ZR-1 Canyon Spec\r\nelse if ($prop('CarId') === 'some1_corvette_c4_zr1_1990_s1') return 0;\r\n//  Chevrolet Corvette C7 Stingray\r\nelse if ($prop('CarId') === 'ks_corvette_c7_stingray') return 0;\r\n//  Chevrolet Corvette C7R\r\nelse if ($prop('CarId') === 'ks_corvette_c7r') return 0;\r\n//  C-One Motorsport MR-S\r\nelse if ($prop('CarId') === 'ddm_toyota_mrs_c_one') return 0;\r\n//  Corvette C6R\r\nelse if ($prop('CarId') === 'corvette_c6r') return 0;\r\n//  Coyote Corvette DP\r\nelse if ($prop('CarId') === 'corvette_dp_c') return 0;\r\n//  Cupra Leon Competición\r\nelse if ($prop('CarId') === 'tmm_cupra_tcr_2020') return 0;\r\n//  D&O Honda Civic Pandem\r\nelse if ($prop('CarId') === 'do_honda_civic_eg6_spoon_pandem') return 0;\r\n//  Daihatsu Copen Street-Spec\r\nelse if ($prop('CarId') === 'ddm_daihatsu_copen_street') return 0;\r\n//  Dallara Corvette DP\r\nelse if ($prop('CarId') === 'corvette_dp_d') return 0;\r\n//  Dallara F312\r\nelse if ($prop('CarId') === 'dallara_f312') return 0;\r\n//  Dallara F317\r\nelse if ($prop('CarId') === 'dallara_f317') return 0;\r\n//  Dallara FX/17\r\nelse if ($prop('CarId') === 'dallara_fx17') return 0;\r\n//  Darche Cup 2021\r\nelse if ($prop('CarId') === 'urd_darche_cup_2021') return 0;\r\n//  Darche EGT 2020\r\nelse if ($prop('CarId') === 'urd_darche_egt_2020') return 0;\r\n//  Darche EGT 2021\r\nelse if ($prop('CarId') === 'urd_darche_egt_2021') return 0;\r\n//  Darche EGT 2021 Sprint\r\nelse if ($prop('CarId') === 'urd_darche_egt_2021_sprint') return 0;\r\n//  De Tomaso Pantera Group 4\r\nelse if ($prop('CarId') === 'pg_pantera_gr4') return 0;\r\n//  Delage 15S8\r\nelse if ($prop('CarId') === 'delage_15s8') return 0;\r\n//  Delage 2LCV (1923)\r\nelse if ($prop('CarId') === 'delage_2lcv') return 0;\r\n//  Detroit EGT\r\nelse if ($prop('CarId') === 'urd_detroit_egt_2018') return 0;\r\n//  Detroit EGT LM\r\nelse if ($prop('CarId') === 'urd_detroit_egt_2018_lm') return 0;\r\n//  DM Uno Turbo MK1\r\nelse if ($prop('CarId') === 'dm_uno_turbo_mk1') return 0;\r\n//  DM Uno Turbo MK2\r\nelse if ($prop('CarId') === 'dm_uno_turbo_mk2') return 0;\r\n//  Dodge Charger El Loquito\r\nelse if ($prop('CarId') === 'bk_dodge_charger_srt_hellcat_turbo') return 0;\r\n//  Dodge Charger R/T Scat Pack\r\nelse if ($prop('CarId') === 'bk_dodge_charger_srt_scatpack_21') return 0;\r\n//  Dodge Viper RT/10\r\nelse if ($prop('CarId') === 'a3dr_viper_rt10') return 0;\r\n//  Ferrari 250 GTO\r\nelse if ($prop('CarId') === 'ks_ferrari_250_gto') return 0;\r\n//  Ferrari 312/67\r\nelse if ($prop('CarId') === 'ks_ferrari_312_67') return 0;\r\n//  Ferrari 312T\r\nelse if ($prop('CarId') === 'ferrari_312t') return 0;\r\n//  Ferrari 330 P4\r\nelse if ($prop('CarId') === 'ks_ferrari_330_p4') return 0;\r\n//  Ferrari 365 GTB/4 Daytona Competizione\r\nelse if ($prop('CarId') === 'ferrari_daytona_competizione') return 0;\r\n//  Ferrari 458 GT2\r\nelse if ($prop('CarId') === 'ferrari_458_gt2') return 0;\r\n//  Ferrari 458 Italia\r\nelse if ($prop('CarId') === 'ferrari_458') return 0;\r\n//  Ferrari 458 Italia Stage 3\r\nelse if ($prop('CarId') === 'ferrari_458_s3') return 0;\r\n//  Ferrari 488 GT3\r\nelse if ($prop('CarId') === 'ks_ferrari_488_gt3') return 0;\r\n//  Ferrari 488 GTB\r\nelse if ($prop('CarId') === 'ks_ferrari_488_gtb') return 0;\r\n//  Ferrari 512 TR\r\nelse if ($prop('CarId') === 'a3dr_ferrari_512tr') return 0;\r\n//  Ferrari 512 TR Canyon Spec\r\nelse if ($prop('CarId') === 'a3dr_ferrari_512tr_s1') return 0;\r\n//  Ferrari 599XX EVO\r\nelse if ($prop('CarId') === 'ferrari_599xxevo') return 0;\r\n//  Ferrari 812 Superfast\r\nelse if ($prop('CarId') === 'ks_ferrari_812_superfast') return 0;\r\n//  Ferrari F1 Concept\r\nelse if ($prop('CarId') === 'vsf1_ferrari_concept') return 0;\r\n//  Ferrari F138\r\nelse if ($prop('CarId') === 'ks_ferrari_f138') return 0;\r\n//  Ferrari F2002\r\nelse if ($prop('CarId') === 'ferrari_f2002') return 0;\r\n//  Ferrari F2004\r\nelse if ($prop('CarId') === 'ks_ferrari_f2004') return 0;\r\n//  Ferrari F310B\r\nelse if ($prop('CarId') === 'vrc_1997_ferrari_f310b') return 0;\r\n//  Ferrari F40\r\nelse if ($prop('CarId') === 'ferrari_f40') return 0;\r\n//  Ferrari F40 Custom\r\nelse if ($prop('CarId') === 'slang_ferrari_f40') return 0;\r\n//  Ferrari F40 Stage 3\r\nelse if ($prop('CarId') === 'ferrari_f40_s3') return 0;\r\n//  Ferrari FXX K\r\nelse if ($prop('CarId') === 'ks_ferrari_fxx_k') return 0;\r\n//  Ferrari GTO\r\nelse if ($prop('CarId') === 'ks_ferrari_288_gto') return 0;\r\n//  Ferrari LaFerrari\r\nelse if ($prop('CarId') === 'ferrari_laferrari') return 0;\r\n//  Ferrari SF15-T\r\nelse if ($prop('CarId') === 'ks_ferrari_sf15t') return 0;\r\n//  Ferrari SF70H\r\nelse if ($prop('CarId') === 'ks_ferrari_sf70h') return 0;\r\n//  FIAT 805 405 (1923)\r\nelse if ($prop('CarId') === 'fiat_805') return 0;\r\n//  Ford Escort RS1600\r\nelse if ($prop('CarId') === 'ks_ford_escort_mk1') return 0;\r\n//  Ford GT40\r\nelse if ($prop('CarId') === 'ks_ford_gt40') return 0;\r\n//  Ford Mustang 2015\r\nelse if ($prop('CarId') === 'ks_ford_mustang_2015') return 0;\r\n//  Ford Mustang Boss 302\r\nelse if ($prop('CarId') === 'ford_mustang_boss_302') return 0;\r\n//  Ford Mustang Boss 302R\r\nelse if ($prop('CarId') === 'ford_mustang_boss_se') return 0;\r\n//  Ford Mustang Boss 429\r\nelse if ($prop('CarId') === 'ford_mustang_boss_429') return 0;\r\n//  Ford Mustang Boss 429R\r\nelse if ($prop('CarId') === 'ford_mustang_boss_429_se') return 0;\r\n//  Ford Mustang Mach 1\r\nelse if ($prop('CarId') === 'ford_mustang_mach1_70') return 0;\r\n//  Ford Mustang Mach 1 428\r\nelse if ($prop('CarId') === 'ford_mustang_mach1_70_428') return 0;\r\n//  Ford Mustang GT350\r\nelse if ($prop('CarId') === 'just_drag_mustang_shelby') return 0;\r\n//  Ford Shelby GT500 Drag Turbo\r\nelse if ($prop('CarId') === 'tko_gt500') return 0;\r\n//  Ford Shelby GT500 Stance\r\nelse if ($prop('CarId') === 'tko_gt500_stance') return 0;\r\n//  Ford Sierra RS500\r\nelse if ($prop('CarId') === 'ford_sierra_cosworth_rs500') return 0;\r\n//  Ford Sierra RS500 Drift\r\nelse if ($prop('CarId') === 'ford_sierra_cosworth_rs500_drift') return 0;\r\n//  Ford Sierra RS500 DTM 90s\r\nelse if ($prop('CarId') === 'ford_sierra_cosworth_rs500_dtm_90s') return 0;\r\n//  Ford Sierra RS500 grA Rally\r\nelse if ($prop('CarId') === 'ford_sierra_cosworth_rs500_rally') return 0;\r\n//  Ford Sierra RS500 Group A\r\nelse if ($prop('CarId') === 'ford_sierra_cosworth_rs500_gra') return 0;\r\n//  Ford Transit\r\nelse if ($prop('CarId') === 'ford_transit') return 0;\r\n//  Formula Agile\r\nelse if ($prop('CarId') === 'z_formula_agile') return 0;\r\n//  Formula Americas 2020\r\nelse if ($prop('CarId') === 'rss_formula_americas_2020') return 0;\r\n//  Formula Americas 2020 Oval\r\nelse if ($prop('CarId') === 'rss_formula_americas_2020_oval') return 0;\r\n//  Formula Argentina 2.0\r\nelse if ($prop('CarId') === 'formula_argentina_2_0') return 0;\r\n//  Formula Hybrid 2017\r\nelse if ($prop('CarId') === 'rss_formula_hybrid_2017') return 0;\r\n//  Formula Hybrid 2018\r\nelse if ($prop('CarId') === 'rss_formula_hybrid_2018') return 0;\r\n//  Formula Hybrid 2018 S1\r\nelse if ($prop('CarId') === 'rss_formula_hybrid_2018_s1') return 0;\r\n//  Formula Hybrid 2019\r\nelse if ($prop('CarId') === 'rss_formula_hybrid_2019') return 0;\r\n//  Formula Hybrid 2020\r\nelse if ($prop('CarId') === 'rss_formula_hybrid_2020') return 0;\r\n//  Formula Hybrid 2021\r\nelse if ($prop('CarId') === 'rss_formula_hybrid_2021') return 0;\r\n//  Formula Hybrid 2022\r\nelse if ($prop('CarId') === 'rss_formula_hybrid_2022') return 0;\r\n//  Formula Hybrid 2022 S\r\nelse if ($prop('CarId') === 'rss_formula_hybrid_2022_s') return 0;\r\n//  Formula Hybrid X 2022\r\nelse if ($prop('CarId') === 'rss_formula_hybrid_x') return 0;\r\n//  Formula Hybrid X 2022 EVO\r\nelse if ($prop('CarId') === 'rss_formula_hybrid_x_evo') return 0;\r\n//  Formula RSS 1979 V8\r\nelse if ($prop('CarId') === 'rss_formula_79') return 0;\r\n//  Formula RSS 1990 V12\r\nelse if ($prop('CarId') === 'rss_formula_1990') return 0;\r\n//  Formula RSS 2\r\nelse if ($prop('CarId') === 'rss_formula_rss_2_v8') return 0;\r\n//  Formula RSS 2 V6 2020\r\nelse if ($prop('CarId') === 'rss_formula_rss_2_v6_2020') return 0;\r\n//  Formula RSS 2000 V10\r\nelse if ($prop('CarId') === 'rss_formula_2000') return 0;\r\n//  Formula RSS 2013 V8\r\nelse if ($prop('CarId') === 'rss_formula_2013') return 0;\r\n//  Formula RSS 3 V6\r\nelse if ($prop('CarId') === 'rss_formula_rss_3_v6') return 10;\r\n//  Formula RSS Supreme\r\nelse if ($prop('CarId') === 'rss_formula_rss_supreme') return 0;\r\n//  Formula Vector\r\nelse if ($prop('CarId') === 'z_formula_vector') return 0;\r\n//  Ginetta G55 GT4 2017 LHD\r\nelse if ($prop('CarId') === 'ginetta_gt4_2017_lhd') return 0;\r\n//  Ginetta G55 GT4 2017 RHD\r\nelse if ($prop('CarId') === 'ginetta_gt4_2017_rhd') return 0;\r\n//  Ginetta G55 SuperCup 2017 LHD\r\nelse if ($prop('CarId') === 'ginetta_supercup2017_lhd') return 0;\r\n//  Ginetta G55 Supercup 2017 RHD\r\nelse if ($prop('CarId') === 'ginetta_supercup2017_rhd') return 0;\r\n//  GT Ferruccio 55 V12\r\nelse if ($prop('CarId') === 'rss_gt_ferruccio_55') return 0;\r\n//  GT Ferruccio 57 V12\r\nelse if ($prop('CarId') === 'rss_gt_ferruccio_57') return 0;\r\n//  GT Lanzo V12\r\nelse if ($prop('CarId') === 'rss_gt_lanzo_v12') return 0;\r\n//  GT Shadow V8\r\nelse if ($prop('CarId') === 'rss_gt_shadow_v8') return 0;\r\n//  GT Tornado V12\r\nelse if ($prop('CarId') === 'rss_gt_tornado_v12') return 0;\r\n//  GT Vortex V10\r\nelse if ($prop('CarId') === 'rss_gt_vortex_v10') return 0;\r\n//  GT-M Bayro 6 V8\r\nelse if ($prop('CarId') === 'rss_gtm_bayro_6') return 0;\r\n//  GT-M Lanzo V10\r\nelse if ($prop('CarId') === 'rss_gtm_lanzo_v10') return 0;\r\n//  GT-N Darche 96 F6\r\nelse if ($prop('CarId') === 'rss_gtn_darche_96') return 0;\r\n//  GT-N Ferruccio 36 V8\r\nelse if ($prop('CarId') === 'rss_gtn_ferruccio_36') return 0;\r\n//  Honda Acty HA3\r\nelse if ($prop('CarId') === 'honda_acty_ha3') return 0;\r\n//  Honda Civic EK Cup\r\nelse if ($prop('CarId') === 'amy_ek_cup') return 0;\r\n//  Honda Civic Type R (EK9) Jeezus Spec\r\nelse if ($prop('CarId') === 'rjzs_ek_jeezusspec') return 0;\r\n//  Honda Civic Type R (EK9) Turbo ver. 2\r\nelse if ($prop('CarId') === 'amy_honda_ek9_turbo') return 0;\r\n//  Honda Civic type R (FD2)\r\nelse if ($prop('CarId') === 'ddm_honda_civic_fd2') return 0;\r\n//  Honda HF2620 Racing Mower\r\nelse if ($prop('CarId') === 'honda_hf2620_racing') return 0;\r\n//  Honda Integra Type R (DC2) Turbo\r\nelse if ($prop('CarId') === 'amy_honda_dc2_turbo') return 0;\r\n//  Honda NSX NA1\r\nelse if ($prop('CarId') === 'some1_honda_nsx_1991') return 0;\r\n//  Honda NSX NA2 S1\r\nelse if ($prop('CarId') === 'some1_honda_nsx_1997_s1') return 0;\r\n//  Honda NSX Type S-Zero NA2\r\nelse if ($prop('CarId') === 'some1_honda_nsx_type_s_zero_1997') return 0;\r\n//  Honda NSX-R NA1 1992\r\nelse if ($prop('CarId') === 'some1_honda_nsx_r_1992') return 0;\r\n//  Honda NSX-R NA1 1994\r\nelse if ($prop('CarId') === 'some1_honda_nsx_r_1994') return 0;\r\n//  Honda S2000\r\nelse if ($prop('CarId') === 'ddm_honda_s2000_ap2') return 0;\r\n//  Honda S2000 (AP1)\r\nelse if ($prop('CarId') === 'ddm_honda_s2000_ap1') return 0;\r\n//  Honda S2000 (AP2 - Legendary)\r\nelse if ($prop('CarId') === 'srp_honda_s2000_legendary') return 0;\r\n//  Honda S2000 Turbo GT1 Amuse (AP1)\r\nelse if ($prop('CarId') === 'ltkaeri_honda_s2000_gt1_amuse') return 0;\r\n//  Honda S800\r\nelse if ($prop('CarId') === 'a3dr_honda_s800') return 0;\r\n//  Honda S800 RSC\r\nelse if ($prop('CarId') === 'a3dr_honda_s800_rsc') return 0;\r\n//  Hyperion 2020\r\nelse if ($prop('CarId') === 'rss_hyperion_2020') return 0;\r\n//  Jay Sadek's R34 GTR\r\nelse if ($prop('CarId') === 'nissan_gtr_jayssadek') return 0;\r\n//  Jeep Trackhawk\r\nelse if ($prop('CarId') === 'tko_stock_trackhawk') return 0;\r\n//  Jordan-Ford 191\r\nelse if ($prop('CarId') === 'vrc_1991_jordan_191') return 0;\r\n//  J's Racing S2000 Maou-Spec\r\nelse if ($prop('CarId') === 'ddm_js_s2000_maou') return 0;\r\n//  KRB Lotus/Tiga Esprit\r\nelse if ($prop('CarId') === 'krb_tiga_lotus') return 0;\r\n//  KTM X-Bow R\r\nelse if ($prop('CarId') === 'ktm_xbow_r') return 0;\r\n//  KTM X-BOW GT2\r\nelse if ($prop('CarId') === 'gue_ktm_xbow_gt2') return 0;\r\n//  Lamborghini Aventador SV\r\nelse if ($prop('CarId') === 'ks_lamborghini_aventador_sv') return 0;\r\n//  Lamborghini Countach\r\nelse if ($prop('CarId') === 'ks_lamborghini_countach') return 0;\r\n//  Lamborghini Countach S1\r\nelse if ($prop('CarId') === 'ks_lamborghini_countach_s1') return 0;\r\n//  Lamborghini Diablo SE30 Jota\r\nelse if ($prop('CarId') === 'a3dr_lambo_diablo_se30_jota') return 0;\r\n//  Lamborghini Diablo VT\r\nelse if ($prop('CarId') === 'a3dr_lambo_diablo_vt') return 0;\r\n//  Lamborghini Gallardo SL\r\nelse if ($prop('CarId') === 'ks_lamborghini_gallardo_sl') return 0;\r\n//  Lamborghini Gallardo SL Step3\r\nelse if ($prop('CarId') === 'ks_lamborghini_gallardo_sl_s3') return 0;\r\n//  Lamborghini Huracan Alex Choi\r\nelse if ($prop('CarId') === 'hugo_choi_lambo') return 0;\r\n//  Lamborghini Huracan GT3\r\nelse if ($prop('CarId') === 'ks_lamborghini_huracan_gt3') return 0;\r\n//  Lamborghini Huracan Performante\r\nelse if ($prop('CarId') === 'ks_lamborghini_huracan_performante') return 0;\r\n//  Lamborghini Huracan ST\r\nelse if ($prop('CarId') === 'ks_lamborghini_huracan_st') return 0;\r\n//  Lamborghini Miura P400 SV\r\nelse if ($prop('CarId') === 'ks_lamborghini_miura_sv') return 0;\r\n//  Lamborghini Miura P400 SV\r\nelse if ($prop('CarId') === 'lamborghini_miura_sv') return 0;\r\n//  Lamborghini Murciélago LP 640 (Veilside)\r\nelse if ($prop('CarId') === 'spear_lamborghini_lp640_veilside') return 0;\r\n//  Lamborghini Sesto Elemento\r\nelse if ($prop('CarId') === 'ks_lamborghini_sesto_elemento') return 0;\r\n//  Lancia Delta S4 Gr. B Hillclimb\r\nelse if ($prop('CarId') === 'rl_lancia_delta_s4_hillclimb') return 0;\r\n//  Lancia Fulvia 1.6 HF\r\nelse if ($prop('CarId') === 'lancia_fulvia_16_hf') return 0;\r\n//  Lancia Fulvia S1\r\nelse if ($prop('CarId') === 'lancia_fulvia_s1') return 0;\r\n//  Legends Ford 34 coupe\r\nelse if ($prop('CarId') === 'legends_ford_34_coupe') return 0;\r\n//  Lola T70 MkII Spyder\r\nelse if ($prop('CarId') === 'ag_lola_t70_rf2') return 0;\r\n//  Lola T70 MkII Spyder (Ford)\r\nelse if ($prop('CarId') === 'ag_lola_t70_rf2_ford') return 0;\r\n//  Lotus 2 Eleven\r\nelse if ($prop('CarId') === 'lotus_2_eleven') return 0;\r\n//  Lotus 2 Eleven GT4\r\nelse if ($prop('CarId') === 'lotus_2_eleven_gt4') return 0;\r\n//  Lotus 3-Eleven\r\nelse if ($prop('CarId') === 'ks_lotus_3_eleven') return 0;\r\n//  Lotus 72D\r\nelse if ($prop('CarId') === 'ks_lotus_72d') return 0;\r\n//  Lotus 98T\r\nelse if ($prop('CarId') === 'lotus_98t') return 0;\r\n//  Lotus Elise SC\r\nelse if ($prop('CarId') === 'lotus_elise_sc') return 0;\r\n//  Lotus Elise SC Step1\r\nelse if ($prop('CarId') === 'lotus_elise_sc_s1') return 0;\r\n//  Lotus Elise SC Step2\r\nelse if ($prop('CarId') === 'lotus_elise_sc_s2') return 0;\r\n//  Lotus Evora GTC\r\nelse if ($prop('CarId') === 'lotus_evora_gtc') return 0;\r\n//  Lotus Evora GTE\r\nelse if ($prop('CarId') === 'lotus_evora_gte') return 0;\r\n//  Lotus Evora GTE Carbon\r\nelse if ($prop('CarId') === 'lotus_evora_gte_carbon') return 0;\r\n//  Lotus Evora GX\r\nelse if ($prop('CarId') === 'lotus_evora_gx') return 0;\r\n//  Lotus Evora S\r\nelse if ($prop('CarId') === 'lotus_evora_s') return 0;\r\n//  Lotus Evora S Stage 2\r\nelse if ($prop('CarId') === 'lotus_evora_s_s2') return 0;\r\n//  Lotus Exige 240R\r\nelse if ($prop('CarId') === 'lotus_exige_240') return 0;\r\n//  Lotus Exige 240R Stage3\r\nelse if ($prop('CarId') === 'lotus_exige_240_s3') return 0;\r\n//  Lotus Exige S\r\nelse if ($prop('CarId') === 'lotus_exige_s') return 0;\r\n//  Lotus Exige S roadster\r\nelse if ($prop('CarId') === 'lotus_exige_s_roadster') return 0;\r\n//  Lotus Exige Scura\r\nelse if ($prop('CarId') === 'lotus_exige_scura') return 0;\r\n//  Lotus Exige V6 CUP\r\nelse if ($prop('CarId') === 'lotus_exige_v6_cup') return 0;\r\n//  Lotus Exos 125\r\nelse if ($prop('CarId') === 'lotus_exos_125') return 0;\r\n//  Lotus Exos 125 Stage 1\r\nelse if ($prop('CarId') === 'lotus_exos_125_s1') return 0;\r\n//  Lotus Type 25\r\nelse if ($prop('CarId') === 'ks_lotus_25') return 0;\r\n//  Lotus Type 49\r\nelse if ($prop('CarId') === 'lotus_49') return 0;\r\n//  MAD Formula Team MFTC3\r\nelse if ($prop('CarId') === 'madformulateam_mftc3') return 0;\r\n//  MAD Formula Team MFTC3 EVO\r\nelse if ($prop('CarId') === 'madformulateam_mftc3_evo') return 0;\r\n//  Maserati 250F 6C\r\nelse if ($prop('CarId') === 'ks_maserati_250f_6cyl') return 0;\r\n//  Maserati 250F T2 12C\r\nelse if ($prop('CarId') === 'ks_maserati_250f_12cyl') return 0;\r\n//  Maserati Alfieri\r\nelse if ($prop('CarId') === 'ks_maserati_alfieri') return 0;\r\n//  Maserati GranTurismo MC GT4\r\nelse if ($prop('CarId') === 'ks_maserati_gt_mc_gt4') return 0;\r\n//  Maserati Levante S\r\nelse if ($prop('CarId') === 'ks_maserati_levante') return 0;\r\n//  Maserati MC12 GT1\r\nelse if ($prop('CarId') === 'ks_maserati_mc12_gt1') return 0;\r\n//  Maserati Quattroporte GTS\r\nelse if ($prop('CarId') === 'ks_maserati_quattroporte') return 0;\r\n//  Maserati Tipo 61 Birdcage\r\nelse if ($prop('CarId') === 'birdcage') return 0;\r\n//  Mazda 787B\r\nelse if ($prop('CarId') === 'ks_mazda_787b') return 0;\r\n//  Mazda 787B\r\nelse if ($prop('CarId') === 'mazda_787b') return 0;\r\n//  Mazda ɛ̃fini RX-7 FD3S [SPEED FACTORY RGO]\r\nelse if ($prop('CarId') === 'wm_mazda_rx7_fd_rgo') return 0;\r\n//  Mazda Miata NA\r\nelse if ($prop('CarId') === 'ks_mazda_miata') return 0;\r\n//  Mazda MX5 Cup\r\nelse if ($prop('CarId') === 'ks_mazda_mx5_cup') return 0;\r\n//  Mazda MX5 ND\r\nelse if ($prop('CarId') === 'ks_mazda_mx5_nd') return 0;\r\n//  Mazda MX5 Toru Suetsugu\r\nelse if ($prop('CarId') === 'ai_mazda_mx5_toru') return 0;\r\n//  Mazda RX-7 Infini\r\nelse if ($prop('CarId') === 'ddm_mazda_rx7_infini_fc3s') return 0;\r\n//  Mazda RX-7 Spirit R\r\nelse if ($prop('CarId') === 'ks_mazda_rx7_spirit_r') return 0;\r\n//  Mazda RX-7 Tuned\r\nelse if ($prop('CarId') === 'ks_mazda_rx7_tuned') return 0;\r\n//  Mazyota Supriata\r\nelse if ($prop('CarId') === 'ato_mazyota_supriata') return 0;\r\n//  McLaren 570S\r\nelse if ($prop('CarId') === 'ks_mclaren_570s') return 0;\r\n//  McLaren 650S GT3\r\nelse if ($prop('CarId') === 'ks_mclaren_650_gt3') return 0;\r\n//  McLaren F1 GTR\r\nelse if ($prop('CarId') === 'ks_mclaren_f1_gtr') return 0;\r\n//  McLaren MP4-12C\r\nelse if ($prop('CarId') === 'mclaren_mp412c') return 0;\r\n//  McLaren MP4-12C GT3\r\nelse if ($prop('CarId') === 'mclaren_mp412c_gt3') return 0;\r\n//  McLaren MP4-20\r\nelse if ($prop('CarId') === 'vrc_2005_mclaren_mp420') return 0;\r\n//  McLaren P1\r\nelse if ($prop('CarId') === 'ks_mclaren_p1') return 0;\r\n//  McLaren P1 GTR\r\nelse if ($prop('CarId') === 'ks_mclaren_p1_gtr') return 0;\r\n//  McLaren-Mercedes MP4/13\r\nelse if ($prop('CarId') === 'vsf1_mclaren-mp413') return 0;\r\n//  Mercedes SLS AMG\r\nelse if ($prop('CarId') === 'mercedes_sls') return 0;\r\n//  Mercedes SLS AMG GT3\r\nelse if ($prop('CarId') === 'mercedes_sls_gt3') return 0;\r\n//  Mercedes-Benz 190E EVO II\r\nelse if ($prop('CarId') === 'ks_mercedes_190_evo2') return 0;\r\n//  Mercedes-Benz AMG GT3\r\nelse if ($prop('CarId') === 'ks_mercedes_amg_gt3') return 0;\r\n//  Mercedes-Benz C9 1989 LM\r\nelse if ($prop('CarId') === 'ks_mercedes_c9') return 0;\r\n//  Mini Cooper JCW Challenge (F56)\r\nelse if ($prop('CarId') === 'mini_jcw_challenge') return 0;\r\n//  Mitsubishi Lancer EVO VIII Time Attack\r\nelse if ($prop('CarId') === 'mitsubishi_lancer_evo_time_attack') return 0;\r\n//  Mitsubishi Lancer Evolution IV GSR\r\nelse if ($prop('CarId') === 'ddm_mitsubishi_evo_iv_gsr') return 0;\r\n//  Mitsubishi Lancer Evolution V Wangan Spec\r\nelse if ($prop('CarId') === 'srp_mitsubishi_evo_5_wangan') return 0;\r\n//  Mitsubishi Lancer Evolution VIII MR\r\nelse if ($prop('CarId') === 'p3_mitsubishi_evo8') return 0;\r\n//  Moyoda Hybrid 2021\r\nelse if ($prop('CarId') === 'urd_gr010') return 0;\r\n//  Mugen Civic type SS (EK9)\r\nelse if ($prop('CarId') === 'ddm_mugen_civic_ek9') return 0;\r\n//  Nissan 370z Nismo\r\nelse if ($prop('CarId') === 'ks_nissan_370z') return 0;\r\n//  Nissan GT-R GT3\r\nelse if ($prop('CarId') === 'ks_nissan_gtr_gt3') return 0;\r\n//  Nissan GT-R NISMO\r\nelse if ($prop('CarId') === 'ks_nissan_gtr') return 0;\r\n//  Nissan GT-R T-Spec\r\nelse if ($prop('CarId') === 'bk_nissan_gtr_21_tspec') return 0;\r\n//  Nissan Primera P11 BTCC\r\nelse if ($prop('CarId') === 'pm3dm_nissan_primera_btcc') return 0;\r\n//  Nissan Pulsar GTI-R\r\nelse if ($prop('CarId') === 'lj_nissan_pulsar_') return 0;\r\n//  Nissan Sileighty (RPS13)\r\nelse if ($prop('CarId') === 'simt_nissan_sil80_rps13') return 0;\r\n//  Nissan Silvia K's\r\nelse if ($prop('CarId') === 'ddm_nissan_silvia_s13') return 0;\r\n//  Nissan Silvia S14 Navan\r\nelse if ($prop('CarId') === 'kire_nissan_s14_navan') return 0;\r\n//  Nissan Silvia S15 [SPEED FACTORY RGO]\r\nelse if ($prop('CarId') === 'wm_nissan_s15') return 0;\r\n//  Nissan Silvia S15 Garage Mak\r\nelse if ($prop('CarId') === 'axis_s15_garagemak') return 0;\r\n//  Nissan Silvia spec-R Aero\r\nelse if ($prop('CarId') === 'ddm_nissan_silvia_s15') return 0;\r\n//  Nissan Skyline GTR R33 (S3 - Wangan)\r\nelse if ($prop('CarId') === 'srp_wangan_r33_ver1') return 0;\r\n//  Nissan Skyline GTR R34 V-Spec\r\nelse if ($prop('CarId') === 'ks_nissan_skyline_r34') return 0;\r\n//  Nissan Skyline GT-R R34 V-SPEC Performance\r\nelse if ($prop('CarId') === 'nissan_skyline_r34_v-specperformance') return 0;\r\n//  Nissan Skyline GT-R R34 Z-Tune\r\nelse if ($prop('CarId') === 'bksy_nissan_skyline_r34_z_tune') return 0;\r\n//  Nissan Skyline GT-R V•Spec II (R32)\r\nelse if ($prop('CarId') === 'ddm_nissan_skyline_bnr32') return 0;\r\n//  Nissan Skyline HR31 House-Spec\r\nelse if ($prop('CarId') === 'ddm_nissan_skyline_hr31_house') return 0;\r\n//  Oreca FLM09\r\nelse if ($prop('CarId') === 'oreca_flm09') return 0;\r\n//  P4/5 Competizione 2011\r\nelse if ($prop('CarId') === 'p4-5_2011') return 0;\r\n//  Pagani Huayra\r\nelse if ($prop('CarId') === 'pagani_huayra') return 0;\r\n//  Pagani Huayra BC\r\nelse if ($prop('CarId') === 'ks_pagani_huayra_bc') return 0;\r\n//  Pagani Zonda R\r\nelse if ($prop('CarId') === 'pagani_zonda_r') return 0;\r\n//  Pessio Garage RD1 Porknose\r\nelse if ($prop('CarId') === 'pessio_garage_rd1') return 0;\r\n//  Peugeot 106 Rallye S2\r\nelse if ($prop('CarId') === 'dj_peugeot_106_rallye_s2_1996') return 0;\r\n//  Peugeot 106 Rallye S2 Tuned\r\nelse if ($prop('CarId') === 'dj_peugeot_106_rallye_s2_1996_tuned') return 0;\r\n//  Peugeot 504\r\nelse if ($prop('CarId') === 'peugeot_504') return 0;\r\n//  Peugeot 504 TN Sport\r\nelse if ($prop('CarId') === 'peugeot_504_tn') return 0;\r\n//  Porsche 718 Boxster S\r\nelse if ($prop('CarId') === 'ks_porsche_718_boxster_s') return 0;\r\n//  Porsche 718 Boxster S PDK\r\nelse if ($prop('CarId') === 'ks_porsche_718_boxster_s_pdk') return 0;\r\n//  Porsche 718 Cayman S\r\nelse if ($prop('CarId') === 'ks_porsche_718_cayman_s') return 0;\r\n//  Porsche 718 Spyder RS\r\nelse if ($prop('CarId') === 'ks_porsche_718_spyder_rs') return 0;\r\n//  Porsche 908 Lang Heck\r\nelse if ($prop('CarId') === 'ks_porsche_908_lh') return 0;\r\n//  Porsche 911 (993) Carrera\r\nelse if ($prop('CarId') === 'a3dr_porsche_993_c2') return 0;\r\n//  Porsche 911 (993) Carrera 4\r\nelse if ($prop('CarId') === 'a3dr_porsche_993_c4') return 0;\r\n//  Porsche 911 (993) Turbo\r\nelse if ($prop('CarId') === 'a3dr_porsche_993_turbo') return 0;\r\n//  Porsche 911 (993) Turbo Canyon Spec\r\nelse if ($prop('CarId') === 'a3dr_porsche_993_turbo_s2') return 0;\r\n//  Porsche 911 3.0 RSR\r\nelse if ($prop('CarId') === 'ks_porsche_911_carrera_rsr') return 0;\r\n//  Porsche 911 3.8 by Singer\r\nelse if ($prop('CarId') === 'bo_singer_38') return 0;\r\n//  Porsche 911 4.0 by Singer\r\nelse if ($prop('CarId') === 'bo_singer') return 0;\r\n//  Porsche 911 991.2 Carrera S\r\nelse if ($prop('CarId') === 'ks_porsche_991_carrera_s') return 0;\r\n//  Porsche 911 AWD by Singer\r\nelse if ($prop('CarId') === 'bo_singer_awd') return 0;\r\n//  Porsche 911 GT America\r\nelse if ($prop('CarId') === 'ier_porsche_911_gta') return 0;\r\n//  Porsche 911 GT1\r\nelse if ($prop('CarId') === 'ks_porsche_911_gt1') return 0;\r\n//  Porsche 911 GT3 Cup 2017\r\nelse if ($prop('CarId') === 'ks_porsche_911_gt3_cup_2017') return 0;\r\n//  Porsche 911 GT3 R 2016\r\nelse if ($prop('CarId') === 'ks_porsche_911_gt3_r_2016') return 0;\r\n//  Porsche 911 GT3 RS\r\nelse if ($prop('CarId') === 'ks_porsche_911_gt3_rs') return 0;\r\n//  Porsche 911 R\r\nelse if ($prop('CarId') === 'ks_porsche_911_r') return 0;\r\n//  Porsche 911 RSR 2017\r\nelse if ($prop('CarId') === 'ks_porsche_911_rsr_2017') return 0;\r\n//  Porsche 911 Turbo S\r\nelse if ($prop('CarId') === 'ks_porsche_991_turbo_s') return 0;\r\n//  Porsche 912 R\r\nelse if ($prop('CarId') === 'oneweek_porsche_912_r') return 0;\r\n//  Porsche 912 Safari\r\nelse if ($prop('CarId') === 'oneweek_porsche_912_s1') return 0;\r\n//  Porsche 917 K\r\nelse if ($prop('CarId') === 'ks_porsche_917_k') return 0;\r\n//  Porsche 917/30\r\nelse if ($prop('CarId') === 'ks_porsche_917_30') return 0;\r\n//  Porsche 918 Spyder\r\nelse if ($prop('CarId') === 'ks_porsche_918_spyder') return 0;\r\n//  Porsche 919 Hybrid 2015\r\nelse if ($prop('CarId') === 'ks_porsche_919_hybrid_2015') return 0;\r\n//  Porsche 919 Hybrid 2016 LeMans\r\nelse if ($prop('CarId') === 'ks_porsche_919_hybrid_2016') return 0;\r\n//  Porsche 935/78 (\"Moby Dick\")\r\nelse if ($prop('CarId') === 'ks_porsche_935_78_moby_dick') return 0;\r\n//  Porsche 962c long tail\r\nelse if ($prop('CarId') === 'ks_porsche_962c_longtail') return 0;\r\n//  Porsche 962c short tail\r\nelse if ($prop('CarId') === 'ks_porsche_962c_shorttail') return 0;\r\n//  Porsche Cayenne Turbo S\r\nelse if ($prop('CarId') === 'ks_porsche_cayenne') return 0;\r\n//  Porsche Cayman GT4\r\nelse if ($prop('CarId') === 'ks_porsche_cayman_gt4_std') return 0;\r\n//  Porsche Cayman GT4 Clubsport\r\nelse if ($prop('CarId') === 'ks_porsche_cayman_gt4_clubsport') return 0;\r\n//  Porsche Macan Turbo\r\nelse if ($prop('CarId') === 'ks_porsche_macan') return 0;\r\n//  Porsche Panamera Turbo\r\nelse if ($prop('CarId') === 'ks_porsche_panamera') return 0;\r\n//  Praga R1\r\nelse if ($prop('CarId') === 'ks_praga_r1') return 0;\r\n//  RedBull X2010\r\nelse if ($prop('CarId') === 'urd_redbull_x2010') return 0;\r\n//  RedBull X2010 S1\r\nelse if ($prop('CarId') === 'urd_redbull_x2010_s1') return 0;\r\n//  Reflex V12R\r\nelse if ($prop('CarId') === 'z_reflex_v12r') return 0;\r\n//  Renault R25\r\nelse if ($prop('CarId') === 'vrc_2005_renault_r25') return 0;\r\n//  RUF CTR Yellowbird\r\nelse if ($prop('CarId') === 'ruf_yellowbird') return 0;\r\n//  RUF CTR-1 Yellowbird\r\nelse if ($prop('CarId') === 'arch_ruf_ctr_1987') return 0;\r\n//  RUF RT12 R\r\nelse if ($prop('CarId') === 'ks_ruf_rt12r') return 0;\r\n//  RUF RT12 R AWD\r\nelse if ($prop('CarId') === 'ks_ruf_rt12r_awd') return 0;\r\n//  Russell-Alexis Mk. 14 Formula Ford\r\nelse if ($prop('CarId') === 'russell_alexis_mk14') return 0;\r\n//  SCG 003C\r\nelse if ($prop('CarId') === 'ks_glickenhaus_scg003') return 0;\r\n//  Seat Leon EuroCup\r\nelse if ($prop('CarId') === 'seat_leon_eurocup') return 0;\r\n//  Seat Leon TCR DSG\r\nelse if ($prop('CarId') === 'seat_leon_tcr') return 0;\r\n//  SheepeyRace Lamborghini Huracan Stage 3+\r\nelse if ($prop('CarId') === 'lamborghini_huracan_sheepey3') return 0;\r\n//  Shelby Cobra 427\r\nelse if ($prop('CarId') === 'shelby_cobra') return 0;\r\n//  Shelby Cobra 427 Competition\r\nelse if ($prop('CarId') === 'shelby_cobra_competition') return 0;\r\n//  Shelby Cobra 427 Replica Stage 1\r\nelse if ($prop('CarId') === 'shelby_cobra_s1') return 0;\r\n//  Shelby Cobra 427 S/C\r\nelse if ($prop('CarId') === 'shelby_cobra_427sc') return 0;\r\n//  Skip Barber Formula 2000 Regional\r\nelse if ($prop('CarId') === 'dj_skipbarber_f2000') return 0;\r\n//  Skoda 130 RS\r\nelse if ($prop('CarId') === 'tmm_skoda_130rs') return 0;\r\n//  Subaru BRZ 2021 STi\r\nelse if ($prop('CarId') === 'kl_subaru_brz_2021_rhd_sti') return 0;\r\n//  Subaru Impreza 22B STi-Version\r\nelse if ($prop('CarId') === 'ddm_subaru_22b') return 0;\r\n//  Subaru Impreza Coupe WRX typeR STi Version VI (GC8)\r\nelse if ($prop('CarId') === 'gmp_gc8_typer') return 0;\r\n//  Subaru Impreza WRX (GD) Tuned\r\nelse if ($prop('CarId') === 'ag_subaru_impreza_wrx_tuned') return 0;\r\n//  Subaru Impreza WRX STI Prodrive Style\r\nelse if ($prop('CarId') === 'tbb_subaru_wrx_sti') return 0;\r\n//  Sunbeam Grand Prix 1923\r\nelse if ($prop('CarId') === 'sunbeam_2l') return 0;\r\n//  Supercar (V8) Ford Falcon FGX\r\nelse if ($prop('CarId') === 'supercars_ford') return 0;\r\n//  Supercar (V8) Ford Mustang S550\r\nelse if ($prop('CarId') === 'supercars_ford_mustang') return 0;\r\n//  Supercar (V8) Holden Commodore VF\r\nelse if ($prop('CarId') === 'supercars_holden') return 0;\r\n//  Supercar (V8) Holden Commodore ZB\r\nelse if ($prop('CarId') === 'supercars_holden_zb') return 0;\r\n//  Supercar (V8) Nissan Altima L33\r\nelse if ($prop('CarId') === 'supercars_nissan') return 0;\r\n//  Supra A90 Kahn\r\nelse if ($prop('CarId') === 'supra_a90_kahn') return 0;\r\n//  Suzuki Cappuccino (EA21R)\r\nelse if ($prop('CarId') === 'suzuki_cappuccino_roof') return 0;\r\n//  Suzuki Cappuccino (EA21R) convertible\r\nelse if ($prop('CarId') === 'suzuki_cappuccino') return 0;\r\n//  T5 Audi 2018\r\nelse if ($prop('CarId') === 'urd_t5_aura_2018') return 0;\r\n//  T5 BMW 2018\r\nelse if ($prop('CarId') === 'urd_t5_bayro_2018') return 0;\r\n//  T5 Mercedes 2018\r\nelse if ($prop('CarId') === 'urd_t5_maures_2018') return 0;\r\n//  Tasken Nissan Skyline ER34 GT-T\r\nelse if ($prop('CarId') === 'tasken_nissan_er34_gtt') return 0;\r\n//  Tatuus FA01\r\nelse if ($prop('CarId') === 'tatuusfa1') return 0;\r\n//  Tinko Trackhawk\r\nelse if ($prop('CarId') === 'tko_trackhawk') return 0;\r\n//  Toyota AE86\r\nelse if ($prop('CarId') === 'ks_toyota_ae86') return 0;\r\n//  Toyota AE86 Drift\r\nelse if ($prop('CarId') === 'ks_toyota_ae86_drift') return 0;\r\n//  Toyota AE86 Trueno\r\nelse if ($prop('CarId') === 'simt_toyota_ae86_trueno') return 0;\r\n//  Toyota AE86 Tuned\r\nelse if ($prop('CarId') === 'ks_toyota_ae86_tuned') return 0;\r\n//  Toyota Celica ST185 4WD Turbo\r\nelse if ($prop('CarId') === 'ks_toyota_celica_st185') return 0;\r\n//  Toyota Corolla Levin 3door 1600GT APEX (AE86)\r\nelse if ($prop('CarId') === 'ddm_toyota_corolla_levin_ae86') return 0;\r\n//  Toyota GR86 2021 TRUST\r\nelse if ($prop('CarId') === 'kl_gr_86_2021_rhd_trust') return 0;\r\n//  Toyota GT86\r\nelse if ($prop('CarId') === 'ks_toyota_gt86') return 0;\r\n//  Toyota MR2 GT-S\r\nelse if ($prop('CarId') === 'ddm_toyota_mr2_sw20') return 0;\r\n//  Toyota MR2 Shutoko•Spec\r\nelse if ($prop('CarId') === 'ddm_toyota_mr2_sw20_shuto') return 0;\r\n//  Toyota MR-S Haru•Spec\r\nelse if ($prop('CarId') === 'ddm_toyota_mrs_haru') return 0;\r\n//  Toyota Sera\r\nelse if ($prop('CarId') === 'a3dr_toyota_sera') return 0;\r\n//  Toyota Sera GT\r\nelse if ($prop('CarId') === 'a3dr_toyota_sera_gt') return 0;\r\n//  Toyota Sera TRD\r\nelse if ($prop('CarId') === 'a3dr_toyota_sera_trd') return 0;\r\n//  Toyota Sprinter Trueno GT-Apex Kouki Hatchback\r\nelse if ($prop('CarId') === 'tw_toyota_ae86_gtapex_kouki_hatchback') return 0;\r\n//  Toyota Supra 3.0GT Turbo A\r\nelse if ($prop('CarId') === 'ddm_toyota_supra_ma70') return 0;\r\n//  Toyota Supra MKIV\r\nelse if ($prop('CarId') === 'ks_toyota_supra_mkiv') return 0;\r\n//  Toyota Supra MKIV Drift\r\nelse if ($prop('CarId') === 'ks_toyota_supra_mkiv_drift') return 0;\r\n//  Toyota Supra MKIV Time Attack\r\nelse if ($prop('CarId') === 'ks_toyota_supra_mkiv_tuned') return 0;\r\n//  Toyota Supra OG Schaefchen | Hugo\r\nelse if ($prop('CarId') === 'hugo_og_supra') return 0;\r\n//  Toyota Supra RZ\r\nelse if ($prop('CarId') === 'ddm_toyota_supra_rz_jza80_1998') return 0;\r\n//  Toyota TS040 Hybrid 2014\r\nelse if ($prop('CarId') === 'ks_toyota_ts040') return 0;\r\n//  UCM 2016 FSAE\r\nelse if ($prop('CarId') === 'ucm_2016') return 0;\r\n//  Veloce GTS-8\r\nelse if ($prop('CarId') === 'a3dr_veloce_gts') return 0;\r\n//  VISION 1789\r\nelse if ($prop('CarId') === 'vision_1789') return 0;\r\n//  Volvo S40 BTCC\r\nelse if ($prop('CarId') === 'pm3dm_volvo_s40_btcc') return 0;\r\n//  VRC Formula Alpha 2007 - Ferrenzo F07\r\nelse if ($prop('CarId') === 'vrc_formula_alpha_2007_f07') return 0;\r\n//  VRC Formula Alpha 2007 - McLenna MC22\r\nelse if ($prop('CarId') === 'vrc_formula_alpha_2007_mc22') return 0;\r\n//  Wide Audi RS3\r\nelse if ($prop('CarId') === 'tko_wide_rs3') return 0;\r\n//  Williams - BMW FW24\r\nelse if ($prop('CarId') === 'msf_williams_fw24') return 0;\r\n//  Williams - BMW FW26\r\nelse if ($prop('CarId') === 'msf_williams_fw26') return 0;\r\n//  Williams FW31\r\nelse if ($prop('CarId') === 'vrc_2009_williams_fw31') return 0;\r\n//  Williams FW31 S1\r\nelse if ($prop('CarId') === 'vrc_2009_williams_fw31_s1') return 0;\r\n//  Williams FW37\r\nelse if ($prop('CarId') === 'vrc_2015_williams_fw37') return 0;\r\n//  Zhonghua Zidantou CHB6401TA Wangan Spec\r\nelse if ($prop('CarId') === 'snp_zhonghua_zidantou_wangan_spec') return 0;\r\n}\r\n"
+          },
+          "FrontRightFormula": {
+            "Expression": ""
+          },
+          "RearLeftFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "game = $prop('DataCorePlugin.CurrentGame')\r\ncar = $prop('CarId')\r\n// return settings[game][car]\r\nreturn car;",
+            "PreExpression": "const settings_file = readtextfile('./JavascriptExtensions/SlipGrip.json')\r\nconst settings = JSON.parse(settings_file);\r\nvar game;\r\nvar car;\r\n"
+          },
+          "RearRightFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": ""
+          },
+          "ForceFrequencies": false,
+          "FrontLeftFrequencyFormula": {
+            "Expression": ""
+          },
+          "FrontRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearLeftFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "SupportWarnInfo": null,
+          "IsMuted": false,
+          "ContainerId": "8077f019-460f-4fa4-8ccc-14ed115e3d84",
+          "ContainerType": "CustomEffectContainer",
+          "Description": "Per Car Threshold",
+          "AggregationMode": "Front/Rear",
+          "Gain": 0.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 1,
+            "UseHighFrequency": false,
+            "HighFrequency": 50,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": true,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "IsAudio": true,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "SlipThreshold",
+            "ExportProperty": true,
+            "DisableOutput": true,
+            "OutputType": "ToneOutput"
+          }
+        },
+        {
+          "AutocalibrationMax": 95.0,
+          "Filter": {
+            "GammaValue": 1.0,
+            "InputGain": 100.0,
+            "MinimumForce": 0,
+            "Threshold": 0,
+            "FilterType": "GammaFilter"
+          },
+          "FrontLeftFormula": {
+            "Expression": "[ShakeITBSV3Plugin.Export.rawproxyS.FrontLeft]-[ShakeITBSV3Plugin.Export.SlipThreshold.All]"
+          },
+          "FrontRightFormula": {
+            "Expression": "[ShakeITBSV3Plugin.Export.rawproxyS.FrontRight]-[ShakeITBSV3Plugin.Export.SlipThreshold.All]"
+          },
+          "RearLeftFormula": {
+            "Expression": "[ShakeITBSV3Plugin.Export.rawproxyS.RearLeft]-[ShakeITBSV3Plugin.Export.SlipThreshold.All]"
+          },
+          "RearRightFormula": {
+            "Expression": "[ShakeITBSV3Plugin.Export.rawproxyS.RearRight]-[ShakeITBSV3Plugin.Export.SlipThreshold.All]"
+          },
+          "ForceFrequencies": false,
+          "FrontLeftFrequencyFormula": {
+            "Expression": ""
+          },
+          "FrontRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearLeftFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "SupportWarnInfo": null,
+          "IsMuted": false,
+          "ContainerId": "c88cdf18-cb77-4646-b90b-5c31fe5e21e8",
+          "ContainerType": "CustomEffectContainer",
+          "Description": "ProxyS threshold applied",
+          "AggregationMode": "Corners",
+          "Gain": 0.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 1,
+            "UseHighFrequency": false,
+            "HighFrequency": 50,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": true,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "IsAudio": true,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "ProxyS",
+            "ExportProperty": true,
+            "DisableOutput": true,
+            "OutputType": "ToneOutput"
+          }
+        },
+        {
+          "AutocalibrationMax": 95.0,
+          "Filter": {
+            "GammaValue": 0.99999999999999933,
+            "InputGain": 100.0,
+            "MinimumForce": 0,
+            "Threshold": 0,
+            "FilterType": "GammaFilter"
+          },
+          "FrontLeftFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "// front left load\r\nLoad = proxyL($prop('AccelerationSway'), $prop('AccelerationSurge'));\r\nslip = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontLeft');\r\n// return Sgain * s / $prop('ShakeITBSV3Plugin.Export.Grip.All');\r\n// return $prop('ShakeITBSV3Plugin.Export.Grip.All')\r\n// return 100 * SG(s, $prop('ShakeITBSV3Plugin.Export.Grip.All'));\r\n\r\nif ($prop('ShakeITBSV3Plugin.Export.proxyShift.All')==0){\r\n\treturn Load * SG(slip, $prop('ShakeITBSV3Plugin.Export.Grip.All'));\r\n}else{\r\n\treturn (Load * SG(slip, $prop('ShakeITBSV3Plugin.Export.Grip.All')))-$prop('ShakeITBSV3Plugin.Export.proxyShift.All');\r\n}",
+            "PreExpression": "Sgain = 20;\r\nfunction SG(s, g) { return Math.min(1, Sgain * s / g) };\r\nfunction AbsAcc(a) { return 100 * Math.abs(.05 * a)**0.3 }\r\n// increasing left load when turning right\r\n// if both sway and surge are 0, then no load shift and each corner gets 25%\r\nfunction proxyL(sway, surge) {\r\n\tvar d = (0 > sway) ? 4 : -4;\r\n\tvar L = 25 + AbsAcc(sway) / d  // 0-50% left-right distribution\r\n\td = (0 < surge) ? 100 : -100\r\n\treturn L * (1 + AbsAcc(surge) / d); // 0-100% fore-aft distribution\r\n}\r\nvar slip, Load;"
+          },
+          "FrontRightFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "Load = proxyL($prop('AccelerationSway'), $prop('AccelerationSurge'));\r\nslip = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontRight');\r\n\r\n\r\nif ($prop('ShakeITBSV3Plugin.Export.proxyShift.All')==0){\r\n\treturn Load * SG(slip, $prop('ShakeITBSV3Plugin.Export.Grip.All'));\r\n}else{\r\n\treturn (Load * SG(slip, $prop('ShakeITBSV3Plugin.Export.Grip.All')))-$prop('ShakeITBSV3Plugin.Export.proxyShift.All');\r\n}\r\n\r\n",
+            "PreExpression": "Sgain = 20;\r\nfunction SG(s, g) { return Math.min(1, Sgain * s / g) };\r\nfunction AbsAcc(a) { return 100 * Math.abs(.05 * a)**0.3 }\r\n// decreasing right load when turning right\r\n// if both sway and surge are 0, then no load shift and each corner gets 25%\r\nfunction proxyL(sway, surge) {\r\n    var d = (0 < sway) ? 4 : -4;\r\n    var L = 25 + AbsAcc(sway) / d  // 0-50% left-right distribution\r\n    d = (0 < surge) ? 100 : -100\r\n    return L * (1 + AbsAcc(surge) / d); // 0-100% fore-aft distribution\r\n}\r\nvar slip, Load;"
+          },
+          "RearLeftFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "Load = proxyL($prop('AccelerationSway'), $prop('AccelerationSurge'));\r\nslip = $prop('ShakeITBSV3Plugin.Export.proxyS.RearLeft');\r\n\r\n\r\n\r\nif ($prop('ShakeITBSV3Plugin.Export.proxyShift.All')==0){\r\n\treturn Load * SG(slip, $prop('ShakeITBSV3Plugin.Export.Grip.All'));\r\n}else{\r\n\treturn (Load * SG(slip, $prop('ShakeITBSV3Plugin.Export.Grip.All')))-$prop('ShakeITBSV3Plugin.Export.proxyShift.All');\r\n}",
+            "PreExpression": "Sgain = 20;\t\t// force SC() to act as a gate\r\nfunction SG(s, g) { return Math.min(1, Sgain * s / g) };\r\nfunction AbsAcc(a) { return 100 * Math.abs(.05 * a)**0.3 }\r\nfunction proxyL(sway, surge) {\r\n    var d = (0 > sway) ? 4 : -4;\r\n    var L = 25 + AbsAcc(sway) / d  // 0-50% left-right distribution\r\n    d = (0 > surge) ? 100 : -100\r\n    return L * (1 + AbsAcc(surge) / d); // 0-100% fore-aft distribution\r\n} \r\nvar slip, Load;"
+          },
+          "RearRightFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "Load = proxyL($prop('AccelerationSway'), $prop('AccelerationSurge'));\r\nslip = $prop('ShakeITBSV3Plugin.Export.proxyS.RearRight');\r\n\r\n\r\nif ($prop('ShakeITBSV3Plugin.Export.proxyShift.All')==0){\r\n\treturn Load * SG(slip, $prop('ShakeITBSV3Plugin.Export.Grip.All'));\r\n}else{\r\n\treturn (Load * SG(slip, $prop('ShakeITBSV3Plugin.Export.Grip.All')))-$prop('ShakeITBSV3Plugin.Export.proxyShift.All');\r\n}",
+            "PreExpression": "Sgain = 20;\t\t// force SG() to act as a gate\r\nfunction SG(s, g) { return Math.min(1, Sgain * s / g) };\r\nfunction proxyL(sway, surge) {\r\n    var d = (0 < sway) ? 4 : -4;\r\n    var L = 25 + AbsAcc(sway) / d  // 0-50% left-right distribution\r\n    d = (0 > surge) ? 100 : -100\r\n    return L * (1 + AbsAcc(surge) / d); // 0-100% fore-aft distribution\r\n} \r\nvar slip, Load;\r\nfunction AbsAcc(a) { return 100 * Math.abs(.05 * a)**0.3 }"
+          },
+          "ForceFrequencies": true,
+          "FrontLeftFrequencyFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "return low + f * $prop('ShakeITBSV3Plugin.Export.noisy.FrontLeft')",
+            "PreExpression": "const low = 60;\r\nconst high = 180;\r\nconst f = .01 * (high - low);"
+          },
+          "FrontRightFrequencyFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "return low + f * $prop('ShakeITBSV3Plugin.Export.noisy.FrontRight')",
+            "PreExpression": "const low = 60;\r\nconst high = 180;\r\nconst f = .01 * (high - low);"
+          },
+          "RearLeftFrequencyFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "return low + f * $prop('ShakeITBSV3Plugin.Export.noisy.RearLeft')",
+            "PreExpression": "const low = 60;\r\nconst high = 180;\r\nconst f = .01 * (high - low);"
+          },
+          "RearRightFrequencyFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "return low + f * $prop('ShakeITBSV3Plugin.Export.noisy.RearRight')",
+            "PreExpression": "const low = 60;\r\nconst high = 180;\r\nconst f = .01 * (high - low);"
+          },
+          "SupportWarnInfo": null,
+          "IsMuted": false,
+          "ContainerId": "b6a37174-466c-4181-877c-81f5a83e39e9",
+          "ContainerType": "CustomEffectContainer",
+          "Description": "output: loaded gated wheel slips",
+          "AggregationMode": "Corners",
+          "Gain": 100.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 1,
+            "UseHighFrequency": false,
+            "HighFrequency": 30,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": true,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "IsAudio": true,
+            "AssignToChannelGroup": true,
+            "ChannelGroupName": "Slip Loaded",
+            "PropertyName": "LoadedSlip",
+            "ExportProperty": false,
+            "DisableOutput": false,
+            "OutputType": "ToneOutput"
+          }
+        }
+      ],
+      "Filter": null,
+      "SupportWarnInfo": null,
+      "IsMuted": false,
+      "ContainerId": "583ba06f-d9a8-447a-8c0d-75a730ea80fe",
+      "ContainerType": "GroupContainer",
+      "Description": "Loaded Slip",
+      "AggregationMode": null,
+      "Gain": 40.333333333333371,
+      "IsEnabled": true,
+      "Output": null
+    }
+  ],
+  "AutoCalibrationRatio2": 0,
+  "OutputMode": 1,
+  "GlobalGain": 100.0,
+  "UseProfileGain": true,
+  "LastLoaded": "2024-02-17T06:15:57.1637747-05:00",
+  "Description": "2024-01-20\r\nhttps://www.racedepartment.com/threads/simhub-shakeit-bass-shakers-custom-4-corner-tire-slip.198455/post-3406020\r\nhttps://www.racedepartment.com/attachments/newloaded4-chanwheelslipundersteer-siprofile-txt.485970/\r\nhttps://www.racedepartment.com/threads/simhub-shakeit-bass-shakers-custom-4-corner-tire-slip.198455/post-3740571",
+  "Name": "Loaded Slip/Grip Blek (remix dMASS) AMS2/ACC/AC (gated upshifts)",
+  "ProfileId": "4f7461e4-8214-4481-9817-bbdd261d2c6a",
+  "GameCode": null
+}
