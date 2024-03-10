@@ -1,0 +1,662 @@
+{
+  "IncludeOutputSettingsInProfile": false,
+  "UnmuteEffectsAfterSimhubRestart": false,
+  "EffectsContainers": [
+    {
+      "EffectsContainers": [
+        {
+          "EffectsContainers": [
+            {
+              "EffectsContainers": [
+                {
+                  "ModulateGainUsingRpms": false,
+                  "MaxFeedbackRpmPercent": 90,
+                  "MinFeedbackRpmPercent": 50,
+                  "GearMode": 2,
+                  "AlwaysIgnoreNeutral": false,
+                  "IgnoreNeutral": true,
+                  "NeutralDebouningTime": 200.0,
+                  "EngagingDebouningTime": 500.0,
+                  "Filter": {
+                    "Duration": 300,
+                    "FilterType": "PulseFilter"
+                  },
+                  "SupportWarnInfo": null,
+                  "IsMuted": false,
+                  "ContainerId": "d8395c93-c0ab-4959-be2b-a3ad480f4578",
+                  "ContainerType": "GearEffectContainer",
+                  "Description": "Gear shift pulse effect property",
+                  "AggregationMode": null,
+                  "Gain": 0.0,
+                  "IsEnabled": true,
+                  "Output": {
+                    "UsePrehemptiveMode": false,
+                    "Frequency": 44,
+                    "Harmonics": 0,
+                    "DelayEnabled": false,
+                    "IsAudio": true,
+                    "AssignToChannelGroup": false,
+                    "ChannelGroupName": "",
+                    "PropertyName": "proxyGear",
+                    "ExportProperty": true,
+                    "DisableOutput": true,
+                    "OutputType": "SingleToneOutput"
+                  }
+                },
+                {
+                  "AutocalibrationMax": 95.0,
+                  "Filter": {
+                    "GammaValue": 1.0,
+                    "InputGain": 100.0,
+                    "MinimumForce": 0,
+                    "Threshold": 0,
+                    "FilterType": "GammaFilter"
+                  },
+                  "FrontLeftFormula": {
+                    "JSExt": 3,
+                    "Interpreter": 1,
+                    "Expression": "// RPM shifts\r\ns = 0;\r\ng = $prop('Gear');\t// watch for upshifts\r\nif (g == 'N' || g == 'R')\t// 'Gear' is pathological\r\n\tg = 0;\r\n  \r\n/* test code e.g. for comparison with downshift\r\nif (1 < $prop('ShakeITBSV3Plugin.Export.proxyShift.All'))\r\n\treturn 100;\r\nelse return 30 * g; \r\n*/\r\n\r\nif (1 < $prop('ShakeITBSV3Plugin.Export.proxyGear.All')) {\r\n\troot[\"sb4\"] = true;\r\n\tif (g > root[\"gear\"])\t// upshift?\r\n\t\ts = $prop('ShakeITBSV3Plugin.Export.proxyShift.FrontRight'); // RPM %\r\n}\r\nelse {\r\n\tif (root[\"sb4\"])\r\n\t\troot[\"gear\"] = g;\t// gear after shifts\r\n\troot[\"sb4\"] = false;\r\n}\r\nreturn s;",
+                    "PreExpression": "// initialize gear history\r\nroot[\"gear\"] = 0;\r\nroot[\"sb4\"] = true;\r\nvar g, s;"
+                  },
+                  "FrontRightFormula": {
+                    "JSExt": 3,
+                    "Interpreter": 1,
+                    "Expression": "// RPM % for shifts\r\nreturn 100 * $prop('Rpms') / $prop('MaxRpm');"
+                  },
+                  "RearLeftFormula": {
+                    "JSExt": 0,
+                    "Interpreter": 1,
+                    "Expression": ""
+                  },
+                  "RearRightFormula": {
+                    "JSExt": 0,
+                    "Interpreter": 1,
+                    "Expression": ""
+                  },
+                  "ForceFrequencies": false,
+                  "FrontLeftFrequencyFormula": {
+                    "Expression": ""
+                  },
+                  "FrontRightFrequencyFormula": {
+                    "Expression": ""
+                  },
+                  "RearLeftFrequencyFormula": {
+                    "Expression": ""
+                  },
+                  "RearRightFrequencyFormula": {
+                    "Expression": ""
+                  },
+                  "SupportWarnInfo": null,
+                  "GainChangeStep": 1,
+                  "IsMuted": false,
+                  "ToggleMute": {
+                    "Triggers": [
+                      {
+                        "Trigger": "PropertyServerPlugin.Upshifts-toggle-mute",
+                        "PressType": 4
+                      }
+                    ]
+                  },
+                  "IncrementGainAction": {
+                    "Triggers": [
+                      {
+                        "Trigger": "PropertyServerPlugin.Upshifts-low-Up",
+                        "PressType": 4
+                      }
+                    ]
+                  },
+                  "DecrementGainAction": {
+                    "Triggers": [
+                      {
+                        "Trigger": "PropertyServerPlugin.Upshifts-low-Down",
+                        "PressType": 4
+                      }
+                    ]
+                  },
+                  "ContainerId": "3fc86d3c-09d9-40df-afeb-061f6e888fcd",
+                  "ContainerType": "CustomEffectContainer",
+                  "Description": "RPM-modulated Upshifts",
+                  "AggregationMode": "Corners",
+                  "Gain": 0.0,
+                  "IsEnabled": true,
+                  "Output": {
+                    "UsePrehemptiveMode": false,
+                    "Frequency": 1,
+                    "UseHighFrequency": false,
+                    "HighFrequency": 30,
+                    "WhiteNoise": 10,
+                    "UseWhiteNoise": false,
+                    "EnableDurationModulation": true,
+                    "DurationModulationValue": 34,
+                    "FrequencyBasedOnPreFilter": false,
+                    "Harmonics": 0,
+                    "HoldMode": 1,
+                    "DelayEnabled": false,
+                    "IsAudio": true,
+                    "AssignToChannelGroup": false,
+                    "ChannelGroupName": "",
+                    "PropertyName": "proxyShift",
+                    "ExportProperty": true,
+                    "DisableOutput": true,
+                    "OutputType": "ToneOutput"
+                  }
+                }
+              ],
+              "Filter": null,
+              "SupportWarnInfo": null,
+              "IsMuted": false,
+              "ContainerId": "24204415-1c4b-42a0-9171-0766329c9d0c",
+              "ContainerType": "GroupContainer",
+              "Description": "Gated Upshifts",
+              "AggregationMode": null,
+              "Gain": 0.0,
+              "IsEnabled": true,
+              "Output": null
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 1,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": "// horizontal acceleration\r\nreturn RMS($prop('AccelerationSurge'), $prop('AccelerationSway'));",
+                "PreExpression": "function RMS(a, b) { return Math.pow(a * a + b * b, 0.5); }\t// 2D accel (estimated grip)"
+              },
+              "FrontRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearLeftFormula": {
+                "Expression": ""
+              },
+              "RearRightFormula": {
+                "Expression": ""
+              },
+              "ForceFrequencies": false,
+              "FrontLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "FrontRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "SupportWarnInfo": null,
+              "GainChangeStep": 1,
+              "IsMuted": false,
+              "ToggleMute": {
+                "Triggers": [
+                  {
+                    "Trigger": "PropertyServerPlugin.Upshifts-toggle-mute",
+                    "PressType": 4
+                  }
+                ]
+              },
+              "IncrementGainAction": {
+                "Triggers": [
+                  {
+                    "Trigger": "PropertyServerPlugin.Upshifts-low-Up",
+                    "PressType": 4
+                  }
+                ]
+              },
+              "DecrementGainAction": {
+                "Triggers": [
+                  {
+                    "Trigger": "PropertyServerPlugin.Upshifts-low-Down",
+                    "PressType": 4
+                  }
+                ]
+              },
+              "ContainerId": "3fc86d3c-09d9-40df-afeb-061f6e888fcd",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "Horizontal acceleration estimate",
+              "AggregationMode": "Mono",
+              "Gain": 0.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 1,
+                "UseHighFrequency": false,
+                "HighFrequency": 30,
+                "WhiteNoise": 10,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": false,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": false,
+                "ChannelGroupName": "",
+                "PropertyName": "Haccel",
+                "ExportProperty": true,
+                "DisableOutput": true,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 1,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": "// shift heave so that 0 heave becomes 25 (1G)\r\nvar load = 25 + $prop('AccelerationHeave') -  $prop('AccelerationSway')\r\n              + $prop('AccelerationSurge') * 0.67;\t// front left: negative sway\r\nif (25 > load)\r\n\tload = 25;\r\nreturn 25 * $prop('ShakeITBSV3Plugin.Export.Haccel.All') / load;"
+              },
+              "FrontRightFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": "var load = 25 + $prop('AccelerationHeave') +  $prop('AccelerationSway')\r\n              + $prop('AccelerationSurge') * 0.67;\t// front right: all positive\r\nif (25 > load)\r\n\tload = 25;\r\nreturn 25 * $prop('ShakeITBSV3Plugin.Export.Haccel.All') / load;"
+              },
+              "RearLeftFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": "var load = 25 + $prop('AccelerationHeave') - $prop('AccelerationSway')\r\n\t\t\t  - $prop('AccelerationSurge') * 0.67;\t// rear left: negative sway and surge\r\nif (25 > load)\r\n\tload = 25;\t// don't increase effective grip\r\nreturn 25 * $prop('ShakeITBSV3Plugin.Export.Haccel.All') / load;"
+              },
+              "RearRightFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": "var load = 25 + $prop('AccelerationHeave') + $prop('AccelerationSway')\r\n              - $prop('AccelerationSurge') * 0.67;\t// rear right : positive sway - surge\r\nif (25 > load)\r\n\tload = 25;\t// don't increase effective grip\r\nreturn 25 * $prop('ShakeITBSV3Plugin.Export.Haccel.All') / load;"
+              },
+              "ForceFrequencies": false,
+              "FrontLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "FrontRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "SupportWarnInfo": null,
+              "IsMuted": false,
+              "ContainerId": "f817fa4c-57b0-45f9-955b-1cb5a967aa8c",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "grip from estimated wheel loads",
+              "AggregationMode": "Corners",
+              "Gain": 0.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 1,
+                "UseHighFrequency": false,
+                "HighFrequency": 50,
+                "WhiteNoise": 10,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": false,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": false,
+                "ChannelGroupName": "",
+                "PropertyName": "Grip",
+                "ExportProperty": true,
+                "DisableOutput": true,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "SupportWarnInfo": null,
+              "BrakeFilter": 10,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 15.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "MuteWhenLockEffectIsActive": false,
+              "ThrottleFilter": 10,
+              "UseBrakeFilter": false,
+              "UseThrottleFilter": false,
+              "IsMuted": false,
+              "ContainerId": "167175b5-df01-4b80-838e-633f1c096b0b",
+              "ContainerType": "WheelsSlipContainer",
+              "Description": "Provide localized wheel slip feedback",
+              "AggregationMode": "Corners",
+              "Gain": 0.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 1,
+                "UseHighFrequency": false,
+                "HighFrequency": 50,
+                "WhiteNoise": 10,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": false,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": false,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": false,
+                "ChannelGroupName": "",
+                "PropertyName": "wslip",
+                "ExportProperty": true,
+                "DisableOutput": true,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": "return clamp(\r\n    $prop('ShakeITBSV3Plugin.Export.wslip.FrontLeft'),\r\n    $prop('JSONio.JSONio.SlipGain'),\r\n    $prop('JSONio.JSONio.threshold'),\r\n    $prop('JSONio.JSONio.gamma'));\r\n",
+                "PreExpression": "function clamp(slip, SlipGain, threshold, gamma) {\r\n\tslip *= SlipGain;\r\n\tslip -= threshold;\r\n\tslip = Math.max(slip, 0);\r\n\treturn 100 * Math.pow(slip * 0.01, 1 / gamma);\r\n}"
+              },
+              "FrontRightFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": "return clamp(\r\n    $prop('ShakeITBSV3Plugin.Export.wslip.FrontRight'),\r\n    $prop('JSONio.JSONio.SlipGain'),\r\n    $prop('JSONio.JSONio.threshold'),\r\n    $prop('JSONio.JSONio.gamma'));\r\n",
+                "PreExpression": "function clamp(slip, SlipGain, threshold, gamma) {\r\n\tslip *= SlipGain;\r\n\tslip -= threshold;\r\n\tslip = Math.max(slip, 0);\r\n\treturn 100 * Math.pow(slip * 0.01, 1 / gamma);\r\n}"
+              },
+              "RearLeftFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": "return clamp(\r\n    $prop('ShakeITBSV3Plugin.Export.wslip.RearLeft'),\r\n    $prop('JSONio.JSONio.SlipGain'),\r\n    $prop('JSONio.JSONio.threshold'),\r\n    $prop('JSONio.JSONio.gamma'));\r\n",
+                "PreExpression": "function clamp(slip, SlipGain, threshold, gamma) {\r\n\tslip *= SlipGain;\r\n\tslip -= threshold;\r\n\tslip = Math.max(slip, 0);\r\n\treturn 100 * Math.pow(slip * 0.01, 1 / gamma);\r\n}"
+              },
+              "RearRightFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": "return clamp(\r\n    $prop('ShakeITBSV3Plugin.Export.wslip.RearRight'),\r\n    $prop('JSONio.JSONio.SlipGain'),\r\n    $prop('JSONio.JSONio.threshold'),\r\n    $prop('JSONio.JSONio.gamma'));\r\n",
+                "PreExpression": "function clamp(slip, SlipGain, threshold, gamma) {\r\n\tslip *= SlipGain;\r\n\tslip -= threshold;\r\n\tslip = Math.max(slip, 0);\r\n\treturn 100 * Math.pow(slip * 0.01, 1 / gamma);\r\n}"
+              },
+              "ForceFrequencies": false,
+              "FrontLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "FrontRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "SupportWarnInfo": null,
+              "IsMuted": false,
+              "ContainerId": "c88cdf18-cb77-4646-b90b-5c31fe5e21e8",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "ProxyS threshold/gain/gamma applied",
+              "AggregationMode": "Corners",
+              "Gain": 0.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 1,
+                "UseHighFrequency": false,
+                "HighFrequency": 50,
+                "WhiteNoise": 10,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": false,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": false,
+                "ChannelGroupName": "",
+                "PropertyName": "ProxyS",
+                "ExportProperty": true,
+                "DisableOutput": true,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": "return $prop('JSONio.JSONio.EffectStrength') * 100\r\n\t * $prop('ShakeITBSV3Plugin.Export.ProxyS.FrontLeft')\r\n\t / $prop('ShakeITBSV3Plugin.Export.Grip.FrontLeft');"
+              },
+              "FrontRightFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": "return $prop('JSONio.JSONio.EffectStrength') * 100\r\n  \t * $prop('ShakeITBSV3Plugin.Export.ProxyS.FrontRight')\r\n\t / $prop('ShakeITBSV3Plugin.Export.Grip.FrontRight');"
+              },
+              "RearLeftFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": "return $prop('JSONio.JSONio.EffectStrength') * 100\r\n\t * $prop('ShakeITBSV3Plugin.Export.ProxyS.RearLeft')\r\n\t / $prop('ShakeITBSV3Plugin.Export.Grip.RearLeft');"
+              },
+              "RearRightFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": "return $prop('JSONio.JSONio.EffectStrength') * 100\r\n\t * $prop('ShakeITBSV3Plugin.Export.ProxyS.RearRight')\r\n\t / $prop('ShakeITBSV3Plugin.Export.Grip.RearRight');"
+              },
+              "ForceFrequencies": false,
+              "FrontLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "FrontRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "SupportWarnInfo": null,
+              "IsMuted": false,
+              "ContainerId": "71680d3c-9be0-4fce-bf62-1c9e8499ca3e",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "slip/grip",
+              "AggregationMode": "Corners",
+              "Gain": 0.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 1,
+                "UseHighFrequency": false,
+                "HighFrequency": 50,
+                "WhiteNoise": 10,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": false,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": false,
+                "ChannelGroupName": "",
+                "PropertyName": "slip/grip",
+                "ExportProperty": true,
+                "DisableOutput": true,
+                "OutputType": "ToneOutput"
+              }
+            }
+          ],
+          "Filter": null,
+          "SupportWarnInfo": null,
+          "GainChangeStep": 1,
+          "IsMuted": false,
+          "ToggleMute": {
+            "Triggers": [
+              {
+                "Trigger": "PropertyServerPlugin.Shift-toggle-mute",
+                "PressType": 4
+              }
+            ]
+          },
+          "IncrementGainAction": {
+            "Triggers": [
+              {
+                "Trigger": "PropertyServerPlugin.Shift-Up",
+                "PressType": 4
+              }
+            ]
+          },
+          "DecrementGainAction": {
+            "Triggers": [
+              {
+                "Trigger": "PropertyServerPlugin.Shift-Down",
+                "PressType": 4
+              }
+            ]
+          },
+          "ContainerId": "60bbc1ff-dd04-445f-b3aa-ce76f512491d",
+          "ContainerType": "GroupContainer",
+          "Description": "Processing",
+          "AggregationMode": null,
+          "Gain": 0.0,
+          "IsEnabled": true,
+          "Output": null
+        },
+        {
+          "AutocalibrationMax": 95.0,
+          "Filter": {
+            "GammaValue": 0.99999999999999933,
+            "InputGain": 110.0,
+            "MinimumForce": 0,
+            "Threshold": 0,
+            "FilterType": "GammaFilter"
+          },
+          "FrontLeftFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "// front left load\r\nreturn \t(proxyL($prop('AccelerationSway'), $prop('AccelerationSurge'))\r\n\t\t* SlipGate($prop('ShakeITBSV3Plugin.Export.slip/grip.FrontLeft'))) \r\n\t\t- $prop('ShakeITBSV3Plugin.Export.proxyShift.FrontLeft');",
+            "PreExpression": "Sgain = .2;\r\nfunction SlipGate(sg) { return Math.min(1, Sgain * sg) };\r\nfunction AbsAcc(a) { return 100 * Math.pow(Math.abs(.05 * a), 0.3) }\r\n// increasing left load when turning right\r\n// if both sway and surge are 0, then no load shift and each corner gets 25%\r\nfunction proxyL(sway, surge) {\r\n\tvar d = (0 > sway) ? 4 : -4;\r\n\tvar L = 25 + AbsAcc(sway) / d; // 25 +/-25% left-right distribution\r\n\td = (0 < surge) ? 100 : -100;\r\n\treturn L * (1 + AbsAcc(surge) / d); // fore-aft distribution\r\n}\r\nvar slip, Load;"
+          },
+          "FrontRightFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "return \t(proxyL($prop('AccelerationSway'), $prop('AccelerationSurge'))\r\n\t\t* SlipGate($prop('ShakeITBSV3Plugin.Export.slip/grip.FrontRight')))\t\t\r\n\t\t- $prop('ShakeITBSV3Plugin.Export.proxyShift.FrontLeft');\r\n",
+            "PreExpression": "Sgain = .2;\r\nfunction SlipGate(sg) { return Math.min(1, Sgain * sg) };\r\nfunction AbsAcc(a) { return 100 * Math.pow(Math.abs(.05 * a), 0.3) }\r\n// decreasing right load when turning right\r\n// if both sway and surge are 0, then no load shift and each corner gets 25%\r\nfunction proxyL(sway, surge) {\r\n    var d = (0 < sway) ? 4 : -4;\r\n    var L = 25 + AbsAcc(sway) / d  // 0-50% left-right distribution\r\n    d = (0 < surge) ? 100 : -100\r\n    return L * (1 + AbsAcc(surge) / d); // 0-100% fore-aft distribution\r\n}"
+          },
+          "RearLeftFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "return \t(proxyL($prop('AccelerationSway'), $prop('AccelerationSurge'))\r\n\t\t* SlipGate($prop('ShakeITBSV3Plugin.Export.slip/grip.RearLeft')))\t\t\r\n\t\t- $prop('ShakeITBSV3Plugin.Export.proxyShift.FrontLeft');\r\n\t\t\r\n\t\t\r\n\t\t",
+            "PreExpression": "Sgain = .2;\r\nfunction SlipGate(sg) { return Math.min(1, Sgain * sg) };\r\nfunction AbsAcc(a) { return 100 * Math.pow(Math.abs(.05 * a), 0.3) }\r\nfunction proxyL(sway, surge) {\r\n    var d = (0 > sway) ? 4 : -4;\r\n    var L = 25 + AbsAcc(sway) / d  // 0-50% left-right distribution\r\n    d = (0 > surge) ? 100 : -100\r\n    return L * (1 + AbsAcc(surge) / d); // 0-100% fore-aft distribution\r\n} \r\nvar slip, Load;"
+          },
+          "RearRightFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "return \t(proxyL($prop('AccelerationSway'), $prop('AccelerationSurge'))\r\n\t\t* SlipGate($prop('ShakeITBSV3Plugin.Export.slip/grip.RearRight')))\t\t\r\n\t\t- $prop('ShakeITBSV3Plugin.Export.proxyShift.FrontLeft');",
+            "PreExpression": "Sgain = .2;\r\nfunction SlipGate(sg) { return Math.min(1, Sgain * sg) };\r\nfunction proxyL(sway, surge) {\r\n    var d = (0 < sway) ? 4 : -4;\r\n    var L = 25 + AbsAcc(sway) / d  // 0-50% left-right distribution\r\n    d = (0 > surge) ? 100 : -100\r\n    return L * (1 + AbsAcc(surge) / d); // 0-100% fore-aft distribution\r\n} \r\nvar slip, Load;\r\nfunction AbsAcc(a) { return 100 * Math.pow(Math.abs(.05 * a), 0.3) }"
+          },
+          "ForceFrequencies": true,
+          "FrontLeftFrequencyFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "return noise(100 - $prop('ShakeITBSV3Plugin.Export.slip/grip.FrontLeft'));",
+            "PreExpression": "const low = parseInt($prop('DataCorePlugin.ExternalScript.Freq.Min'));\r\nconst high = parseInt($prop('DataCorePlugin.ExternalScript.Freq.Max'));\r\nconst r = 3;\t\t\t// fraction of range for random()\r\nconst f = .01 * (high - low) * r / (1 + r);\t// scale based on r\r\nfunction noise(sg) { return low + f * (sg + Math.random() * (1 + sg / r)) };"
+          },
+          "FrontRightFrequencyFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "return noise(100 - $prop('ShakeITBSV3Plugin.Export.slip/grip.FrontRight'));",
+            "PreExpression": "const low = parseInt($prop('DataCorePlugin.ExternalScript.Freq.Min'));\r\nconst high = parseInt($prop('DataCorePlugin.ExternalScript.Freq.Max'));\r\nconst f = .01 * (high - low);\r\nconst r = 3;\t\t\t// fraction of range for random()\r\nconst s = r / (1 + r);\t// scale based on r\r\nfunction noise(sg) { return low + f * s * (sg + Math.random() * (1 + sg / r)) };"
+          },
+          "RearLeftFrequencyFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "return noise(100 - $prop('ShakeITBSV3Plugin.Export.slip/grip.RearLeft'));",
+            "PreExpression": "const low = parseInt($prop('DataCorePlugin.ExternalScript.Freq.Min'));\r\nconst high = parseInt($prop('DataCorePlugin.ExternalScript.Freq.Max'));\r\nconst f = .01 * (high - low);\r\nconst r = 3;\t\t\t// fraction of range for random()\r\nconst s = r / (1 + r);\t// scale based on r\r\nfunction noise(sg) { return low + f * s * (sg + Math.random() * (1 + sg / r)) };"
+          },
+          "RearRightFrequencyFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "return noise(100 - $prop('ShakeITBSV3Plugin.Export.slip/grip.RearRight'));",
+            "PreExpression": "const low = parseInt($prop('DataCorePlugin.ExternalScript.Freq.Min'));\r\nconst high = parseInt($prop('DataCorePlugin.ExternalScript.Freq.Max'));\r\nconst f = .01 * (high - low);\r\nconst r = 3;\t\t\t// fraction of range for random()\r\nconst s = r / (1 + r);\t// scale based on r\r\nfunction noise(sg) { return low + f * s * (sg + Math.random() * (1 + sg / r)) };"
+          },
+          "SupportWarnInfo": null,
+          "IsMuted": false,
+          "ContainerId": "269f6394-40f4-4ce1-b5fe-e69637df1b8b",
+          "ContainerType": "CustomEffectContainer",
+          "Description": "output: loaded gated wheel slips",
+          "AggregationMode": "Corners",
+          "Gain": 100.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 1,
+            "UseHighFrequency": false,
+            "HighFrequency": 30,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": true,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "IsAudio": true,
+            "AssignToChannelGroup": true,
+            "ChannelGroupName": "Slip Loaded",
+            "PropertyName": "OutputSlip",
+            "ExportProperty": true,
+            "DisableOutput": false,
+            "OutputType": "ToneOutput"
+          }
+        }
+      ],
+      "Filter": null,
+      "SupportWarnInfo": null,
+      "IsMuted": false,
+      "ContainerId": "583ba06f-d9a8-447a-8c0d-75a730ea80fe",
+      "ContainerType": "GroupContainer",
+      "Description": "Loaded Slip ",
+      "AggregationMode": null,
+      "Gain": 50.888888888889369,
+      "IsEnabled": true,
+      "Output": null
+    }
+  ],
+  "AutoCalibrationRatio2": 0,
+  "OutputMode": 1,
+  "GlobalGain": 100.0,
+  "UseProfileGain": false,
+  "LastLoaded": "2024-02-20T09:12:26.882464+11:00",
+  "Description": "",
+  "Name": "LoadedSlipGrip refactored blekenbleu (w. gated upshifts)",
+  "DisplayName": "LoadedSlipGrip refactored blekenbleu (w. gated upshifts)",
+  "ProfileId": "e0eb8056-ae1a-4646-b8c0-b611c4642c8a",
+  "GameCode": null,
+  "CarChoice": null
+}
