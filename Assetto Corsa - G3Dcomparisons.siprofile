@@ -1,0 +1,149 @@
+{
+  "IncludeOutputSettingsInProfile": false,
+  "UnmuteEffectsAfterSimhubRestart": false,
+  "EffectsContainers": [
+    {
+      "AutocalibrationMax": 95.0,
+      "Filter": {
+        "GammaValue": 1.0,
+        "InputGain": 100.0,
+        "MinimumForce": 0,
+        "Threshold": 0,
+        "FilterType": "GammaFilter"
+      },
+      "FrontLeftFormula": {
+        "Expression": "[GameRawData.Physics.AccG01]*33 + 50",
+        "PreExpression": "function square_root(sum) { return Math.pow(Math.max(0,sum), 0.5) }"
+      },
+      "FrontRightFormula": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "// approx Physics.AccG01\r\nreturn 50 + (50 + 180 * $prop('AccelerationSway'))\r\n          / (50 + $prop('OrientationYawAcceleration'));",
+        "PreExpression": "function square_root(sum) { return Math.pow(Math.max(0,sum), 0.5) }"
+      },
+      "RearLeftFormula": {
+        "Expression": "[GameRawData.Physics.AccG03]*33 + 50",
+        "PreExpression": "function square_root(sum) { return Math.pow(Math.max(0,sum), 0.5) }"
+      },
+      "RearRightFormula": {
+        "Expression": "[GlobalAccelerationG]*3 + 50"
+      },
+      "ForceFrequencies": false,
+      "FrontLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "FrontRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "SupportWarnInfo": null,
+      "IsMuted": false,
+      "ContainerId": "b04e831e-2e0f-4418-a053-86832ced983b",
+      "ContainerType": "CustomEffectContainer",
+      "Description": "AC AccG01,3",
+      "AggregationMode": "Corners",
+      "Gain": 90.0,
+      "IsEnabled": true,
+      "Output": {
+        "UsePrehemptiveMode": false,
+        "Frequency": 44,
+        "UseHighFrequency": false,
+        "HighFrequency": 50,
+        "WhiteNoise": 10,
+        "UseWhiteNoise": false,
+        "EnableDurationModulation": true,
+        "DurationModulationValue": 34,
+        "FrequencyBasedOnPreFilter": false,
+        "Harmonics": 0,
+        "HoldMode": 1,
+        "DelayEnabled": false,
+        "IsAudio": true,
+        "AssignToChannelGroup": false,
+        "ChannelGroupName": "",
+        "PropertyName": "LatLonG",
+        "ExportProperty": true,
+        "DisableOutput": false,
+        "OutputType": "ToneOutput"
+      }
+    },
+    {
+      "AutocalibrationMax": 95.0,
+      "Filter": {
+        "GammaValue": 1.0,
+        "InputGain": 100.0,
+        "MinimumForce": 0,
+        "Threshold": 0,
+        "FilterType": "GammaFilter"
+      },
+      "FrontLeftFormula": {
+        "Expression": "[AccelerationHeave]*3 + 50\r\n\t\r\n"
+      },
+      "FrontRightFormula": {
+        "Expression": "[GameRawData.Physics.AccG02]*33 + 50"
+      },
+      "RearLeftFormula": {
+        "Expression": ""
+      },
+      "RearRightFormula": {
+        "Expression": ""
+      },
+      "ForceFrequencies": false,
+      "FrontLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "FrontRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "SupportWarnInfo": null,
+      "IsMuted": false,
+      "ContainerId": "b59ac49e-439c-48c8-815c-e2a98e83b430",
+      "ContainerType": "CustomEffectContainer",
+      "Description": "AC AccG02",
+      "AggregationMode": "Left/Right",
+      "Gain": 91.0,
+      "IsEnabled": true,
+      "Output": {
+        "UsePrehemptiveMode": false,
+        "Frequency": 44,
+        "UseHighFrequency": false,
+        "HighFrequency": 50,
+        "WhiteNoise": 10,
+        "UseWhiteNoise": false,
+        "EnableDurationModulation": true,
+        "DurationModulationValue": 34,
+        "FrequencyBasedOnPreFilter": false,
+        "Harmonics": 0,
+        "HoldMode": 1,
+        "DelayEnabled": false,
+        "IsAudio": true,
+        "AssignToChannelGroup": false,
+        "ChannelGroupName": "",
+        "PropertyName": "vertG",
+        "ExportProperty": true,
+        "DisableOutput": false,
+        "OutputType": "ToneOutput"
+      }
+    }
+  ],
+  "AutoCalibrationRatio2": 100,
+  "OutputMode": 1,
+  "GlobalGain": 50.0,
+  "UseProfileGain": false,
+  "LastLoaded": "0001-01-01T00:00:00",
+  "Description": "Compare AC(,ACC)-specific GameRawData.Physics.AccG0[1-3] to GlobalAccelerationG, AccelerationSway, OrientationYawAcceleration, AccelerationHeave ",
+  "Name": "G3Dcomparisons",
+  "ProfileId": "e6da2151-a7bf-4199-acd1-3dd190d5d661",
+  "GameCode": "AssettoCorsa",
+  "CarChoice": null
+}

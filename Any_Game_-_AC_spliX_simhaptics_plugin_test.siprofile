@@ -1,0 +1,81 @@
+{
+  "IncludeOutputSettingsInProfile": false,
+  "UnmuteEffectsAfterSimhubRestart": false,
+  "EffectsContainers": [
+    {
+      "AutocalibrationMax": 95.0,
+      "Filter": {
+        "GammaValue": 1.0,
+        "InputGain": 25.0,
+        "MinimumForce": 0,
+        "Threshold": 0,
+        "FilterType": "GammaFilter"
+      },
+      "FrontLeftFormula": {
+        "Expression": "[SimHapticsPlugin.SlipXFL]"
+      },
+      "FrontRightFormula": {
+        "Expression": "[SimHapticsPlugin.SlipXFR]"
+      },
+      "RearLeftFormula": {
+        "Expression": "[SimHapticsPlugin.SlipXRL]"
+      },
+      "RearRightFormula": {
+        "Expression": "[SimHapticsPlugin.SlipXRR]"
+      },
+      "ForceFrequencies": false,
+      "FrontLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "FrontRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "SupportWarnInfo": null,
+      "IsMuted": false,
+      "ContainerId": "6fb4cb8d-ec7b-47d9-be73-13ad4a89620a",
+      "ContainerType": "CustomEffectContainer",
+      "Description": "Provides ability to create your own effect based on game data",
+      "AggregationMode": "Corners",
+      "Gain": 0.0,
+      "IsEnabled": true,
+      "Output": {
+        "UsePrehemptiveMode": false,
+        "Frequency": 44,
+        "UseHighFrequency": false,
+        "HighFrequency": 50,
+        "WhiteNoise": 10,
+        "UseWhiteNoise": false,
+        "EnableDurationModulation": true,
+        "DurationModulationValue": 34,
+        "FrequencyBasedOnPreFilter": false,
+        "Harmonics": 0,
+        "HoldMode": 1,
+        "DelayEnabled": false,
+        "IsAudio": true,
+        "AssignToChannelGroup": false,
+        "ChannelGroupName": "",
+        "PropertyName": null,
+        "ExportProperty": false,
+        "DisableOutput": false,
+        "OutputType": "ToneOutput"
+      }
+    }
+  ],
+  "AutoCalibrationRatio2": 0,
+  "OutputMode": 1,
+  "GlobalGain": 100.0,
+  "UseProfileGain": false,
+  "LastLoaded": "2024-02-20T09:12:26.882464+11:00",
+  "Description": "",
+  "Name": "AC spliX simhaptics plugin test",
+  "DisplayName": "AC spliX simhaptics plugin test",
+  "ProfileId": "95bdde4a-686a-4d41-be06-69825b42b520",
+  "GameCode": null,
+  "CarChoice": null
+}
