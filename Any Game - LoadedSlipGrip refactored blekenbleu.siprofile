@@ -224,26 +224,26 @@
               "FrontLeftFormula": {
                 "JSExt": 0,
                 "Interpreter": 1,
-                "Expression": "return clamp($prop('ShakeITBSV3Plugin.Export.wslip.FrontLeft'),\r\n    $prop('JSONio.JSONio.SlipGain'),\r\n    $prop('JSONio.JSONio.threshold'),\r\n    $prop('JSONio.JSONio.gamma'));\r\n",
-                "PreExpression": "function clamp(slip, SlipGain, threshold, gamma) {\r\n\tslip *= SlipGain;\r\n\tslip -= threshold;\r\n\treturn 100 * Math.pow(0.01 * Math.max(0, slip), 1 / gamma);\r\n}"
+                "Expression": "return clamp($prop('ShakeITBSV3Plugin.Export.wslip.FrontLeft'),\r\n    $prop('JSONio.JSONio.SlipGain'),\r\n    $prop('JSONio.JSONio.gamma'));\r\n",
+                "PreExpression": "function clamp(slip, SlipGain, gamma) {\r\n\treturn 100 * Math.pow(0.01 * SlipGain * slip, 1 / gamma);\r\n}"
               },
               "FrontRightFormula": {
                 "JSExt": 0,
                 "Interpreter": 1,
-                "Expression": "return clamp($prop('ShakeITBSV3Plugin.Export.wslip.FrontRight'),\r\n    $prop('JSONio.JSONio.SlipGain'),\r\n    $prop('JSONio.JSONio.threshold'),\r\n    $prop('JSONio.JSONio.gamma'));\r\n",
-                "PreExpression": "function clamp(slip, SlipGain, threshold, gamma) {\r\n\tslip *= SlipGain;\r\n\tslip -= threshold;\r\n\treturn 100 * Math.pow(0.01 * Math.max(0, slip), 1 / gamma);\r\n}"
+                "Expression": "return clamp($prop('ShakeITBSV3Plugin.Export.wslip.FrontRight'),\r\n    $prop('JSONio.JSONio.SlipGain'),\r\n    $prop('JSONio.JSONio.gamma'));\r\n",
+                "PreExpression": "function clamp(slip, SlipGain, gamma) {\r\n\treturn 100 * Math.pow(0.01 * SlipGain * slip, 1 / gamma);\r\n}"
               },
               "RearLeftFormula": {
                 "JSExt": 0,
                 "Interpreter": 1,
-                "Expression": "return clamp($prop('ShakeITBSV3Plugin.Export.wslip.RearLeft'),\r\n    $prop('JSONio.JSONio.SlipGain'),\r\n    $prop('JSONio.JSONio.threshold'),\r\n    $prop('JSONio.JSONio.gamma'));\r\n",
-                "PreExpression": "function clamp(slip, SlipGain, threshold, gamma) {\r\n\tslip *= SlipGain;\r\n\tslip -= threshold;\r\n\treturn 100 * Math.pow(0.01 * Math.max(0, slip), 1 / gamma);\r\n}"
+                "Expression": "return clamp($prop('ShakeITBSV3Plugin.Export.wslip.RearLeft'),\r\n    $prop('JSONio.JSONio.SlipGain'),\r\n    $prop('JSONio.JSONio.gamma'));\r\n",
+                "PreExpression": "function clamp(slip, SlipGain, gamma) {\r\n\treturn 100 * Math.pow(0.01 * SlipGain * slip, 1 / gamma);\r\n}"
               },
               "RearRightFormula": {
                 "JSExt": 0,
                 "Interpreter": 1,
-                "Expression": "return clamp($prop('ShakeITBSV3Plugin.Export.wslip.RearRight'),\r\n    $prop('JSONio.JSONio.SlipGain'),\r\n    $prop('JSONio.JSONio.threshold'),\r\n    $prop('JSONio.JSONio.gamma'));\r\n",
-                "PreExpression": "function clamp(slip, SlipGain, threshold, gamma) {\r\n\tslip *= SlipGain;\r\n\tslip -= threshold;\r\n\treturn 100 * Math.pow(0.01 * Math.max(0, slip), 1 / gamma);\r\n}"
+                "Expression": "return clamp($prop('ShakeITBSV3Plugin.Export.wslip.RearRight'),\r\n    $prop('JSONio.JSONio.SlipGain'),\r\n    $prop('JSONio.JSONio.gamma'));\r\n",
+                "PreExpression": "function clamp(slip, SlipGain, gamma) {\r\n\treturn 100 * Math.pow(0.01 * SlipGain * slip, 1 / gamma);\r\n}"
               },
               "ForceFrequencies": false,
               "FrontLeftFrequencyFormula": {
@@ -262,7 +262,7 @@
               "IsMuted": false,
               "ContainerId": "c88cdf18-cb77-4646-b90b-5c31fe5e21e8",
               "ContainerType": "CustomEffectContainer",
-              "Description": "ProxyS threshold/gain/gamma applied for slip/grip",
+              "Description": "ProxyS gain/gamma applied for slip/grip",
               "AggregationMode": "Corners",
               "Gain": 0.0,
               "IsEnabled": true,
@@ -409,25 +409,25 @@
           "FrontLeftFormula": {
             "JSExt": 0,
             "Interpreter": 1,
-            "Expression": "return SlipGate($prop('ShakeITBSV3Plugin.Export.slip/grip.FrontLeft'))\r\n\t\t*proxyL($prop('AccelerationSway'), $prop('AccelerationSurge')); ",
+            "Expression": "return SlipGate($prop('ShakeITBSV3Plugin.Export.slip/grip.FrontLeft'))\r\n\t   * proxyL($prop('AccelerationSway'), $prop('AccelerationSurge'))\r\n\t   - $prop('JSONio.JSONio.threshold');",
             "PreExpression": "Sgain = .2;\r\nfunction SlipGate(sg) { return Math.min(1, Sgain * sg) };\r\nfunction AbsAcc(a) { return 100 * Math.pow(Math.abs(.05 * a), 0.3) }\r\n// increasing left load when turning right\r\n// if both sway and surge are 0, then no load shift and each corner gets 25%\r\nfunction proxyL(sway, surge) {\r\n\tvar d = (0 > sway) ? 4 : -4;\r\n\tvar L = 25 + AbsAcc(sway) / d; // 25 +/-25% left-right distribution\r\n\td = (0 < surge) ? 100 : -100;\r\n\treturn L * (1 + AbsAcc(surge) / d); // fore-aft distribution\r\n}"
           },
           "FrontRightFormula": {
             "JSExt": 0,
             "Interpreter": 1,
-            "Expression": "return SlipGate($prop('ShakeITBSV3Plugin.Export.slip/grip.FrontRight'))\r\n\t   * proxyL($prop('AccelerationSway'), $prop('AccelerationSurge'));\r\n",
+            "Expression": "return SlipGate($prop('ShakeITBSV3Plugin.Export.slip/grip.FrontRight'))\r\n\t   * proxyL($prop('AccelerationSway'), $prop('AccelerationSurge'))\r\n\t   - $prop('JSONio.JSONio.threshold');\r\n",
             "PreExpression": "Sgain = .2;\r\nfunction SlipGate(sg) { return Math.min(1, Sgain * sg) };\r\nfunction AbsAcc(a) { return 100 * Math.pow(Math.abs(.05 * a), 0.3) }\r\n// each corner gets 25% for 0 sway and surge\r\nfunction proxyL(sway, surge) {\r\n    var d = (0 < sway) ? 4 : -4;\t// left turns increase load\r\n    var L = 25 + AbsAcc(sway) / d;\t// 25 +/-25% left-right distribution\r\n    d = (0 < surge) ? 100 : -100;\t// braking increases front load\r\n    return L * (1 + AbsAcc(surge) / d); // 0-100% fore-aft distribution\r\n}"
           },
           "RearLeftFormula": {
             "JSExt": 0,
             "Interpreter": 1,
-            "Expression": "return SlipGate($prop('ShakeITBSV3Plugin.Export.slip/grip.RearLeft'))\r\n\t   * proxyL($prop('AccelerationSway'), $prop('AccelerationSurge'));",
+            "Expression": "return SlipGate($prop('ShakeITBSV3Plugin.Export.slip/grip.RearLeft'))\r\n\t   * proxyL($prop('AccelerationSway'), $prop('AccelerationSurge'))\r\n\t   - $prop('JSONio.JSONio.threshold');",
             "PreExpression": "const Sgain = .2;\r\nfunction SlipGate(sg) { return Math.min(1, Sgain * sg) };\r\nfunction AbsAcc(a) { return 100 * Math.pow(Math.abs(.05 * a), 0.3) }\t// nonlinearity\r\nfunction proxyL(sway, surge) {\r\n    var d = (0 > sway) ? 4 : -4;\t// left load increases for negative sway\r\n    var L = 25 + AbsAcc(sway) / d\t// 25 +/-25% left-right distribution\r\n    d = (0 > surge) ? 100 : -100\t// rear load increases for negative surge\r\n    return L * (1 + AbsAcc(surge) / d); // 0-100% fore-aft distribution\r\n}"
           },
           "RearRightFormula": {
             "JSExt": 0,
             "Interpreter": 1,
-            "Expression": "return SlipGate($prop('ShakeITBSV3Plugin.Export.slip/grip.RearRight'))\r\n\t   * proxyL($prop('AccelerationSway'), $prop('AccelerationSurge'));",
+            "Expression": "return SlipGate($prop('ShakeITBSV3Plugin.Export.slip/grip.RearRight'))\r\n\t   * proxyL($prop('AccelerationSway'), $prop('AccelerationSurge'))\r\n\t   - $prop('JSONio.JSONio.threshold');",
             "PreExpression": "const Sgain = .2;\r\nfunction SlipGate(sg) { return Math.min(1, Sgain * sg) };\r\nfunction AbsAcc(a) { return 100 * Math.pow(Math.abs(.05 * a), 0.3); }\r\nfunction proxyL(sway, surge) {\r\n    var d = (0 < sway) ? 4 : -4;\r\n    var L = 25 + AbsAcc(sway) / d  // 0-50% left-right distribution\r\n    d = (0 > surge) ? 100 : -100\r\n    return L * (1 + AbsAcc(surge) / d); // 0-100% fore-aft distribution\r\n}"
           },
           "ForceFrequencies": true,
