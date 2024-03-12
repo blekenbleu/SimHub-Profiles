@@ -73,7 +73,7 @@
           }
         },
         {
-          "SupportWarnInfo": "{0} does not provide accurate slip information, you can complete this effect with the traction loss effect",
+          "SupportWarnInfo": null,
           "BrakeFilter": 10,
           "Filter": {
             "GammaValue": 1.2999999999999992,
@@ -229,25 +229,25 @@
             "JSExt": 0,
             "Interpreter": 1,
             "Expression": "return noise(100 - $prop('ShakeITBSV3Plugin.Export.slip/grip.FrontLeft'));",
-            "PreExpression": "// Forced Frequencies\r\nconst low = $prop('ShakeITBSV3Plugin.Export.Haccel.RearLeft');\r\nconst high = 10 * $prop('ShakeITBSV3Plugin.Export.Haccel.RearRight');\r\nconst f = .01 * (high - low) * 3 / (1 + 3); // scale based on 3\r\nfunction noise(sg) { return low + f * (sg + Math.random() * (1 + sg / 3)) }; "
+            "PreExpression": "// Forced Frequencies\r\nconst low = $prop('ShakeITBSV3Plugin.Export.Haccel.RearLeft');\r\nconst high = 10 * $prop('ShakeITBSV3Plugin.Export.Haccel.RearRight');\r\nconst f = .01 * (high - low) * 3 / (1 + 3); // scale based on 3\r\nfunction noise(sg) { sg = low + f * sg; return sg + Math.random() * sg / 3 };"
           },
           "FrontRightFrequencyFormula": {
             "JSExt": 0,
             "Interpreter": 1,
             "Expression": "return noise(100 - $prop('ShakeITBSV3Plugin.Export.slip/grip.FrontRight'));",
-            "PreExpression": "const low = $prop('ShakeITBSV3Plugin.Export.Haccel.RearLeft');\r\nconst high = 10 * $prop('ShakeITBSV3Plugin.Export.Haccel.RearRight');\r\nconst f = .01 * (high - low) * 3 / (1 + 3); // scale based on 3\r\nfunction noise(sg) { return low + f * (sg + Math.random() * (1 + sg / 3)) }; "
+            "PreExpression": "const low = $prop('ShakeITBSV3Plugin.Export.Haccel.RearLeft');\r\nconst high = 10 * $prop('ShakeITBSV3Plugin.Export.Haccel.RearRight');\r\nconst f = .01 * (high - low) * 3 / (1 + 3); // scale based on 3\r\nfunction noise(sg) { sg = low + f * sg; return sg + Math.random() * sg / 3 };"
           },
           "RearLeftFrequencyFormula": {
             "JSExt": 0,
             "Interpreter": 1,
             "Expression": "return noise(100 - $prop('ShakeITBSV3Plugin.Export.slip/grip.RearLeft'));\r\n",
-            "PreExpression": "const low = $prop('ShakeITBSV3Plugin.Export.Haccel.RearLeft');\r\nconst high = 10 * $prop('ShakeITBSV3Plugin.Export.Haccel.RearRight');\r\nconst f = .01 * (high - low) * 3 / (1 + 3); // scale based on 3\r\nfunction noise(sg) { return low + f * (sg + Math.random() * (1 + sg / 3)) };"
+            "PreExpression": "const low = $prop('ShakeITBSV3Plugin.Export.Haccel.RearLeft');\r\nconst high = 10 * $prop('ShakeITBSV3Plugin.Export.Haccel.RearRight');\r\nconst f = .01 * (high - low) * 3 / (1 + 3); // scale based on 3\r\nfunction noise(sg) { sg = low + f * sg; return sg + Math.random() * sg / 3 };"
           },
           "RearRightFrequencyFormula": {
             "JSExt": 0,
             "Interpreter": 1,
             "Expression": "return noise(100 - $prop('ShakeITBSV3Plugin.Export.slip/grip.RearRight'));",
-            "PreExpression": "const low = $prop('ShakeITBSV3Plugin.Export.Haccel.RearLeft');\r\nconst high = 10 * $prop('ShakeITBSV3Plugin.Export.Haccel.RearRight');\r\nconst f = .01 * (high - low) * 3 / (1 + 3); // scale based on 3\r\nfunction noise(sg) { return low + f * (sg + Math.random() * (1 + sg / 3)) };"
+            "PreExpression": "const low = $prop('ShakeITBSV3Plugin.Export.Haccel.RearLeft');\r\nconst high = 10 * $prop('ShakeITBSV3Plugin.Export.Haccel.RearRight');\r\nconst f = .01 * (high - low) * 3 / (1 + 3); // scale based on 3\r\nfunction noise(sg) { sg = low + f * sg; return sg + Math.random() * sg / 3 };"
           },
           "SupportWarnInfo": null,
           "IsMuted": false,

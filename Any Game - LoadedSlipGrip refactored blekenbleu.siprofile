@@ -435,25 +435,25 @@
             "JSExt": 0,
             "Interpreter": 1,
             "Expression": "return noise(100 - $prop('ShakeITBSV3Plugin.Export.slip/grip.FrontLeft'));",
-            "PreExpression": "const low = parseInt($prop('DataCorePlugin.ExternalScript.Freq.Min'));\r\nconst high = parseInt($prop('DataCorePlugin.ExternalScript.Freq.Max'));\r\nconst f = .01 * (high - low) * 3 / (1 + 3);\t// scale based on 3 and range\r\nfunction noise(sg) { return low + f * (sg + Math.random() * (1 + sg / 3)) };"
+            "PreExpression": "const low = parseInt($prop('DataCorePlugin.ExternalScript.Freq.Min'));\r\nconst high = parseInt($prop('DataCorePlugin.ExternalScript.Freq.Max'));\r\nconst f = .01 * (high - low) * 3 / (1 + 3);\t// scale based on 3 and range\r\nfunction noise(sg) { sg = low + f * sg; return sg + Math.random() * sg / 3 };"
           },
           "FrontRightFrequencyFormula": {
             "JSExt": 0,
             "Interpreter": 1,
             "Expression": "return noise(100 - $prop('ShakeITBSV3Plugin.Export.slip/grip.FrontRight'));",
-            "PreExpression": "const low = parseInt($prop('DataCorePlugin.ExternalScript.Freq.Min'));\r\nconst high = parseInt($prop('DataCorePlugin.ExternalScript.Freq.Max'));\r\nconst f = .01 * (high - low) * 3 / (1 + 3);\t// scale based on 3 and range\r\nfunction noise(sg) { return low + f * (sg + Math.random() * (1 + sg / 3)) };"
+            "PreExpression": "const low = parseInt($prop('DataCorePlugin.ExternalScript.Freq.Min'));\r\nconst high = parseInt($prop('DataCorePlugin.ExternalScript.Freq.Max'));\r\nconst f = .01 * (high - low) * 3 / (1 + 3);\t// scale based on 3 and range\r\nfunction noise(sg) { sg = low + f * sg; return sg + Math.random() * sg / 3 };"
           },
           "RearLeftFrequencyFormula": {
             "JSExt": 0,
             "Interpreter": 1,
             "Expression": "return noise(100 - $prop('ShakeITBSV3Plugin.Export.slip/grip.RearLeft'));",
-            "PreExpression": "const low = parseInt($prop('DataCorePlugin.ExternalScript.Freq.Min'));\r\nconst high = parseInt($prop('DataCorePlugin.ExternalScript.Freq.Max'));\r\nconst f = .01 * (high - low) * 3 / (1 + 3);\t// scale based on 3 and range\r\nfunction noise(sg) { return low + f * (sg + Math.random() * (1 + sg / 3)) };"
+            "PreExpression": "const low = parseInt($prop('DataCorePlugin.ExternalScript.Freq.Min'));\r\nconst high = parseInt($prop('DataCorePlugin.ExternalScript.Freq.Max'));\r\nconst f = .01 * (high - low) * 3 / (1 + 3);\t// scale based on 3 and range\r\nfunction noise(sg) { sg = low + f * sg; return sg + Math.random() * sg / 3 };"
           },
           "RearRightFrequencyFormula": {
             "JSExt": 0,
             "Interpreter": 1,
             "Expression": "return noise(100 - $prop('ShakeITBSV3Plugin.Export.slip/grip.RearRight'));",
-            "PreExpression": "const low = parseInt($prop('DataCorePlugin.ExternalScript.Freq.Min'));\r\nconst high = parseInt($prop('DataCorePlugin.ExternalScript.Freq.Max'));\r\nconst f = .01 * (high - low) * 3 / (1 + 3);\t// scale based on 3 and range\r\nfunction noise(sg) { return low + f * (sg + Math.random() * (1 + sg / 3)) };"
+            "PreExpression": "const low = parseInt($prop('DataCorePlugin.ExternalScript.Freq.Min'));\r\nconst high = parseInt($prop('DataCorePlugin.ExternalScript.Freq.Max'));\r\nconst f = .01 * (high - low) * 3 / (1 + 3);\t// scale based on 3 and range\r\nfunction noise(sg) { sg = low + f * sg; return sg + Math.random() * sg / 3 };"
           },
           "SupportWarnInfo": null,
           "IsMuted": false,
@@ -496,6 +496,142 @@
       "Gain": 50.888888888889369,
       "IsEnabled": true,
       "Output": null
+    },
+    {
+      "AutocalibrationMax": 95.0,
+      "Filter": {
+        "GammaValue": 1.0,
+        "InputGain": 100.0,
+        "MinimumForce": 0,
+        "Threshold": 0,
+        "FilterType": "GammaFilter"
+      },
+      "FrontLeftFormula": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "return 50 + 2 * (0.006 * $prop('GameRawData.Physics.WheelLoad01')\r\n\t\t\t- (16 + 5.0 * $prop('AccelerationHeave') - $prop('AccelerationSway')\r\n\t\t  + 0.9 * $prop('AccelerationSurge')));"
+      },
+      "FrontRightFormula": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "return 0.006 * ($prop('GameRawData.Physics.WheelLoad01')) /*\r\n+ $prop('GameRawData.Physics.WheelLoad02') + $prop('GameRawData.Physics.WheelLoad03')\r\n+ $prop('GameRawData.Physics.WheelLoad04')); */"
+      },
+      "RearLeftFormula": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "return 30 + 5 * $prop('AccelerationHeave')"
+      },
+      "RearRightFormula": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "return 25 + 5 * $prop('AccelerationHeave') -  $prop('AccelerationSway')\r\n\t\t  + $prop('AccelerationSurge');\t// front left: negative sway"
+      },
+      "ForceFrequencies": false,
+      "FrontLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "FrontRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "SupportWarnInfo": null,
+      "IsMuted": false,
+      "ContainerId": "09337888-7322-44ad-a182-122af2189c70",
+      "ContainerType": "CustomEffectContainer",
+      "Description": "compare AC wheel load to estimate",
+      "AggregationMode": "Corners",
+      "Gain": 0.0,
+      "IsEnabled": true,
+      "Output": {
+        "UsePrehemptiveMode": false,
+        "Frequency": 44,
+        "UseHighFrequency": false,
+        "HighFrequency": 50,
+        "WhiteNoise": 10,
+        "UseWhiteNoise": false,
+        "EnableDurationModulation": true,
+        "DurationModulationValue": 34,
+        "FrequencyBasedOnPreFilter": false,
+        "Harmonics": 0,
+        "HoldMode": 1,
+        "DelayEnabled": false,
+        "IsAudio": true,
+        "AssignToChannelGroup": false,
+        "ChannelGroupName": "",
+        "PropertyName": "loads",
+        "ExportProperty": true,
+        "DisableOutput": true,
+        "OutputType": "ToneOutput"
+      }
+    },
+    {
+      "AutocalibrationMax": 95.0,
+      "Filter": {
+        "GammaValue": 1.0,
+        "InputGain": 100.0,
+        "MinimumForce": 0,
+        "Threshold": 0,
+        "FilterType": "GammaFilter"
+      },
+      "FrontLeftFormula": {
+        "Expression": "50 + 3 * [AccelerationSurge]"
+      },
+      "FrontRightFormula": {
+        "Expression": "[AccelerationSway] * 3 + 50"
+      },
+      "RearLeftFormula": {
+        "Expression": ""
+      },
+      "RearRightFormula": {
+        "Expression": ""
+      },
+      "ForceFrequencies": false,
+      "FrontLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "FrontRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "SupportWarnInfo": null,
+      "IsMuted": false,
+      "ContainerId": "e1f85638-f022-427d-a5c2-e555564abdd6",
+      "ContainerType": "CustomEffectContainer",
+      "Description": "surge, sway",
+      "AggregationMode": "Left/Right",
+      "Gain": 90.0,
+      "IsEnabled": true,
+      "Output": {
+        "UsePrehemptiveMode": false,
+        "Frequency": 44,
+        "UseHighFrequency": false,
+        "HighFrequency": 50,
+        "WhiteNoise": 10,
+        "UseWhiteNoise": false,
+        "EnableDurationModulation": true,
+        "DurationModulationValue": 34,
+        "FrequencyBasedOnPreFilter": false,
+        "Harmonics": 0,
+        "HoldMode": 1,
+        "DelayEnabled": false,
+        "IsAudio": true,
+        "AssignToChannelGroup": false,
+        "ChannelGroupName": "",
+        "PropertyName": null,
+        "ExportProperty": false,
+        "DisableOutput": false,
+        "OutputType": "ToneOutput"
+      }
     }
   ],
   "AutoCalibrationRatio2": 0,
