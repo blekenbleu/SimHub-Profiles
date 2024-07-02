@@ -618,7 +618,7 @@
       "Description": "compare AC wheel load to estimate",
       "AggregationMode": "Corners",
       "Gain": 0.0,
-      "IsEnabled": false,
+      "IsEnabled": true,
       "Output": {
         "UsePrehemptiveMode": false,
         "Frequency": 44,

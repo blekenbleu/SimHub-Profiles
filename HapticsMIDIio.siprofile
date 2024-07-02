@@ -1,0 +1,90 @@
+{
+  "CarChoices": [],
+  "IncludeOutputSettingsInProfile": false,
+  "UnmuteEffectsAfterSimhubRestart": false,
+  "EffectsContainers": [
+    {
+      "AutocalibrationMax": 95.0,
+      "Filter": {
+        "GammaValue": 1.0,
+        "InputGain": 100.0,
+        "MinimumForce": 0,
+        "Threshold": 0,
+        "FilterType": "GammaFilter"
+      },
+      "FrontLeftFormula": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "return IdlePoint($prop('Haptics.IdleRPM'));",
+        "PreExpression": "function IdlePoint(idle) { return 12 * Math.log2(( Math.max(idle,1) /60 /2 ) / 16.352 )+50; }"
+      },
+      "FrontRightFormula": {
+        "Expression": "[Haptics.Throttle]"
+      },
+      "RearLeftFormula": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "return RedlinePoint($prop('Haptics.RedlineRPM'), $prop('Haptics.IdleRPM'));",
+        "PreExpression": "function RedlinePoint(redline, idle) {\r\n  idle = Math.max(1,idle);\r\n  return ((( redline / idle ) - 1) * 100) / (51 - 1);\r\n}\r\n"
+      },
+      "RearRightFormula": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "return ReScaleRPM($prop('Rpms'),\r\n                  $prop('Haptics.IdleRPM'),\r\n                  $prop('Haptics.RedlineRPM'));",
+        "PreExpression": "function ReScaleRPM(rpm, idle, redline) {\r\nvar range = Math.max(1, redline - idle);\r\nreturn 1 + Math.min(99, Math.max(0, 99 * (rpm - idle) / range));\r\n}"
+      },
+      "ForceFrequencies": true,
+      "FrontLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "FrontRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "SupportWarnInfo": null,
+      "IsMuted": false,
+      "ContainerId": "8b9f4799-fad6-4b7f-adc6-32857043571f",
+      "ContainerType": "CustomEffectContainer",
+      "Description": "Generate properties for MIDIio from Haptics",
+      "AggregationMode": "Corners",
+      "Gain": 90.0,
+      "IsEnabled": true,
+      "Output": {
+        "UsePrehemptiveMode": false,
+        "Frequency": 44,
+        "UseHighFrequency": false,
+        "HighFrequency": 50,
+        "WhiteNoise": 10,
+        "UseWhiteNoise": false,
+        "EnableDurationModulation": true,
+        "DurationModulationValue": 34,
+        "FrequencyBasedOnPreFilter": false,
+        "Harmonics": 0,
+        "HoldMode": 1,
+        "DelayEnabled": false,
+        "IsAudio": true,
+        "AssignToChannelGroup": true,
+        "ChannelGroupName": "harmonic 0-3",
+        "PropertyName": "throttle",
+        "ExportProperty": true,
+        "DisableOutput": false,
+        "OutputType": "ToneOutput"
+      }
+    }
+  ],
+  "AutoCalibrationRatio2": 0,
+  "OutputMode": 1,
+  "GlobalGain": 100.0,
+  "UseProfileGain": false,
+  "LastLoaded": "2024-02-19T17:12:26.882464-05:00",
+  "Description": "MIDIio currently supports exporting only ShakeIt properties as vJoy axes or MIDI CCs.\r\nThese CUSTOM effect corners convert Haptics properties to ShakeIt properties\r\nthat MIDIio sends as CCs for use in Phase Plant synthesizer.",
+  "Name": "HapticsMIDIio",
+  "ProfileId": "e0eb8056-ae1a-4646-b8c0-b611c4642c8a",
+  "GameCode": null,
+  "CarChoice": null
+}
