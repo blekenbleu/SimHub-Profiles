@@ -1,0 +1,92 @@
+{
+  "CarChoices": [],
+  "IncludeOutputSettingsInProfile": false,
+  "UnmuteEffectsAfterSimhubRestart": true,
+  "EffectsContainers": [
+    {
+      "AutocalibrationMax": 95.0,
+      "Filter": {
+        "GammaValue": 1.0,
+        "InputGain": 100.0,
+        "MinimumForce": 0,
+        "Threshold": 0,
+        "FilterType": "GammaFilter"
+      },
+      "FrontLeftFormula": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "var tire = NewRawData().TireLoad.FrontLeft;\r\n//           __________________slip ____________________\r\nreturn 100 * (1 - $prop('GameRawData.TireGrip.FrontLeft')) * load(tire);",
+        "PreExpression": "// approximate average tire load\r\nroot['load'] = NewRawData().TireLoad.FrontLeft\r\n\r\nfunction load(tire)\r\n{\r\n    root['load'] += (tire - root['load']) / 100; // smoothed tire load\r\n    return tire / root['load'];\r\n}"
+      },
+      "FrontRightFormula": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "var tire = NewRawData().TireLoad.FrontRight;\r\n//           __________________slip ____________________\r\nreturn 100 * (1 - $prop('GameRawData.TireGrip.FrontRight')) * load(tire);",
+        "PreExpression": "// approximate average tire load\r\nroot['load'] = NewRawData().TireLoad.FrontRight\r\n\r\nfunction load(tire)\r\n{\r\n    root['load'] += (tire - root['load']) / 100; // smoothed tire load\r\n    return tire / root['load'];\r\n}"
+      },
+      "RearLeftFormula": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "var tire = NewRawData().TireLoad.RearLeft;\r\n//           __________________slip ____________________\r\nreturn 100 * (1 - $prop('GameRawData.TireGrip.RearLeft')) * load(tire);",
+        "PreExpression": "// approximate average tire load\r\nroot['load'] = NewRawData().TireLoad.RearLeft\r\n\r\nfunction load(tire)\r\n{\r\n    root['load'] += (tire - root['load']) / 100; // smoothed tire load\r\n    return tire / root['load'];\r\n}"
+      },
+      "RearRightFormula": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "var tire = NewRawData().TireLoad.RearRight;\r\n//           __________________slip ____________________\r\nreturn 100 * (1 - $prop('GameRawData.TireGrip.RearRight')) * load(tire);",
+        "PreExpression": "// approximate average tire load\r\nroot['load'] = NewRawData().TireLoad.RearRight\r\n\r\nfunction load(tire)\r\n{\r\n    root['load'] += (tire - root['load']) / 100; // smoothed tire load\r\n    return tire / root['load'];\r\n}"
+      },
+      "ForceFrequencies": false,
+      "FrontLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "FrontRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "SupportWarnInfo": null,
+      "ContainerId": "943036cf-d60f-46cd-b6e5-e7f0176005fa",
+      "ContainerType": "CustomEffectContainer",
+      "Description": "Use RRE-specific NewRawData().TireLoad, GameRawData.TireGrip",
+      "AggregationMode": "Corners",
+      "Gain": 35.555555555555543,
+      "IsEnabled": true,
+      "Output": {
+        "UsePrehemptiveMode": false,
+        "Frequency": 44,
+        "UseHighFrequency": false,
+        "HighFrequency": 50,
+        "WhiteNoise": 10,
+        "UseWhiteNoise": false,
+        "EnableDurationModulation": true,
+        "DurationModulationValue": 34,
+        "FrequencyBasedOnPreFilter": false,
+        "Harmonics": 0,
+        "HoldMode": 1,
+        "DelayEnabled": false,
+        "IsAudio": true,
+        "AssignToChannelGroup": false,
+        "ChannelGroupName": "",
+        "PropertyName": null,
+        "ExportProperty": false,
+        "DisableOutput": false,
+        "OutputType": "ToneOutput"
+      }
+    }
+  ],
+  "AutoCalibrationRatio2": 100,
+  "OutputMode": 1,
+  "GlobalGain": 50.0,
+  "UseProfileGain": false,
+  "LastLoaded": "0001-01-01T00:00:00",
+  "Description": "Generate loaded tire slip,\r\ntaking advantage of RRRE-specific properties and data\r\nthat must be estimated in other games.\r\n",
+  "Name": "LoadedTireSlip",
+  "ProfileId": "1620e2bf-1f1d-4be3-ba74-d4acb5bef08e",
+  "GameCode": "RRRE",
+  "CarChoice": null
+}
