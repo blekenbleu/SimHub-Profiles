@@ -1,4 +1,5 @@
 {
+  "CarChoices": [],
   "IncludeOutputSettingsInProfile": false,
   "UnmuteEffectsAfterSimhubRestart": false,
   "EffectsContainers": [
@@ -12,10 +13,12 @@
         "FilterType": "GammaFilter"
       },
       "FrontLeftFormula": {
+        "JSExt": 3,
         "Interpreter": 1,
         "Expression": "// sway\r\nreturn Math.abs($prop('AccelerationSway')) * 5"
       },
       "FrontRightFormula": {
+        "JSExt": 3,
         "Interpreter": 1,
         "Expression": "// surge\r\nreturn Math.abs($prop('AccelerationSurge'))*5;"
       },
@@ -25,6 +28,20 @@
       "RearRightFormula": {
         "Expression": ""
       },
+      "ForceFrequencies": false,
+      "FrontLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "FrontRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "SupportWarnInfo": null,
       "IsMuted": true,
       "ContainerId": "b19de096-c48e-4659-84d6-b0aeb26f4316",
       "ContainerType": "CustomEffectContainer",
@@ -45,6 +62,7 @@
         "Harmonics": 0,
         "HoldMode": 1,
         "DelayEnabled": false,
+        "IsAudio": true,
         "AssignToChannelGroup": false,
         "ChannelGroupName": "",
         "PropertyName": "AbsAcc",
@@ -63,21 +81,39 @@
         "FilterType": "GammaFilter"
       },
       "FrontLeftFormula": {
+        "JSExt": 3,
         "Interpreter": 1,
         "Expression": "// front left load\r\nd = $prop('ShakeITBSV3Plugin.Export.AbsAcc.Right')\r\nd = (0<$prop('AccelerationSurge')) ? d : -d;\r\n// left load (turning right)\r\nvar L = $prop('ShakeITBSV3Plugin.Export.AbsAcc.Left')\r\nL = (0>$prop('AccelerationSway')) ? L : -L;\r\n//return d;\r\n// d, L range -100 to 100; max magnitude 100*sqrt(2)\r\n// if G are 0, then no load shift and each corner gets 0.25 G\r\nL = 25 + 25 * L / 100;\t// left-right load distribution\r\nL += (L * d / 100);\t\t// fore-aft load distribution\r\nreturn L;\r\n"
       },
       "FrontRightFormula": {
+        "JSExt": 3,
         "Interpreter": 1,
         "Expression": "// load @ front right\r\nvar d = $prop('ShakeITBSV3Plugin.Export.AbsAcc.Right')\r\n// deceleration\r\nd = (0<$prop('AccelerationSurge')) ? d : -d;\r\nvar L = $prop('ShakeITBSV3Plugin.Export.AbsAcc.Left')\r\n// right force (turning left)\r\nL = (0<$prop('AccelerationSway')) ? L : -L;\r\n//return d;\r\n// d, L range -100 to 100; max magnitude 100*sqrt(2)\r\n// for 0 acceleeration, no shift and each corner gets 0.25 G\r\nL = 25 + 25 * L / 100;\t// distribute right - left\r\nL += (L * d / 100);\t\t\t// distribute fore - aft\r\nreturn L;\r\n\r\n"
       },
       "RearLeftFormula": {
+        "JSExt": 3,
         "Interpreter": 1,
         "Expression": "// rear left corner load\r\nvar d = $prop('ShakeITBSV3Plugin.Export.AbsAcc.Right')\r\n// deceleration force\r\nd = (0>$prop('AccelerationSurge')) ? d : -d;\r\n// left force (turning right)\r\nvar L = $prop('ShakeITBSV3Plugin.Export.AbsAcc.Left')\r\nL = (0>$prop('AccelerationSway')) ? L : -L;\r\n// d, L range -100 to 100; max magnitude 100*sqrt(2)\r\n// no load shift for 0 acceleration; each corner gets 0.25 G\r\nvar L = 25 + 25 * L / 100;\t// left-right distribution\r\nL += (L * d / 100);\t\t// distribute aft-fore\r\nreturn L;"
       },
       "RearRightFormula": {
+        "JSExt": 3,
         "Interpreter": 1,
         "Expression": "// right rear load\r\nvar d = $prop('ShakeITBSV3Plugin.Export.AbsAcc.Right')\r\nd = (0>$prop('AccelerationSurge')) ? d : -d;\r\nvar L = $prop('ShakeITBSV3Plugin.Export.AbsAcc.Left')\r\nL = (0<$prop('AccelerationSway')) ? L : -L;\r\n// d, L range -100 to 100; max magnitude 100*sqrt(2)\r\n// if no accelerations, then no shift and each corner gets 0.25 G\r\nL = 25 + 25 * L / 100;\t\t// distribute load rith - left\r\nL += (L * d / 100);\t\t\t// distribute load aft - fore\r\nreturn L;"
       },
+      "ForceFrequencies": false,
+      "FrontLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "FrontRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "SupportWarnInfo": null,
       "IsMuted": true,
       "ContainerId": "a3fc7f43-8f9e-4da1-be9c-1ceacc50d9f0",
       "ContainerType": "CustomEffectContainer",
@@ -98,6 +134,7 @@
         "Harmonics": 0,
         "HoldMode": 1,
         "DelayEnabled": false,
+        "IsAudio": true,
         "AssignToChannelGroup": false,
         "ChannelGroupName": "",
         "PropertyName": "proxyL",
@@ -107,6 +144,7 @@
       }
     },
     {
+      "SupportWarnInfo": null,
       "BrakeFilter": 10,
       "Filter": {
         "GammaValue": 1.0,
@@ -139,6 +177,7 @@
         "Harmonics": 0,
         "HoldMode": 1,
         "DelayEnabled": false,
+        "IsAudio": true,
         "AssignToChannelGroup": false,
         "ChannelGroupName": "",
         "PropertyName": "proxyS",
@@ -157,21 +196,39 @@
         "FilterType": "GammaFilter"
       },
       "FrontLeftFormula": {
+        "JSExt": 3,
         "Interpreter": 1,
         "Expression": "// left front loaded slip\r\nvar L = $prop('ShakeITBSV3Plugin.Export.proxyL.FrontLeft');\r\n// corner slip\r\ns = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontLeft');\r\nreturn s *  L / 100; \r\n//return s;\r\n"
       },
       "FrontRightFormula": {
+        "JSExt": 3,
         "Interpreter": 1,
         "Expression": "// front right loaded slip\r\nvar L = $prop('ShakeITBSV3Plugin.Export.proxyL.FrontRight');\r\n// slip\r\ns = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontRight');\r\n// weight slip by load (abs max 100);\r\nreturn s * L / 100;"
       },
       "RearLeftFormula": {
+        "JSExt": 3,
         "Interpreter": 1,
         "Expression": "// left rear loaded slip\r\nvar L = $prop('ShakeITBSV3Plugin.Export.proxyL.RearLeft');\r\n// corner slip\r\nvar s = $prop('ShakeITBSV3Plugin.Export.proxyS.RearLeft');\r\n// weight slip by load\r\nreturn s *  L / 100; "
       },
       "RearRightFormula": {
+        "JSExt": 3,
         "Interpreter": 1,
         "Expression": "// right rear loaded slip\r\nvar L = $prop('ShakeITBSV3Plugin.Export.proxyL.RearRight');\r\n// corner slip\r\ns = $prop('ShakeITBSV3Plugin.Export.proxyS.RearRight');\r\n// weight slip by load (abs max 100);\r\nreturn s * L / 100;"
       },
+      "ForceFrequencies": false,
+      "FrontLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "FrontRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "SupportWarnInfo": null,
       "IsMuted": true,
       "ContainerId": "cc64cec4-9dc5-4e26-bce2-ef087adb2c84",
       "ContainerType": "CustomEffectContainer",
@@ -192,6 +249,7 @@
         "Harmonics": 0,
         "HoldMode": 1,
         "DelayEnabled": false,
+        "IsAudio": true,
         "AssignToChannelGroup": false,
         "ChannelGroupName": "",
         "PropertyName": "LoadedSlip",
@@ -210,6 +268,7 @@
         "FilterType": "GammaFilter"
       },
       "FrontLeftFormula": {
+        "JSExt": 3,
         "Interpreter": 1,
         "Expression": "// understeer\r\n// front left slip\r\nvar s = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontLeft');\r\ns = Math.max(0, s - $prop('ShakeITBSV3Plugin.Export.proxyS.RearLeft'));\r\n// front right slip\r\nvar r = $prop('ShakeITBSV3Plugin.Export.proxyS.FrontRight');\r\nr = Math.max(0, r - $prop('ShakeITBSV3Plugin.Export.proxyS.RearRight'));\r\n// correlate slip differences\r\nreturn Math.sqrt(r*s) * $prop('ShakeITBSV3Plugin.Export.AbsAcc.Left') / 15;\r\n"
       },
@@ -217,12 +276,27 @@
         "Expression": "[GameRawData.Player.Rotation.X]*100"
       },
       "RearLeftFormula": {
+        "JSExt": 3,
         "Interpreter": 1,
         "Expression": "// oversteer\r\n// front left slip\r\nvar s = - $prop('ShakeITBSV3Plugin.Export.proxyS.FrontLeft');\r\ns = Math.max(0, s + $prop('ShakeITBSV3Plugin.Export.proxyS.RearLeft'));\r\n// front right slip\r\nvar r = - $prop('ShakeITBSV3Plugin.Export.proxyS.FrontRight');\r\nr = Math.max(0, r + $prop('ShakeITBSV3Plugin.Export.proxyS.RearRight'));\r\n// correlate slip differences\r\nreturn Math.sqrt(r*s) * $prop('ShakeITBSV3Plugin.Export.AbsAcc.Left') / 20;"
       },
       "RearRightFormula": {
         "Expression": "[GameRawData.Player.Rotation.Y]*100"
       },
+      "ForceFrequencies": false,
+      "FrontLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "FrontRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "SupportWarnInfo": null,
       "IsMuted": true,
       "ContainerId": "fde99e46-a446-4e25-b8c2-cd3e10f6bef2",
       "ContainerType": "CustomEffectContainer",
@@ -243,6 +317,7 @@
         "Harmonics": 0,
         "HoldMode": 1,
         "DelayEnabled": false,
+        "IsAudio": true,
         "AssignToChannelGroup": false,
         "ChannelGroupName": "",
         "PropertyName": "UnderOversteer",
@@ -261,21 +336,39 @@
         "FilterType": "GammaFilter"
       },
       "FrontLeftFormula": {
+        "JSExt": 3,
         "Interpreter": 1,
         "Expression": "mix = $prop('ShakeITBSV3Plugin.Export.UnderOversteer.Front');\r\nmix += $prop('ShakeITBSV3Plugin.Export.LoadedSlip.FrontLeft');\r\nmix += $prop('ShakeITBSV3Plugin.Export.proxyS.FrontLeft');\r\nreturn mix/2;"
       },
       "FrontRightFormula": {
+        "JSExt": 3,
         "Interpreter": 1,
         "Expression": "mix = $prop('ShakeITBSV3Plugin.Export.UnderOversteer.Front');\r\nmix += $prop('ShakeITBSV3Plugin.Export.LoadedSlip.FrontRight');\r\nmix += $prop('ShakeITBSV3Plugin.Export.proxyS.FrontRight');\r\nreturn mix/2;"
       },
       "RearLeftFormula": {
+        "JSExt": 3,
         "Interpreter": 1,
         "Expression": "mix = $prop('ShakeITBSV3Plugin.Export.UnderOversteer.Rear');\r\nmix += $prop('ShakeITBSV3Plugin.Export.LoadedSlip.RearLeft');\r\nmix += $prop('ShakeITBSV3Plugin.Export.proxyS.RearLeft');\r\nreturn mix/2;"
       },
       "RearRightFormula": {
+        "JSExt": 3,
         "Interpreter": 1,
         "Expression": "mix = $prop('ShakeITBSV3Plugin.Export.UnderOversteer.Rear');\r\nmix += $prop('ShakeITBSV3Plugin.Export.LoadedSlip.RearRight');\r\nmix += $prop('ShakeITBSV3Plugin.Export.proxyS.RearRight');\r\nreturn mix/2;"
       },
+      "ForceFrequencies": false,
+      "FrontLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "FrontRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "SupportWarnInfo": null,
       "IsMuted": false,
       "ContainerId": "d4886909-a1a8-4548-96e2-5bf3725caa5c",
       "ContainerType": "CustomEffectContainer",
@@ -296,6 +389,7 @@
         "Harmonics": 0,
         "HoldMode": 1,
         "DelayEnabled": false,
+        "IsAudio": true,
         "AssignToChannelGroup": true,
         "ChannelGroupName": "mixSlipsOversteer",
         "PropertyName": null,
@@ -314,25 +408,47 @@
         "FilterType": "GammaFilter"
       },
       "FrontLeftFormula": {
+        "JSExt": 3,
         "Interpreter": 1,
-        "Expression": "var tsfl = $prop('GameRawData.TireSpeed.FrontLeft')\r\nvar cs = $prop('SpeedMph')\r\nvar grip = 1-$prop('GameRawData.TireGrip.RearLeft')\r\nvar sway = Math.pow (Math.abs ($prop('AccelerationSway')),2)\r\nvar surge = Math.pow (Math.abs ($prop('AccelerationSurge')),2)\r\nreturn cs\r\nreturn Math.abs((tsfl+cs)/cs)*(Math.sqrt(sway+surge))*400 \r\n"
+        "Expression": "var cs = $prop('SpeedMph');\r\nif (1 > cs)\r\n\treturn 0;\r\n\t\r\nvar ts = $prop('GameRawData.TireSpeed.FrontLeft');\r\nreturn Math.abs((ts+cs)/cs)*RMSss($prop('AccelerationSway'), $prop('AccelerationSurge'))*8;\r\n",
+        "PreExpression": "function RMSss(sway, surge)\r\n{\r\n\treturn Math.sqrt(sway*sway + surge*surge);\r\n}"
       },
       "FrontRightFormula": {
+        "JSExt": 3,
         "Interpreter": 1,
-        "Expression": "var tsfl = $prop('GameRawData.TireSpeed.FrontRight')\r\nvar cs = $prop('SpeedMph');\r\nvar sway = Math.pow (Math.abs ($prop('AccelerationSway')),2)\r\nvar surge = Math.pow (Math.abs ($prop('AccelerationSurge')),2)\r\nreturn Math.abs((tsfl+cs)/cs)*(Math.sqrt(sway+surge))*8\r\n\r\n"
+        "Expression": "var cs = $prop('SpeedMph');\r\nif (1 > cs)\r\n\treturn 0;\r\n\t\r\nvar ts = $prop('GameRawData.TireSpeed.FrontRight');\r\nreturn Math.abs((ts+cs)/cs)*RMSss($prop('AccelerationSway'), $prop('AccelerationSurge'))*8;",
+        "PreExpression": "function RMSss(sway, surge)\r\n{\r\n\treturn Math.sqrt(sway*sway + surge*surge);\r\n}"
       },
       "RearLeftFormula": {
+        "JSExt": 3,
         "Interpreter": 1,
-        "Expression": "var ts = $prop('GameRawData.TireSpeed.RearLeft')\r\nvar cs = $prop('SpeedMph');\r\nvar sway = Math.pow (Math.abs ($prop('AccelerationSway')),2)\r\nvar surge = Math.pow (Math.abs ($prop('AccelerationSurge')),2)\r\nreturn Math.abs((ts+cs)/cs)*(Math.sqrt(sway+surge))*8\r\n"
+        "Expression": "var cs = $prop('SpeedMph');\r\nif (1 > cs)\r\n\treturn 0;\r\n\t\r\nvar ts = $prop('GameRawData.TireSpeed.RearLeft');\r\nreturn Math.abs((ts+cs)/cs)*RMSss($prop('AccelerationSway'), $prop('AccelerationSurge'))*8;\r\n",
+        "PreExpression": "function RMSss(sway, surge)\r\n{\r\n\treturn Math.sqrt(sway*sway + surge*surge);\r\n}"
       },
       "RearRightFormula": {
+        "JSExt": 3,
         "Interpreter": 1,
-        "Expression": "var ts = $prop('GameRawData.TireSpeed.RearLeft')\r\nvar cs = $prop('SpeedMph');\r\nvar sway = Math.pow (Math.abs ($prop('AccelerationSway')),2)\r\nvar surge = Math.pow (Math.abs ($prop('AccelerationSurge')),2)\r\nreturn Math.abs((ts+cs)/cs)*(Math.sqrt(sway+surge))*8\r\n\r\n"
+        "Expression": "var cs = $prop('SpeedMph');\r\nif (1 > cs)\r\n\treturn 0;\r\n\t\r\nvar ts = $prop('GameRawData.TireSpeed.RearLeft');\r\nreturn Math.abs((ts+cs)/cs)*RMSss($prop('AccelerationSway'), $prop('AccelerationSurge'))*8;",
+        "PreExpression": "function RMSss(sway, surge)\r\n{\r\n\treturn Math.sqrt(sway*sway + surge*surge);\r\n}"
       },
+      "ForceFrequencies": false,
+      "FrontLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "FrontRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "SupportWarnInfo": null,
       "IsMuted": false,
       "ContainerId": "499cc56c-eece-492f-8dbe-646819bc067a",
       "ContainerType": "CustomEffectContainer",
-      "Description": "Slip Conditioned by Surge, Sway.",
+      "Description": "Slip Conditioned by RMS Surge, Sway.",
       "AggregationMode": "Corners",
       "Gain": 36.000000000000114,
       "IsEnabled": true,
@@ -349,6 +465,7 @@
         "Harmonics": 0,
         "HoldMode": 1,
         "DelayEnabled": false,
+        "IsAudio": true,
         "AssignToChannelGroup": true,
         "ChannelGroupName": "SlipSurgeSway",
         "PropertyName": null,
@@ -367,21 +484,39 @@
         "FilterType": "GammaFilter"
       },
       "FrontLeftFormula": {
+        "JSExt": 3,
         "Interpreter": 1,
         "Expression": "var tsfl = $prop('GameRawData.TireSpeed.FrontLeft')\r\nvar cs = $prop('GameRawData.CarSpeed')\r\nvar grip = (1-$prop('GameRawData.TireGrip.FrontLeft'))/10\r\nvar sway = Math.pow (Math.abs ($prop('AccelerationSway')),2)\r\nvar surge = Math.pow (Math.abs ($prop('AccelerationSurge')),2)\r\n//return (((tsfl+cs)/cs)*(Math.sqrt(sway+surge)))*100 \r\n//return Math.abs((tsfl+cs)/cs)*(Math.sqrt(sway+surge))*150 \r\n//return grip\r\nreturn grip*(Math.sqrt(sway+surge))*100 "
       },
       "FrontRightFormula": {
+        "JSExt": 3,
         "Interpreter": 1,
         "Expression": "var tsfl = $prop('GameRawData.TireSpeed.FrontRight')\r\nvar cs = $prop('GameRawData.CarSpeed')\r\nvar grip = (1-$prop('GameRawData.TireGrip.FrontRight'))/10\r\nvar sway = Math.pow (Math.abs ($prop('AccelerationSway')),2)\r\nvar surge = Math.pow (Math.abs ($prop('AccelerationSurge')),2)\r\n//return (((tsfl+cs)/cs)*(Math.sqrt(sway+surge)))*100 \r\n//return Math.abs((tsfl+cs)/cs)*(Math.sqrt(sway+surge))*150 \r\nreturn grip*(Math.sqrt(sway+surge))*100 \r\n"
       },
       "RearLeftFormula": {
+        "JSExt": 3,
         "Interpreter": 1,
         "Expression": "var ts = $prop('GameRawData.TireSpeed.RearLeft')\r\nvar cs = $prop('GameRawData.CarSpeed')\r\nvar sway = Math.pow (Math.abs ($prop('AccelerationSway')),2)\r\nvar surge = Math.pow (Math.abs ($prop('AccelerationSurge')),2)\r\nreturn Math.abs((ts+cs)/cs)*(Math.sqrt(sway+surge))*100 \r\n"
       },
       "RearRightFormula": {
+        "JSExt": 3,
         "Interpreter": 1,
         "Expression": "var ts = $prop('GameRawData.TireSpeed.RearLeft')\r\nvar cs = $prop('GameRawData.CarSpeed')\r\nvar sway = Math.pow (Math.abs ($prop('AccelerationSway')),2)\r\nvar surge = Math.pow (Math.abs ($prop('AccelerationSurge')),2)\r\nreturn Math.abs((ts+cs)/cs)*(Math.sqrt(sway+surge))*100 \r\n"
       },
+      "ForceFrequencies": false,
+      "FrontLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "FrontRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "SupportWarnInfo": null,
       "IsMuted": false,
       "ContainerId": "387e419e-2e89-434d-997d-2d58526a57ee",
       "ContainerType": "CustomEffectContainer",
@@ -402,6 +537,7 @@
         "Harmonics": 0,
         "HoldMode": 1,
         "DelayEnabled": false,
+        "IsAudio": true,
         "AssignToChannelGroup": true,
         "ChannelGroupName": "not on",
         "PropertyName": null,
@@ -415,10 +551,10 @@
   "OutputMode": 1,
   "GlobalGain": 50.0,
   "UseProfileGain": false,
-  "Error": "",
   "LastLoaded": "2021-09-18T11:48:50.7431082-04:00",
   "Description": "RangeyRover 9/6/2021 https://www.racedepartment.com/threads/simhub-shakeit-bass-shakers-custom-4-corner-tire-slip.198455/page-3#post-3426910\r\nShaker Profiles with RRE replay for F4, M3 @ Zolder\r\nhttps://drive.google.com/file/d/1OphMBb-S_sdSF7fXH7X0BCzu5X0hLzs8/view?usp=sharing",
   "Name": "RRShakers",
   "ProfileId": "91c422ec-2b62-4ce0-8921-7da30caea30a",
-  "GameCode": "RRRE"
+  "GameCode": "RRRE",
+  "CarChoice": null
 }
