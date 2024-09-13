@@ -1,0 +1,1986 @@
+{
+  "CarChoices": [],
+  "IncludeOutputSettingsInProfile": false,
+  "UnmuteEffectsAfterSimhubRestart": false,
+  "EffectsContainers": [
+    {
+      "EffectsContainers": [
+        {
+          "EffectsContainers": [
+            {
+              "EffectsContainers": [
+                {
+                  "AutocalibrationMax": 95.0,
+                  "Filter": {
+                    "GammaValue": 1.0,
+                    "InputGain": 100.0,
+                    "MinimumForce": 0,
+                    "Threshold": 0,
+                    "FilterType": "GammaFilter"
+                  },
+                  "FrontLeftFormula": {
+                    "JSExt": 0,
+                    "Interpreter": 1,
+                    "Expression": "var carname = $prop('Haptics.CarName')\r\nlet cyl = $prop('Haptics.EngineCylinders')\r\nlet audi10;\r\nif (carname.indexOf('Audi') > -1 && cyl == 10) {\r\naudi10 = true;\r\n} else {\r\naudi10 = false;\r\n}\r\n\r\nreturn audi10"
+                  },
+                  "FrontRightFormula": {
+                    "Expression": ""
+                  },
+                  "RearLeftFormula": {
+                    "Expression": ""
+                  },
+                  "RearRightFormula": {
+                    "Expression": ""
+                  },
+                  "ForceFrequencies": false,
+                  "FrontLeftFrequencyFormula": {
+                    "Expression": ""
+                  },
+                  "FrontRightFrequencyFormula": {
+                    "Expression": ""
+                  },
+                  "RearLeftFrequencyFormula": {
+                    "Expression": ""
+                  },
+                  "RearRightFrequencyFormula": {
+                    "Expression": ""
+                  },
+                  "IsMuted": false,
+                  "ContainerId": "b9957bf1-d3be-45ec-9faa-3103fa4c10d5",
+                  "ContainerType": "CustomEffectContainer",
+                  "Description": "AudiV10exception",
+                  "AggregationMode": "Mono",
+                  "Gain": 0.0,
+                  "IsEnabled": true,
+                  "Output": {
+                    "UsePrehemptiveMode": false,
+                    "Frequency": 1,
+                    "UseHighFrequency": false,
+                    "HighFrequency": 1,
+                    "WhiteNoise": 10,
+                    "UseWhiteNoise": false,
+                    "EnableDurationModulation": true,
+                    "DurationModulationValue": 34,
+                    "FrequencyBasedOnPreFilter": false,
+                    "Harmonics": 0,
+                    "HoldMode": 1,
+                    "DelayEnabled": false,
+                    "IsAudio": true,
+                    "AssignToChannelGroup": false,
+                    "ChannelGroupName": "",
+                    "PropertyName": "AudiV10exception",
+                    "ExportProperty": true,
+                    "DisableOutput": true,
+                    "OutputType": "ToneOutput"
+                  }
+                },
+                {
+                  "AutocalibrationMax": 95.0,
+                  "Filter": {
+                    "GammaValue": 1.0,
+                    "InputGain": 100.0,
+                    "MinimumForce": 0,
+                    "Threshold": 0,
+                    "FilterType": "GammaFilter"
+                  },
+                  "FrontLeftFormula": {
+                    "JSExt": 0,
+                    "Interpreter": 1,
+                    "Expression": "var carname = $prop('Haptics.CarName')\r\nlet cyl = $prop('Haptics.EngineCylinders')\r\nlet car;\r\nif (carname.indexOf('Lamborghini') > -1 && cyl == 12) {\r\ncar = true;\r\n} else {\r\ncar = false;\r\n}\r\n\r\nreturn car"
+                  },
+                  "FrontRightFormula": {
+                    "Expression": ""
+                  },
+                  "RearLeftFormula": {
+                    "Expression": ""
+                  },
+                  "RearRightFormula": {
+                    "Expression": ""
+                  },
+                  "ForceFrequencies": false,
+                  "FrontLeftFrequencyFormula": {
+                    "Expression": ""
+                  },
+                  "FrontRightFrequencyFormula": {
+                    "Expression": ""
+                  },
+                  "RearLeftFrequencyFormula": {
+                    "Expression": ""
+                  },
+                  "RearRightFrequencyFormula": {
+                    "Expression": ""
+                  },
+                  "IsMuted": false,
+                  "ContainerId": "aae044be-1f5a-46f3-a1bd-adbd7eb6a306",
+                  "ContainerType": "CustomEffectContainer",
+                  "Description": "LamboV12exception",
+                  "AggregationMode": "Mono",
+                  "Gain": 0.0,
+                  "IsEnabled": true,
+                  "Output": {
+                    "UsePrehemptiveMode": false,
+                    "Frequency": 1,
+                    "UseHighFrequency": false,
+                    "HighFrequency": 1,
+                    "WhiteNoise": 10,
+                    "UseWhiteNoise": false,
+                    "EnableDurationModulation": true,
+                    "DurationModulationValue": 34,
+                    "FrequencyBasedOnPreFilter": false,
+                    "Harmonics": 0,
+                    "HoldMode": 1,
+                    "DelayEnabled": false,
+                    "IsAudio": true,
+                    "AssignToChannelGroup": false,
+                    "ChannelGroupName": "",
+                    "PropertyName": "LamboV12exception",
+                    "ExportProperty": true,
+                    "DisableOutput": true,
+                    "OutputType": "ToneOutput"
+                  }
+                }
+              ],
+              "Filter": null,
+              "IsMuted": false,
+              "ContainerId": "12a2ef1d-569d-4bb7-a929-d9c3fd481b04",
+              "ContainerType": "GroupContainer",
+              "Description": "Specific cars",
+              "AggregationMode": null,
+              "Gain": 0.0,
+              "IsEnabled": true,
+              "Output": null
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": "if ($prop('EngineIgnitionOn') == 0 || $prop('EngineStarted') == 0)\r\nreturn 0\r\nelse \r\nreturn 1"
+              },
+              "FrontRightFormula": {
+                "Expression": ""
+              },
+              "RearLeftFormula": {
+                "Expression": ""
+              },
+              "RearRightFormula": {
+                "Expression": ""
+              },
+              "ForceFrequencies": false,
+              "FrontLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "FrontRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "IsMuted": false,
+              "ContainerId": "e2dabd86-c64d-4d54-9085-44e9077cd65a",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "Return 0",
+              "AggregationMode": "Mono",
+              "Gain": 0.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 1,
+                "UseHighFrequency": false,
+                "HighFrequency": 50,
+                "WhiteNoise": 10,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": false,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": false,
+                "ChannelGroupName": "",
+                "PropertyName": "returnZero",
+                "ExportProperty": true,
+                "DisableOutput": true,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": "if ($prop('ShakeITBSV3Plugin.Export.returnZero.All') == 0 || $prop('Haptics.EngineConfig') == 'E') return 0\r\n\r\nlet t = ($prop('ShakeITBSV3Plugin.Export.finalThrottle.All') / 200) + 1\r\n\r\nreturn (($prop('Haptics.rpmMain') * 2 ) * $prop('Haptics.rpmMainEQ') ) * t\r\n"
+              },
+              "FrontRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "ForceFrequencies": false,
+              "FrontLeftFrequencyFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": "let f = $prop('Haptics.FreqHarmonic')*2\r\nlet fscale = f/100\r\nlet r = (($prop('ShakeITBSV3Plugin.Export.rpmRandomizer.All')*fscale)-(50*fscale)-fscale)\r\n\r\nreturn f+r"
+              },
+              "FrontRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "IsMuted": false,
+              "ContainerId": "cf6e8d83-4de2-4afc-9f70-daa14d6711d6",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "RPM Main processing",
+              "AggregationMode": "Mono",
+              "Gain": 0.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 1,
+                "UseHighFrequency": false,
+                "HighFrequency": 1,
+                "WhiteNoise": 2,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": true,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": false,
+                "ChannelGroupName": "Engine RPM - Main",
+                "PropertyName": "rpmMainF",
+                "ExportProperty": true,
+                "DisableOutput": true,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": "let rpm = $prop('Rpms')\r\nlet start = 10000\r\n\r\nlet r;\r\nif (rpm <= start)\r\nr = start\r\nelse\r\nr = rpm\r\n\r\nlet start = r - start\r\n\r\nreturn ((start/3750))\r\n"
+              },
+              "FrontRightFormula": {
+                "Expression": ""
+              },
+              "RearLeftFormula": {
+                "Expression": ""
+              },
+              "RearRightFormula": {
+                "Expression": ""
+              },
+              "ForceFrequencies": false,
+              "FrontLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "FrontRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "IsMuted": false,
+              "ContainerId": "e5c324c6-78b8-4894-977c-2411f48315a0",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "Fundamental rpm friction multi",
+              "AggregationMode": "Mono",
+              "Gain": 0.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 1,
+                "UseHighFrequency": false,
+                "HighFrequency": 50,
+                "WhiteNoise": 10,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": false,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": false,
+                "ChannelGroupName": "",
+                "PropertyName": "rpmFrictionMulti",
+                "ExportProperty": true,
+                "DisableOutput": true,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 70,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": "root[\"filtered\"] += ($prop('Throttle') - root[\"filtered\"]) / 14;\r\nif ($prop('Throttle') > (0.5 + root[\"filtered\"]))\r\n   root['more'] += ($prop('Throttle') - root[\"filtered\"]) / 6;\r\nelse root['more'] += ((95 < $prop('Throttle') ? 1 : 0) - root['more'])  * 0.2\r\nreturn root['more'];",
+                "PreExpression": "root['more'] = 0;\r\nroot['filtered'] = $prop('Throttle');"
+              },
+              "FrontRightFormula": {
+                "Expression": ""
+              },
+              "RearLeftFormula": {
+                "Expression": ""
+              },
+              "RearRightFormula": {
+                "Expression": ""
+              },
+              "ForceFrequencies": false,
+              "FrontLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "FrontRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "IsMuted": false,
+              "ContainerId": "2e2dd2c9-eccf-46e9-bae0-50223e4edd6a",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "proxyThrottle",
+              "AggregationMode": "Mono",
+              "Gain": 0.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 1,
+                "UseHighFrequency": false,
+                "HighFrequency": 50,
+                "WhiteNoise": 10,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": false,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": false,
+                "ChannelGroupName": "",
+                "PropertyName": "proxyThrottle",
+                "ExportProperty": true,
+                "DisableOutput": true,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": "let t0 = $prop('Throttle') * 0.33\r\nlet throttle = $prop('ShakeITBSV3Plugin.Export.proxyThrottle.All') + t0\r\n\r\n\r\nreturn iirL(throttle)",
+                "PreExpression": "root[\"sluggish\"] = 0; // initial value\r\nconst slower = 60;        // larger values are more sluggish\r\nconst faster =  1;        // smaller values respond more quickly\r\nfunction factor(throttle)\r\n{\r\n  if (throttle > root[\"sluggish\"])\r\n    return faster;\r\n  else return slower;\r\n}\r\n\r\nfunction iirL(throttle) {\r\n    root[\"sluggish\"] += (throttle - root[\"sluggish\"]) / factor(throttle);\r\n    return root[\"sluggish\"];\r\n}"
+              },
+              "FrontRightFormula": {
+                "Expression": ""
+              },
+              "RearLeftFormula": {
+                "Expression": ""
+              },
+              "RearRightFormula": {
+                "Expression": ""
+              },
+              "ForceFrequencies": false,
+              "FrontLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "FrontRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "IsMuted": false,
+              "ContainerId": "ef653596-d083-4869-8afc-7a2bf6844f0d",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "add further sluggish control to proxyThrottle",
+              "AggregationMode": "Mono",
+              "Gain": 0.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 1,
+                "UseHighFrequency": false,
+                "HighFrequency": 50,
+                "WhiteNoise": 10,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": false,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": false,
+                "ChannelGroupName": "",
+                "PropertyName": "finalThrottle",
+                "ExportProperty": true,
+                "DisableOutput": true,
+                "OutputType": "ToneOutput"
+              }
+            }
+          ],
+          "Filter": null,
+          "IsMuted": false,
+          "ContainerId": "24828868-d531-4040-9f0c-a56df038d6b1",
+          "ContainerType": "GroupContainer",
+          "Description": "Processing",
+          "AggregationMode": null,
+          "Gain": 0.0,
+          "IsEnabled": true,
+          "Output": null
+        },
+        {
+          "EffectsContainers": [
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": "if ($prop('ShakeITBSV3Plugin.Export.returnZero.All') == 0 || $prop('Haptics.EngineConfig') == 'E') return 0\r\n\r\nlet t = ($prop('ShakeITBSV3Plugin.Export.finalThrottle.All') / 50) + 1\r\nlet friction = $prop('ShakeITBSV3Plugin.Export.rpmFrictionMulti.All') + 1\r\n\r\nreturn (($prop('Haptics.FreqLFEeq') * 2) * friction ) * t"
+              },
+              "FrontRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "ForceFrequencies": true,
+              "FrontLeftFrequencyFormula": {
+                "Expression": "[Haptics.FreqLFEAdaptive]"
+              },
+              "FrontRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "GainChangeStep": 1,
+              "IsMuted": false,
+              "ContainerId": "d3b260c3-2b25-4299-9ee5-c8774f2ea69e",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "RPM LFE (A)",
+              "AggregationMode": "Mono",
+              "Gain": 100.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 1,
+                "UseHighFrequency": false,
+                "HighFrequency": 12,
+                "WhiteNoise": 1,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": true,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": true,
+                "ChannelGroupName": "Engine RPM - LFE",
+                "PropertyName": "ArpmLFE",
+                "ExportProperty": true,
+                "DisableOutput": false,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": "let friction = $prop('ShakeITBSV3Plugin.Export.rpmFrictionMulti.All') + 1\r\nlet t = ($prop('ShakeITBSV3Plugin.Export.finalThrottle.All') / 50) + 1\r\n\r\nreturn ($prop('ShakeITBSV3Plugin.Export.ArpmLFE.All') / friction) / t"
+              },
+              "FrontRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "ForceFrequencies": true,
+              "FrontLeftFrequencyFormula": {
+                "Expression": "[Haptics.FreqLFEAdaptive] * 1.5"
+              },
+              "FrontRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "GainChangeStep": 1,
+              "IsMuted": false,
+              "DecrementGainAction": {
+                "Triggers": [
+                  {
+                    "Trigger": "PropertyServerPlugin.RPM-LFE-down",
+                    "PressType": 4
+                  }
+                ]
+              },
+              "ContainerId": "1cbbe7ff-5a77-4df2-b1bb-a69d2cb5094b",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "RPM LFE: (B) ",
+              "AggregationMode": "Mono",
+              "Gain": 100.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 1,
+                "UseHighFrequency": false,
+                "HighFrequency": 12,
+                "WhiteNoise": 1,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": true,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": true,
+                "ChannelGroupName": "Engine RPM - LFE",
+                "PropertyName": "BrpmLFE",
+                "ExportProperty": true,
+                "DisableOutput": false,
+                "OutputType": "ToneOutput"
+              }
+            }
+          ],
+          "Filter": null,
+          "GainChangeStep": 1,
+          "IsMuted": false,
+          "ToggleMute": {
+            "Triggers": [
+              {
+                "Trigger": "PropertyServerPlugin.RPM-LFE-toggle-mute",
+                "PressType": 4
+              }
+            ]
+          },
+          "IncrementGainAction": {
+            "Triggers": [
+              {
+                "Trigger": "PropertyServerPlugin.RPM-LFE-up",
+                "PressType": 4
+              }
+            ]
+          },
+          "DecrementGainAction": {
+            "Triggers": [
+              {
+                "Trigger": "PropertyServerPlugin.RPM-LFE-down",
+                "PressType": 4
+              }
+            ]
+          },
+          "ContainerId": "d3913086-a220-465a-94af-163fc887d8a7",
+          "ContainerType": "GroupContainer",
+          "Description": "RPM LFE",
+          "AggregationMode": null,
+          "Gain": 50.333333333333371,
+          "IsEnabled": true,
+          "Output": null
+        },
+        {
+          "EffectsContainers": [
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": "let cyl = $prop('Haptics.EngineCylinders')\r\nlet sum = $prop('ShakeITBSV3Plugin.Export.rpmMainF.All')\r\nlet audiv10 = $prop('ShakeITBSV3Plugin.Export.AudiV10exception.All')\r\nlet lambov12 = $prop('ShakeITBSV3Plugin.Export.LamboV12exception.All')\r\nlet friction = $prop('ShakeITBSV3Plugin.Export.rpmFrictionMulti.All') + 1\r\n\r\nlet total;\r\nif (cyl == 1)\r\ntotal = 5\r\n\r\nelse if (cyl == 2)\r\ntotal = 4\r\n\r\nelse if (cyl == 3)\r\ntotal = 2\r\n\r\nelse if (cyl == 4)\r\ntotal = 3\r\n\r\nelse if (cyl == 5)\r\ntotal = 2\r\n\r\nelse if (cyl == 6)\r\ntotal = 2\r\n\r\nelse if (cyl == 8)\r\ntotal = 3\r\n\r\nelse if (cyl == 10 && audiv10 == 1) //audi\r\ntotal = 4\r\n\r\nelse if (cyl == 10 && audiv10 == 0)\r\ntotal = 3\r\n\r\nelse if (cyl == 12 && lambov12 == 0)\r\ntotal = 2\r\n\r\nelse if (cyl == 12 && lambov12 == 1) //lambo\r\ntotal = 1\r\n\r\nelse\r\ntotal = 0 \r\n\r\nreturn ((total/5 * sum) * friction)"
+              },
+              "FrontRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "ForceFrequencies": true,
+              "FrontLeftFrequencyFormula": {
+                "Expression": "[Haptics.FreqHarmonic] * 2"
+              },
+              "FrontRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "IsMuted": false,
+              "ContainerId": "f749f814-5334-4987-b03d-339515369173",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "F",
+              "AggregationMode": "Mono",
+              "Gain": 100.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 1,
+                "UseHighFrequency": false,
+                "HighFrequency": 1,
+                "WhiteNoise": 2,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": true,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": true,
+                "ChannelGroupName": "Engine RPM - Main",
+                "PropertyName": "rpmMainF0",
+                "ExportProperty": false,
+                "DisableOutput": false,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": "let cyl = $prop('Haptics.EngineCylinders')\r\nlet sum = $prop('ShakeITBSV3Plugin.Export.rpmMainF.All')\r\nlet audiv10 = $prop('ShakeITBSV3Plugin.Export.AudiV10exception.All')\r\nlet lambov12 = $prop('ShakeITBSV3Plugin.Export.LamboV12exception.All')\r\n\r\nlet total;\r\nif (cyl == 1 || cyl == 2)\r\ntotal = 0\r\n\r\nelse if (cyl == 3)\r\ntotal = 4\r\n\r\nelse if (cyl == 4)\r\ntotal = 3\r\n\r\nelse if (cyl == 5)\r\ntotal = 4\r\n\r\nelse if (cyl == 6)\r\ntotal = 3\r\n\r\nelse if (cyl == 8)\r\ntotal = 2\r\n\r\nelse if (cyl == 10 && audiv10 == 1) //audi\r\ntotal = 4\r\n\r\nelse if (cyl == 10 && audiv10 == 0)\r\ntotal = 3\r\n\r\nelse if (cyl == 12 && lambov12 == 0)\r\ntotal = 2\r\n\r\nelse if (cyl == 12 && lambov12 == 1) //lambo\r\ntotal = 3\r\n\r\nelse\r\ntotal = 0 \r\n\r\nreturn total/5 * sum"
+              },
+              "FrontRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "ForceFrequencies": true,
+              "FrontLeftFrequencyFormula": {
+                "Expression": "[Haptics.FreqHarmonic] * 2.5"
+              },
+              "FrontRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "IsMuted": false,
+              "ContainerId": "aa7b087c-b1fa-4fdd-bf2c-7f9e955caa05",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "1.5F",
+              "AggregationMode": "Mono",
+              "Gain": 100.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 1,
+                "UseHighFrequency": false,
+                "HighFrequency": 1,
+                "WhiteNoise": 2,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": true,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": true,
+                "ChannelGroupName": "Engine RPM - Main",
+                "PropertyName": "rpmMain1.5F",
+                "ExportProperty": false,
+                "DisableOutput": false,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": "let cyl = $prop('Haptics.EngineCylinders')\r\nlet sum = $prop('ShakeITBSV3Plugin.Export.rpmMainF.All')\r\nlet audiv10 = $prop('ShakeITBSV3Plugin.Export.AudiV10exception.All')\r\nlet lambov12 = $prop('ShakeITBSV3Plugin.Export.LamboV12exception.All')\r\n\r\nlet total;\r\nif (cyl == 1)\r\ntotal = 0\r\n\r\nelse if (cyl == 2)\r\ntotal = 1\r\n\r\nelse if (cyl == 3)\r\ntotal = 0\r\n\r\nelse if (cyl == 4)\r\ntotal = 5\r\n\r\nelse if (cyl == 5)\r\ntotal = 1\r\n\r\nelse if (cyl == 6)\r\ntotal = 1\r\n\r\nelse if (cyl == 8)\r\ntotal = 3\r\n\r\nelse if (cyl == 10 && audiv10 == 1) //audi\r\ntotal = 1\r\n\r\nelse if (cyl == 10 && audiv10 == 0)\r\ntotal = 2\r\n\r\nelse if (cyl == 12 && lambov12 == 0)\r\ntotal = 3\r\n\r\nelse if (cyl == 12 && lambov12 == 1) //lambo\r\ntotal = 1\r\n\r\nelse\r\ntotal = 0 \r\n\r\nreturn total/5 * sum"
+              },
+              "FrontRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "ForceFrequencies": true,
+              "FrontLeftFrequencyFormula": {
+                "Expression": "[Haptics.FreqHarmonic] * 3"
+              },
+              "FrontRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "IsMuted": false,
+              "ContainerId": "b0750a3b-8608-4c28-96c6-026dda37ea2f",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "2F",
+              "AggregationMode": "Mono",
+              "Gain": 100.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 1,
+                "UseHighFrequency": false,
+                "HighFrequency": 1,
+                "WhiteNoise": 2,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": true,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": true,
+                "ChannelGroupName": "Engine RPM - Main",
+                "PropertyName": "rpmMain2F",
+                "ExportProperty": false,
+                "DisableOutput": false,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": "let cyl = $prop('Haptics.EngineCylinders')\r\nlet sum = $prop('ShakeITBSV3Plugin.Export.rpmMainF.All')\r\nlet audiv10 = $prop('ShakeITBSV3Plugin.Export.AudiV10exception.All')\r\nlet lambov12 = $prop('ShakeITBSV3Plugin.Export.LamboV12exception.All')\r\n\r\nlet total;\r\nif (cyl == 1 || cyl == 2)\r\ntotal = 0\r\n\r\nelse if (cyl == 3)\r\ntotal = 0\r\n\r\nelse if (cyl == 4)\r\ntotal = 0\r\n\r\nelse if (cyl == 5)\r\ntotal = 5\r\n\r\nelse if (cyl == 6)\r\ntotal = 0\r\n\r\nelse if (cyl == 8)\r\ntotal = 0\r\n\r\nelse if (cyl == 10 && audiv10 == 1) //audi\r\ntotal = 4\r\n\r\nelse if (cyl == 10 && audiv10 == 0)\r\ntotal = 4\r\n\r\nelse if (cyl == 12 && lambov12 == 0)\r\ntotal = 4\r\n\r\nelse if (cyl == 12 && lambov12 == 1) //lambo\r\ntotal = 0\r\n\r\nelse\r\ntotal = 0 \r\n\r\nreturn total/5 * sum"
+              },
+              "FrontRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "ForceFrequencies": true,
+              "FrontLeftFrequencyFormula": {
+                "Expression": "[Haptics.FreqHarmonic] * 3.25"
+              },
+              "FrontRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "IsMuted": false,
+              "ContainerId": "5e5e648a-0643-481b-9bff-480c3ab8b3af",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "2.25F",
+              "AggregationMode": "Mono",
+              "Gain": 100.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 1,
+                "UseHighFrequency": false,
+                "HighFrequency": 1,
+                "WhiteNoise": 2,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": true,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": true,
+                "ChannelGroupName": "Engine RPM - Main",
+                "PropertyName": "rpmMain2.25F",
+                "ExportProperty": false,
+                "DisableOutput": false,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": "let cyl = $prop('Haptics.EngineCylinders')\r\nlet sum = $prop('ShakeITBSV3Plugin.Export.rpmMainF.All')\r\nlet audiv10 = $prop('ShakeITBSV3Plugin.Export.AudiV10exception.All')\r\nlet lambov12 = $prop('ShakeITBSV3Plugin.Export.LamboV12exception.All')\r\n\r\nlet total;\r\nif (cyl == 1 || cyl == 2)\r\ntotal = 0\r\n\r\nelse if (cyl == 3)\r\ntotal = 0\r\n\r\nelse if (cyl == 4)\r\ntotal = 0\r\n\r\nelse if (cyl == 5)\r\ntotal = 0\r\n\r\nelse if (cyl == 6)\r\ntotal = 5\r\n\r\nelse if (cyl == 8)\r\ntotal = 3\r\n\r\nelse if (cyl == 10 && audiv10 == 1) //audi\r\ntotal = 0\r\n\r\nelse if (cyl == 10 && audiv10 == 0)\r\ntotal = 1\r\n\r\nelse if (cyl == 12 && lambov12 == 0)\r\ntotal = 5\r\n\r\nelse if (cyl == 12 && lambov12 == 1) //lambo\r\ntotal = 3\r\n\r\nelse\r\ntotal = 0 \r\n\r\nreturn total/5 * sum"
+              },
+              "FrontRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "ForceFrequencies": true,
+              "FrontLeftFrequencyFormula": {
+                "Expression": "[Haptics.FreqHarmonic] * 3.5"
+              },
+              "FrontRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "IsMuted": false,
+              "ContainerId": "090e8e84-c94f-46ae-88f0-ebcbfb091441",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "2.5F",
+              "AggregationMode": "Mono",
+              "Gain": 100.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 1,
+                "UseHighFrequency": false,
+                "HighFrequency": 1,
+                "WhiteNoise": 2,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": true,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": true,
+                "ChannelGroupName": "Engine RPM - Main",
+                "PropertyName": "rpmMain2.5F",
+                "ExportProperty": false,
+                "DisableOutput": false,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": "let cyl = $prop('Haptics.EngineCylinders')\r\nlet sum = $prop('ShakeITBSV3Plugin.Export.rpmMainF.All')\r\nlet audiv10 = $prop('ShakeITBSV3Plugin.Export.AudiV10exception.All')\r\nlet lambov12 = $prop('ShakeITBSV3Plugin.Export.LamboV12exception.All')\r\n\r\nlet total;\r\nif (cyl == 1 || cyl == 2)\r\ntotal = 0\r\n\r\nelse if (cyl == 3)\r\ntotal = 0\r\n\r\nelse if (cyl == 4)\r\ntotal = 0\r\n\r\nelse if (cyl == 5)\r\ntotal = 0\r\n\r\nelse if (cyl == 6)\r\ntotal = 0\r\n\r\nelse if (cyl == 8)\r\ntotal = 5\r\n\r\nelse if (cyl == 10 && audiv10 == 1) //audi\r\ntotal = 0\r\n\r\nelse if (cyl == 10 && audiv10 == 0)\r\ntotal = 0\r\n\r\nelse if (cyl == 12 && lambov12 == 0)\r\ntotal = 1\r\n\r\nelse if (cyl == 12 && lambov12 == 1) //lambo\r\ntotal = 0\r\n\r\nelse\r\ntotal = 0 \r\n\r\nreturn total/5 * sum"
+              },
+              "FrontRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "ForceFrequencies": true,
+              "FrontLeftFrequencyFormula": {
+                "Expression": "[Haptics.FreqHarmonic] * 4"
+              },
+              "FrontRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "IsMuted": false,
+              "ContainerId": "c4aa077b-3e58-4069-9a1c-463af565cfbb",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "3F",
+              "AggregationMode": "Mono",
+              "Gain": 100.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 1,
+                "UseHighFrequency": false,
+                "HighFrequency": 1,
+                "WhiteNoise": 2,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": true,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": true,
+                "ChannelGroupName": "Engine RPM - Main",
+                "PropertyName": "rpmMain3F",
+                "ExportProperty": false,
+                "DisableOutput": false,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": "let cyl = $prop('Haptics.EngineCylinders')\r\nlet sum = $prop('ShakeITBSV3Plugin.Export.rpmMainF.All')\r\nlet audiv10 = $prop('ShakeITBSV3Plugin.Export.AudiV10exception.All')\r\nlet lambov12 = $prop('ShakeITBSV3Plugin.Export.LamboV12exception.All')\r\n\r\nlet total;\r\nif (cyl == 1 || cyl == 2)\r\ntotal = 0\r\n\r\nelse if (cyl == 3)\r\ntotal = 0\r\n\r\nelse if (cyl == 4)\r\ntotal = 0\r\n\r\nelse if (cyl == 5)\r\ntotal = 0\r\n\r\nelse if (cyl == 6)\r\ntotal = 0\r\n\r\nelse if (cyl == 8)\r\ntotal = 0\r\n\r\nelse if (cyl == 10 && audiv10 == 1) //audi\r\ntotal = 0\r\n\r\nelse if (cyl == 10 && audiv10 == 0)\r\ntotal = 3\r\n\r\nelse if (cyl == 12 && lambov12 == 0)\r\ntotal = 1\r\n\r\nelse if (cyl == 12 && lambov12 == 1) //lambo\r\ntotal = 0\r\n\r\nelse\r\ntotal = 0 \r\n\r\nreturn total/5 * sum"
+              },
+              "FrontRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "ForceFrequencies": true,
+              "FrontLeftFrequencyFormula": {
+                "Expression": "[Haptics.FreqHarmonic] * 4.25"
+              },
+              "FrontRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "IsMuted": false,
+              "ContainerId": "1d76dad5-fea2-47f5-a90f-8a879c05974a",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "3.25F",
+              "AggregationMode": "Mono",
+              "Gain": 100.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 1,
+                "UseHighFrequency": false,
+                "HighFrequency": 1,
+                "WhiteNoise": 2,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": true,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": true,
+                "ChannelGroupName": "Engine RPM - Main",
+                "PropertyName": "rpmMain3.25F",
+                "ExportProperty": false,
+                "DisableOutput": false,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": "let cyl = $prop('Haptics.EngineCylinders')\r\nlet sum = $prop('ShakeITBSV3Plugin.Export.rpmMainF.All')\r\nlet audiv10 = $prop('ShakeITBSV3Plugin.Export.AudiV10exception.All')\r\nlet lambov12 = $prop('ShakeITBSV3Plugin.Export.LamboV12exception.All')\r\n\r\nlet total;\r\nif (cyl == 1 || cyl == 2)\r\ntotal = 0\r\n\r\nelse if (cyl == 3)\r\ntotal = 0\r\n\r\nelse if (cyl == 4)\r\ntotal = 0\r\n\r\nelse if (cyl == 5)\r\ntotal = 0\r\n\r\nelse if (cyl == 6)\r\ntotal = 0\r\n\r\nelse if (cyl == 8)\r\ntotal = 0\r\n\r\nelse if (cyl == 10 && audiv10 == 1) //audi\r\ntotal = 0\r\n\r\nelse if (cyl == 10 && audiv10 == 0)\r\ntotal = 0\r\n\r\nelse if (cyl == 12 && lambov12 == 0)\r\ntotal = 3\r\n\r\nelse if (cyl == 12 && lambov12 == 1) //lambo\r\ntotal = 5\r\n\r\nelse\r\ntotal = 0 \r\n\r\nreturn total/5 * sum"
+              },
+              "FrontRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "ForceFrequencies": true,
+              "FrontLeftFrequencyFormula": {
+                "Expression": "[Haptics.FreqHarmonic] * 4.5"
+              },
+              "FrontRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "IsMuted": false,
+              "ContainerId": "61dbf699-aac8-450b-b09e-f77697e7a1ae",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "3.5F",
+              "AggregationMode": "Mono",
+              "Gain": 100.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 1,
+                "UseHighFrequency": false,
+                "HighFrequency": 1,
+                "WhiteNoise": 2,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": true,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": true,
+                "ChannelGroupName": "Engine RPM - Main",
+                "PropertyName": "rpmMain3.5F",
+                "ExportProperty": false,
+                "DisableOutput": false,
+                "OutputType": "ToneOutput"
+              }
+            }
+          ],
+          "Filter": null,
+          "GainChangeStep": 1,
+          "IsMuted": false,
+          "ToggleMute": {
+            "Triggers": [
+              {
+                "Trigger": "PropertyServerPlugin.RPM-main-toggle-mute",
+                "PressType": 4
+              }
+            ]
+          },
+          "IncrementGainAction": {
+            "Triggers": [
+              {
+                "Trigger": "PropertyServerPlugin.RPM-main-up",
+                "PressType": 4
+              }
+            ]
+          },
+          "DecrementGainAction": {
+            "Triggers": [
+              {
+                "Trigger": "PropertyServerPlugin.RPM-main-down",
+                "PressType": 4
+              }
+            ]
+          },
+          "ContainerId": "e4cbc33b-b4b1-480d-8d12-f28418c5cf1f",
+          "ContainerType": "GroupContainer",
+          "Description": "RPM Main",
+          "AggregationMode": null,
+          "Gain": 50.0,
+          "IsEnabled": true,
+          "Output": null
+        },
+        {
+          "EffectsContainers": [
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": "if ($prop('ShakeITBSV3Plugin.Export.returnZero.All') == 0)\r\nreturn 0\r\n\r\nreturn $prop('Haptics.rpmPeakA2Rear')"
+              },
+              "FrontRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "ForceFrequencies": true,
+              "FrontLeftFrequencyFormula": {
+                "Expression": "[Haptics.FreqPeakA2]"
+              },
+              "FrontRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "IsMuted": false,
+              "ContainerId": "09996851-6e20-4573-847b-cedc25687d5f",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "F-A2",
+              "AggregationMode": "Mono",
+              "Gain": 100.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 1,
+                "UseHighFrequency": false,
+                "HighFrequency": 1,
+                "WhiteNoise": 2,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": true,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": true,
+                "ChannelGroupName": "Engine RPM - Peak - Rear",
+                "PropertyName": "rearPeakFA",
+                "ExportProperty": true,
+                "DisableOutput": false,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": "if ($prop('ShakeITBSV3Plugin.Export.returnZero.All') == 0)\r\nreturn 0\r\n\r\nreturn $prop('Haptics.rpmPeakB1Rear')"
+              },
+              "FrontRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "ForceFrequencies": true,
+              "FrontLeftFrequencyFormula": {
+                "Expression": "[Haptics.FreqPeakB1]"
+              },
+              "FrontRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "IsMuted": false,
+              "ContainerId": "37eb9d6a-27dc-4bb5-b1f7-129c760bdfeb",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "F-B1",
+              "AggregationMode": "Mono",
+              "Gain": 100.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 1,
+                "UseHighFrequency": false,
+                "HighFrequency": 1,
+                "WhiteNoise": 2,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": true,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": true,
+                "ChannelGroupName": "Engine RPM - Peak - Rear",
+                "PropertyName": "rearPeakB1",
+                "ExportProperty": true,
+                "DisableOutput": false,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": "if ($prop('ShakeITBSV3Plugin.Export.returnZero.All') == 0)\r\nreturn 0\r\n\r\nreturn $prop('Haptics.rpmPeakA1Rear')"
+              },
+              "FrontRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "ForceFrequencies": true,
+              "FrontLeftFrequencyFormula": {
+                "Expression": "[Haptics.FreqPeakA1]"
+              },
+              "FrontRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "IsMuted": false,
+              "ContainerId": "c1a46ebe-bed6-420b-8865-d856cc00975c",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "F-A1",
+              "AggregationMode": "Mono",
+              "Gain": 100.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 1,
+                "UseHighFrequency": false,
+                "HighFrequency": 1,
+                "WhiteNoise": 2,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": true,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": true,
+                "ChannelGroupName": "Engine RPM - Peak - Rear",
+                "PropertyName": "rearPeakFA1",
+                "ExportProperty": true,
+                "DisableOutput": false,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": "if ($prop('ShakeITBSV3Plugin.Export.returnZero.All') == 0)\r\nreturn 0\r\n\r\nreturn $prop('Haptics.rpmPeakB2Rear')"
+              },
+              "FrontRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "ForceFrequencies": true,
+              "FrontLeftFrequencyFormula": {
+                "Expression": "[Haptics.FreqPeakB2]"
+              },
+              "FrontRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "IsMuted": false,
+              "ContainerId": "7af70ace-ca7d-4fc1-9123-0d372e4d0c4e",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "F-B2",
+              "AggregationMode": "Mono",
+              "Gain": 100.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 1,
+                "UseHighFrequency": false,
+                "HighFrequency": 1,
+                "WhiteNoise": 2,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": true,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": true,
+                "ChannelGroupName": "Engine RPM - Peak - Rear",
+                "PropertyName": "rearPeakB2",
+                "ExportProperty": true,
+                "DisableOutput": false,
+                "OutputType": "ToneOutput"
+              }
+            }
+          ],
+          "Filter": null,
+          "GainChangeStep": 1,
+          "IsMuted": false,
+          "ToggleMute": {
+            "Triggers": [
+              {
+                "Trigger": "PropertyServerPlugin.RPM-rear-toggle-mute",
+                "PressType": 4
+              }
+            ]
+          },
+          "IncrementGainAction": {
+            "Triggers": [
+              {
+                "Trigger": "PropertyServerPlugin.RPM-rear-up",
+                "PressType": 4
+              }
+            ]
+          },
+          "DecrementGainAction": {
+            "Triggers": [
+              {
+                "Trigger": "PropertyServerPlugin.RPM-rear-down",
+                "PressType": 4
+              }
+            ]
+          },
+          "ContainerId": "cbff2ebf-f01a-44dc-bd10-598ff69d8642",
+          "ContainerType": "GroupContainer",
+          "Description": "Peak RPM - Rear",
+          "AggregationMode": null,
+          "Gain": 70.333333333333258,
+          "IsEnabled": true,
+          "Output": null
+        },
+        {
+          "EffectsContainers": [
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": "if ($prop('ShakeITBSV3Plugin.Export.returnZero.All') == 0)\r\nreturn 0\r\n\r\nreturn $prop('Haptics.rpmPeakA2Front')"
+              },
+              "FrontRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "ForceFrequencies": true,
+              "FrontLeftFrequencyFormula": {
+                "Expression": "[Haptics.FreqPeakA2]"
+              },
+              "FrontRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "IsMuted": false,
+              "ContainerId": "6ef07bc9-46c0-4222-a20c-39565e5e0458",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "F-A2",
+              "AggregationMode": "Mono",
+              "Gain": 100.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 1,
+                "UseHighFrequency": false,
+                "HighFrequency": 1,
+                "WhiteNoise": 2,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": true,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": true,
+                "ChannelGroupName": "Engine RPM - Peak - Front",
+                "PropertyName": "rearPeakFA",
+                "ExportProperty": false,
+                "DisableOutput": false,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": "if ($prop('ShakeITBSV3Plugin.Export.returnZero.All') == 0)\r\nreturn 0\r\n\r\nreturn $prop('Haptics.rpmPeakB1Front')"
+              },
+              "FrontRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "ForceFrequencies": true,
+              "FrontLeftFrequencyFormula": {
+                "Expression": "[Haptics.FreqPeakB1]"
+              },
+              "FrontRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "IsMuted": false,
+              "ContainerId": "64badd8f-b4ff-4083-a92a-1e974eb5718c",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "F-B1",
+              "AggregationMode": "Mono",
+              "Gain": 100.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 1,
+                "UseHighFrequency": false,
+                "HighFrequency": 1,
+                "WhiteNoise": 2,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": true,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": true,
+                "ChannelGroupName": "Engine RPM - Peak - Front",
+                "PropertyName": "frontPeakB1",
+                "ExportProperty": true,
+                "DisableOutput": false,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": "if ($prop('ShakeITBSV3Plugin.Export.returnZero.All') == 0)\r\nreturn 0\r\n\r\nreturn $prop('Haptics.rpmPeakA1Front')"
+              },
+              "FrontRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "ForceFrequencies": true,
+              "FrontLeftFrequencyFormula": {
+                "Expression": "[Haptics.FreqPeakA1]"
+              },
+              "FrontRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "IsMuted": false,
+              "ContainerId": "f4e61ca1-3bf4-481e-b812-9ce305a6fb94",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "F-A1",
+              "AggregationMode": "Mono",
+              "Gain": 100.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 1,
+                "UseHighFrequency": false,
+                "HighFrequency": 1,
+                "WhiteNoise": 2,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": true,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": true,
+                "ChannelGroupName": "Engine RPM - Peak - Front",
+                "PropertyName": "frontPeakFA1",
+                "ExportProperty": true,
+                "DisableOutput": false,
+                "OutputType": "ToneOutput"
+              }
+            },
+            {
+              "AutocalibrationMax": 95.0,
+              "Filter": {
+                "GammaValue": 1.0,
+                "InputGain": 100.0,
+                "MinimumForce": 0,
+                "Threshold": 0,
+                "FilterType": "GammaFilter"
+              },
+              "FrontLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": "if ($prop('ShakeITBSV3Plugin.Export.returnZero.All') == 0)\r\nreturn 0\r\n\r\nreturn $prop('Haptics.rpmPeakB2Front')"
+              },
+              "FrontRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearLeftFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "RearRightFormula": {
+                "JSExt": 3,
+                "Interpreter": 1,
+                "Expression": ""
+              },
+              "ForceFrequencies": true,
+              "FrontLeftFrequencyFormula": {
+                "Expression": "[Haptics.FreqPeakB2]"
+              },
+              "FrontRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearLeftFrequencyFormula": {
+                "Expression": ""
+              },
+              "RearRightFrequencyFormula": {
+                "Expression": ""
+              },
+              "IsMuted": false,
+              "ContainerId": "5d5678b9-a5af-4460-838c-1ab48886cc9f",
+              "ContainerType": "CustomEffectContainer",
+              "Description": "F-B2",
+              "AggregationMode": "Mono",
+              "Gain": 100.0,
+              "IsEnabled": true,
+              "Output": {
+                "UsePrehemptiveMode": false,
+                "Frequency": 1,
+                "UseHighFrequency": false,
+                "HighFrequency": 1,
+                "WhiteNoise": 2,
+                "UseWhiteNoise": false,
+                "EnableDurationModulation": true,
+                "DurationModulationValue": 34,
+                "FrequencyBasedOnPreFilter": true,
+                "Harmonics": 0,
+                "HoldMode": 1,
+                "DelayEnabled": false,
+                "IsAudio": true,
+                "AssignToChannelGroup": true,
+                "ChannelGroupName": "Engine RPM - Peak - Front",
+                "PropertyName": "frontPeakB2",
+                "ExportProperty": true,
+                "DisableOutput": false,
+                "OutputType": "ToneOutput"
+              }
+            }
+          ],
+          "Filter": null,
+          "GainChangeStep": 1,
+          "IsMuted": false,
+          "ToggleMute": {
+            "Triggers": [
+              {
+                "Trigger": "PropertyServerPlugin.RPM-rear-toggle-mute",
+                "PressType": 4
+              }
+            ]
+          },
+          "IncrementGainAction": {
+            "Triggers": [
+              {
+                "Trigger": "PropertyServerPlugin.RPM-rear-up",
+                "PressType": 4
+              }
+            ]
+          },
+          "DecrementGainAction": {
+            "Triggers": [
+              {
+                "Trigger": "PropertyServerPlugin.RPM-rear-down",
+                "PressType": 4
+              }
+            ]
+          },
+          "ContainerId": "48586c58-9770-4000-81a7-d77a8d9c695d",
+          "ContainerType": "GroupContainer",
+          "Description": "Peak RPM - Front",
+          "AggregationMode": null,
+          "Gain": 70.33333333333303,
+          "IsEnabled": true,
+          "Output": null
+        }
+      ],
+      "Filter": null,
+      "GainChangeStep": 1,
+      "IsMuted": false,
+      "ToggleMute": {
+        "Triggers": [
+          {
+            "Trigger": "PropertyServerPlugin.RPM-toggle-mute",
+            "PressType": 4
+          }
+        ]
+      },
+      "IncrementGainAction": {
+        "Triggers": [
+          {
+            "Trigger": "PropertyServerPlugin.RPM-Up",
+            "PressType": 4
+          }
+        ]
+      },
+      "DecrementGainAction": {
+        "Triggers": [
+          {
+            "Trigger": "PropertyServerPlugin.RPM-Down",
+            "PressType": 4
+          }
+        ]
+      },
+      "ContainerId": "c4eeb9d9-c821-46f8-a490-7c5a120e0071",
+      "ContainerType": "GroupContainer",
+      "Description": "Engine RPM 64.05",
+      "AggregationMode": null,
+      "Gain": 100.0,
+      "IsEnabled": true,
+      "Output": null
+    }
+  ],
+  "AutoCalibrationRatio2": 0,
+  "OutputMode": 1,
+  "GlobalGain": 100.0,
+  "UseProfileGain": false,
+  "LastLoaded": "2024-02-20T09:12:26.882464+11:00",
+  "Description": "dMASS",
+  "Name": "dMASS Haptics 64.05 (rpm only)",
+  "ProfileId": "431a2e78-1903-40e8-8f28-7cbe8b72ef1a",
+  "GameCode": null,
+  "CarChoice": null
+}

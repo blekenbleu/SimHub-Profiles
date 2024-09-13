@@ -1,0 +1,88 @@
+{
+  "CarChoices": [],
+  "IncludeOutputSettingsInProfile": false,
+  "UnmuteEffectsAfterSimhubRestart": false,
+  "EffectsContainers": [
+    {
+      "AutocalibrationMax": 95.0,
+      "Filter": {
+        "GammaValue": 1.0,
+        "InputGain": 97.0,
+        "MinimumForce": 2,
+        "Threshold": 0,
+        "FilterType": "GammaFilter"
+      },
+      "FrontLeftFormula": {
+        "Expression": "[Throttle]"
+      },
+      "FrontRightFormula": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "root[\"filtered\"] += ($prop('Throttle') - root[\"filtered\"]) / 4;\r\nreturn root[\"filtered\"];",
+        "PreExpression": "root['filtered'] = $prop('Throttle');\r\nroot['more'] = 0;"
+      },
+      "RearLeftFormula": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "root[\"filtered\"] += ($prop('Throttle') - root[\"filtered\"]) / 3;\r\nif ($prop('Throttle') > (0.5 + root[\"filtered\"]))\r\n   root['more'] += ($prop('Throttle') - root[\"filtered\"]) / 5;\r\nelse root['more'] += ((0.25 * root[\"filtered\"]) - root['more'])  * 0.2\r\nreturn root['more'];",
+        "PreExpression": "root['more'] = 0;\r\nroot['filtered'] = $prop('Throttle');"
+      },
+      "RearRightFormula": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "root[\"filtered\"] += ($prop('Throttle') - root[\"filtered\"]) / 4;\r\nif ($prop('Throttle') < (root[\"filtered\"] - 0.5))\r\n   root['less'] -= ($prop('Throttle') - root[\"filtered\"]) / 6;\r\nelse root['less'] *= 0.8;\r\nreturn root['less'];",
+        "PreExpression": "root['less'] = 0;\r\nroot['filtered'] = $prop('Throttle');"
+      },
+      "ForceFrequencies": false,
+      "FrontLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "FrontRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "IsMuted": false,
+      "ContainerId": "59953272-692d-41a9-8283-de0c4f4471bf",
+      "ContainerType": "CustomEffectContainer",
+      "Description": "throttle, filtered throttle, increases, decreases",
+      "AggregationMode": "Corners",
+      "Gain": 90.0,
+      "IsEnabled": true,
+      "Output": {
+        "UsePrehemptiveMode": false,
+        "Frequency": 44,
+        "UseHighFrequency": false,
+        "HighFrequency": 50,
+        "WhiteNoise": 10,
+        "UseWhiteNoise": false,
+        "EnableDurationModulation": true,
+        "DurationModulationValue": 34,
+        "FrequencyBasedOnPreFilter": false,
+        "Harmonics": 0,
+        "HoldMode": 1,
+        "DelayEnabled": false,
+        "IsAudio": true,
+        "AssignToChannelGroup": false,
+        "ChannelGroupName": "",
+        "PropertyName": null,
+        "ExportProperty": false,
+        "DisableOutput": false,
+        "OutputType": "ToneOutput"
+      }
+    }
+  ],
+  "AutoCalibrationRatio2": 100,
+  "OutputMode": 1,
+  "GlobalGain": 50.0,
+  "UseProfileGain": false,
+  "LastLoaded": "0001-01-01T00:00:00",
+  "Name": "Throttle changes",
+  "ProfileId": "2dfc311d-a5bc-4ef8-be4f-12ddb22637f7",
+  "GameCode": null,
+  "CarChoice": null
+}
