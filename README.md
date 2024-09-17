@@ -11,6 +11,11 @@
 ## [ShakeIt Bass Shakers - Tactile profiles](https://blekenbleu.github.io/pedals/shakeit.htm)
 ### Suggested tire slip Shakeit profiles
 - [LoadedSlipGrip.siprofile](https://github.com/blekenbleu/SimHub-Profiles/blob/main/LoadedSlipGrip.siprofile)  
+	![](images/Slip4output.png)  
+	*4 output channels e.g. for seat cushion*  
+
+	![](images/SlipGripGroup.png)  
+	*copy* `Loaded Slip/Grip` *effect group to clipboard, then paste into your usual ShakeIt profile*
 	- described [here](https://blekenbleu.github.io/pedals/shakeit.htm#S/G); &nbsp; discussed [there](https://www.overtake.gg/threads/simhub-shakeit-bass-shakers-custom-4-corner-tire-slip.198455/page-8)  
 - [LoadedSlipGripJSONio.siprofile](https://github.com/blekenbleu/SimHub-Profiles/blob/main/LoadedSlipGripJSONio.siprofile),
 	 [currentSlipGripJSONio.siprofile](https://github.com/blekenbleu/SimHub-Profiles/blob/main/currentSlipGripJSONio.siprofile)  
