@@ -1,5 +1,5 @@
 # SimHub profiles
- My SimHub is configured to look for these profiles in `Documents\SimHub\`  
+ My SimHub configuration looks for these profiles in `Documents\SimHub\`  
  ShakeIt profiles e.g. for tire slip and Custom Serial profiles e.g. for harness tensioning, etc;&nbsp; mostly NOT dashes  
  For file names differing only by `.txt` suffix, `.txt` version is usually older.
  - `.txt` suffix for posting to [RaceDepartment](https://www.overtake.gg/threads/simhub-shakeit-bass-shakers-custom-4-corner-tire-slip.198455/)  
@@ -10,15 +10,17 @@
 
 ## [ShakeIt Bass Shakers - Tactile profiles](https://blekenbleu.github.io/pedals/shakeit.htm)
 ### Suggested tire slip Shakeit profiles
-- [LoadedSlipGrip.siprofile](https://github.com/blekenbleu/SimHub-Profiles/blob/main/LoadedSlipGrip.siprofile)  
+- [**LoadedSlipGrip.siprofile**](https://github.com/blekenbleu/SimHub-Profiles/blob/main/LoadedSlipGrip.siprofile)  
 	![](images/Slip4output.png)  
-	*4 output channels e.g. for seat cushion*  
+	*4 output channels e.g. [for seat cushion](https://blekenbleu.github.io/pedals/PuckSeat.htm)*  
 
 	![](images/SlipGripGroup.png)  
 	*copy* `Loaded Slip/Grip` *effect group to clipboard, then paste into your usual ShakeIt profile*
-	- described [here](https://blekenbleu.github.io/pedals/shakeit.htm#S/G); &nbsp; discussed [there](https://www.overtake.gg/threads/simhub-shakeit-bass-shakers-custom-4-corner-tire-slip.198455/page-8)  
-- [LoadedSlipGripJSONio.siprofile](https://github.com/blekenbleu/SimHub-Profiles/blob/main/LoadedSlipGripJSONio.siprofile),
-	 [currentSlipGripJSONio.siprofile](https://github.com/blekenbleu/SimHub-Profiles/blob/main/currentSlipGripJSONio.siprofile)  
+	- described [here](https://blekenbleu.github.io/pedals/shakeit.htm#S/G); &nbsp;
+      forum discussion [there](https://www.overtake.gg/threads/simhub-shakeit-bass-shakers-custom-4-corner-tire-slip.198455/page-8)  
+
+- [**LoadedSlipGripJSONio.siprofile**](https://github.com/blekenbleu/SimHub-Profiles/blob/main/LoadedSlipGripJSONio.siprofile),
+	 [**currentSlipGripJSONio.siprofile**](https://github.com/blekenbleu/SimHub-Profiles/blob/main/currentSlipGripJSONio.siprofile)  
 	- [JSONio SimHub plugin](https://github.com/blekenbleu/JSONio) required  
 		Slip/grip estimated from SimHub properties wants car-specific tuning; &nbsp;  JSONio helps manage that...
 
