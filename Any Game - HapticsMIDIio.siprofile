@@ -1,0 +1,243 @@
+{
+  "CarChoices": [],
+  "IncludeOutputSettingsInProfile": false,
+  "UnmuteEffectsAfterSimhubRestart": false,
+  "EffectsContainers": [
+    {
+      "EffectsContainers": [
+        {
+          "AutocalibrationMax": 95.0,
+          "Filter": {
+            "GammaValue": 1.0,
+            "InputGain": 100.0,
+            "MinimumForce": 0,
+            "Threshold": 0,
+            "FilterType": "GammaFilter"
+          },
+          "FrontLeftFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "return IdlePoint($prop('Haptics.IdleRPM'));",
+            "PreExpression": "function IdlePoint(idle) { return 12 * Math.log2(( Math.max(idle,1) /60 /2 ) / 16.352 )+50; }"
+          },
+          "FrontRightFormula": {
+            "Expression": "[Haptics.Throttle]"
+          },
+          "RearLeftFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "return RedlinePoint($prop('Haptics.RedlineRPM'), $prop('Haptics.IdleRPM'));",
+            "PreExpression": "function RedlinePoint(redline, idle) {\r\n  idle = Math.max(1,idle);\r\n  return ((( redline / idle ) - 1) * 100) / (51 - 1);\r\n}\r\n"
+          },
+          "RearRightFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "return ReScaleRPM($prop('Rpms'),\r\n                  $prop('Haptics.IdleRPM'),\r\n                  $prop('Haptics.RedlineRPM'));",
+            "PreExpression": "function ReScaleRPM(rpm, idle, redline) {\r\nvar range = Math.max(1, redline - idle);\r\nreturn 1 + Math.min(99, Math.max(0, 99 * (rpm - idle) / range));\r\n}"
+          },
+          "ForceFrequencies": true,
+          "FrontLeftFrequencyFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": ""
+          },
+          "FrontRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearLeftFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "IsMuted": false,
+          "ContainerId": "8b9f4799-fad6-4b7f-adc6-32857043571f",
+          "ContainerType": "CustomEffectContainer",
+          "Description": "Throttle, Idle, Redline, RPM rescale",
+          "AggregationMode": "Corners",
+          "Gain": 90.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 44,
+            "UseHighFrequency": false,
+            "HighFrequency": 50,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": true,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "IsAudio": true,
+            "AssignToChannelGroup": true,
+            "ChannelGroupName": "harmonic 0-3",
+            "PropertyName": "throttle",
+            "ExportProperty": true,
+            "DisableOutput": false,
+            "OutputType": "ToneOutput"
+          }
+        },
+        {
+          "AutocalibrationMax": 95.0,
+          "Filter": {
+            "GammaValue": 1.0,
+            "InputGain": 100.0,
+            "MinimumForce": 0,
+            "Threshold": 0,
+            "FilterType": "GammaFilter"
+          },
+          "FrontLeftFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "return Math.round($prop('ShakeITBSV3Plugin.Export.nlRPM.RearRight'));"
+          },
+          "FrontRightFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "return 20 + 60 * ($prop('ShakeITBSV3Plugin.Export.nlRPM.RearRight')\r\n\t\t\t\t- $prop('ShakeITBSV3Plugin.Export.nlRPM.FrontLeft'))"
+          },
+          "RearLeftFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "return map($prop('Haptics.EngineCylinders'), $prop('Haptics.CarId'));",
+            "PreExpression": "function map(cylinders, carID) {\r\n    var mcyl = cylinders * 100.0 / 127;\t// account for MIDIio rescaling\r\n\tswitch(cylinders) {\r\n\t\tcase 4:\r\n\t\t\tif (carID.includes(\"MGB\"))\r\n\t\t\t\treturn 2000.0/127;\r\n\t\tcase 2:\r\n\t\tcase 3:\r\n\t\tcase 1:\r\n\t\tcase 5:\r\n\t\tcase 6:\r\n\t\tcase 8:\r\n\t\tcase 10:\r\n\t\tcase 12:\r\n\t\tcase 16:\r\n\t\t\treturn mcyl;\r\n\t\tdefault:\r\n\t\t\treturn 0;\t// not implemented or not running\r\n\t}\r\n}"
+          },
+          "RearRightFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "if ($prop('Haptics.RedlineRPM') < root[\"rpm\"])\r\n\troot[\"rpm\"] = $prop('Haptics.IdleRPM');\r\nelse root[\"rpm\"] = 1.004 * root[\"rpm\"];\r\nreturn 100 * root[\"rpm\"] / $prop('Haptics.RedlineRPM');",
+            "PreExpression": "root[\"rpm\"] = $prop('Haptics.IdleRPM')"
+          },
+          "ForceFrequencies": false,
+          "FrontLeftFrequencyFormula": {
+            "Expression": ""
+          },
+          "FrontRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearLeftFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "IsMuted": false,
+          "ContainerId": "545eb86a-5e19-4441-8f81-526648100eb4",
+          "ContainerType": "CustomEffectContainer",
+          "Description": "Cylinder mapping;  nonlinear (geometric) RPM rescaling",
+          "AggregationMode": "Corners",
+          "Gain": 91.0,
+          "IsEnabled": true,
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 44,
+            "UseHighFrequency": false,
+            "HighFrequency": 50,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "EnableDurationModulation": true,
+            "DurationModulationValue": 34,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "DelayEnabled": false,
+            "IsAudio": true,
+            "AssignToChannelGroup": false,
+            "ChannelGroupName": "",
+            "PropertyName": "nlRPM",
+            "ExportProperty": true,
+            "DisableOutput": false,
+            "OutputType": "ToneOutput"
+          }
+        }
+      ],
+      "Filter": null,
+      "IsMuted": false,
+      "ContainerId": "a02697d1-8d23-41cc-9b4a-c6cf62e58fe8",
+      "ContainerType": "GroupContainer",
+      "Description": "HapticsMIDIio",
+      "AggregationMode": null,
+      "Gain": 100.0,
+      "IsEnabled": true,
+      "Output": null
+    },
+    {
+      "AutocalibrationMax": 95.0,
+      "Filter": {
+        "GammaValue": 1.0,
+        "InputGain": 100.0,
+        "MinimumForce": 0,
+        "Threshold": 0,
+        "FilterType": "GammaFilter"
+      },
+      "FrontLeftFormula": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "var counter = root[count];\r\nvar timer = root[time];\r\nif (6 == ++timer)\r\n{\r\n\tcounter++;\t\t// increment counter once per second\r\n\ttimer = 0;\t\t// count another second\r\n}\r\nif (counter == 10) {\r\n\tcounter = $prop('CarSettings_CurrentDisplayedRPMPercent') /10;\r\n\troot[count] = 0;\r\n}\r\nelse root[count] = counter;\r\nroot[time] = timer;\r\nreturn 10*counter;",
+        "PreExpression": "const count = \"count\";\t// root names\r\nconst time = \"time\";\r\nroot[count] = 0;\t\t// root variables\r\nroot[time] = 0;"
+      },
+      "FrontRightFormula": {
+        "Expression": ""
+      },
+      "RearLeftFormula": {
+        "Expression": ""
+      },
+      "RearRightFormula": {
+        "Expression": ""
+      },
+      "ForceFrequencies": false,
+      "FrontLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "FrontRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "IsMuted": false,
+      "ContainerId": "cf233d37-0828-4abb-8002-6bfe0bc0cd4c",
+      "ContainerType": "CustomEffectContainer",
+      "Description": "Provides ability to create your own effect based on game data",
+      "AggregationMode": "Corners",
+      "Gain": 90.0,
+      "IsEnabled": true,
+      "Output": {
+        "UsePrehemptiveMode": false,
+        "Frequency": 44,
+        "UseHighFrequency": false,
+        "HighFrequency": 50,
+        "WhiteNoise": 10,
+        "UseWhiteNoise": false,
+        "EnableDurationModulation": true,
+        "DurationModulationValue": 34,
+        "FrequencyBasedOnPreFilter": false,
+        "Harmonics": 0,
+        "HoldMode": 1,
+        "DelayEnabled": false,
+        "IsAudio": true,
+        "AssignToChannelGroup": false,
+        "ChannelGroupName": "",
+        "PropertyName": null,
+        "ExportProperty": false,
+        "DisableOutput": false,
+        "OutputType": "ToneOutput"
+      }
+    }
+  ],
+  "AutoCalibrationRatio2": 0,
+  "OutputMode": 1,
+  "GlobalGain": 100.0,
+  "UseProfileGain": false,
+  "LastLoaded": "2024-02-19T17:12:26.882464-05:00",
+  "Description": "MIDIio currently supports exporting only ShakeIt properties as vJoy axes or MIDI CCs.\r\nThese CUSTOM effect corners convert Haptics properties to ShakeIt properties\r\nthat MIDIio sends as CCs for use in Phase Plant synthesizer.",
+  "Name": "HapticsMIDIio",
+  "ProfileId": "e0eb8056-ae1a-4646-b8c0-b611c4643210",
+  "GameCode": null,
+  "CarChoice": null
+}
