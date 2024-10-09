@@ -1,0 +1,123 @@
+{
+  "CarChoices": [],
+  "IncludeOutputSettingsInProfile": false,
+  "UnmuteEffectsAfterSimhubRestart": false,
+  "EffectsContainers": [
+    {
+      "BrakeFilter": 10,
+      "Filter": {
+        "GammaValue": 0.69999999999999973,
+        "InputGain": 18.0,
+        "MinimumForce": 0,
+        "Threshold": 0,
+        "FilterType": "GammaFilter"
+      },
+      "MuteWhenLockEffectIsActive": false,
+      "ThrottleFilter": 10,
+      "UseBrakeFilter": false,
+      "UseThrottleFilter": false,
+      "UseLegacyIracingAlgorythm": false,
+      "IsMuted": false,
+      "ContainerId": "894e7549-25a5-4da4-a566-9da212dd7096",
+      "ContainerType": "WheelsSlipContainer",
+      "Description": "localized wheel slip for JSONio",
+      "AggregationMode": "Corners",
+      "Gain": 0.0,
+      "IsEnabled": true,
+      "Output": {
+        "UsePrehemptiveMode": false,
+        "Frequency": 1,
+        "UseHighFrequency": false,
+        "HighFrequency": 50,
+        "WhiteNoise": 10,
+        "UseWhiteNoise": false,
+        "EnableDurationModulation": false,
+        "DurationModulationValue": 34,
+        "FrequencyBasedOnPreFilter": false,
+        "Harmonics": 0,
+        "HoldMode": 1,
+        "DelayEnabled": false,
+        "IsAudio": true,
+        "AssignToChannelGroup": false,
+        "ChannelGroupName": "",
+        "PropertyName": "wslip",
+        "ExportProperty": true,
+        "DisableOutput": true,
+        "OutputType": "ToneOutput"
+      }
+    },
+    {
+      "AutocalibrationMax": 95.0,
+      "Filter": {
+        "GammaValue": 1.0,
+        "InputGain": 100.0,
+        "MinimumForce": 0,
+        "Threshold": 0,
+        "FilterType": "GammaFilter"
+      },
+      "FrontLeftFormula": {
+        "Expression": "[JSONio.LoadedSlipGrip.FrontLeft]"
+      },
+      "FrontRightFormula": {
+        "Expression": "[JSONio.LoadedSlipGrip.FrontRight]"
+      },
+      "RearLeftFormula": {
+        "Expression": "[JSONio.LoadedSlipGrip.RearLeft]"
+      },
+      "RearRightFormula": {
+        "Expression": "[JSONio.LoadedSlipGrip.RearRight]"
+      },
+      "ForceFrequencies": true,
+      "FrontLeftFrequencyFormula": {
+        "Expression": "[JSONio.FF.FrontLeft]"
+      },
+      "FrontRightFrequencyFormula": {
+        "Expression": "[JSONio.FF.FrontRight]"
+      },
+      "RearLeftFrequencyFormula": {
+        "Expression": "[JSONio.FF.RearLeft]"
+      },
+      "RearRightFrequencyFormula": {
+        "Expression": "[JSONio.FF.RearRight]"
+      },
+      "IsMuted": false,
+      "ContainerId": "4f8e2173-ffaa-4b01-8682-aaa67702de1c",
+      "ContainerType": "CustomEffectContainer",
+      "Description": "Loaded  SlipGrip using JSONio properties",
+      "AggregationMode": "Corners",
+      "Gain": 90.0,
+      "IsEnabled": true,
+      "Output": {
+        "UsePrehemptiveMode": false,
+        "Frequency": 44,
+        "UseHighFrequency": false,
+        "HighFrequency": 50,
+        "WhiteNoise": 10,
+        "UseWhiteNoise": false,
+        "EnableDurationModulation": true,
+        "DurationModulationValue": 34,
+        "FrequencyBasedOnPreFilter": false,
+        "Harmonics": 0,
+        "HoldMode": 1,
+        "DelayEnabled": false,
+        "IsAudio": true,
+        "AssignToChannelGroup": true,
+        "ChannelGroupName": "JSONio Loaded SlipGrip",
+        "PropertyName": "OutputSlip",
+        "ExportProperty": true,
+        "DisableOutput": false,
+        "OutputType": "ToneOutput"
+      }
+    }
+  ],
+  "AutoCalibrationRatio2": 0,
+  "OutputMode": 1,
+  "GlobalGain": 100.0,
+  "UseProfileGain": false,
+  "LastLoaded": "2024-02-19T17:12:26.882464-05:00",
+  "Description": "Nearly all JavaScript replaced by JSONio plugin C#\r\nUses JSONio plugin properties with NCalcScripts entries for:\r\n[ExportProperty]\r\nname='JSONio.settings'\r\nvalue='Fmin.RearLeft,Fmin.RearRight,Fmin.FrontLeft,Fmin.FrontRight,Fmax.RearLeft,Fmax.RearRight,Fmax.FrontLeft,Fmax.FrontRight'",
+  "Name": "JSONioNewSlipGrip",
+  "ProfileId": "e0eb8056-1234-7734-b8c0-b611c4642c8a",
+  "GameCode": null,
+  "CarChoice": null
+}
