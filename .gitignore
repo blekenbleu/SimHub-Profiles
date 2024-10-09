@@ -3,4 +3,5 @@ SimHubVersion.txt
 *upshift*
 *viper*
 *.zip
-*.simhubdash
+dmass*.simhubdash
+JSONio_refactored_1.1.simhubdash
