@@ -1,0 +1,352 @@
+{
+  "CarChoices": [],
+  "IncludeOutputSettingsInProfile": false,
+  "UnmuteEffectsAfterSimhubRestart": false,
+  "EffectsContainers": [
+    {
+      "ContainerType": "GroupContainer",
+      "IsEnabled": true,
+      "Gain": 50.399999999999977,
+      "Description": "AMS 2 slip",
+      "EffectsContainers": [
+        {
+          "ContainerType": "CustomEffectContainer",
+          "IsEnabled": true,
+          "Gain": 90.0,
+          "Description": "Rear Slip",
+          "FrontLeftFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": ""
+          },
+          "FrontRightFormula": {
+            "Expression": ""
+          },
+          "RearLeftFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "//Dont waste processing time if in pits or in pit lane or is less than 5kph$prop('SpeedKmh')\r\n//if ($prop('IsInPit')==1 || $prop('IsInPitLane')==1 || $prop('SpeedKmh')<=5){return 0;}\r\n\r\n\r\nvar degreeRad = Math.PI/180; // 360 degrees to radians, which is 2π radians\r\n\r\n// Angular velocities in radians per second\r\nvar angle1 = $prop('GameRawData.mAngularVelocity01'); // [ UNITS = Radians per-second ] (roll rate)\r\nvar angle2 = $prop('GameRawData.mAngularVelocity02'); // [ UNITS = Radians per-second ] (yaw rate)\r\nvar angle3 = $prop('GameRawData.mAngularVelocity03'); // [ UNITS = Radians per-second ] (pitch rate)\r\n\r\n// Normalized steering input\r\nvar steeringInput = $prop('GameRawData.mSteering'); // [ RANGE = -1.0f->1.0f ]\r\nvar steeringAngleDeg = steeringInput * 24; //Typical steering angle 24 degrees, match to what is set in game\r\n\r\n// Convert normalized steering input to actual steering angle in radians\r\nvar steeringAngleRad = steeringAngleDeg * degreeRad;\r\n\r\n// Local velocities in metres per second\r\nvar local1 = $prop('GameRawData.mLocalVelocity01'); // [ UNITS = Metres per-second ] (Lateral velocity)\r\nvar local2 = $prop('GameRawData.mLocalVelocity02'); // [ UNITS = Metres per-second ] (Vertical velocity, not used in slip angle calculations)\r\nvar local3 = $prop('GameRawData.mLocalVelocity03'); // [ UNITS = Metres per-second ] (Longitudinal velocity)\r\n\r\n// Assumed distances to front and rear axles in meters not available in game\r\nvar L_f = 1.2; // Distance to front axle [ UNITS = Metres ]\r\nvar L_r = 1.6; // Distance to rear axle [ UNITS = Metres ]\r\n\r\n// Extract yaw rate, lateral and longitudinal velocities\r\nvar yaw_rate = angle2; // Yaw rate in rad/s\r\nvar v_y = local1; // Lateral velocity in m/s\r\nvar v_x = local3; // Longitudinal velocity in m/s\r\n\r\n// Calculate front slip angle in radians from simplified equation\r\nvar alpha_f = steeringAngleRad - Math.atan((v_y + L_f * yaw_rate) / v_x);\r\n\r\n// Calculate rear slip angle in radians from simplified equation\r\nvar alpha_r = -Math.atan((v_y - L_r * yaw_rate) / v_x);\r\n\r\n// Convert slip angles from radians to degrees\r\nvar alpha_f_deg = alpha_f * (180 / Math.PI);\r\nvar alpha_r_deg = alpha_r * (180 / Math.PI);\r\n\r\n\r\n//Output rear slip in degrees\r\nvar pit = $prop('IsInPit');\r\nvar game =  NewRawData().mGameState;\r\nif(pit !=1 && game!=4 ){ //prevent from making noise if not driving\r\nreturn Math.abs(alpha_r_deg *2);\r\n}\r\nreturn 0;"
+          },
+          "RearRightFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "\r\n//Dont waste processing time if in pits or in pit lane or is less than 5kph$prop('SpeedKmh')\r\n//if ($prop('IsInPit')==1 || $prop('IsInPitLane')==1 || $prop('SpeedKmh')<=5){return 0;}\r\nvar degreeRad = Math.PI/180; // 360 degrees to radians, which is 2π radians\r\n\r\n// Angular velocities in radians per second\r\nvar angle1 = $prop('GameRawData.mAngularVelocity01'); // [ UNITS = Radians per-second ] (roll rate)\r\nvar angle2 = $prop('GameRawData.mAngularVelocity02'); // [ UNITS = Radians per-second ] (yaw rate)\r\nvar angle3 = $prop('GameRawData.mAngularVelocity03'); // [ UNITS = Radians per-second ] (pitch rate)\r\n\r\n// Normalized steering input\r\nvar steeringInput = $prop('GameRawData.mSteering'); // [ RANGE = -1.0f->1.0f ]\r\nvar steeringAngleDeg = steeringInput * 24; //Typical steering angle 24 degrees, match to what is set in game\r\n\r\n// Convert normalized steering input to actual steering angle in radians\r\nvar steeringAngleRad = steeringAngleDeg * degreeRad;\r\n\r\n// Local velocities in metres per second\r\nvar local1 = $prop('GameRawData.mLocalVelocity01'); // [ UNITS = Metres per-second ] (Lateral velocity)\r\nvar local2 = $prop('GameRawData.mLocalVelocity02'); // [ UNITS = Metres per-second ] (Vertical velocity, not used in slip angle calculations)\r\nvar local3 = $prop('GameRawData.mLocalVelocity03'); // [ UNITS = Metres per-second ] (Longitudinal velocity)\r\n\r\n// Assumed distances to front and rear axles in meters not available in game\r\nvar L_f = 1.2; // Distance to front axle [ UNITS = Metres ]\r\nvar L_r = 1.6; // Distance to rear axle [ UNITS = Metres ]\r\n\r\n// Extract yaw rate, lateral and longitudinal velocities\r\nvar yaw_rate = angle2; // Yaw rate in rad/s\r\nvar v_y = local1; // Lateral velocity in m/s\r\nvar v_x = local3; // Longitudinal velocity in m/s\r\n\r\n// Calculate front slip angle in radians from simplified equation\r\nvar alpha_f = steeringAngleRad - Math.atan((v_y + L_f * yaw_rate) / v_x);\r\n\r\n// Calculate rear slip angle in radians from simplified equation\r\nvar alpha_r = -Math.atan((v_y - L_r * yaw_rate) / v_x);\r\n\r\n// Convert slip angles from radians to degrees\r\nvar alpha_f_deg = alpha_f * (180 / Math.PI);\r\nvar alpha_r_deg = alpha_r * (180 / Math.PI);\r\n\r\n\r\n//Output rear slip in degrees\r\nvar pit = $prop('IsInPit');\r\nvar game =  NewRawData().mGameState;\r\nif(pit !=1 && game!=4 ){ //prevent from making noise if not driving\r\nreturn Math.abs(alpha_r_deg *2);\r\n}\r\nreturn 0;"
+          },
+          "ForceFrequencies": true,
+          "FrontLeftFrequencyFormula": {
+            "Expression": ""
+          },
+          "FrontRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearLeftFrequencyFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "var rlrps = $prop('GameRawData.mTyreRPS03')\r\nrlrps = rlrps/2\r\nreturn Math.max(40,rlrps * -1)"
+          },
+          "RearRightFrequencyFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "var rrrps = $prop('GameRawData.mTyreRPS04')\r\nrrrps = rrrps/2\r\nreturn Math.max(40,rrrps * -1)"
+          },
+          "ContainerId": "8cc4e3d2-442d-40bd-b45d-fc0118931e91",
+          "AggregationMode": "Front/Rear",
+          "Filter": {
+            "GammaValue": 1.8500000000000008,
+            "InputGain": 100.0,
+            "MinimumForce": 0,
+            "Threshold": 5,
+            "FilterType": "GammaFilter"
+          },
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 120,
+            "UseHighFrequency": true,
+            "HighFrequency": 50,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "AssignToChannelGroup": true,
+            "ChannelGroupName": "Rear Slip",
+            "OutputType": "ToneOutput"
+          }
+        },
+        {
+          "ContainerType": "CustomEffectContainer",
+          "IsEnabled": true,
+          "Gain": 91.0,
+          "Description": "Front Slip",
+          "FrontLeftFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "//Dont waste processing time if in pits or in pit lane or is less than 5kph$prop('SpeedKmh')\r\n//if ($prop('IsInPit')==1 || $prop('IsInPitLane')==1 || $prop('SpeedKmh')<=5){return 0;}\r\nvar degreeRad = Math.PI/180; // 360 degrees to radians, which is 2π radians\r\n\r\n// Angular velocities in radians per second\r\nvar angle1 = $prop('GameRawData.mAngularVelocity01'); // [ UNITS = Radians per-second ] (roll rate)\r\nvar angle2 = $prop('GameRawData.mAngularVelocity02'); // [ UNITS = Radians per-second ] (yaw rate)\r\nvar angle3 = $prop('GameRawData.mAngularVelocity03'); // [ UNITS = Radians per-second ] (pitch rate)\r\n\r\n// Normalized steering input\r\nvar steeringInput = $prop('GameRawData.mSteering'); // [ RANGE = -1.0f->1.0f ]\r\nvar steeringAngleDeg = steeringInput * 24; //Typical steering angle 24 degrees, match to what is set in game\r\n\r\n// Convert normalized steering input to actual steering angle in radians\r\nvar steeringAngleRad = steeringAngleDeg * degreeRad;\r\n\r\n// Local velocities in metres per second\r\nvar local1 = $prop('GameRawData.mLocalVelocity01'); // [ UNITS = Metres per-second ] (Lateral velocity)\r\nvar local2 = $prop('GameRawData.mLocalVelocity02'); // [ UNITS = Metres per-second ] (Vertical velocity, not used in slip angle calculations)\r\nvar local3 = $prop('GameRawData.mLocalVelocity03'); // [ UNITS = Metres per-second ] (Longitudinal velocity)\r\n\r\n// Assumed distances to front and rear axles in meters not available in game\r\nvar L_f = 1.2; // Distance to front axle [ UNITS = Metres ]\r\nvar L_r = 1.6; // Distance to rear axle [ UNITS = Metres ]\r\n\r\n// Extract yaw rate, lateral and longitudinal velocities\r\nvar yaw_rate = angle2; // Yaw rate in rad/s\r\nvar v_y = local1; // Lateral velocity in m/s\r\nvar v_x = local3; // Longitudinal velocity in m/s\r\n\r\n// Calculate front slip angle in radians from simplified equation\r\nvar alpha_f = steeringAngleRad - Math.atan((v_y + L_f * yaw_rate) / v_x);\r\n\r\n// Calculate rear slip angle in radians from simplified equation\r\nvar alpha_r = -Math.atan((v_y - L_r * yaw_rate) / v_x);\r\n\r\n// Convert slip angles from radians to degrees\r\nvar alpha_f_deg = alpha_f * (180 / Math.PI);\r\nvar alpha_r_deg = alpha_r * (180 / Math.PI);\r\n\r\n\r\n//Output front slip in degrees\r\nvar pit = $prop('IsInPit');\r\nvar game =  NewRawData().mGameState;\r\nif(pit !=1 && game!=4 ){ //prevent from making noise if not driving\r\nreturn Math.abs(alpha_f_deg *2);\r\n}\r\nreturn 0;"
+          },
+          "FrontRightFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "//Dont waste processing time if in pits or in pit lane or is less than 5kph$prop('SpeedKmh')\r\n//if ($prop('IsInPit')==1 || $prop('IsInPitLane')==1 || $prop('SpeedKmh')<=5){return 0;}\r\nvar degreeRad = Math.PI/180; // 360 degrees to radians, which is 2π radians\r\n\r\n// Angular velocities in radians per second\r\nvar angle1 = $prop('GameRawData.mAngularVelocity01'); // [ UNITS = Radians per-second ] (roll rate)\r\nvar angle2 = $prop('GameRawData.mAngularVelocity02'); // [ UNITS = Radians per-second ] (yaw rate)\r\nvar angle3 = $prop('GameRawData.mAngularVelocity03'); // [ UNITS = Radians per-second ] (pitch rate)\r\n\r\n// Normalized steering input\r\nvar steeringInput = $prop('GameRawData.mSteering'); // [ RANGE = -1.0f->1.0f ]\r\nvar steeringAngleDeg = steeringInput * 24; //Typical steering angle 24 degrees, match to what is set in game\r\n\r\n// Convert normalized steering input to actual steering angle in radians\r\nvar steeringAngleRad = steeringAngleDeg * degreeRad;\r\n\r\n// Local velocities in metres per second\r\nvar local1 = $prop('GameRawData.mLocalVelocity01'); // [ UNITS = Metres per-second ] (Lateral velocity)\r\nvar local2 = $prop('GameRawData.mLocalVelocity02'); // [ UNITS = Metres per-second ] (Vertical velocity, not used in slip angle calculations)\r\nvar local3 = $prop('GameRawData.mLocalVelocity03'); // [ UNITS = Metres per-second ] (Longitudinal velocity)\r\n\r\n// Assumed distances to front and rear axles in meters not available in game\r\nvar L_f = 1.2; // Distance to front axle [ UNITS = Metres ]\r\nvar L_r = 1.6; // Distance to rear axle [ UNITS = Metres ]\r\n\r\n// Extract yaw rate, lateral and longitudinal velocities\r\nvar yaw_rate = angle2; // Yaw rate in rad/s\r\nvar v_y = local1; // Lateral velocity in m/s\r\nvar v_x = local3; // Longitudinal velocity in m/s\r\n\r\n// Calculate front slip angle in radians from simplified equation\r\nvar alpha_f = steeringAngleRad - Math.atan((v_y + L_f * yaw_rate) / v_x);\r\n\r\n// Calculate rear slip angle in radians from simplified equation\r\nvar alpha_r = -Math.atan((v_y - L_r * yaw_rate) / v_x);\r\n\r\n// Convert slip angles from radians to degrees\r\nvar alpha_f_deg = alpha_f * (180 / Math.PI);\r\nvar alpha_r_deg = alpha_r * (180 / Math.PI);\r\n\r\n\r\n//Output front slip in degrees\r\nvar pit = $prop('IsInPit');\r\nvar game =  NewRawData().mGameState;\r\nif(pit !=1 && game!=4 ){ //prevent from making noise if not driving\r\nreturn Math.abs(alpha_f_deg *2);\r\n}\r\nreturn 0;"
+          },
+          "RearLeftFormula": {
+            "Expression": ""
+          },
+          "RearRightFormula": {
+            "Expression": ""
+          },
+          "ForceFrequencies": true,
+          "FrontLeftFrequencyFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "var flrps = $prop('GameRawData.mTyreRPS01')\r\nflrps = flrps/2\r\nreturn Math.max(40,flrps * -1)"
+          },
+          "FrontRightFrequencyFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "var frrps = $prop('GameRawData.mTyreRPS02')\r\nfrrps = frrps/2\r\nreturn Math.max(40,frrps * -1)"
+          },
+          "RearLeftFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "ContainerId": "a4673780-4abd-4ef4-81ab-54b009c60270",
+          "AggregationMode": "Front/Rear",
+          "Filter": {
+            "GammaValue": 1.8500000000000008,
+            "InputGain": 100.0,
+            "MinimumForce": 0,
+            "Threshold": 5,
+            "FilterType": "GammaFilter"
+          },
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 120,
+            "UseHighFrequency": true,
+            "HighFrequency": 80,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "AssignToChannelGroup": true,
+            "ChannelGroupName": "Front Slip",
+            "OutputType": "ToneOutput"
+          }
+        },
+        {
+          "ContainerType": "CustomEffectContainer",
+          "IsEnabled": true,
+          "Gain": 90.0,
+          "Description": "Rangey Under Steer",
+          "FrontLeftFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "//Dont waste processing time if in pits or in pit lane or is less than 5kph$prop('SpeedKmh')\r\n//if ($prop('IsInPit')==1 || $prop('IsInPitLane')==1 || $prop('SpeedKmh')<=5){return 0;}\r\nvar degreeRad = Math.PI/180; // 360 degrees to radians, which is 2π radians\r\n\r\n// Angular velocities in radians per second\r\nvar angle1 = $prop('GameRawData.mAngularVelocity01'); // [ UNITS = Radians per-second ] (roll rate)\r\nvar angle2 = $prop('GameRawData.mAngularVelocity02'); // [ UNITS = Radians per-second ] (yaw rate)\r\nvar angle3 = $prop('GameRawData.mAngularVelocity03'); // [ UNITS = Radians per-second ] (pitch rate)\r\n\r\n// Normalized steering input\r\nvar steeringInput = $prop('GameRawData.mSteering'); // [ RANGE = -1.0f->1.0f ]\r\nvar steeringAngleDeg = steeringInput * 24; //Typical steering angle 24 degrees, match to what is set in game\r\n\r\n// Convert normalized steering input to actual steering angle in radians\r\nvar steeringAngleRad = steeringAngleDeg * degreeRad;\r\n\r\n// Local velocities in metres per second\r\nvar local1 = $prop('GameRawData.mLocalVelocity01'); // [ UNITS = Metres per-second ] (Lateral velocity)\r\nvar local2 = $prop('GameRawData.mLocalVelocity02'); // [ UNITS = Metres per-second ] (Vertical velocity, not used in slip angle calculations)\r\nvar local3 = $prop('GameRawData.mLocalVelocity03'); // [ UNITS = Metres per-second ] (Longitudinal velocity)\r\n\r\n// Assumed distances to front and rear axles in meters not available in game\r\nvar L_f = 1.2; // Distance to front axle [ UNITS = Metres ]\r\nvar L_r = 1.6; // Distance to rear axle [ UNITS = Metres ]\r\n\r\n// Extract yaw rate, lateral and longitudinal velocities\r\nvar yaw_rate = angle2; // Yaw rate in rad/s\r\nvar v_y = local1; // Lateral velocity in m/s\r\nvar v_x = local3; // Longitudinal velocity in m/s\r\n\r\n// Calculate front slip angle in radians from simplified equation\r\nvar alpha_f = steeringAngleRad - Math.atan((v_y + L_f * yaw_rate) / v_x);\r\n\r\n// Calculate rear slip angle in radians from simplified equation\r\nvar alpha_r = -Math.atan((v_y - L_r * yaw_rate) / v_x);\r\n\r\n// Convert slip angles from radians to degrees\r\nvar alpha_f_deg = alpha_f * (180 / Math.PI);\r\nvar alpha_r_deg = alpha_r * (180 / Math.PI);\r\n\r\n\r\n//Output understeer in degrees\r\nvar under = Math.abs(alpha_f_deg) - Math.abs(alpha_r_deg); //understeer\r\nif(under<=0){\r\nunder = 0;\r\n}\r\nvar pit = $prop('IsInPit');\r\nvar game =  NewRawData().mGameState;\r\nif(pit !=1 && game!=4 ){\r\nreturn Math.abs(under) * 10;\r\n}"
+          },
+          "FrontRightFormula": {
+            "Expression": ""
+          },
+          "RearLeftFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": ""
+          },
+          "RearRightFormula": {
+            "Expression": ""
+          },
+          "ForceFrequencies": false,
+          "FrontLeftFrequencyFormula": {
+            "Expression": ""
+          },
+          "FrontRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearLeftFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "ContainerId": "2d4ab968-79cf-4971-a85f-b21b09e198c1",
+          "AggregationMode": "Front/Rear",
+          "Filter": {
+            "GammaValue": 0.74999999999999978,
+            "InputGain": 100.0,
+            "MinimumForce": 0,
+            "Threshold": 5,
+            "FilterType": "GammaFilter"
+          },
+          "Output": {
+            "UsePrehemptiveMode": true,
+            "Frequency": 70,
+            "UseHighFrequency": true,
+            "HighFrequency": 40,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "AssignToChannelGroup": true,
+            "ChannelGroupName": "Under",
+            "OutputType": "ToneOutput"
+          }
+        },
+        {
+          "ContainerType": "CustomEffectContainer",
+          "IsEnabled": true,
+          "Gain": 90.0,
+          "Description": "Rangey Over Steer",
+          "FrontLeftFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": ""
+          },
+          "FrontRightFormula": {
+            "Expression": ""
+          },
+          "RearLeftFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "//Dont waste processing time if in pits or in pit lane or is less than 5kph$prop('SpeedKmh')\r\n//if ($prop('IsInPit')==1 || $prop('IsInPitLane')==1 || $prop('SpeedKmh')<=5){return 0;}\r\nvar degreeRad = Math.PI/180; // 360 degrees to radians, which is 2π radians\r\n\r\n// Angular velocities in radians per second\r\nvar angle1 = $prop('GameRawData.mAngularVelocity01'); // [ UNITS = Radians per-second ] (roll rate)\r\nvar angle2 = $prop('GameRawData.mAngularVelocity02'); // [ UNITS = Radians per-second ] (yaw rate)\r\nvar angle3 = $prop('GameRawData.mAngularVelocity03'); // [ UNITS = Radians per-second ] (pitch rate)\r\n\r\n// Normalized steering input\r\nvar steeringInput = $prop('GameRawData.mSteering'); // [ RANGE = -1.0f->1.0f ]\r\nvar steeringAngleDeg = steeringInput * 24; //Typical steering angle 24 degrees, match to what is set in game\r\n\r\n// Convert normalized steering input to actual steering angle in radians\r\nvar steeringAngleRad = steeringAngleDeg * degreeRad;\r\n\r\n// Local velocities in metres per second\r\nvar local1 = $prop('GameRawData.mLocalVelocity01'); // [ UNITS = Metres per-second ] (Lateral velocity)\r\nvar local2 = $prop('GameRawData.mLocalVelocity02'); // [ UNITS = Metres per-second ] (Vertical velocity, not used in slip angle calculations)\r\nvar local3 = $prop('GameRawData.mLocalVelocity03'); // [ UNITS = Metres per-second ] (Longitudinal velocity)\r\n\r\n// Assumed distances to front and rear axles in meters not available in game\r\nvar L_f = 1.2; // Distance to front axle [ UNITS = Metres ]\r\nvar L_r = 1.6; // Distance to rear axle [ UNITS = Metres ]\r\n\r\n// Extract yaw rate, lateral and longitudinal velocities\r\nvar yaw_rate = angle2; // Yaw rate in rad/s\r\nvar v_y = local1; // Lateral velocity in m/s\r\nvar v_x = local3; // Longitudinal velocity in m/s\r\n\r\n// Calculate front slip angle in radians from simplified equation\r\nvar alpha_f = steeringAngleRad - Math.atan((v_y + L_f * yaw_rate) / v_x);\r\n\r\n// Calculate rear slip angle in radians from simplified equation\r\nvar alpha_r = -Math.atan((v_y - L_r * yaw_rate) / v_x);\r\n\r\n// Convert slip angles from radians to degrees\r\nvar alpha_f_deg = alpha_f * (180 / Math.PI);\r\nvar alpha_r_deg = alpha_r * (180 / Math.PI);\r\n\r\n//Output Oversteer in degrees\r\nvar over =  Math.abs(alpha_r_deg) - Math.abs(alpha_f_deg); //Oversteer\r\nif(over<=0){\r\nover = 0;\r\n}\r\nvar pit = $prop('IsInPit');\r\nvar game =  NewRawData().mGameState;\r\nif(pit !=1 && game!=4 ){\r\nreturn Math.abs(over) * 10;\r\n}\r\nreturn 0\r\n"
+          },
+          "RearRightFormula": {
+            "Expression": ""
+          },
+          "ForceFrequencies": false,
+          "FrontLeftFrequencyFormula": {
+            "Expression": ""
+          },
+          "FrontRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearLeftFrequencyFormula": {
+            "Expression": ""
+          },
+          "RearRightFrequencyFormula": {
+            "Expression": ""
+          },
+          "ContainerId": "f39c7634-fc3c-4bd5-a054-a5aefb121262",
+          "AggregationMode": "Front/Rear",
+          "Filter": {
+            "GammaValue": 0.74999999999999978,
+            "InputGain": 100.0,
+            "MinimumForce": 0,
+            "Threshold": 5,
+            "FilterType": "GammaFilter"
+          },
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 70,
+            "UseHighFrequency": true,
+            "HighFrequency": 40,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "AssignToChannelGroup": true,
+            "ChannelGroupName": "Over",
+            "OutputType": "ToneOutput"
+          }
+        }
+      ],
+      "ContainerId": "76858003-f57c-43c6-9422-708093fabeb1",
+      "Filter": null,
+      "Output": null
+    },
+    {
+      "ContainerType": "GroupContainer",
+      "IsEnabled": true,
+      "Gain": 100.0,
+      "Description": "Viper Brake Only Wheelslip -Freq",
+      "EffectsContainers": [
+        {
+          "ContainerType": "CustomEffectContainer",
+          "IsEnabled": true,
+          "Gain": 59.666666666666288,
+          "Description": "Viper 4 Wheel tyre slip x surge brakes only",
+          "FrontLeftFormula": {
+            "JSExt": 3,
+            "Interpreter": 1,
+            "Expression": "//Tyre Slip\r\nvar fl = $prop('ViperDataPlugin.CalcLngWheelSlip.Computed.LngWheelSlip_FL')\r\n//Sway Acceleration\r\nvar sway = Math.pow ($prop('AccelerationSway'),2)\r\n//surge Acceleration\r\nvar surge = Math.pow ($prop('AccelerationSurge'),2)\r\nvar limited = fl * surge\r\nif (($prop('GameRawData.mUnfilteredBrake') *100) > 10 ) {\r\nreturn Math.min(Math.max(parseInt(limited), 0), 100);\r\n}\r\nreturn 0"
+          },
+          "FrontRightFormula": {
+            "JSExt": 3,
+            "Interpreter": 1,
+            "Expression": "//Tyre Slip\r\nvar fr = $prop('ViperDataPlugin.CalcLngWheelSlip.Computed.LngWheelSlip_FR')\r\n//Sway Acceleration\r\nvar sway = Math.pow ($prop('AccelerationSway'),2)\r\n//surge Acceleration\r\nvar surge = Math.pow ($prop('AccelerationSurge'),2)\r\nvar limited = fr * surge\r\nif (($prop('GameRawData.mUnfilteredBrake') *100) > 10 ) {\r\nreturn Math.min(Math.max(parseInt(limited), 0), 100);\r\n}\r\nreturn 0"
+          },
+          "RearLeftFormula": {
+            "JSExt": 3,
+            "Interpreter": 1,
+            "Expression": "//Tyre Slip\r\nvar rl = $prop('ViperDataPlugin.CalcLngWheelSlip.Computed.LngWheelSlip_RL')\r\n//Sway Acceleration\r\nvar sway = Math.pow ($prop('AccelerationSway'),2)\r\n//surge Acceleration\r\nvar surge = Math.pow ($prop('AccelerationSurge'),2)\r\nvar limited = rl * surge\r\nif (($prop('GameRawData.mUnfilteredBrake') *100) > 10 )  {\r\nreturn Math.min(Math.max(parseInt(limited), 0), 100);\r\n}\r\nreturn 0\r\n "
+          },
+          "RearRightFormula": {
+            "JSExt": 3,
+            "Interpreter": 1,
+            "Expression": "//Tyre Slip\r\nvar rr = $prop('ViperDataPlugin.CalcLngWheelSlip.Computed.LngWheelSlip_RR')\r\n//Sway Acceleration\r\nvar sway = Math.pow ($prop('AccelerationSway'),2)\r\n//surge Acceleration\r\nvar surge = Math.pow ($prop('AccelerationSurge'),2)\r\nvar limited = rr * surge\r\nif (($prop('GameRawData.mUnfilteredBrake') *100) > 10 ) {\r\nreturn Math.min(Math.max(parseInt(limited), 0), 100);\r\n}\r\nreturn 0"
+          },
+          "ForceFrequencies": true,
+          "FrontLeftFrequencyFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "var flrps = $prop('GameRawData.mTyreRPS01')\r\n// Lockup percentage (0.0 to 1.0)\r\nvar lockup = $prop('ViperDataPlugin.CalcLngWheelSlip.Computed.LngWheelSlip_FL');\r\n\r\n// Additional rising frequency element (only applies if lockup > 0.75)\r\nvar risingFrequency = 0;\r\nif (lockup > 0.75) {\r\n    // Scale the rising element from 0 to a max value (e.g., 40) as lockup moves from 0.75 to 1.0\r\n    risingFrequency = (lockup - 0.75) / 0.25 * 40; // Adjust \"40\" to control the maximum added frequency\r\n}\r\n\r\n// Final frequency calculation\r\nvar frequency = ((flrps+30) + risingFrequency)*-1;\r\nvar frequency = Math.max(frequency, 30);\r\n\r\n// Return the resulting frequency\r\nreturn frequency;\r\n"
+          },
+          "FrontRightFrequencyFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "var frrps = $prop('GameRawData.mTyreRPS02')\r\n// Lockup percentage (0.0 to 1.0)\r\nvar lockup = $prop('ViperDataPlugin.CalcLngWheelSlip.Computed.LngWheelSlip_FR');\r\n\r\n// Additional rising frequency element (only applies if lockup > 0.75)\r\nvar risingFrequency = 0;\r\nif (lockup > 0.75) {\r\n    // Scale the rising element from 0 to a max value (e.g., 40) as lockup moves from 0.75 to 1.0\r\n    risingFrequency = (lockup - 0.75) / 0.25 * 40; // Adjust \"40\" to control the maximum added frequency\r\n}\r\n\r\n// Final frequency calculation\r\nvar frequency = ((frrps+30) + risingFrequency)*-1;\r\nvar frequency = Math.max(frequency, 30);\r\n\r\n// Return the resulting frequency\r\nreturn frequency;"
+          },
+          "RearLeftFrequencyFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "var rlrps = $prop('GameRawData.mTyreRPS01')\r\n// Lockup percentage (0.0 to 1.0)\r\nvar lockup = $prop('ViperDataPlugin.CalcLngWheelSlip.Computed.LngWheelSlip_RL');\r\n\r\n// Additional rising frequency element (only applies if lockup > 0.75)\r\nvar risingFrequency = 0;\r\nif (lockup > 0.75) {\r\n    // Scale the rising element from 0 to a max value (e.g., 40) as lockup moves from 0.75 to 1.0\r\n    risingFrequency = (lockup - 0.75) / 0.25 * 40; // Adjust \"40\" to control the maximum added frequency\r\n}\r\n\r\n// Final frequency calculation\r\nvar frequency = ((rlrps+30) + risingFrequency)*-1;\r\nvar frequency = Math.max(frequency, 30);\r\n\r\n// Return the resulting frequency\r\nreturn frequency;\r\n"
+          },
+          "RearRightFrequencyFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "var rrrps = $prop('GameRawData.mTyreRPS02')\r\n// Lockup percentage (0.0 to 1.0)\r\nvar lockup = $prop('ViperDataPlugin.CalcLngWheelSlip.Computed.LngWheelSlip_RR');\r\n\r\n// Additional rising frequency element (only applies if lockup > 0.75)\r\nvar risingFrequency = 0;\r\nif (lockup > 0.75) {\r\n    // Scale the rising element from 0 to a max value (e.g., 40) as lockup moves from 0.75 to 1.0\r\n    risingFrequency = (lockup - 0.75) / 0.25 * 40; // Adjust \"40\" to control the maximum added frequency\r\n}\r\n\r\n// Final frequency calculation\r\nvar frequency = ((rrrps+30) + risingFrequency)*-1;\r\nvar frequency = Math.max(frequency, 30);\r\n\r\n// Return the resulting frequency\r\nreturn frequency;"
+          },
+          "ContainerId": "23a4e0d8-6d66-4774-970b-2851792e4ed2",
+          "AggregationMode": "Corners",
+          "Filter": {
+            "GammaValue": 1.0,
+            "InputGain": 100.0,
+            "MinimumForce": 0,
+            "Threshold": 5,
+            "FilterType": "GammaFilter"
+          },
+          "Output": {
+            "UsePrehemptiveMode": false,
+            "Frequency": 80,
+            "UseHighFrequency": true,
+            "HighFrequency": 44,
+            "WhiteNoise": 10,
+            "UseWhiteNoise": false,
+            "FrequencyBasedOnPreFilter": false,
+            "Harmonics": 0,
+            "HoldMode": 1,
+            "Delay": 5,
+            "DelayEnabled": true,
+            "AssignToChannelGroup": true,
+            "ChannelGroupName": "Viper Brakes",
+            "OutputType": "ToneOutput"
+          }
+        }
+      ],
+      "ContainerId": "2d2c5d61-f68b-477b-8440-e317ccb044ee",
+      "Filter": null,
+      "Output": null
+    }
+  ],
+  "AutoCalibrationRatio2": 0,
+  "OutputMode": 1,
+  "GlobalGain": 50.0,
+  "UseProfileGain": false,
+  "LastLoaded": "0001-01-01T00:00:00",
+  "Name": "Rangey Under/Over Steer Front & Rear Slip with Brake surge 04-05-25",
+  "ProfileId": "df8954df-ad17-4dd4-b202-8308bd84ba6b",
+  "GameCode": "Automobilista2",
+  "CarChoice": null
+}

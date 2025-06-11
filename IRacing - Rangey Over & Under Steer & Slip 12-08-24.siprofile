@@ -1,0 +1,219 @@
+{
+  "IncludeOutputSettingsInProfile": false,
+  "UnmuteEffectsAfterSimhubRestart": true,
+  "EffectsContainers": [
+    {
+      "AutocalibrationMax": 95.0,
+      "Filter": {
+        "GammaValue": 1.0,
+        "InputGain": 100.0,
+        "MinimumForce": 0,
+        "Threshold": 0,
+        "FilterType": "GammaFilter"
+      },
+      "FrontLeftFormula": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "// Assumed distance to the front axle in meters\r\nvar L_f = 1.2; // Distance to front axle in meters, adjust as necessary for your vehicle\r\n// Assumed distance to the rear axle in meters\r\nvar L_r = 1.6; // Distance to rear axle in meters, adjust as necessary for your vehicle\r\nvar degreeRad = Math.PI/180; // 360 degrees to radians, which is 2π radians\r\n\r\n// Angular velocity (Yaw rate) in radians per second\r\nvar yaw_rate = $prop('GameRawData.Telemetry.YawRate'); // Yaw rate\r\n\r\n// Normalized steering input\r\nvar steeringInput = $prop('GameRawData.Telemetry.SteeringWheelAngle'); \r\nvar steeringInputMax = $prop('GameRawData.Telemetry.SteeringWheelAngleMax');\r\nvar steeringRatio = steeringInput/steeringInputMax;\r\nvar steeringAngleDeg = steeringRatio * 24; //Typical steering angle 24 degrees, match to what is set in game\r\n// Convert normalized steering input to actual wheel steering angle in radians\r\nvar steeringAngleRad = steeringAngleDeg * degreeRad;\r\n\r\n// Local velocities in metres per second\r\nvar v_y = $prop('GameRawData.Telemetry.VelocityY'); // Lateral velocity in m/s\r\nvar v_x = $prop('GameRawData.Telemetry.VelocityX'); // Longitudinal velocity in m/s\r\n\r\n// Calculate the front slip angle in radians\r\nvar alpha_f = steeringAngleRad - Math.atan((v_y + L_f * yaw_rate) / v_x);\r\n\r\n// Convert the front slip angle from radians to degrees\r\nvar alpha_f_deg = alpha_f * (180 / Math.PI);\r\n\r\n// Calculate rear slip angle in radians from simplified equation\r\nvar alpha_r = -Math.atan((v_y - L_r * yaw_rate) / v_x);\r\n\r\n// Convert the rear slip angle from radians to degrees\r\nvar alpha_r_deg = alpha_r * (180 / Math.PI);\r\n\r\n//Output understeer in degrees\r\nvar under = Math.abs(alpha_f_deg) - Math.abs(alpha_r_deg); //understeer\r\nif(under<=0){\r\nunder = 0;\r\n}\r\nreturn Math.abs(under) * 10;//return understeer + Multiplier for shakers\r\n\r\n\r\n"
+      },
+      "FrontRightFormula": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": ""
+      },
+      "RearLeftFormula": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "// Assumed distance to the front axle in meters\r\nvar L_f = 1.2; // Distance to front axle in meters, adjust as necessary for your vehicle\r\n// Assumed distance to the rear axle in meters\r\nvar L_r = 1.6; // Distance to rear axle in meters, adjust as necessary for your vehicle\r\nvar degreeRad = Math.PI/180; // 360 degrees to radians, which is 2π radians\r\n\r\n// Angular velocity (Yaw rate) in radians per second\r\nvar yaw_rate = $prop('GameRawData.Telemetry.YawRate'); // Yaw rate\r\n\r\n// Normalized steering input\r\nvar steeringInput = $prop('GameRawData.Telemetry.SteeringWheelAngle'); \r\nvar steeringInputMax = $prop('GameRawData.Telemetry.SteeringWheelAngleMax');\r\nvar steeringRatio = steeringInput/steeringInputMax;\r\nvar steeringAngleDeg = steeringRatio * 24; //Typical steering angle 24 degrees, match to what is set in game\r\n// Convert normalized steering input to actual wheel steering angle in radians\r\nvar steeringAngleRad = steeringAngleDeg * degreeRad;\r\n\r\n// Local velocities in metres per second\r\nvar v_y = $prop('GameRawData.Telemetry.VelocityY'); // Lateral velocity in m/s\r\nvar v_x = $prop('GameRawData.Telemetry.VelocityX'); // Longitudinal velocity in m/s\r\n\r\n// Calculate the front slip angle in radians\r\nvar alpha_f = steeringAngleRad - Math.atan((v_y + L_f * yaw_rate) / v_x);\r\n\r\n// Convert the front slip angle from radians to degrees\r\nvar alpha_f_deg = alpha_f * (180 / Math.PI);\r\n\r\n// Calculate rear slip angle in radians from simplified equation\r\nvar alpha_r = -Math.atan((v_y - L_r * yaw_rate) / v_x);\r\n\r\n// Convert the rear slip angle from radians to degrees\r\nvar alpha_r_deg = alpha_r * (180 / Math.PI);\r\n\r\n//Output oversteer in degrees\r\nvar over = Math.abs(alpha_r_deg) - Math.abs(alpha_f_deg); //understeer\r\nif(over<=0){\r\nover = 0;\r\n}\r\nreturn Math.abs(over) * 10;//return understeer + Multiplier for shakers\r\n\r\n\r\n"
+      },
+      "RearRightFormula": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": ""
+      },
+      "ForceFrequencies": false,
+      "FrontLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "FrontRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "SupportWarnInfo": null,
+      "ContainerId": "2d4ab968-79cf-4971-a85f-b21b09e198c1",
+      "ContainerType": "CustomEffectContainer",
+      "Description": "Rangey Under & Over Steer",
+      "AggregationMode": "Front/Rear",
+      "Gain": 90.0,
+      "IsEnabled": true,
+      "Output": {
+        "UsePrehemptiveMode": false,
+        "Frequency": 70,
+        "UseHighFrequency": true,
+        "HighFrequency": 40,
+        "WhiteNoise": 10,
+        "UseWhiteNoise": false,
+        "EnableDurationModulation": true,
+        "DurationModulationValue": 34,
+        "FrequencyBasedOnPreFilter": false,
+        "Harmonics": 0,
+        "HoldMode": 1,
+        "DelayEnabled": false,
+        "IsAudio": true,
+        "AssignToChannelGroup": true,
+        "ChannelGroupName": "Under Over",
+        "PropertyName": null,
+        "ExportProperty": false,
+        "DisableOutput": false,
+        "OutputType": "ToneOutput"
+      }
+    },
+    {
+      "AutocalibrationMax": 95.0,
+      "Filter": {
+        "GammaValue": 1.8500000000000008,
+        "InputGain": 100.0,
+        "MinimumForce": 0,
+        "Threshold": 5,
+        "FilterType": "GammaFilter"
+      },
+      "FrontLeftFormula": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "// Assumed distance to the front axle in meters\r\nvar L_f = 1.2; // Distance to front axle in meters, adjust as necessary for your vehicle\r\n// Assumed distance to the rear axle in meters\r\nvar L_r = 1.6; // Distance to rear axle in meters, adjust as necessary for your vehicle\r\nvar degreeRad = Math.PI/180; // 360 degrees to radians, which is 2π radians\r\n\r\n// Angular velocity (Yaw rate) in radians per second\r\nvar yaw_rate = $prop('GameRawData.Telemetry.YawRate'); // Yaw rate\r\n\r\n// Normalized steering input\r\nvar steeringInput = $prop('GameRawData.Telemetry.SteeringWheelAngle'); \r\nvar steeringInputMax = $prop('GameRawData.Telemetry.SteeringWheelAngleMax');\r\nvar steeringRatio = steeringInput/steeringInputMax;\r\nvar steeringAngleDeg = steeringRatio * 24; //Typical steering angle 24 degrees, match to what is set in game\r\n// Convert normalized steering input to actual wheel steering angle in radians\r\nvar steeringAngleRad = steeringAngleDeg * degreeRad;\r\n\r\n// Local velocities in metres per second\r\nvar v_y = $prop('GameRawData.Telemetry.VelocityY'); // Lateral velocity in m/s\r\nvar v_x = $prop('GameRawData.Telemetry.VelocityX'); // Longitudinal velocity in m/s\r\n\r\n// Calculate the front slip angle in radians\r\nvar alpha_f = steeringAngleRad - Math.atan((v_y + L_f * yaw_rate) / v_x);\r\n\r\n// Convert the front slip angle from radians to degrees\r\nvar alpha_f_deg = alpha_f * (180 / Math.PI);\r\n\r\n// Calculate rear slip angle in radians from simplified equation\r\nvar alpha_r = -Math.atan((v_y - L_r * yaw_rate) / v_x);\r\n\r\n// Convert the rear slip angle from radians to degrees\r\nvar alpha_r_deg = alpha_r * (180 / Math.PI);\r\n\r\n//Output front slip\r\nreturn Math.abs(alpha_f_deg) * 2;//return front slip + Multiplier for shakers\r\n\r\n\r\n"
+      },
+      "FrontRightFormula": {
+        "Expression": ""
+      },
+      "RearLeftFormula": {
+        "Expression": ""
+      },
+      "RearRightFormula": {
+        "Expression": ""
+      },
+      "ForceFrequencies": false,
+      "FrontLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "FrontRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "SupportWarnInfo": null,
+      "ContainerId": "a4673780-4abd-4ef4-81ab-54b009c60270",
+      "ContainerType": "CustomEffectContainer",
+      "Description": "Front Slip",
+      "AggregationMode": "Front/Rear",
+      "Gain": 91.0,
+      "IsEnabled": true,
+      "Output": {
+        "UsePrehemptiveMode": false,
+        "Frequency": 120,
+        "UseHighFrequency": true,
+        "HighFrequency": 80,
+        "WhiteNoise": 10,
+        "UseWhiteNoise": false,
+        "EnableDurationModulation": true,
+        "DurationModulationValue": 34,
+        "FrequencyBasedOnPreFilter": false,
+        "Harmonics": 0,
+        "HoldMode": 1,
+        "DelayEnabled": false,
+        "IsAudio": true,
+        "AssignToChannelGroup": true,
+        "ChannelGroupName": "Front Slip",
+        "PropertyName": null,
+        "ExportProperty": false,
+        "DisableOutput": false,
+        "OutputType": "ToneOutput"
+      }
+    },
+    {
+      "AutocalibrationMax": 95.0,
+      "Filter": {
+        "GammaValue": 1.8500000000000008,
+        "InputGain": 100.0,
+        "MinimumForce": 0,
+        "Threshold": 5,
+        "FilterType": "GammaFilter"
+      },
+      "FrontLeftFormula": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": ""
+      },
+      "FrontRightFormula": {
+        "Expression": ""
+      },
+      "RearLeftFormula": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "// Assumed distance to the front axle in meters\r\nvar L_f = 1.2; // Distance to front axle in meters, adjust as necessary for your vehicle\r\n// Assumed distance to the rear axle in meters\r\nvar L_r = 1.6; // Distance to rear axle in meters, adjust as necessary for your vehicle\r\nvar degreeRad = Math.PI/180; // 360 degrees to radians, which is 2π radians\r\n\r\n// Angular velocity (Yaw rate) in radians per second\r\nvar yaw_rate = $prop('GameRawData.Telemetry.YawRate'); // Yaw rate\r\n\r\n// Normalized steering input\r\nvar steeringInput = $prop('GameRawData.Telemetry.SteeringWheelAngle'); \r\nvar steeringInputMax = $prop('GameRawData.Telemetry.SteeringWheelAngleMax');\r\nvar steeringRatio = steeringInput/steeringInputMax;\r\nvar steeringAngleDeg = steeringRatio * 24; //Typical steering angle 24 degrees, match to what is set in game\r\n// Convert normalized steering input to actual wheel steering angle in radians\r\nvar steeringAngleRad = steeringAngleDeg * degreeRad;\r\n\r\n// Local velocities in metres per second\r\nvar v_y = $prop('GameRawData.Telemetry.VelocityY'); // Lateral velocity in m/s\r\nvar v_x = $prop('GameRawData.Telemetry.VelocityX'); // Longitudinal velocity in m/s\r\n\r\n// Calculate the front slip angle in radians\r\nvar alpha_f = steeringAngleRad - Math.atan((v_y + L_f * yaw_rate) / v_x);\r\n\r\n// Convert the front slip angle from radians to degrees\r\nvar alpha_f_deg = alpha_f * (180 / Math.PI);\r\n\r\n// Calculate rear slip angle in radians from simplified equation\r\nvar alpha_r = -Math.atan((v_y - L_r * yaw_rate) / v_x);\r\n\r\n// Convert the rear slip angle from radians to degrees\r\nvar alpha_r_deg = alpha_r * (180 / Math.PI);\r\n\r\n//Output rear slip\r\nreturn Math.abs(alpha_r_deg) * 2;//return rear slip + Multiplier for shakers\r\n\r\n\r\n"
+      },
+      "RearRightFormula": {
+        "Expression": ""
+      },
+      "ForceFrequencies": false,
+      "FrontLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "FrontRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearLeftFrequencyFormula": {
+        "Expression": ""
+      },
+      "RearRightFrequencyFormula": {
+        "Expression": ""
+      },
+      "SupportWarnInfo": null,
+      "ContainerId": "8cc4e3d2-442d-40bd-b45d-fc0118931e91",
+      "ContainerType": "CustomEffectContainer",
+      "Description": "Rear Slip",
+      "AggregationMode": "Front/Rear",
+      "Gain": 90.0,
+      "IsEnabled": true,
+      "Output": {
+        "UsePrehemptiveMode": false,
+        "Frequency": 120,
+        "UseHighFrequency": true,
+        "HighFrequency": 50,
+        "WhiteNoise": 10,
+        "UseWhiteNoise": false,
+        "EnableDurationModulation": true,
+        "DurationModulationValue": 34,
+        "FrequencyBasedOnPreFilter": false,
+        "Harmonics": 0,
+        "HoldMode": 1,
+        "DelayEnabled": false,
+        "IsAudio": true,
+        "AssignToChannelGroup": true,
+        "ChannelGroupName": "Rear Slip",
+        "PropertyName": null,
+        "ExportProperty": false,
+        "DisableOutput": false,
+        "OutputType": "ToneOutput"
+      }
+    }
+  ],
+  "AutoCalibrationRatio2": 100,
+  "OutputMode": 1,
+  "GlobalGain": 50.0,
+  "UseProfileGain": false,
+  "LastLoaded": "0001-01-01T00:00:00",
+  "Description": "Setup For Front/Rear shakers using BST-1 \r\nIracing specific only",
+  "Name": "Rangey Over & Under Steer & Slip",
+  "ProfileId": "4f5ffe04-814d-4678-9960-91fa4e1b4675",
+  "GameCode": "IRacing",
+  "CarChoice": null
+}
